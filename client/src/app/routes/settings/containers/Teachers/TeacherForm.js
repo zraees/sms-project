@@ -33,25 +33,30 @@ const validationOptions = {
 };
 
 class TeacherForm extends React.Component {
-  onSubmit(e) {
-    e.preventDefault();
-    console.log("Submit values = " + e.data);
-
-    // axios.post('/api/teachers', values)      
-    //     .then(function (response) {
-    //         console.log(response);
-    //     })
-    //     .catch(function (error) {
-    //         console.log('this is error: '+error);
-    //     });      
-  }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
 
+    const required = value => value ? undefined : 'Required'
+    const maxLength = max => value =>
+      value && value.length > max ? `Must be ${max} characters or less` : undefined
+    const maxLength15 = maxLength(15)
+    const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+    const minValue = min => value =>
+      value && value < min ? `Must be at least ${min}` : undefined
+    const minValue18 = minValue(18)
+    const email = value =>
+      value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+      'Invalid email address' : undefined
+    const tooOld = value =>
+      value && value > 65 ? 'You might be too old for this' : undefined
+    const aol = value =>
+      value && /.+@aol\.com/.test(value) ?
+      'Really? You still use AOL for your email?' : undefined
+      
     return (
       <UiValidate options={validationOptions}>
-        <form id="smart-form-register" className="smart-form" noValidate="novalidate" 
+        <form id="form-teacher" className="smart-form" noValidate="novalidate" 
             onSubmit={handleSubmit}>
           <header>
             Personal Information
@@ -60,22 +65,27 @@ class TeacherForm extends React.Component {
           <fieldset>
             <section>
               <label className="input"> <i className="icon-append fa fa-user"/>
-                <Field name="name" component="input" type="text" placeholder="Name"/>
-                <b className="tooltip tooltip-bottom-right">Needed to enter the website</b> </label>
+                <Field name="name" validate={required} component="input" type="text" placeholder="Name"/>
+                <b className="tooltip tooltip-bottom-right">Needed to enter the website</b> 
+                
+              </label>
+              {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </section>
-
 
             <section>
               <label className="input"> <i className="icon-append fa fa-envelope-o"/>
-                <Field type="email" component="input" name="email" placeholder="Email address"/>
-                <b className="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
+                <Field type="email" validate={email} component="input" name="email" placeholder="Email address"/>
+                <b className="tooltip tooltip-bottom-right">Needed to verify your account</b> 
+                
+              </label>
+              {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </section>
 
           </fieldset>
 
           <footer>
-            <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
-              Validate Form
+            <button type="submit" disabled={submitting} className="btn btn-primary">
+              Save
             </button>
           </footer>
         </form>

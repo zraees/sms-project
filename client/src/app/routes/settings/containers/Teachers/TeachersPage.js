@@ -44,7 +44,7 @@ export default class TeachersPage extends React.Component {
                 <header>
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
 
-                  <h2>Add New Teacher</h2>
+                  <h2>Add New Teacher..</h2>
 
                 </header>
 
@@ -66,7 +66,7 @@ export default class TeachersPage extends React.Component {
               </JarvisWidget>
               {/* end widget */}
 
-          </article>
+            </article>
             {/* END COL */}
 
           </div>
