@@ -95,8 +95,10 @@ module.exports = (env) => {
       // hot: true,
       compress:true,
       publicPath: '/',
-      stats: "minimal"
-
+      stats: "minimal",
+      proxy: {
+          '*': {target: 'http://localhost:8080'}
+        }
     },
     stats: "minimal",
     performance: {

@@ -4,6 +4,21 @@
         "title":"Home",
         "route":"home",
         "icon":"fa fa-lg fa-fw fa-home"
+    },
+    {
+      "title": "Settings",
+
+      "icon": "fa fa-lg fa-fw fa-cogs",
+      "items": [
+        {
+          "route": "/settings/subjects",
+          "title": "Subjects"
+        },
+        {
+          "route": "/settings/teachers",
+          "title": "Teachers"
+        }
+      ]
     }
 
   ]

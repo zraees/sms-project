@@ -14,6 +14,7 @@ const routes = {
   indexRoute: { onEnter: (nextState, replace) => replace('/home') },
   childRoutes: [
     require('./routes/home').default,
+    require('./routes/settings').default,
 
 
     // require('./routes/dashboard').default,
