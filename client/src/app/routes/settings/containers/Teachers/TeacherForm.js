@@ -55,41 +55,43 @@ class TeacherForm extends React.Component {
       'Really? You still use AOL for your email?' : undefined
       
     return (
-      <UiValidate options={validationOptions}>
-        <form id="form-teacher" className="smart-form" noValidate="novalidate" 
-            onSubmit={handleSubmit}>
-          <header>
-            Personal Information
-          </header>
+          <UiValidate options={validationOptions}>
+            <form id="form-teacher" className="smart-form" noValidate="novalidate" 
+                onSubmit={handleSubmit}>
 
-          <fieldset>
-            <section>
-              <label className="input"> <i className="icon-append fa fa-user"/>
-                <Field name="name" validate={required} component="input" type="text" placeholder="Name"/>
-                <b className="tooltip tooltip-bottom-right">Needed to enter the website</b> 
-                
-              </label>
-              {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-            </section>
+              <header>
+                Personal Information
+              </header>
 
-            <section>
-              <label className="input"> <i className="icon-append fa fa-envelope-o"/>
-                <Field type="email" validate={email} component="input" name="email" placeholder="Email address"/>
-                <b className="tooltip tooltip-bottom-right">Needed to verify your account</b> 
-                
-              </label>
-              {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-            </section>
+              <fieldset>
+                <section>
+                  <label className="input"> <i className="icon-append fa fa-user"/>
+                    <Field name="name" validate={required} component="input" type="text" placeholder="Name"/>
+                    <b className="tooltip tooltip-bottom-right">Needed to enter the website</b> 
+                    
+                  </label>
+                  {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+                </section>
 
-          </fieldset>
+                <section>
+                  <label className="input"> <i className="icon-append fa fa-envelope-o"/>
+                    <Field type="email" validate={email} component="input" name="email" placeholder="Email address"/>
+                    <b className="tooltip tooltip-bottom-right">Needed to verify your account</b> 
+                    
+                  </label>
+                  {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+                </section>
 
-          <footer>
-            <button type="submit" disabled={submitting} className="btn btn-primary">
-              Save
-            </button>
-          </footer>
-        </form>
-      </UiValidate>
+              </fieldset>
+
+              <footer>
+                <button type="submit" disabled={submitting} className="btn btn-primary">
+                  Save
+                </button>
+              </footer>
+
+            </form>
+          </UiValidate>
     )
   }
 }

@@ -31,10 +31,11 @@ let router = express.Router();
 // }
 
 router.get('/', (req, res) => {
-  Parent.query({
+  Teacher.query({
     select: [ 'TeacherId', 'Name', 'Email' ],  
   }).fetchAll().then(teachers => {
-        res.send(teachers.toJSON());
+      console.log('get teachers OK' + teachers);
+        res.send({"data": teachers.toJSON()});
   });
 });
 

@@ -1,0 +1,19 @@
+Ui - elements: (modal popup, alerts, notifications, well ....)
+http://sarj-shockwave.rhcloud.com/#/ui/general
+
+widgets: JarvisWidgets
+http://sarj-shockwave.rhcloud.com/#/widgets
+
+
+add student page should like this:
+http://sarj-shockwave.rhcloud.com/deleteSelected()?style-0=on#/forms/wizards
+
+auto complete (jquery ui)
+http://sarj-shockwave.rhcloud.com/#/ui/jquery-ui
+
+show yearly progress
+http://sarj-shockwave.rhcloud.com/#/ui/tree-views
+http://sarj-shockwave.rhcloud.com/#/views/timeline
+
+
+
