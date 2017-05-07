@@ -15,35 +15,35 @@ export default class TeachersPage extends React.Component {
   constructor(props){
    super(props);
    this.state = {
-     id: 0
+     id: 0,
+     refresh: {}
    }
   }
  
   componentDidMount(){
       console.log('componentDidMount');
     $('#myModal').on('show.bs.modal', function (e) {
-      // do something...
-      var button = $(e.relatedTarget); // Button that triggered the modal
-      var id = button.data('id') // Extract info from data-* attributes
+      
+      var button = $(e.relatedTarget);        // Button that triggered the modal
+      var id = button.data('id');             // Extract info from data-* attributes
 
-     this.setState({id});   
-// var modal = $(this)
-//   modal.find('.modal-title').text('New message to ' + recipient)
-//   modal.find('.modal-body input').val(recipient)
-      console.log('show.bs.modal ' + this.state.id);
+      this.setState({id});   
+      //console.log('show.bs.modal ' + this.state.id);
     }.bind(this));
 
-     $('#myModal').on('shown.bs.modal', function (e) {
-      // do something...
-      console.log('shown.bs.modal');
-    });
+     $('#myModal').on('hidden.bs.modal', function (e) {      
+      //console.log('hidden.bs.modal 1'+this.state.paging);
+      
+      this.setState({refresh:true});   
+
+
+      console.log('hidden.bs.modal ' + this.state.refresh);
+    }.bind(this));
+
   }
 
   render() {
-
- 
-  //let id= 0;
-      
+    
       function onSubmit(values){
           console.log('values submitted', values);
           
@@ -54,13 +54,12 @@ export default class TeachersPage extends React.Component {
               .catch(function (error) {
                 console.log('this is error: '+error);
               });      
-      }
+        }
 
     return (
       <div id="content">
         
         <WidgetGrid>
-
 
           {/* START ROW */}
 
@@ -71,7 +70,7 @@ export default class TeachersPage extends React.Component {
 
               {/* Widget ID (each widget will need unique ID)*/}
               <JarvisWidget colorbutton={false} editbutton={false} color="blueLight" 
-                            custombutton={false} deletebutton={false}>
+                            custombutton={false} deletebutton={false} >
 
                 <header>
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
@@ -101,7 +100,7 @@ export default class TeachersPage extends React.Component {
                         </div>
                     </div>
 
-                    <Datatable 
+                    <Datatable id="Datatable1"  
                       options={{
                         ajax: '/api/teachers',
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -116,7 +115,7 @@ export default class TeachersPage extends React.Component {
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                  console.log(data);
+                                  //console.log(data);
                                   //console.log(type);
                                   //console.log(row);
                                     //return data +' ('+ row[0]+')';
@@ -144,6 +143,7 @@ export default class TeachersPage extends React.Component {
                         ]
                       }}
                       paginationLength={true} 
+                      refresh={this.state.refresh}
                       className="table table-striped table-bordered table-hover"
                       width="100%">
                       <thead>
@@ -151,6 +151,7 @@ export default class TeachersPage extends React.Component {
                         <th data-hide="mobile-p">ID</th>
                         <th data-class="expand">Name</th>
                         <th data-hide="mobile-p">Email</th>
+                        <th data-hide="mobile-p">Edit</th>
                       </tr>
                       </thead>
                     </Datatable>
@@ -176,6 +177,7 @@ export default class TeachersPage extends React.Component {
         {/* end widget grid */}
   
         <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" 
+            data-backdrop="static" data-keyboard="false"
             aria-labelledby="myModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
