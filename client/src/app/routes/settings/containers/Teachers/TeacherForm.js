@@ -85,6 +85,9 @@ class TeacherForm extends React.Component {
               </fieldset>
 
               <footer>
+                <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
+                  Reset
+                </button>
                 <button type="submit" disabled={submitting} className="btn btn-primary">
                   Save
                 </button>
@@ -97,5 +100,5 @@ class TeacherForm extends React.Component {
 }
 
 export default reduxForm({
-  form: 'simple'  // a unique identifier for this form
+  form: 'TeacherForm'  // a unique identifier for this form
 })(TeacherForm)

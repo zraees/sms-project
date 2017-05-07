@@ -4,10 +4,12 @@
 
 import React from 'react'
 import axios from 'axios'
+import {reset} from 'redux-form';
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
+import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
 import TeacherForm from './TeacherForm'
 
@@ -16,7 +18,7 @@ export default class TeachersPage extends React.Component {
    super(props);
    this.state = {
      id: 0,
-     refresh: {}
+     url: '/api/teachers'
    }
   }
  
@@ -34,10 +36,10 @@ export default class TeachersPage extends React.Component {
      $('#myModal').on('hidden.bs.modal', function (e) {      
       //console.log('hidden.bs.modal 1'+this.state.paging);
       
-      this.setState({refresh:true});   
+      this.setState({url:''});   
 
 
-      console.log('hidden.bs.modal ' + this.state.refresh);
+      console.log('hidden.bs.modal ' + this.state.url);
     }.bind(this));
 
   }
@@ -45,14 +47,33 @@ export default class TeachersPage extends React.Component {
   render() {
     
       function onSubmit(values){
-          console.log('values submitted', values);
+          //console.log('values submitted', values);
           
           axios.post('/api/teachers', values)      
               .then(function (response) {
-                console.log(response);
+                //console.log(response);
+                smallBox({
+                  title: "System Alert",
+                  content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
+                  color: "#659265",
+                  iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                  timeout: 3000
+                });
+                
+                dispatch(reset('TeacherForm'));  // requires form name
+
+                $('#myModal').modal('hide');  
+
               })
               .catch(function (error) {
-                console.log('this is error: '+error);
+                console.log(error);
+                smallBox({
+                  title: "System Alert",
+                  content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
+                  color: "#C46A69",
+                  iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                  timeout: 5000
+                });
               });      
         }
 
@@ -102,7 +123,7 @@ export default class TeachersPage extends React.Component {
 
                     <Datatable id="Datatable1"  
                       options={{
-                        ajax: '/api/teachers',
+                        ajax: this.state.url,
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -143,7 +164,7 @@ export default class TeachersPage extends React.Component {
                         ]
                       }}
                       paginationLength={true} 
-                      refresh={this.state.refresh}
+                      //refresh={this.state.refresh}
                       className="table table-striped table-bordered table-hover"
                       width="100%">
                       <thead>
@@ -189,7 +210,7 @@ export default class TeachersPage extends React.Component {
               </div>
               <div className="modal-body">
                   
-                  <TeacherForm onSubmit={onSubmit} teacherId={this.state.id} />
+                  <TeacherForm  teacherId={this.state.id} onSubmit={onSubmit} />
 
               </div>
               {/*<div className="modal-footer">
