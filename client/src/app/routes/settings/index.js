@@ -2,7 +2,7 @@ export default {
   path: 'settings',
   component: require('../../components/common/Layout').default,
 
-  indexRoute: { onEnter: (nextState, replace) => replace('/settings/subjects') },
+  indexRoute: { onEnter: (nextState, replace) => replace('/settings/teachers') },
 
   childRoutes: [
     {

@@ -12,7 +12,37 @@ import Datatable from '../../../../components/tables/Datatable'
 import TeacherForm from './TeacherForm'
 
 export default class TeachersPage extends React.Component {
+  constructor(props){
+   super(props);
+   this.state = {
+     id: 0
+   }
+  }
+ 
+  componentDidMount(){
+      console.log('componentDidMount');
+    $('#myModal').on('show.bs.modal', function (e) {
+      // do something...
+      var button = $(e.relatedTarget); // Button that triggered the modal
+      var id = button.data('id') // Extract info from data-* attributes
+
+     this.setState({id});   
+// var modal = $(this)
+//   modal.find('.modal-title').text('New message to ' + recipient)
+//   modal.find('.modal-body input').val(recipient)
+      console.log('show.bs.modal ' + this.state.id);
+    }.bind(this));
+
+     $('#myModal').on('shown.bs.modal', function (e) {
+      // do something...
+      console.log('shown.bs.modal');
+    });
+  }
+
   render() {
+
+ 
+  //let id= 0;
       
       function onSubmit(values){
           console.log('values submitted', values);
@@ -74,21 +104,40 @@ export default class TeachersPage extends React.Component {
                     <Datatable 
                       options={{
                         ajax: '/api/teachers',
+                        //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        //createdRow: function ( row, data, index ) {
+                            //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
+                        //        $('td', row).eq(2).addClass('text-success');
+                            //}
+                        //},                        
+                        columnDefs: [
+                            {
+                                // The `data` parameter refers to the data for the cell (defined by the
+                                // `data` option, which defaults to the column being worked with, in
+                                // this case `data: 0`.
+                                "render": function ( data, type, row ) {
+                                  console.log(data);
+                                  //console.log(type);
+                                  //console.log(row);
+                                    //return data +' ('+ row[0]+')';
+                                    //id = data;
+                                    //console.log(this.state.id);
+                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#myModal"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                },
+                                "targets": 3
+                            }
+                        ],
                         columns: [
+                          //{
+                          //    "className":      'details-control',
+                          //    "orderable":      false,
+                          //    "data":           null,
+                          //    "defaultContent": ''
+                          //},
                           {data: "TeacherId"},
                           {data: "Name"},
-                          {data: "Email"},
-                          {
-                               "sName": "TeacherId",
-                               "bSearchable": false,
-                               "bSortable": false,
-                               "mRender": function (row) {
-                                  //console.log(row.data());
-                                   //return '<a data-modal = \"\" href=\"Site/Edit?siteID=' + item + '\"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
-                                   return '<a data-toggle="modal" data-target="#myModal"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
-                                   
-                               }
-                           }
+                          {data: "Email"},    
+                          {data: "TeacherId"}
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'
@@ -125,7 +174,7 @@ export default class TeachersPage extends React.Component {
         </WidgetGrid>
 
         {/* end widget grid */}
-
+  
         <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" 
             aria-labelledby="myModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
@@ -137,8 +186,8 @@ export default class TeachersPage extends React.Component {
                 <h4 className="modal-title" id="myModalLabel">Add New Teacher</h4>
               </div>
               <div className="modal-body">
-
-                  <TeacherForm onSubmit={onSubmit} />
+                  
+                  <TeacherForm onSubmit={onSubmit} teacherId={this.state.id} />
 
               </div>
               {/*<div className="modal-footer">

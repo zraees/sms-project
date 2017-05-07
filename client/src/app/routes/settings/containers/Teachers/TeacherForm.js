@@ -60,7 +60,7 @@ class TeacherForm extends React.Component {
                 onSubmit={handleSubmit}>
 
               <header>
-                Personal Information
+                Personal Information -- {this.props.teacherId}
               </header>
 
               <fieldset>
