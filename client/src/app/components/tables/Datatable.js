@@ -8,7 +8,7 @@ export default class Datatable extends React.Component {
       this.datatable(this.props.data)
     });
 
-    console.log("componentDidMount in Datatable");
+    //console.log("componentDidMount in Datatable");
   }
 
   datatable() {

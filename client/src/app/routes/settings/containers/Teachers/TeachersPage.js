@@ -3,8 +3,7 @@
  */
 
 import React from 'react'
-import axios from 'axios'
-import {reset} from 'redux-form';
+import axios from 'axios' 
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
@@ -23,22 +22,18 @@ export default class TeachersPage extends React.Component {
   }
  
   componentDidMount(){
-      console.log('componentDidMount');
+    
     $('#myModal').on('show.bs.modal', function (e) {
       
       var button = $(e.relatedTarget);        // Button that triggered the modal
       var id = button.data('id');             // Extract info from data-* attributes
 
-      this.setState({id});   
-      //console.log('show.bs.modal ' + this.state.id);
+      this.setState({id});    
+
     }.bind(this));
 
-     $('#myModal').on('hidden.bs.modal', function (e) {      
-      //console.log('hidden.bs.modal 1'+this.state.paging);
-      
-      this.setState({url:''});   
-
-
+    $('#myModal').on('hidden.bs.modal', function (e) {            
+      //this.setState({url:''});   
       console.log('hidden.bs.modal ' + this.state.url);
     }.bind(this));
 
@@ -46,36 +41,32 @@ export default class TeachersPage extends React.Component {
 
   render() {
     
-      function onSubmit(values){
-          //console.log('values submitted', values);
-          
-          axios.post('/api/teachers', values)      
-              .then(function (response) {
-                //console.log(response);
-                smallBox({
-                  title: "System Alert",
-                  content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
-                  color: "#659265",
-                  iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                  timeout: 3000
-                });
-                
-                dispatch(reset('TeacherForm'));  // requires form name
+    function onSubmit(values){
+      axios.post('/api/teachers', values)      
+          .then(function (response) {
+            //console.log(response);
+            smallBox({
+              title: "System Alert",
+              content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
+              color: "#659265",
+              iconSmall: "fa fa-check fa-2x fadeInRight animated",
+              timeout: 3000
+            });
+              
+            $('#myModal').modal('hide');  
 
-                $('#myModal').modal('hide');  
-
-              })
-              .catch(function (error) {
-                console.log(error);
-                smallBox({
-                  title: "System Alert",
-                  content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
-                  color: "#C46A69",
-                  iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                  timeout: 5000
-                });
-              });      
-        }
+          })
+          .catch(function (error) {
+            console.log(error);
+            smallBox({
+              title: "System Alert",
+              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
+              color: "#C46A69",
+              iconSmall: "fa fa-times fa-2x fadeInRight animated",
+              timeout: 5000
+            });
+          });      
+      }
 
     return (
       <div id="content">

@@ -1,4 +1,5 @@
 import React from 'react'
+import { reset } from 'redux-form';
 
 import UiValidate from '../../../../components/forms/validation/UiValidate'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
@@ -33,7 +34,7 @@ const validationOptions = {
 };
 
 class TeacherForm extends React.Component {
-
+ 
   render() {
     const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
 
@@ -99,6 +100,10 @@ class TeacherForm extends React.Component {
   }
 }
 
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('TeacherForm'));
+
 export default reduxForm({
-  form: 'TeacherForm'  // a unique identifier for this form
+  form: 'TeacherForm',  // a unique identifier for this form
+  onSubmitSuccess: afterSubmit
 })(TeacherForm)
