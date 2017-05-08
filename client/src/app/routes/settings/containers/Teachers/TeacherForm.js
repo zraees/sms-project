@@ -35,6 +35,20 @@ const validationOptions = {
 
 class TeacherForm extends React.Component {
  
+  componentDidMount(){
+    console.log('TeacherForm:componentDidMount' + this.props.id);
+    this.handleInitialize();
+  }
+
+  handleInitialize() {
+    const initData = {
+      "name": 'name from the componentDidMount',
+      "email": 'email@componentDidMount.com'    
+    };
+
+    this.props.initialize(initData);
+  }
+
   render() {
     const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
 
@@ -105,5 +119,6 @@ const afterSubmit = (result, dispatch) =>
 
 export default reduxForm({
   form: 'TeacherForm',  // a unique identifier for this form
-  onSubmitSuccess: afterSubmit
+  onSubmitSuccess: afterSubmit,
+  keepDirtyOnReinitialize: false
 })(TeacherForm)
