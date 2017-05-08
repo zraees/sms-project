@@ -1,0 +1,10 @@
+https://www.a2hosting.com/
+how to host on A2:
+------------------
+https://www.a2hosting.com/kb/installable-applications/manual-installations/installing-node-js-on-managed-hosting-accounts
+https://facebook.github.io/react/docs/installation.html
+
+postgre SQL: (https://www.postgresql.org/support/professional_hosting/asia/)
+https://www.databaselabs.io/pricing/
+https://www.elephantsql.com/plans.html
+
