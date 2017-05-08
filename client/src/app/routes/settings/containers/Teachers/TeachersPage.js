@@ -16,25 +16,22 @@ export default class TeachersPage extends React.Component {
   constructor(props){
    super(props);
    this.state = {
-     id: 0,
-     url: '/api/teachers'
+     id: 0
    }
   }
  
   componentDidMount(){
     
-    $('#myModal').on('show.bs.modal', function (e) {
-      
+    // call before modal open
+    $('#teacherPopup').on('show.bs.modal', function (e) {      
       var button = $(e.relatedTarget);        // Button that triggered the modal
       var id = button.data('id');             // Extract info from data-* attributes
-
       this.setState({id});    
-
     }.bind(this));
 
-    $('#myModal').on('hidden.bs.modal', function (e) {            
-      //this.setState({url:''});   
-      console.log('hidden.bs.modal ' + this.state.url);
+    // call on modal close
+    $('#teacherPopup').on('hidden.bs.modal', function (e) {            
+      $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
 
   }
@@ -53,7 +50,7 @@ export default class TeachersPage extends React.Component {
               timeout: 3000
             });
               
-            $('#myModal').modal('hide');  
+            $('#teacherPopup').modal('hide');  
 
           })
           .catch(function (error) {
@@ -105,16 +102,16 @@ export default class TeachersPage extends React.Component {
                             </div>
                             <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
                                 <button className="btn btn-primary" data-toggle="modal"
-                                  data-target="#myModal">
+                                  data-target="#teacherPopup">
                                     <i className="fa fa-plus"/> <span className="hidden-mobile">Add New</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <Datatable id="Datatable1"  
+                    <Datatable id="teachersGrid"  
                       options={{
-                        ajax: this.state.url,
+                        ajax: '/api/teachers',
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -133,7 +130,7 @@ export default class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.id);
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#myModal"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "targets": 3
                             }
@@ -188,16 +185,16 @@ export default class TeachersPage extends React.Component {
 
         {/* end widget grid */}
   
-        <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" 
+        <div className="modal fade" id="teacherPopup" tabIndex="-1" role="dialog" 
             data-backdrop="static" data-keyboard="false"
-            aria-labelledby="myModalLabel" aria-hidden="true">
+            aria-labelledby="teacherPopupLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="myModalLabel">Add New Teacher</h4>
+                <h4 className="modal-title" id="teacherPopupLabel">Add New Teacher</h4>
               </div>
               <div className="modal-body">
                   

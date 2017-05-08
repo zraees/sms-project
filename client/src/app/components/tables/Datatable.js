@@ -7,14 +7,11 @@ export default class Datatable extends React.Component {
     System.import('script-loader!smartadmin-plugins/datatables-bundle/datatables.min.js').then(()=> {
       this.datatable(this.props.data)
     });
-
-    //console.log("componentDidMount in Datatable");
   }
 
   datatable() {
     const element = $(this.refs.table);
     let {options} = {...this.props} || {}
-
 
     let toolbar = '';
     if (options.buttons)
@@ -61,14 +58,6 @@ export default class Datatable extends React.Component {
       });
     }
 
-    if (this.props.refresh) {
-        // refresh table
-      console.log('refresh ' + this.props.refresh)
-        _dataTable 
-          .draw();
- 
-    }
-
     if (!toolbar) {
       element.parent().find(".dt-toolbar").append('<div class="text-right"><img src="assets/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
     }
@@ -92,7 +81,7 @@ export default class Datatable extends React.Component {
   }
 
   render() {
-    let {children, options, detailsFormat, paginationLength, refresh, ...props} = this.props;
+    let {children, options, detailsFormat, paginationLength, ...props} = this.props;
     return (
       <table {...props} ref="table">
         {children}
