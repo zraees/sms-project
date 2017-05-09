@@ -34,9 +34,31 @@ router.get('/', (req, res) => {
   Teacher.query({
     select: [ 'TeacherId', 'Name', 'Email' ],  
   }).fetchAll().then(teachers => {
-      console.log('get teachers OK' + teachers);
-        res.send({"data": teachers.toJSON()});
+      //console.log('get teachers OK' + teachers);
+      res.send({"data": teachers.toJSON()});
   });
+});
+
+router.get('/:teacherId', (req, res) => {
+  console.log('GET by teacher id ' + req.params.teacherId);
+  Teacher.forge({TeacherId: req.params.teacherId})
+      .fetch()
+      .then(function (teacher) {
+      if(!teacher) {
+        console.log('404 error get teacher id');
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        console.log(teacher.toJSON());
+        //res.json({error: false, data: teacher.toJSON()});
+        res.json({error: false, data: JSON.stringify(teacher)});
+        //res.send({"data": teacher.toJSON()});
+      }
+      })
+      .catch(function (err) {
+        console.log('500 error get teacher id ' + err.message);
+        res.status(500).json({error: true, data: {message: err.message}});
+      });    
 });
 
 router.post('/', (req, res) => {

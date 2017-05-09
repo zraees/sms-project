@@ -1,9 +1,11 @@
 import React from 'react'
 import { reset } from 'redux-form';
+import axios from 'axios';
 
 import UiValidate from '../../../../components/forms/validation/UiValidate'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
 import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
+import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
 import { Field, reduxForm } from 'redux-form'
 
@@ -35,22 +37,55 @@ const validationOptions = {
 
 class TeacherForm extends React.Component {
  
-  componentDidMount(){
-    console.log('TeacherForm:componentDidMount' + this.props.id);
-    this.handleInitialize();
+  componentDidMount(){    
+    //console.log('TeacherForm:componentDidMount' + this.props.teacherId);    
   }
 
-  handleInitialize() {
-    const initData = {
-      "name": 'name from the componentDidMount',
-      "email": 'email@componentDidMount.com'    
-    };
+  componentWillReceiveProps(nextProps) {
+    const {teacherId} = nextProps;
+    console.log("componentWillReceiveProps method " + teacherId)
+    if(teacherId>0){
+      this.handleInitialize(teacherId);
+    }
+  }
 
-    this.props.initialize(initData);
+  handleInitialize(teacherId) {
+    // let initData = {
+    //   //"name": 'name from the componentDidMount',
+    //   //"email": 'email@componentDidMount.com'    
+    // };
+      //console.log("handleInitialize = " + teacherId);
+      axios.get('/api/teachers/' + teacherId)
+          .then(res=>{                           
+              console.log (res);
+              console.log("handleInitialize -- response= " + res.data["TeacherId"]);
+              //  initData = {
+              //     "name": response.data.Name,
+              //     "email": response.data.Email
+              //   }
+
+              // this.props.initialize({
+              //     "name": response.data.Name,
+              //     "email": response.data.Email
+              //   });
+
+          })
+          .catch(function (error) {
+            console.log(error);
+            smallBox({
+              title: "System Alert",
+              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
+              color: "#C46A69",
+              iconSmall: "fa fa-times fa-2x fadeInRight animated",
+              timeout: 5000
+            });
+          });      
+
+    //this.props.initialize(initData);
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
 
     const required = value => value ? undefined : 'Required'
     const maxLength = max => value =>
@@ -75,7 +110,7 @@ class TeacherForm extends React.Component {
                 onSubmit={handleSubmit}>
 
               <header>
-                Personal Information -- {this.props.teacherId}
+                Personal Information -- {teacherId}
               </header>
 
               <fieldset>
@@ -101,7 +136,7 @@ class TeacherForm extends React.Component {
 
               <footer>
                 <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                  Reset
+                  { teacherId > 0 ? "Undo Changes" : "Reset" }
                 </button>
                 <button type="submit" disabled={submitting} className="btn btn-primary">
                   Save
