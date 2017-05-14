@@ -87,14 +87,14 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {
-      const { name, email } = req.body;
+      const { id, name, email } = req.body;
       //const ParentName = firstName + ' ' + lastName;
       //const ParentID = id;
       //console.log('server/routes/parents', ParentName)
-      console.log('server/routes/teacherupdate ', req.body)
+      //console.log('server/routes/teacherupdate ', req.body)
        
       Teacher.forge({
-        TeacherId: 1,Name: name, Email: email
+        TeacherId: id, Name: name, Email: email
       }).save(null, {method: 'update'})
         .then(teacher => res.json({ success: true }))
         .catch(err => { console.log(err.message); res.status(500).json({ error: err.message })});

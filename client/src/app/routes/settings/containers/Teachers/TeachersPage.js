@@ -32,6 +32,7 @@ export default class TeachersPage extends React.Component {
 
     // call on modal close
     $('#teacherPopup').on('hidden.bs.modal', function (e) {            
+      this.setState({id : 0});
       $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
 
@@ -40,15 +41,17 @@ export default class TeachersPage extends React.Component {
   render() {
     
     function onSubmit(values){
-      const valuesWithId = Object.assign( values, {id: 2});
-      console.log(valuesWithId);
-      //console.log(this.state.id);
-      // if(this.state.id>0){
-      //   update(values); 
-      // }
-      // else{
+      // const valuesWithId = Object.assign( values, {id: 2});
+      // console.log(valuesWithId);
+      //console.log(values);
+      
+      //console.log(values.id);
+      if(values.id>0){
+        update(values); 
+      }
+      else{
         insert(values);
-      // }      
+      }      
     }
 
     function insert(values){
@@ -240,7 +243,7 @@ export default class TeachersPage extends React.Component {
               </div>
               <div className="modal-body">
                   
-                  <TeacherForm  teacherId={this.state.id} onSubmit={this.onSubmit.bind(this)} />
+                  <TeacherForm  teacherId={this.state.id} onSubmit={onSubmit} />
 
               </div>
               {/*<div className="modal-footer">

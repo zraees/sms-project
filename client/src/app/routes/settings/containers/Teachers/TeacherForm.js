@@ -45,22 +45,25 @@ class TeacherForm extends React.Component {
   }
 
   componentDidMount(){    
-    //console.log('TeacherForm:componentDidMount' + this.props.teacherId);    
+   
   }
-
-  // componentWillMount(){
-  //     const {teacherId} = this.props;
-  //     console.log("componentWillMount method " + teacherId)
-  //     if(teacherId>0 && !this.state.editDataLoaded){
-  //       this.setState({editDataLoaded:true});
-  //       this.handleInitialize(teacherId);
-  //     }    
-  // }
 
   componentWillReceiveProps(nextProps) {
     const {teacherId} = nextProps;
     //console.log("componentWillReceiveProps method " + teacherId)
-    if(teacherId>0 && !this.state.editDataLoaded){
+    if(teacherId<=0){
+      this.setState({editDataLoaded:false});
+      //this.handleInitialize(teacherId);
+      const initData = {
+          "id": 0,
+          "name": "",
+          "email": ""
+        }
+        
+        this.props.initialize(initData);
+
+    }
+    else if(teacherId>0 && !this.state.editDataLoaded){
       this.setState({editDataLoaded:true});
       this.handleInitialize(teacherId);
     }
@@ -79,9 +82,11 @@ class TeacherForm extends React.Component {
 
               //console.log("handleInitialize -- response= " + res.data.Name);
               const initData = {
+                  "id": teacherId,
                   "name": res.data.Name,
                   "email": res.data.Email
                 }
+                //console.log('initData');
                 //console.log(initData);
                 this.props.initialize(initData);
 
@@ -160,7 +165,7 @@ class TeacherForm extends React.Component {
                 <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
                   { teacherId > 0 ? "Undo Changes" : "Reset" }
                 </button>
-                <button type="submit" disabled={submitting} className="btn btn-primary">
+                <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
                   Save
                 </button>
               </footer>
