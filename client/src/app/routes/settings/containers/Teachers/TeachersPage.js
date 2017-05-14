@@ -18,9 +18,13 @@ export default class TeachersPage extends React.Component {
    this.state = {
      id: 0
    }
+  
+    //this._smartModEg1 = this._smartModEg1.bind(this);
+
    //this.onSubmit = this.onSubmit.bind(this);
   }
- 
+
+
   componentDidMount(){
     
     // call before modal open
@@ -36,10 +40,59 @@ export default class TeachersPage extends React.Component {
       $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
 
+
+    //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
+    //https://datatables.net/examples/api/select_single_row.html
+    //https://datatables.net/reference/api/row().remove()
+    
+    $('#teachersGrid tbody').on( 'click', 'tr', function () {
+        var table = $('#teachersGrid').DataTable();
+        alert('hi');
+        table
+            .row( $(this).parents('tr') )
+            .remove()
+            .draw();
+    } ).bind(this);
+
   }
 
+_smartModEg1() {
+    SmartMessageBox({
+      title: "Smart Alert!",
+      content: "This is a confirmation box. Can be programmed for button callback",
+      buttons: '[No][Yes]'
+    }, function (ButtonPressed) {
+      if (ButtonPressed === "Yes") {
+
+        smallBox({
+          title: "Callback function",
+          content: "<i class='fa fa-clock-o'></i> <i>You pressed Yes...</i>",
+          color: "#659265",
+          iconSmall: "fa fa-check fa-2x fadeInRight animated",
+          timeout: 4000
+        });
+      }
+      if (ButtonPressed === "No") {
+        smallBox({
+          title: "Callback function",
+          content: "<i class='fa fa-clock-o'></i> <i>You pressed No...</i>",
+          color: "#C46A69",
+          iconSmall: "fa fa-times fa-2x fadeInRight animated",
+          timeout: 4000
+        });
+      }
+
+    });
+  }
+
+
+  handleClick() {
+		console.log("clicked");
+	}
+      
   render() {
-    
+  
+
     function onSubmit(values){
       // const valuesWithId = Object.assign( values, {id: 2});
       // console.log(valuesWithId);
@@ -110,6 +163,7 @@ export default class TeachersPage extends React.Component {
           });      
     }
 
+  
     return (
       <div id="content">
         
@@ -178,6 +232,18 @@ export default class TeachersPage extends React.Component {
                                     return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "targets": 3
+                            },
+                            {
+                                "render": function ( data, type, row ) {
+                                  //return (<a onClick={onOrderRestaurant.bind(self, this)} 
+                                  //                className="btn btn-primary btn-sm">Order this restaurant
+                                  //                </a>);
+                                    return '<a class="icon-delete">del</a>'
+                                    //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
+                                    //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
+                                    //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
+                                }.bind(self),
+                                "targets": 4
                             }
                         ],
                         columns: [
@@ -190,6 +256,7 @@ export default class TeachersPage extends React.Component {
                           {data: "TeacherId"},
                           {data: "Name"},
                           {data: "Email"},    
+                          {data: "TeacherId"},    
                           {data: "TeacherId"}
                         ],
                         buttons: [
@@ -206,6 +273,7 @@ export default class TeachersPage extends React.Component {
                         <th data-class="expand">Name</th>
                         <th data-hide="mobile-p">Email</th>
                         <th data-hide="mobile-p">Edit</th>
+                        <th data-hide="mobile-p">Delete</th>
                       </tr>
                       </thead>
                     </Datatable>
@@ -265,3 +333,4 @@ export default class TeachersPage extends React.Component {
     )
   }
 }
+
