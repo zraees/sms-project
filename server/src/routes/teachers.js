@@ -51,8 +51,9 @@ router.get('/:teacherId', (req, res) => {
       else {
         console.log(teacher.toJSON());
         //res.json({error: false, data: teacher.toJSON()});
-        res.json({error: false, data: JSON.stringify(teacher)});
+        //res.json({error: false, data: JSON.stringify(teacher)});
         //res.send({"data": teacher.toJSON()});
+        res.send(teacher.toJSON());
       }
       })
       .catch(function (err) {

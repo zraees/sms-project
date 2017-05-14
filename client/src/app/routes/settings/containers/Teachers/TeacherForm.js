@@ -50,19 +50,21 @@ class TeacherForm extends React.Component {
   }
 
   handleInitialize(teacherId) {
-    // let initData = {
-    //   //"name": 'name from the componentDidMount',
-    //   //"email": 'email@componentDidMount.com'    
-    // };
+    let initData = {
+      //"name": 'name from the componentDidMount',
+      //"email": 'email@componentDidMount.com'    
+    };
       //console.log("handleInitialize = " + teacherId);
       axios.get('/api/teachers/' + teacherId)
-          .then(res=>{                           
-              console.log (res);
-              console.log("handleInitialize -- response= " + res.data["TeacherId"]);
-              //  initData = {
-              //     "name": response.data.Name,
-              //     "email": response.data.Email
-              //   }
+          .then(res=>{            
+              var json = res.data;               
+              //console.log (json);
+
+              console.log("handleInitialize -- response= " + res.data.Name);
+               initData = {
+                  "name": res.data.Name,
+                  "email": res.data.Email
+                }
 
               // this.props.initialize({
               //     "name": response.data.Name,
@@ -81,7 +83,7 @@ class TeacherForm extends React.Component {
             });
           });      
 
-    //this.props.initialize(initData);
+    this.props.initialize(initData);
   }
 
   render() {
