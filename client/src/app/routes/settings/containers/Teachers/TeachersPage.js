@@ -18,6 +18,7 @@ export default class TeachersPage extends React.Component {
    this.state = {
      id: 0
    }
+   //this.onSubmit = this.onSubmit.bind(this);
   }
  
   componentDidMount(){
@@ -39,6 +40,18 @@ export default class TeachersPage extends React.Component {
   render() {
     
     function onSubmit(values){
+      const valuesWithId = Object.assign( values, {id: 2});
+      console.log(valuesWithId);
+      //console.log(this.state.id);
+      // if(this.state.id>0){
+      //   update(values); 
+      // }
+      // else{
+        insert(values);
+      // }      
+    }
+
+    function insert(values){
       axios.post('/api/teachers', values)      
           .then(function (response) {
             //console.log(response);
@@ -63,7 +76,36 @@ export default class TeachersPage extends React.Component {
               timeout: 5000
             });
           });      
-      }
+    }
+
+    function update(values){
+      console.log('update '+ values);
+
+      axios.put('/api/teachers', values)      
+          .then(function (response) {
+            //console.log(response);
+            smallBox({
+              title: "System Alert",
+              content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
+              color: "#659265",
+              iconSmall: "fa fa-check fa-2x fadeInRight animated",
+              timeout: 3000
+            });
+              
+            $('#teacherPopup').modal('hide');  
+
+          })
+          .catch(function (error) {
+            console.log(error);
+            smallBox({
+              title: "System Alert",
+              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
+              color: "#C46A69",
+              iconSmall: "fa fa-times fa-2x fadeInRight animated",
+              timeout: 5000
+            });
+          });      
+    }
 
     return (
       <div id="content">
@@ -198,7 +240,7 @@ export default class TeachersPage extends React.Component {
               </div>
               <div className="modal-body">
                   
-                  <TeacherForm  teacherId={this.state.id} onSubmit={onSubmit} />
+                  <TeacherForm  teacherId={this.state.id} onSubmit={this.onSubmit.bind(this)} />
 
               </div>
               {/*<div className="modal-footer">

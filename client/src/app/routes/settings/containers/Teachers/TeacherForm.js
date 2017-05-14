@@ -37,34 +37,53 @@ const validationOptions = {
 
 class TeacherForm extends React.Component {
  
+  constructor(props){
+    super(props);
+    this.state = {
+      editDataLoaded: false
+    }
+  }
+
   componentDidMount(){    
     //console.log('TeacherForm:componentDidMount' + this.props.teacherId);    
   }
 
+  // componentWillMount(){
+  //     const {teacherId} = this.props;
+  //     console.log("componentWillMount method " + teacherId)
+  //     if(teacherId>0 && !this.state.editDataLoaded){
+  //       this.setState({editDataLoaded:true});
+  //       this.handleInitialize(teacherId);
+  //     }    
+  // }
+
   componentWillReceiveProps(nextProps) {
     const {teacherId} = nextProps;
-    console.log("componentWillReceiveProps method " + teacherId)
-    if(teacherId>0){
+    //console.log("componentWillReceiveProps method " + teacherId)
+    if(teacherId>0 && !this.state.editDataLoaded){
+      this.setState({editDataLoaded:true});
       this.handleInitialize(teacherId);
     }
   }
 
   handleInitialize(teacherId) {
-    let initData = {
-      //"name": 'name from the componentDidMount',
-      //"email": 'email@componentDidMount.com'    
-    };
+    // let initData = {
+    //   "name": '',
+    //   "email": ''
+    // };
       //console.log("handleInitialize = " + teacherId);
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
               var json = res.data;               
               //console.log (json);
 
-              console.log("handleInitialize -- response= " + res.data.Name);
-               initData = {
+              //console.log("handleInitialize -- response= " + res.data.Name);
+              const initData = {
                   "name": res.data.Name,
                   "email": res.data.Email
                 }
+                //console.log(initData);
+                this.props.initialize(initData);
 
               // this.props.initialize({
               //     "name": response.data.Name,
@@ -83,7 +102,8 @@ class TeacherForm extends React.Component {
             });
           });      
 
-    this.props.initialize(initData);
+    // console.log('2 '+initData);
+    // this.props.initialize(initData);
   }
 
   render() {

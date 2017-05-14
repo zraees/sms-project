@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:teacherId', (req, res) => {
-  console.log('GET by teacher id ' + req.params.teacherId);
+  //console.log('GET by teacher id ' + req.params.teacherId);
   Teacher.forge({TeacherId: req.params.teacherId})
       .fetch()
       .then(function (teacher) {
@@ -49,7 +49,7 @@ router.get('/:teacherId', (req, res) => {
         res.status(404).json({error: true, data: {}});
       }
       else {
-        console.log(teacher.toJSON());
+        //console.log(teacher.toJSON());
         //res.json({error: false, data: teacher.toJSON()});
         //res.json({error: false, data: JSON.stringify(teacher)});
         //res.send({"data": teacher.toJSON()});
@@ -68,7 +68,7 @@ router.post('/', (req, res) => {
       const { name, email } = req.body;
       //const ParentID = 100;
       //console.log('server/routes/parents', ParentName)
-      console.log('server/routes/teachers', name + ' ' + email)
+      //console.log('server/routes/teachers', name + ' ' + email)
        
       Teacher.forge({
         Name: name, Email: email
@@ -83,21 +83,20 @@ router.post('/', (req, res) => {
 });
 // });
 
-/*
+
 router.put('/', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {
-      const { id, firstName, lastName } = req.body;
-      const ParentName = firstName + ' ' + lastName;
-      const ParentID = id;
+      const { name, email } = req.body;
+      //const ParentName = firstName + ' ' + lastName;
+      //const ParentID = id;
       //console.log('server/routes/parents', ParentName)
-      console.log('server/routes/parentupdate', req.body)
+      console.log('server/routes/teacherupdate ', req.body)
        
-      Parent.forge({
-        ParentID,
-        ParentName
+      Teacher.forge({
+        TeacherId: 1,Name: name, Email: email
       }).save(null, {method: 'update'})
-        .then(parent => res.json({ success: true }))
+        .then(teacher => res.json({ success: true }))
         .catch(err => { console.log(err.message); res.status(500).json({ error: err.message })});
 
     //} else {
@@ -107,6 +106,7 @@ router.put('/', (req, res) => {
 });
 // });
 
+/*
 router.delete('/:id', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {
