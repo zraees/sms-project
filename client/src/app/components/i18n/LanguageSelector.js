@@ -17,6 +17,9 @@ const LanguageSelector = React.createClass({
     render: function () {
         let languages = this.state.store.languages;
         let language = this.state.store.language;
+        
+        // console.log(language);
+        // console.log(languages);
         return (
             <ul className="header-dropdown-list hidden-xs ng-cloak">
                 <li className="dropdown">

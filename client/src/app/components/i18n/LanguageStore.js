@@ -27,6 +27,10 @@ const LanguageStore = Reflux.createStore({
     },
     setLanguage: function(_lang){
         data.language = _lang
+        // var $body = $('body');
+        // if (!$body.hasClass("smart-rtl")) {
+        //     $body.addClass("smart-rtl");
+        // }
     }
 });
 
