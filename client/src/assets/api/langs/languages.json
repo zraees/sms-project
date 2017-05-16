@@ -2,16 +2,19 @@
     {
         "key": "us",
         "alt": "United States",
-        "title": "English (US)"
+        "title": "English (US)",
+        "rtl": false
     },
     {
         "key": "ur",
         "alt": "Pakistan",
-        "title": "Urdu (PK)"
+        "title": "Urdu (PK)",
+        "rtl": true
     },
     {
         "key": "ar",
         "alt": "Saudi Arabia",
-        "title": "Arabic (KSA)"
+        "title": "Arabic (KSA)",
+        "rtl": true
     }
 ]

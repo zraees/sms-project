@@ -1,8 +1,15 @@
 import React from 'react'
 import Reflux from 'reflux'
+
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux';
+
 import classnames from 'classnames'
+
 import LanguageActions from './LanguageActions'
 import LanguageStore from './LanguageStore'
+
+import * as LayoutActions from '../layout/LayoutActions'
 
 const LanguageSelector = React.createClass({
     getInitialState: function(){
@@ -50,7 +57,17 @@ const LanguageSelector = React.createClass({
     _selectLanguage: function(language){
         LanguageStore.setLanguage(language)
         LanguageActions.select(language)
+        
+        //console.log('before rtl action ' + language.rtl)
+        if((!this.props.rtl && language.rtl) || (this.props.rtl && !language.rtl))
+            this.props.onRtl();     // toggle RTL 
     }
 });
 
-export default LanguageSelector
+const mapStateToProps = (state, ownProps) => (state.layout); 
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(LayoutActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageSelector);

@@ -10,6 +10,8 @@ import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
+import Msg from '../../../../components/i18n/Msg'
+
 import TeacherForm from './TeacherForm'
 
 class TeachersPage extends React.Component {
@@ -182,7 +184,7 @@ class TeachersPage extends React.Component {
                         </div>
                     </div>
   
- 
+                    <Msg phrase="Recent projects" />
                     <Datatable id="teachersGrid"  
                       options={{
                         ajax: '/api/teachers',
