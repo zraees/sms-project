@@ -1,0 +1,12 @@
+age
+gender
+CNIC / National ID / Resident ID
+Phone #
+Home #
+Address
+Pic (Opt)
+Education (Multi)
+Experience (multi)
+Rating(*)
+Teach Subjects (Multi)
+Teach Classes (Multi)
