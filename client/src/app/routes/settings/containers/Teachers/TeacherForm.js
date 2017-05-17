@@ -4,38 +4,11 @@ import axios from 'axios';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
-import UiValidate from '../../../../components/forms/validation/UiValidate'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
 import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
 import { Field, reduxForm } from 'redux-form'
-
-const validationOptions = {
-
-  // Rules for form validation
-  rules: {
-    name: {
-      required: true
-    },
-    email: {
-      required: true,
-      email: true
-    }
-  },
-
-  // Messages for form validation
-  messages: {
-    name: {
-      required: 'Please enter your login'
-    },
-    email: {
-      required: 'Please enter your email address',
-      email: 'Please enter a VALID email address'
-    }
-  }
-
-};
 
 class TeacherForm extends React.Component {
  
@@ -46,24 +19,17 @@ class TeacherForm extends React.Component {
     }
   }
 
-  componentDidMount(){    
-   
-  }
-
   componentWillReceiveProps(nextProps) {
     const {teacherId} = nextProps;
-    //console.log("componentWillReceiveProps method " + teacherId)
+
     if(teacherId<=0){
       this.setState({editDataLoaded:false});
-      //this.handleInitialize(teacherId);
       const initData = {
           "id": 0,
           "name": "",
           "email": ""
-        }
-        
+        }        
         this.props.initialize(initData);
-
     }
     else if(teacherId>0 && !this.state.editDataLoaded){
       this.setState({editDataLoaded:true});
@@ -71,32 +37,16 @@ class TeacherForm extends React.Component {
     }
   }
 
-  handleInitialize(teacherId) {
-    // let initData = {
-    //   "name": '',
-    //   "email": ''
-    // };
-      //console.log("handleInitialize = " + teacherId);
+  handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
-              var json = res.data;               
-              //console.log (json);
-
-              //console.log("handleInitialize -- response= " + res.data.Name);
+              var json = res.data;                
               const initData = {
                   "id": teacherId,
                   "name": res.data.Name,
                   "email": res.data.Email
-                }
-                // console.log('initData');
-                // console.log(initData);
-                this.props.initialize(initData);
-
-              // this.props.initialize({
-              //     "name": response.data.Name,
-              //     "email": response.data.Email
-              //   });
-
+                } 
+                this.props.initialize(initData); 
           })
           .catch(function (error) {
             console.log(error);
@@ -107,14 +57,9 @@ class TeacherForm extends React.Component {
               iconSmall: "fa fa-times fa-2x fadeInRight animated",
               timeout: 5000
             });
-          });      
+          });   
+  } 
 
-    // console.log('2 '+initData);
-    // this.props.initialize(initData);
-  }
-
-
-    
   render() {
     const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
 
@@ -135,11 +80,7 @@ class TeacherForm extends React.Component {
       value && /.+@aol\.com/.test(value) ?
       'Really? You still use AOL for your email?' : undefined
 
-
-
-
     return (
-          // <UiValidate options={validationOptions}>
             <form id="form-teacher" className="smart-form" 
                 onSubmit={handleSubmit}>
 
@@ -176,23 +117,18 @@ class TeacherForm extends React.Component {
               </footer>
 
             </form>
-          // </UiValidate>
     )
   }
 }
 
   const renderField = ({input, label, type, labelClassName, labelIconClassName, placeholder, meta: {touched, error, warning}}) => (
-      <section>
-    
-        
+      <section>        
         <label className={classNames(labelClassName, {'state-error':touched && error!==undefined})}>    
           {/* */}
           <i className={labelIconClassName}/>
           <input {...input} placeholder={label} type={type} placeholder={placeholder} />            
         </label>
-        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}
-        {/*console.log('touched '+touched + ': error '+error)*/}
-          
+        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
       </section>
     )
     
