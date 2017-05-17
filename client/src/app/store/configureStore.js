@@ -5,6 +5,10 @@
 import {createStore, combineReducers,  applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {routerReducer} from 'react-router-redux'
+import { reducer as formReducer } from 'redux-form'
+
+// Logger with default options
+import createLogger from 'redux-logger'
 
 import {config} from '../config/config'
 import {handleBodyClasses, dumpLayoutToStorage, layoutReducer} from '../components/layout'
@@ -14,7 +18,6 @@ import {userReducer, requestUserInfo} from '../components/user'
 import {chatReducer, chatInit} from '../components/chat'
 import {eventsReducer} from '../components/calendar'
 import outlookReducer from '../routes/outlook/outlookReducer'
-import { reducer as formReducer } from 'redux-form'
 
 import {voiceReducer, VoiceMiddleware} from '../components/voice-control'
 import {voiceControlOn} from "../components/voice-control/VoiceActions";
@@ -33,12 +36,17 @@ export const rootReducer = combineReducers(
   }
 );
 
+const logger = createLogger({
+    //empty options
+});
+
 const store =  createStore(rootReducer,
-  applyMiddleware(
+  applyMiddleware(   
+    //logger,       working fine but comment because there is lot of console writing
     thunk,
     handleBodyClasses,
     dumpLayoutToStorage,
-    VoiceMiddleware
+    VoiceMiddleware    
   )
 );
 
