@@ -29,6 +29,10 @@ class TeachersPage extends React.Component {
 
   componentDidMount(){
     
+    $('#teachersGrid td').on( 'click', function (item) {
+      alert('hiiiii');
+         
+    });
     // $('#teachersGrid tbody').on('click', 'tr', function () {
     //     //var data = table.row( this ).data();
     //     alert( 'You clicked on   row' );
@@ -47,6 +51,7 @@ class TeachersPage extends React.Component {
       $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
     
+
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html
     //https://datatables.net/reference/api/row().remove()
@@ -139,8 +144,9 @@ class TeachersPage extends React.Component {
           });      
     }
 
-  
+    var self = this;
     return (
+      
       <div id="content">
         
         <WidgetGrid>
@@ -185,6 +191,7 @@ class TeachersPage extends React.Component {
                     </div>
   
                     <Msg phrase="Recent projects" />
+                     
                     <Datatable id="teachersGrid"  
                       options={{
                         ajax: '/api/teachers',
@@ -210,17 +217,17 @@ class TeachersPage extends React.Component {
                                 },
                                 "targets": 3
                             },
-                            {
-                              
+                            { 
                                 "render": function ( data, type, row ) {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
                                   //                </a>);
-                                    return ('<a onClick={this.handleClick}>del</a>');
+                                  return 'abc';
+                                    //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                     //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                     //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
                                     //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
-                                }.bind(this),
+                                }.bind(self),
                                 "targets": 4
                             }
                         ],
