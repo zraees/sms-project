@@ -1,30 +1,29 @@
 import express from 'express';
 //import commonValidations from '../shared/validations/signup';
-//import isEmpty from 'lodash/isEmpty';
+import isEmpty from 'lodash/isEmpty';
 
 import Teacher from '../models/teacher';
 
 let router = express.Router();
 
-// function validateInput(data, otherValidations) {
-//   let { errors } = otherValidations(data);
+// function validateInput(data) {    //, otherValidations
+//   let error  = {}; //otherValidations(data);
+//   console.log('validateInput');
   
-//   return User.query({
-//     where: { email: data.email },
-//     orWhere: { username: data.username }
-//   }).fetch().then(user => {
-//     if (user) {
-//       if (user.get('username') === data.username) {
-//         errors.username = 'There is user with such username';
-//       }
-//       if (user.get('email') === data.email) {
-//         errors.email = 'There is user with such email';
+//   return Teacher.query({
+//     where: { Email: data.email }//,
+//     //orWhere: { username: data.username }
+//   }).fetch().then(teacher => {
+    
+//     if (teacher) {
+//       if (teacher.get('Email') === data.email) {
+//         error.email = 'There is user with such email';
 //       }
 //     }
 
 //     return {
-//       errors,
-//       isValid: isEmpty(errors)
+//       error,
+//       isValid: isEmpty(error)
 //     };
 //   })
 
@@ -82,23 +81,22 @@ router.get('/:teacherId/:email', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
-  //  if (isValid) {
+  // validateInput(req.body).then(({ error, isValid }) => {   //, commonValidations
+  //   if (isValid) {
+  //     console.log(isValid);
       const { name, email } = req.body;
-      //const ParentID = 100;
-      //console.log('server/routes/parents', ParentName)
-      //console.log('server/routes/teachers', name + ' ' + email)
-       
+  
       Teacher.forge({
         Name: name, Email: email
       }).save(null, {method: 'insert'})
         .then(teacher => res.json({ success: true }))
         .catch(err => { console.log(err.message); res.status(500).json({ error: err.message })});
-
-    //} else {
-    //  res.status(400).json(errors);
-   // }
-  //});
+         
+  //   } else {
+  //     console.log(error.message);
+  //    res.status(400).json(error);
+  //  }
+  // });
 });
 // });
 

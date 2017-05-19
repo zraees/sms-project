@@ -124,9 +124,9 @@ const afterSubmit = (result, dispatch) =>
 export default reduxForm({
   form: 'TeacherForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
-  keepDirtyOnReinitialize: false,
-  asyncValidate,
-  asyncBlurFields: ['email']
+  keepDirtyOnReinitialize: false//  ,
+  // asyncValidate,
+  // asyncBlurFields: ['email']
 })(TeacherForm)
 
 /*
