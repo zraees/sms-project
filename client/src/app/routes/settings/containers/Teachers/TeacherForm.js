@@ -11,6 +11,7 @@ import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
 import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
+import AlertMessage from '../../../../components/common/AlertMessage'
 
 class TeacherForm extends React.Component {
  
@@ -42,7 +43,7 @@ class TeacherForm extends React.Component {
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
-              var json = res.data;                
+              //var json = res.data;                
               const initData = {
                   "id": teacherId,
                   "name": res.data.Name,
@@ -91,7 +92,11 @@ class TeacherForm extends React.Component {
                 </section>*/}
 
               </fieldset>
+              
+              {(error!==undefined && <AlertMessage type="w" 
+                          icon="alert-danger" message={error} />)}
 
+              
               <footer>
                 <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
                   { teacherId > 0 ? "Undo Changes" : "Reset" }
@@ -108,7 +113,7 @@ class TeacherForm extends React.Component {
 
   const renderField = ({input, label, type, labelClassName, labelIconClassName, placeholder, meta: {asyncValidating, touched, error, warning}}) => (
       <section>        
-        {console.log(asyncValidating)}
+        
         <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
           {/* */}
           <i className={labelIconClassName}/>
@@ -124,7 +129,8 @@ const afterSubmit = (result, dispatch) =>
 export default reduxForm({
   form: 'TeacherForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
-  keepDirtyOnReinitialize: false//  ,
+  keepDirtyOnReinitialize: false
+  // ,
   // asyncValidate,
   // asyncBlurFields: ['email']
 })(TeacherForm)

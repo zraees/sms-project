@@ -67,12 +67,21 @@ router.get('/:teacherId/:email', (req, res) => {
       .fetch()
       .then(function (teacher) {
       if(!teacher) {
-        console.log('404 error get teacher email');
-        res.status(404).json({error: true, data: {}});
+        //console.log('404 error get teacher email');
+        //res.status(404).json({error: true, data: {}});
+        var EmptyObj = {"Email":""};
+        res.send(JSON.stringify(EmptyObj));
       }
-      else {
-        res.send(teacher.toJSON());
-      }
+      else {        
+        if(req.params.teacherId > 0 && teacher.get('TeacherId') !== req.params.teacherId){
+          var EmptyObj = {"Email":""};
+          res.send(JSON.stringify(EmptyObj));
+        }
+        else{
+          res.send(teacher.toJSON());
+          }
+    
+        }
       })
       .catch(function (err) {
         console.log('500 error get teacher email ' + err.message);
