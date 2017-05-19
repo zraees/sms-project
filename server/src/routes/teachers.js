@@ -62,6 +62,25 @@ router.get('/:teacherId', (req, res) => {
       });    
 });
 
+router.get('/:teacherId/:email', (req, res) => {
+  console.log('GET by teacher email ' );
+  Teacher.forge({Email: req.params.email})
+      .fetch()
+      .then(function (teacher) {
+      if(!teacher) {
+        console.log('404 error get teacher email');
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        res.send(teacher.toJSON());
+      }
+      })
+      .catch(function (err) {
+        console.log('500 error get teacher email ' + err.message);
+        res.status(500).json({error: true, data: {message: err.message}});
+      });    
+});
+
 router.post('/', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {

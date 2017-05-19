@@ -4,12 +4,13 @@ import axios from 'axios';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
+import { Field, reduxForm } from 'redux-form'
+
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
 import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
-
-import { Field, reduxForm } from 'redux-form'
+import asyncValidate from './asyncValidate'
 
 class TeacherForm extends React.Component {
  
@@ -105,9 +106,10 @@ class TeacherForm extends React.Component {
   }
 }
 
-  const renderField = ({input, label, type, labelClassName, labelIconClassName, placeholder, meta: {touched, error, warning}}) => (
+  const renderField = ({input, label, type, labelClassName, labelIconClassName, placeholder, meta: {asyncValidating, touched, error, warning}}) => (
       <section>        
-        <label className={classNames(labelClassName, {'state-error':touched && error!==undefined})}>    
+        {console.log(asyncValidating)}
+        <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
           {/* */}
           <i className={labelIconClassName}/>
           <input {...input} placeholder={label} type={type} placeholder={placeholder} />            
@@ -122,7 +124,9 @@ const afterSubmit = (result, dispatch) =>
 export default reduxForm({
   form: 'TeacherForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
-  keepDirtyOnReinitialize: false
+  keepDirtyOnReinitialize: false,
+  asyncValidate,
+  asyncBlurFields: ['email']
 })(TeacherForm)
 
 /*
