@@ -9,6 +9,9 @@ import { Field, reduxForm } from 'redux-form'
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
 import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
+import RFDatePicker from '../../../../components/ui/RFDatePicker'
+import RFReactSelect from '../../../../components/ui/RFReactSelect'
+import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -30,7 +33,8 @@ class TeacherForm extends React.Component {
       const initData = {
           "id": 0,
           "name": "",
-          "email": ""
+          "email": "",
+          gender: "male"
         }        
         this.props.initialize(initData);
     }
@@ -64,7 +68,7 @@ class TeacherForm extends React.Component {
   } 
 
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
 
     return (
             <form id="form-teacher" className="smart-form" 
@@ -81,16 +85,66 @@ class TeacherForm extends React.Component {
             
                 <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
                   validate={[required,email]} component={renderField} type="text" placeholder="Email Address"/>
-            
-                {/*<section>
-                  <label className="input"> <i className="icon-append fa fa-envelope-o"/>
-                    <Field type="email" validate={[required,email]} component="input" name="email" placeholder="Email address"/>
-                    <b className="tooltip tooltip-bottom-right">Needed to verify your account</b> 
-                    
-                  </label>
-                  {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-                </section>*/}
 
+                <Field 
+                  name="date21" validate={required} 
+                  component={RFDatePicker} />
+
+                <Field component={RFRadioButtonList} name="gender" required={true} options={[
+                    { title: 'Male', value: 'male' },
+                    { title: 'Female', value: 'female' }
+                ]} />
+
+                <Field name="idNo" labelClassName="input" labelIconClassName="icon-append fa fa-id-card"
+                  component={renderField} type="text" placeholder="Identity Card Number"/>
+
+                <div>
+                    <label>combo</label>
+                    <Field
+                        multi={false}
+                        name="nationality"
+                        options={nationalities}
+                        component={RFReactSelect} />
+                </div>
+                
+
+                {/*<section>
+                  <div className="rating">
+                      <input type="radio" name="stars-rating" id="stars-rating-5"/>
+                      <label htmlFor="stars-rating-5"><i
+                        className="fa fa-star"/></label>
+                      <input type="radio" name="stars-rating" id="stars-rating-4"/>
+                      <label htmlFor="stars-rating-4"><i
+                        className="fa fa-star"/></label>
+                      <input type="radio" name="stars-rating" id="stars-rating-3"/>
+                      <label htmlFor="stars-rating-3"><i
+                        className="fa fa-star"/></label>
+                      <input type="radio" name="stars-rating" id="stars-rating-2"/>
+                      <label htmlFor="stars-rating-2"><i
+                        className="fa fa-star"/></label>
+                      <input type="radio" name="stars-rating" id="stars-rating-1"/>
+                      <label htmlFor="stars-rating-1"><i
+                        className="fa fa-star"/></label>
+                      Stars
+                    </div>
+                </section>  */}
+
+
+                {/*<section>
+                  <label className="label">Gender</label>
+
+                  <div className="inline-group">
+                      <label className="radio">
+                        <input type="radio" id="male" name="gender" value="male" defaultChecked/>
+                        <i/>Male</label>
+                      <label className="radio">
+                        <input type="radio" id="female" name="gender" value="female"/>
+                        <i/>Female</label>
+                    </div>
+                  
+                  
+                </section>*/}
+                
               </fieldset>
               
               {(error!==undefined && <AlertMessage type="w" 
@@ -115,7 +169,6 @@ class TeacherForm extends React.Component {
       <section>        
         
         <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
-          {/* */}
           <i className={labelIconClassName}/>
           <input {...input} placeholder={label} type={type} placeholder={placeholder} />            
         </label>
@@ -123,6 +176,19 @@ class TeacherForm extends React.Component {
       </section>
     )
     
+    
+  /*const renderDateField = ({input, label, type, placeholder, dateFormat, meta: {asyncValidating, touched, error, warning}}) => (
+      <section>        
+        
+        <label className={classNames('input', {'state-error':(touched && error!==undefined)||asyncValidating })}>    
+          
+          <i className="icon-append fa fa-calendar"/>
+          <UiDatepicker {...input} placeholder={label} type={type} placeholder={placeholder} dateFormat={dateFormat} />
+        </label>
+        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
+      </section>
+    )
+    */
 const afterSubmit = (result, dispatch) =>
   dispatch(reset('TeacherForm'));
 

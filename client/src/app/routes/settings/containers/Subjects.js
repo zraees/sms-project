@@ -6,6 +6,7 @@ import React from 'react'
 
 import WidgetGrid from '../../../components/widgets/WidgetGrid'
 import JarvisWidget  from '../../../components/widgets/JarvisWidget'
+import RFDatePicker from '../../../components/ui/RFDatePicker'
 
 import { Field, reduxForm } from 'redux-form'
 
@@ -26,6 +27,15 @@ class Subjects extends React.Component {
                 <div>
                   {/* widget content */}
                   <div className="widget-body">
+
+        <div>
+            <label>date picker</label>
+            <Field 
+                name="date1" 
+                component={RFDatePicker} />
+        </div>
+
+
                     <div className="row">
                       <div className="col-md-12">
                         <form onSubmit={handleSubmit}>

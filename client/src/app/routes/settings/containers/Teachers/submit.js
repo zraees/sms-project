@@ -7,27 +7,28 @@ import Msg from '../../../../components/i18n/Msg'
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
     function submit(values){
-    //console.log(values);
-      return axios.get('/api/teachers/' + values.id + '/' + values.email)
-        .then(res=>{            
-            //throw {email: 'That email is already taken'}
-            if(res.data.Email===''){
+      console.log(values);
+      
+      // return axios.get('/api/teachers/' + values.id + '/' + values.email)
+      //   .then(res=>{            
+      //       //throw {email: 'That email is already taken'}
+      //       if(res.data.Email===''){
                       
-              if(values.id>0){
-                update(values); 
-              }
-              else{
-                insert(values);
-              }      
+      //         if(values.id>0){
+      //           update(values); 
+      //         }
+      //         else{
+      //           insert(values);
+      //         }      
 
-            }
-            else{
-              throw new SubmissionError({   
-                email: 'email is already taken',
-                _error: 'You cannot proceed further!'
-              })
-            }
-        })   
+      //       }
+      //       else{
+      //         throw new SubmissionError({   
+      //           email: 'email is already taken',
+      //           _error: 'You cannot proceed further!'
+      //         })
+      //       }
+      //   })   
         
 
     }

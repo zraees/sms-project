@@ -21,7 +21,8 @@ class TeachersPage extends React.Component {
   constructor(props){
    super(props);
    this.state = {
-     id: 0
+     id: 0,
+     nationalities: []
    }
   
     //this._smartModEg1 = this._smartModEg1.bind(this);
@@ -53,7 +54,13 @@ class TeachersPage extends React.Component {
       $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
     
-
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res=>{
+                const nationalities = res.data.map(function(item, index){
+                    return {value: item.title, label: item.title};
+                });                       
+                this.setState({nationalities});
+            });
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html
     //https://datatables.net/reference/api/row().remove()
@@ -227,7 +234,8 @@ class TeachersPage extends React.Component {
               </div>
               <div className="modal-body">
                   
-                  <TeacherForm  teacherId={this.state.id} onSubmit={submit} />
+                  <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
+                      onSubmit={submit} />
 
               </div>
               {/*<div className="modal-footer">
