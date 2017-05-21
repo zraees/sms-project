@@ -32,15 +32,30 @@ class TeachersPage extends React.Component {
 
   componentDidMount(){
     
-    $('#teachersGrid td').on( 'click', function (item) {
-      alert('hiiiii');
+    // $('#teachersGrid').on( 'click', function (item) {
+    //   alert('hiiiii');
          
+    // });
+
+    // $('#teachersGrid > tbody').click( function () {
+    //     alert('hello');
+    // });
+
+    $('#teachersGrid').on('click', 'td', function(event) {
+      
+      if ($(this).find('#dele').length > 0) {
+        
+        alert(  $(this).find('#dele').data('tid'));
+/*
+        var table = $('#teachersGrid').DataTable();                
+        table
+            .row( $(this).parents('tr') )
+            .remove()
+            .draw();            
+ */          
+      }
     });
-    // $('#teachersGrid tbody').on('click', 'tr', function () {
-    //     //var data = table.row( this ).data();
-    //     alert( 'You clicked on   row' );
-    // }.bind(this));
-    
+
     // call before modal open
     $('#teacherPopup').on('show.bs.modal', function (e) {      
       var button = $(e.relatedTarget);        // Button that triggered the modal
@@ -160,7 +175,7 @@ class TeachersPage extends React.Component {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
                                   //                </a>);
-                                  return 'abc';
+                                  return '<a id="dele" data-tid="' + data + '">abc</a>';
                                     //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                     //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                     //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
