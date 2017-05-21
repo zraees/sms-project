@@ -6,9 +6,10 @@ export default class RFRadioButtonList extends React.Component {
           const hasError = meta.touched && meta.error;
 
           return (
-              <div>
-                    {options.map(o => <label key={o.value}>
-                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
+
+              <div className="inline-group">
+                    {options.map(o => <label className="radio" key={o.value}>
+                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} /><i/> {o.title}</label>)}
                     {hasError && <span className="error">{meta.error}</span>}
               </div>
           );

@@ -9,9 +9,9 @@ const RFDatePicker = ({input, placeholder, defaultValue, meta: {touched, error, 
   <section>
     <label className={classnames(['input', {'state-error':touched && error!==undefined}])}>
         <i className="icon-append fa fa-calendar"/>
-            <DatePicker {...input} dateForm="MM/DD/YYYY" showMonthDropdown
-                showYearDropdown dropdownMode="select"
-                selected={input.value ? moment(input.value) : null} />
+            <DatePicker {...input} showMonthDropdown
+                showYearDropdown 
+                selected={input.value ? moment(input.value, "MM-DD-YYYY") : null} />
     </label>
     {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
   </section>

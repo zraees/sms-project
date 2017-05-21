@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
 import { Field, reduxForm } from 'redux-form'
+import StarRating from 'react-rating'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
@@ -21,7 +22,8 @@ class TeacherForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      editDataLoaded: false
+      editDataLoaded: false,
+      starRating: 0
     }
   }
 
@@ -67,6 +69,14 @@ class TeacherForm extends React.Component {
           });   
   } 
 
+changeRate(name, value) {
+  console.log('changeRate');
+  console.log(name);
+  console.log(value);
+    this.props.change(name, value); // function provided by redux-form
+    this.setState({ starRating: value })
+}
+
   render() {
     const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
 
@@ -107,6 +117,14 @@ class TeacherForm extends React.Component {
                         component={RFReactSelect} />
                 </div>
                 
+                
+                <StarRating onChange={(value) => { this.changeRate("rating", value) } }
+                  initialRate={ this.state.starRating } 
+                  empty="fa fa-star-o fa-2x"
+                  full="fa fa-star fa-2x"  
+                  />
+                <Field component="input" type="hidden" name="rating"/>
+
 
                 {/*<section>
                   <div className="rating">
@@ -129,22 +147,6 @@ class TeacherForm extends React.Component {
                     </div>
                 </section>  */}
 
-
-                {/*<section>
-                  <label className="label">Gender</label>
-
-                  <div className="inline-group">
-                      <label className="radio">
-                        <input type="radio" id="male" name="gender" value="male" defaultChecked/>
-                        <i/>Male</label>
-                      <label className="radio">
-                        <input type="radio" id="female" name="gender" value="female"/>
-                        <i/>Female</label>
-                    </div>
-                  
-                  
-                </section>*/}
-                
               </fieldset>
               
               {(error!==undefined && <AlertMessage type="w" 

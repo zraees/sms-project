@@ -17,3 +17,9 @@
  * - BODY
  * - CUSTOM STYLES
  */
+
+ .react-datepicker {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.0rem !important;
+    color: #000;
+}
