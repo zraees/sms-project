@@ -5,6 +5,7 @@
 import React from 'react'
 import axios from 'axios' 
 import {SubmissionError} from 'redux-form'
+import moment from 'moment'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
@@ -14,7 +15,7 @@ import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/ac
 import Msg from '../../../../components/i18n/Msg'
 
 import TeacherForm from './TeacherForm'
-import submit from './submit';
+import submit, {remove} from './submit';
 
 class TeachersPage extends React.Component {
   
@@ -24,10 +25,9 @@ class TeachersPage extends React.Component {
      id: 0,
      nationalities: []
    }
-  
-    //this._smartModEg1 = this._smartModEg1.bind(this);
-
-   //this.onSubmit = this.onSubmit.bind(this);
+   
+     //this.handleClick = this.handleClick.bind(this);
+     //   this.handleClick();
   } 
 
   componentDidMount(){
@@ -41,21 +41,32 @@ class TeachersPage extends React.Component {
     //     alert('hello');
     // });
 
+    //var self =this;
     $('#teachersGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) {
         
-        alert(  $(this).find('#dele').data('tid'));
-/*
-        var table = $('#teachersGrid').DataTable();                
-        table
-            .row( $(this).parents('tr') )
-            .remove()
-            .draw();            
- */          
+        //alert(  $(this).find('#dele').data('tid'));
+        var id = $(this).find('#dele').data('tid');
+        remove(id, $(this));
+
+        // console.log('outside');
+        // console.log(success);
+        
+        // if(success){
+        //   var table = $('#teachersGrid').DataTable();                
+        //   table
+        //     .row( $(this).parents('tr') )
+        //     .remove()
+        //     .draw();
+        // }
+        
+        
+        //self._smartModEg1();
+
       }
     });
-
+    
     // call before modal open
     $('#teacherPopup').on('show.bs.modal', function (e) {      
       var button = $(e.relatedTarget);        // Button that triggered the modal
@@ -70,12 +81,12 @@ class TeachersPage extends React.Component {
     }.bind(this));
     
     axios.get('https://jsonplaceholder.typicode.com/posts')
-            .then(res=>{
-                const nationalities = res.data.map(function(item, index){
-                    return {value: item.title, label: item.title};
-                });                       
-                this.setState({nationalities});
-            });
+        .then(res=>{
+            const nationalities = res.data.map(function(item, index){
+                return {value: item.id + "", label: item.title};
+            });                       
+            this.setState({nationalities});
+        });
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html
     //https://datatables.net/reference/api/row().remove()
@@ -91,9 +102,10 @@ class TeachersPage extends React.Component {
 
   }
 
-  handleClick() {
-		console.log("clicked");
-	}
+
+  // handleClick() {
+	// 	console.log("clicked");
+	// }
       
   render() {
   
@@ -155,6 +167,14 @@ class TeachersPage extends React.Component {
                             //}
                         //},                        
                         columnDefs: [
+                            { 
+                                "type": "date",
+                                "render": function ( data, type, row ) {
+                                  //console.log(type);
+                                    return data;  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
+                                },
+                                "targets": 5 
+                            },
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the
                                 // `data` option, which defaults to the column being worked with, in
@@ -168,20 +188,24 @@ class TeachersPage extends React.Component {
                                     //console.log(this.state.id);
                                     return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
-                                "targets": 3
-                            },
-                            { 
+                                "className": "dt-center",
+                                "sorting": false,
+                                "targets": 7
+                            }
+                            ,{ 
                                 "render": function ( data, type, row ) {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
                                   //                </a>);
-                                  return '<a id="dele" data-tid="' + data + '">abc</a>';
+                                  return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                                     //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                     //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                     //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
                                     //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
                                 }.bind(self),
-                                "targets": 4
+                                "className": "dt-center",
+                                "sorting": false,
+                                "targets": 8
                             }
                         ],
                         columns: [
@@ -194,7 +218,11 @@ class TeachersPage extends React.Component {
                           {data: "TeacherId"},
                           {data: "Name"},
                           {data: "Email"},    
-                          {data: "TeacherId"},    
+                          {data: "IDNo"},  
+                          {data: "Gender"},  
+                          {data: "DOB"},  
+                          {data: "Rating"},  
+                          {data: "TeacherId"},
                           {data: "TeacherId"}
                         ],
                         buttons: [
@@ -210,8 +238,12 @@ class TeachersPage extends React.Component {
                         <th data-hide="mobile-p">ID</th>
                         <th data-class="expand">Name</th>
                         <th data-hide="mobile-p">Email</th>
-                        <th data-hide="mobile-p">Edit</th>
-                        <th data-hide="mobile-p">Delete</th>
+                        <th data-hide="mobile-p">ID Number</th>
+                        <th data-hide="mobile-p">Gender</th>
+                        <th data-hide="mobile-p">DOB</th>
+                        <th data-hide="mobile-p">Rating</th>
+                        <th data-hide="mobile-p"></th>
+                        <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>
                     </Datatable>
@@ -271,6 +303,7 @@ class TeachersPage extends React.Component {
       </div>
     )
   }
+
 }
 
 export default TeachersPage;

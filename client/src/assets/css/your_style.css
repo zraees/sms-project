@@ -23,3 +23,7 @@
     font-size: 1.0rem !important;
     color: #000;
 }
+
+table.dataTable td.dt-center {
+    text-align: center !important;
+}

@@ -31,7 +31,7 @@ let router = express.Router();
 
 router.get('/', (req, res) => {
   Teacher.query({
-    select: [ 'TeacherId', 'Name', 'Email' ],  
+    select: [ 'TeacherId', 'Name', 'Email', 'IDNo', 'Gender', 'DOB', 'Rating' ],  
   }).fetchAll().then(teachers => {
       //console.log('get teachers OK' + teachers);
       res.send({"data": teachers.toJSON()});
@@ -93,10 +93,12 @@ router.post('/', (req, res) => {
   // validateInput(req.body).then(({ error, isValid }) => {   //, commonValidations
   //   if (isValid) {
   //     console.log(isValid);
-      const { name, email } = req.body;
+      const { name, email, DOB, idNo, nationality, rating, gender } = req.body;
   
+      //console.log(req.body);
+
       Teacher.forge({
-        Name: name, Email: email
+        Name: name, Email: email, Gender: gender, IDNo: idNo, Rating : rating, NationalityId: nationality, DOB: DOB
       }).save(null, {method: 'insert'})
         .then(teacher => res.json({ success: true }))
         .catch(err => { console.log(err.message); res.status(500).json({ error: err.message })});
@@ -113,7 +115,7 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {
-      const { id, name, email } = req.body;
+      //const { id, name, email } = req.body;
       //const ParentName = firstName + ' ' + lastName;
       //const ParentID = id;
       //console.log('server/routes/parents', ParentName)
@@ -132,20 +134,28 @@ router.put('/', (req, res) => {
 });
 // });
 
-/*
+
 router.delete('/:id', (req, res) => {
   //validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
   //  if (isValid) {
       //const { id } = req.body;
-      const ParentID = req.params.id;
+      const TeacherId = req.params.id;
       //console.log('server/routes/parents', ParentName)
-      console.log('server/routes/parentDelete', ParentID)
+      console.log('server/routes/teacherDelete', TeacherId)
        
-      Parent.forge({
-        ParentID
+      Teacher.forge({
+        TeacherId
       }).destroy()
-        .then(parent => res.json({ success: true }))
+        .then(teacher => res.json({ success: true }))
         .catch(err => { console.log(err.message); res.status(500).json({ error: err.message })});
+      
+
+      // Teacher.forge({
+      //   TeacherId:123213
+      // }).destroy()
+      //   .then(teacher => res.json({ success: true }))
+      //   .catch(res.json({ success: true }));
+
 
     //} else {
     //  res.status(400).json(errors);
@@ -153,6 +163,6 @@ router.delete('/:id', (req, res) => {
   //});
 });
 // });
-*/
+
 
 export default router;

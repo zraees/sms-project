@@ -23,7 +23,7 @@ class TeacherForm extends React.Component {
     super(props);
     this.state = {
       editDataLoaded: false,
-      starRating: 0
+      rating: 0
     }
   }
 
@@ -36,7 +36,8 @@ class TeacherForm extends React.Component {
           "id": 0,
           "name": "",
           "email": "",
-          gender: "male"
+          "gender": "male",
+          "rating":0
         }        
         this.props.initialize(initData);
     }
@@ -69,13 +70,13 @@ class TeacherForm extends React.Component {
           });   
   } 
 
-changeRate(name, value) {
-  console.log('changeRate');
-  console.log(name);
-  console.log(value);
-    this.props.change(name, value); // function provided by redux-form
-    this.setState({ starRating: value })
-}
+  changeRate(name, value) {
+    // console.log('changeRate');
+    // console.log(name);
+    // console.log(value);
+      this.props.change(name, value); // function provided by redux-form
+      this.setState({ rating: value })
+  }
 
   render() {
     const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
@@ -85,7 +86,7 @@ changeRate(name, value) {
                 onSubmit={handleSubmit}>
 
               <header>
-                Personal Information -- {teacherId}
+                Personal Information
               </header>
 
               <fieldset>
@@ -97,7 +98,7 @@ changeRate(name, value) {
                   validate={[required,email]} component={renderField} type="text" placeholder="Email Address"/>
 
                 <Field 
-                  name="date21" validate={required} 
+                  name="DOB" validate={required} 
                   component={RFDatePicker} />
 
                 <Field component={RFRadioButtonList} name="gender" required={true} options={[
@@ -119,33 +120,11 @@ changeRate(name, value) {
                 
                 
                 <StarRating onChange={(value) => { this.changeRate("rating", value) } }
-                  initialRate={ this.state.starRating } 
+                  initialRate={ this.state.rating } 
                   empty="fa fa-star-o fa-2x"
                   full="fa fa-star fa-2x"  
                   />
                 <Field component="input" type="hidden" name="rating"/>
-
-
-                {/*<section>
-                  <div className="rating">
-                      <input type="radio" name="stars-rating" id="stars-rating-5"/>
-                      <label htmlFor="stars-rating-5"><i
-                        className="fa fa-star"/></label>
-                      <input type="radio" name="stars-rating" id="stars-rating-4"/>
-                      <label htmlFor="stars-rating-4"><i
-                        className="fa fa-star"/></label>
-                      <input type="radio" name="stars-rating" id="stars-rating-3"/>
-                      <label htmlFor="stars-rating-3"><i
-                        className="fa fa-star"/></label>
-                      <input type="radio" name="stars-rating" id="stars-rating-2"/>
-                      <label htmlFor="stars-rating-2"><i
-                        className="fa fa-star"/></label>
-                      <input type="radio" name="stars-rating" id="stars-rating-1"/>
-                      <label htmlFor="stars-rating-1"><i
-                        className="fa fa-star"/></label>
-                      Stars
-                    </div>
-                </section>  */}
 
               </fieldset>
               
