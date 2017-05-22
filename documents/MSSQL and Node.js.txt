@@ -6,3 +6,8 @@ http://www.dotnetcurry.com/nodejs/1238/connect-sql-server-nodejs-mssql-package
 sequelizejs: (ORM for MSSQL)
 ============ 
 http://docs.sequelizejs.com/manual/installation/getting-started.html
+
+
+seriate
+========
+https://keyholesoftware.com/2016/04/04/seriate-the-glue-between-sql-server-and-node-js/
