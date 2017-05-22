@@ -30,16 +30,7 @@ class TeachersPage extends React.Component {
      //   this.handleClick();
   } 
 
-  componentDidMount(){
-    
-    // $('#teachersGrid').on( 'click', function (item) {
-    //   alert('hiiiii');
-         
-    // });
-
-    // $('#teachersGrid > tbody').click( function () {
-    //     alert('hello');
-    // });
+  componentDidMount(){ 
 
     //var self =this;
     $('#teachersGrid').on('click', 'td', function(event) {
@@ -80,13 +71,15 @@ class TeachersPage extends React.Component {
       $('#teachersGrid').DataTable().ajax.reload();      
     }.bind(this));
     
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    //https://jsonplaceholder.typicode.com/posts
+    axios.get('/api/nationalities/')
         .then(res=>{
             const nationalities = res.data.map(function(item, index){
-                return {value: item.id + "", label: item.title};
+                return {value: item.NationalityId + "", label: item.Nationality};
             });                       
             this.setState({nationalities});
         });
+ 
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html
     //https://datatables.net/reference/api/row().remove()

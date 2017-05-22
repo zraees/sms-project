@@ -93,11 +93,11 @@ import Msg from '../../../../components/i18n/Msg'
         buttons: '[No][Yes]'
         }, function (ButtonPressed) {
           if (ButtonPressed === "Yes") {
-              console.log('conf yes');
+              //console.log('conf yes');
 
               axios.delete('/api/teachers/' + id)      
                 .then(function (response) {
-                  console.log(response);
+                  //console.log(response);
                   
                   smallBox({
                     title: "System Alert",
@@ -107,14 +107,14 @@ import Msg from '../../../../components/i18n/Msg'
                     timeout: 3000
                   });
                   
-                  console.log('del success..');
+                  //console.log('del success..');
                   var table = $('#teachersGrid').DataTable();                
                   table
                     .row( delCell.parents('tr') )
                     .remove()
                     .draw();
 
-                    console.log('after row del ..')
+                    //console.log('after row del ..')
 
                 })
                 .catch(function (error) {
