@@ -72,13 +72,13 @@ class TeachersPage extends React.Component {
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
-    axios.get('/api/nationalities/')
-        .then(res=>{
-            const nationalities = res.data.map(function(item, index){
-                return {value: item.NationalityId + "", label: item.Nationality};
-            });                       
-            this.setState({nationalities});
-        });
+    // axios.get('/api/nationalities/')
+    //     .then(res=>{
+    //         const nationalities = res.data.map(function(item, index){
+    //             return {value: item.NationalityId + "", label: item.Nationality};
+    //         });                       
+    //         this.setState({nationalities});
+    //     });
  
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html

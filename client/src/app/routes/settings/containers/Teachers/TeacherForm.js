@@ -90,34 +90,46 @@ class TeacherForm extends React.Component {
               </header>
 
               <fieldset>
-                
-                <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                  validate={required} component={renderField} type="text" placeholder="Name"/>
+                    
+                <div className="row">
+                  <section className="col col-6">
+                    <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                      validate={required} component={renderField} type="text" placeholder="Name"/>    
+                  </section>
+
+                  <section className="col col-6">
+                    <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                      validate={[required,email]} component={renderField} type="text" placeholder="Email Address"/>
+                  </section>
+                </div>
+
+                <div className="row">
+                  <section className="col col-6">
+                    <Field name="DOB" validate={required} component={RFDatePicker} />
+                  </section>
+
+                  <section className="col col-6">
+                    <Field component={RFRadioButtonList} name="gender" required={true} options={[
+                        { title: 'Male', value: 'male' },
+                        { title: 'Female', value: 'female' }
+                    ]} />
+                  </section>
+                </div>
             
-                <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                  validate={[required,email]} component={renderField} type="text" placeholder="Email Address"/>
+                <div className="row">
+                  <section className="col col-6">
+                    <Field name="idNo" labelClassName="input" labelIconClassName="icon-append fa fa-id-card"
+                      component={renderField} type="text" placeholder="Identity Card Number"/>
+                  </section>
 
-                <Field 
-                  name="DOB" validate={required} 
-                  component={RFDatePicker} />
-
-                <Field component={RFRadioButtonList} name="gender" required={true} options={[
-                    { title: 'Male', value: 'male' },
-                    { title: 'Female', value: 'female' }
-                ]} />
-
-                <Field name="idNo" labelClassName="input" labelIconClassName="icon-append fa fa-id-card"
-                  component={renderField} type="text" placeholder="Identity Card Number"/>
-
-                <div>
-                    <label>combo</label>
+                  <section className="col col-6">
                     <Field
                         multi={false}
                         name="nationality"
                         options={nationalities}
                         component={RFReactSelect} />
+                  </section>
                 </div>
-                
                 
                 <StarRating onChange={(value) => { this.changeRate("rating", value) } }
                   initialRate={ this.state.rating } 
