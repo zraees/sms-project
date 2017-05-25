@@ -13,6 +13,7 @@ import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
 import RFDatePicker from '../../../../components/ui/RFDatePicker'
 import RFReactSelect from '../../../../components/ui/RFReactSelect'
 import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
+import RFField from '../../../../components/ui/RFField'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -94,49 +95,58 @@ class TeacherForm extends React.Component {
                 <div className="row">
                   <section className="col col-6">
                     <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={renderField} type="text" placeholder="Name"/>    
+                      validate={required} component={RFField} type="text" placeholder="Name"/>    
                   </section>
 
                   <section className="col col-6">
                     <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={renderField} type="text" placeholder="Email Address"/>
+                      validate={[required,email]} component={RFField} type="text" placeholder="Email Address"/>
                   </section>
                 </div>
 
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="DOB" validate={required} component={RFDatePicker} />
+                    <Field name="DOB" validate={required} placeholder="Date of Birth" component={RFDatePicker} />
                   </section>
 
-                  <section className="col col-6">
-                    <Field component={RFRadioButtonList} name="gender" required={true} options={[
+                  <section className="col col-3">
+                    <Field component={RFRadioButtonList} name="gender" required={true} 
+                      placeholder="Gender"
+                      options={[
                         { title: 'Male', value: 'male' },
                         { title: 'Female', value: 'female' }
                     ]} />
+                  </section>
+
+                  <section className="col col-3">      
+                    <label>Rating</label>              
+                    <div className="inline-group">
+                      <StarRating onChange={(value) => { this.changeRate("rating", value) } }
+                        initialRate={ this.state.rating } 
+                        empty="fa fa-star-o fa-2x"
+                        full="fa fa-star fa-2x"  
+                        />
+                      <Field component="input" type="hidden" name="rating"/>
+                    </div>
                   </section>
                 </div>
             
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="idNo" labelClassName="input" labelIconClassName="icon-append fa fa-id-card"
-                      component={renderField} type="text" placeholder="Identity Card Number"/>
+                    <Field name="idNo" labelClassName="input" 
+                      labelIconClassName="icon-append fa fa-credit-card-alt"
+                      component={RFField} type="text" placeholder="Identity Card Number"/>
                   </section>
 
                   <section className="col col-6">
                     <Field
                         multi={false}
                         name="nationality"
+                        placeholder="Nationality"
                         options={nationalities}
                         component={RFReactSelect} />
                   </section>
                 </div>
-                
-                <StarRating onChange={(value) => { this.changeRate("rating", value) } }
-                  initialRate={ this.state.rating } 
-                  empty="fa fa-star-o fa-2x"
-                  full="fa fa-star fa-2x"  
-                  />
-                <Field component="input" type="hidden" name="rating"/>
 
               </fieldset>
               
@@ -157,31 +167,7 @@ class TeacherForm extends React.Component {
     )
   }
 }
-
-  const renderField = ({input, label, type, labelClassName, labelIconClassName, placeholder, meta: {asyncValidating, touched, error, warning}}) => (
-      <section>        
-        
-        <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
-          <i className={labelIconClassName}/>
-          <input {...input} placeholder={label} type={type} placeholder={placeholder} />            
-        </label>
-        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
-      </section>
-    )
-    
-    
-  /*const renderDateField = ({input, label, type, placeholder, dateFormat, meta: {asyncValidating, touched, error, warning}}) => (
-      <section>        
-        
-        <label className={classNames('input', {'state-error':(touched && error!==undefined)||asyncValidating })}>    
-          
-          <i className="icon-append fa fa-calendar"/>
-          <UiDatepicker {...input} placeholder={label} type={type} placeholder={placeholder} dateFormat={dateFormat} />
-        </label>
-        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
-      </section>
-    )
-    */
+       
 const afterSubmit = (result, dispatch) =>
   dispatch(reset('TeacherForm'));
 
