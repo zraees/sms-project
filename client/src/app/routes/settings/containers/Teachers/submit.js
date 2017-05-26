@@ -7,7 +7,7 @@ import Msg from '../../../../components/i18n/Msg'
     function submit(values){
       //console.log(values);
       
-      return axios.get('/api/teachers/' + values.id + '/' + values.email)
+      return axios.get('/api/teachers/' + values.id + '/' + values.email + '/')
         .then(res=>{            
             //throw {email: 'That email is already taken'}
             if(res.data.Email===''){
@@ -30,6 +30,8 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
     function insert(values){
+      // console.log(' in insert');
+      // console.log(values);
       axios.post('/api/teachers', values)      
           .then(function (response) {
             //console.log(response);
@@ -57,8 +59,8 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
     function update(values){
-      //console.log('update '+ values);
-
+      // console.log('in update');
+      // console.log(values);
       axios.put('/api/teachers', values)      
           .then(function (response) {
             //console.log(response);
@@ -86,15 +88,15 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
     export function remove(id, delCell){
-
+      // console.log('in remove');
       SmartMessageBox({
         title: "Confirmation!",
         content: "Are you sure, you want to delete this record?",
         buttons: '[No][Yes]'
         }, function (ButtonPressed) {
           if (ButtonPressed === "Yes") {
-              //console.log('conf yes');
-
+              // console.log('conf yes');
+              // console.log(id);
               axios.delete('/api/teachers/' + id)      
                 .then(function (response) {
                   //console.log(response);
@@ -136,5 +138,6 @@ import Msg from '../../../../components/i18n/Msg'
 
         });
       }
+
 
 export default submit

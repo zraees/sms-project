@@ -152,7 +152,7 @@ class TeachersPage extends React.Component {
                      
                     <Datatable id="teachersGrid"  
                       options={{
-                        ajax: '/api/teachers',
+                        ajax: {"url":'/api/teachers', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
