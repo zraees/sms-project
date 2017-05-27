@@ -1,12 +1,12 @@
 import {SubmissionError} from 'redux-form'
 import axios from 'axios' 
 
+import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
 
     function submit(values){
       //console.log(values);
-      
       return axios.get('/api/teachers/' + values.id + '/' + values.email + '/')
         .then(res=>{            
             //throw {email: 'That email is already taken'}
@@ -34,27 +34,15 @@ import Msg from '../../../../components/i18n/Msg'
       // console.log(values);
       axios.post('/api/teachers', values)      
           .then(function (response) {
-            //console.log(response);
-            smallBox({
-              title: "System Alert",
-              content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
-              color: "#659265",
-              iconSmall: "fa fa-check fa-2x fadeInRight animated",
-              timeout: 3000
-            });
-              
+            
+            alert('s', 'Teacher details has been saved.');
             $('#teacherPopup').modal('hide');  
 
           })
           .catch(function (error) {
             console.log(error);
-            smallBox({
-              title: "System Alert",
-              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
-              color: "#C46A69",
-              iconSmall: "fa fa-times fa-2x fadeInRight animated",
-              timeout: 5000
-            });
+            alert('f', '');
+            
           });      
     }
 
@@ -63,81 +51,55 @@ import Msg from '../../../../components/i18n/Msg'
       // console.log(values);
       axios.put('/api/teachers', values)      
           .then(function (response) {
-            //console.log(response);
-            smallBox({
-              title: "System Alert",
-              content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been saved.</i>",
-              color: "#659265",
-              iconSmall: "fa fa-check fa-2x fadeInRight animated",
-              timeout: 3000
-            });
-              
+            
+            alert('s','Teacher details has been updated.');
             $('#teacherPopup').modal('hide');  
 
           })
           .catch(function (error) {
             console.log(error);
-            smallBox({
-              title: "System Alert",
-              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
-              color: "#C46A69",
-              iconSmall: "fa fa-times fa-2x fadeInRight animated",
-              timeout: 5000
-            });
+            alert('f', '');
+            
           });      
     }
 
     export function remove(id, delCell){
       // console.log('in remove');
-      SmartMessageBox({
-        title: "Confirmation!",
-        content: "Are you sure, you want to delete this record?",
-        buttons: '[No][Yes]'
-        }, function (ButtonPressed) {
-          if (ButtonPressed === "Yes") {
-              // console.log('conf yes');
-              // console.log(id);
-              axios.delete('/api/teachers/' + id)      
-                .then(function (response) {
-                  //console.log(response);
-                  
-                  smallBox({
-                    title: "System Alert",
-                    content: "<i class='fa fa-clock-o'></i> <i>Teacher record has been deleted.</i>",
-                    color: "#659265",
-                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                    timeout: 3000
-                  });
-                  
-                  //console.log('del success..');
-                  var table = $('#teachersGrid').DataTable();                
-                  table
-                    .row( delCell.parents('tr') )
-                    .remove()
-                    .draw();
 
-                    //console.log('after row del ..')
-
-                })
-                .catch(function (error) {
-                  
-                  smallBox({
-                    title: "System Alert",
-                    content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
-                    color: "#C46A69",
-                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                    timeout: 5000
-                  });
-                }); 
-
-            
-          }
-          if (ButtonPressed === "No") {
-            // do nothing
-          }
-
+        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+           deleteRecord(ButtonPressed, id, delCell); 
         });
+
       }
 
+      function deleteRecord(ButtonPressed, id, delCell) {
 
+        if (ButtonPressed === "Yes") {
+            // console.log('conf yes');
+            // console.log(id);
+            axios.delete('/api/teachers/' + id)      
+              .then(function (response) {
+                
+                alert('s','Teacher details has been deleted.');
+                
+                var table = $('#teachersGrid').DataTable();                
+                table
+                  .row( delCell.parents('tr') )
+                  .remove()
+                  .draw();
+
+                  //console.log('after row del ..')
+
+              })
+              .catch(function (error) {
+                  alert('f','');
+              }); 
+
+          
+        }
+        else if (ButtonPressed === "No") {
+          // do nothing
+        }
+      }
+        
 export default submit

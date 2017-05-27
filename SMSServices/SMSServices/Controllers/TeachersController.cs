@@ -75,8 +75,9 @@ namespace SMSServices.Controllers
                     result.IDNo = teacher.IDNo;
                     result.NationalityId = teacher.NationalityId;
                     result.Rating = teacher.Rating;
-
-                    entities.Entry(result).State = System.Data.Entity.EntityState.Modified;     
+                    
+                    entities.Teachers.Attach(result);
+                    //entities.Entry(result).State = System.Data.Entity.EntityState.Modified;     
                     entities.SaveChanges();
                 }
             }

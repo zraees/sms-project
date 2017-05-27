@@ -13,6 +13,8 @@ import Datatable from '../../../../components/tables/Datatable'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
 import Msg from '../../../../components/i18n/Msg'
+import Moment from '../../../../components/utils/Moment'
+
 
 import TeacherForm from './TeacherForm'
 import submit, {remove} from './submit';
@@ -72,13 +74,13 @@ class TeachersPage extends React.Component {
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
-    // axios.get('/api/nationalities/')
-    //     .then(res=>{
-    //         const nationalities = res.data.map(function(item, index){
-    //             return {value: item.NationalityId + "", label: item.Nationality};
-    //         });                       
-    //         this.setState({nationalities});
-    //     });
+    axios.get('/api/nationalities/')
+        .then(res=>{
+            const nationalities = res.data.map(function(item, index){
+                return {value: item.NationalityId + "", label: item.Nationality};
+            });                       
+            this.setState({nationalities});
+        });
  
     //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
     //https://datatables.net/examples/api/select_single_row.html
@@ -147,9 +149,9 @@ class TeachersPage extends React.Component {
                             </div>
                         </div>
                     </div>
-  
+                    
                     <Msg phrase="Recent projects" />
-                     
+                    <Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />
                     <Datatable id="teachersGrid"  
                       options={{
                         ajax: {"url":'/api/teachers', "dataSrc": ""},
@@ -163,8 +165,9 @@ class TeachersPage extends React.Component {
                             { 
                                 "type": "date",
                                 "render": function ( data, type, row ) {
-                                  //console.log(type);
-                                    return data;  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
+                                  //console.log(data);
+                                  return data;
+                                    //return '<Moment date="2017-05-26T00:00:00" format="DD-MM-YYYY" ></Moment>';  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
                                 },
                                 "targets": 5 
                             },

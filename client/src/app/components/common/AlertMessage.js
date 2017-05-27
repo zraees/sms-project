@@ -2,8 +2,8 @@ import React from 'react'
 import classnames from 'classnames'
 
 const AlertMessage = (props) => {
+    
     return(
-        
         <div className={classnames(['alert fade in', props.icon])}>
             <button className="close" data-dismiss="alert">
             ×
