@@ -86,9 +86,9 @@ class TeacherForm extends React.Component {
             <form id="form-teacher" className="smart-form" 
                 onSubmit={handleSubmit}>
 
-              <header>
+              {/*<header>
                 Personal Information
-              </header>
+              </header>*/}
 
               <fieldset>
                     
@@ -141,7 +141,7 @@ class TeacherForm extends React.Component {
                   <section className="col col-6">
                     <Field
                         multi={false}
-                        name="nationality"
+                        name="nationalityId"
                         placeholder="Nationality"
                         options={nationalities}
                         component={RFReactSelect} />

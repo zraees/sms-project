@@ -14,7 +14,14 @@ namespace SMSServices.Models
     
     public partial class Nationalities
     {
+        public Nationalities()
+        {
+            this.Teachers = new HashSet<Teachers>();
+        }
+    
         public int NationalityId { get; set; }
         public string Nationality { get; set; }
+    
+        public virtual ICollection<Teachers> Teachers { get; set; }
     }
 }

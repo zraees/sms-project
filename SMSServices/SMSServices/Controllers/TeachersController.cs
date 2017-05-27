@@ -17,12 +17,16 @@ namespace SMSServices.Controllers
         // GET api/<controller>
         public IEnumerable<Teachers> Get()
         {
+            entities.Configuration.ProxyCreationEnabled = false;
             return entities.Teachers;
         }
 
         // GET api/<controller>/5
         public Teachers Get(int id)
         {
+            entities.Configuration.ProxyCreationEnabled = false;
+            //Teachers teacher = entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
+            //if (teacher != null) { teacher.DOB = teacher.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; }
             return entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
         }
 
@@ -30,6 +34,7 @@ namespace SMSServices.Controllers
         [Route("api/Teachers/{id}/{email}")]
         public Teachers Get(int id, string email)
         {
+            entities.Configuration.ProxyCreationEnabled = false;
             Teachers teacher;
             teacher = entities.Teachers.Where(t => t.TeacherId == id && t.Email == email).FirstOrDefault();
             if (teacher == null)

@@ -15,8 +15,8 @@ import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/ac
 import Msg from '../../../../components/i18n/Msg'
 import Moment from '../../../../components/utils/Moment'
 
-
 import TeacherForm from './TeacherForm'
+import TeacherEditForm from './TeacherEditForm'
 import submit, {remove} from './submit';
 
 class TeachersPage extends React.Component {
@@ -27,10 +27,7 @@ class TeachersPage extends React.Component {
      id: 0,
      nationalities: []
    }
-   
-     //this.handleClick = this.handleClick.bind(this);
-     //   this.handleClick();
-  } 
+  }
 
   componentDidMount(){ 
 
@@ -277,9 +274,12 @@ class TeachersPage extends React.Component {
               </div>
               <div className="modal-body">
                   
-                  <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
+                  { this.state.id > 0 ? 
+                    <TeacherEditForm teacherId={this.state.id} nationalities={this.state.nationalities} 
                       onSubmit={submit} />
-
+                  : <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
+                      onSubmit={submit} />
+                  }      
               </div>
               {/*<div className="modal-footer">
                 <button type="button" className="btn btn-default" data-dismiss="modal">

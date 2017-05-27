@@ -6,7 +6,7 @@ import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/ac
 import Msg from '../../../../components/i18n/Msg'
 
     function submit(values){
-      //console.log(values);
+      console.log(values);
       return axios.get('/api/teachers/' + values.id + '/' + values.email + '/')
         .then(res=>{            
             //throw {email: 'That email is already taken'}

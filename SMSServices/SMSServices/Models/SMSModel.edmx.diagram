@@ -7,6 +7,7 @@
       <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1">
         <EntityTypeShape EntityType="SMSModel.Nationalities" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SMSModel.FK_Teachers_Nationalities" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

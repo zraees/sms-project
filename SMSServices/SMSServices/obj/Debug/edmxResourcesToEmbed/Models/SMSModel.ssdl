@@ -20,8 +20,24 @@
     <Property Name="Gender" Type="nvarchar" MaxLength="6" />
     <Property Name="Rating" Type="int" />
   </EntityType>
+  <Association Name="FK_Teachers_Nationalities">
+    <End Role="Nationalities" Type="Self.Nationalities" Multiplicity="0..1" />
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nationalities">
+        <PropertyRef Name="NationalityId" />
+      </Principal>
+      <Dependent Role="Teachers">
+        <PropertyRef Name="NationalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Nationalities" EntityType="Self.Nationalities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Teachers_Nationalities" Association="Self.FK_Teachers_Nationalities">
+      <End Role="Nationalities" EntitySet="Nationalities" />
+      <End Role="Teachers" EntitySet="Teachers" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

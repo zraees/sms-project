@@ -15,6 +15,7 @@ namespace SMSServices.Controllers
         // GET api/<controller>
         public IEnumerable<Nationalities> Get()
         {
+            entities.Configuration.ProxyCreationEnabled = false;
             return entities.Nationalities;
         }
 

@@ -22,5 +22,7 @@ namespace SMSServices.Models
         public string IDNo { get; set; }
         public string Gender { get; set; }
         public Nullable<int> Rating { get; set; }
+    
+        public virtual Nationalities Nationalities { get; set; }
     }
 }
