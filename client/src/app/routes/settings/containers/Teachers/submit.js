@@ -72,7 +72,7 @@ import Msg from '../../../../components/i18n/Msg'
 
       }
 
-      function deleteRecord(ButtonPressed, id, delCell) {
+    function deleteRecord(ButtonPressed, id, delCell) {
 
         if (ButtonPressed === "Yes") {
             // console.log('conf yes');
@@ -101,5 +101,15 @@ import Msg from '../../../../components/i18n/Msg'
           // do nothing
         }
       }
-        
+
+    export function submitEducation(values){
+      console.log(values);
+      alert('s', 'Submit education form')
+    } 
+
+    export function submitExperience(values){
+      console.log(values);
+      alert('s', 'Submit experience form')
+    }
+
 export default submit

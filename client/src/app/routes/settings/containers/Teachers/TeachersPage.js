@@ -17,7 +17,7 @@ import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
-import submit, {remove} from './submit';
+import submit, {remove, submitEducation, submitExperience} from './submit';
 
 class TeachersPage extends React.Component {
   
@@ -270,13 +270,15 @@ class TeachersPage extends React.Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="teacherPopupLabel">Add New Teacher</h4>
+                <h4 className="modal-title" id="teacherPopupLabel">{ this.state.id > 0 ? "Manage Teacher" : "Add New Teacher" }</h4>
               </div>
               <div className="modal-body">
                   
                   { this.state.id > 0 ? 
                     <TeacherEditForm teacherId={this.state.id} nationalities={this.state.nationalities} 
-                      onSubmit={submit} />
+                      onSubmit={submit} 
+                      onSubmitEducation={submitEducation} 
+                      onSubmitExperience={submitExperience} />
                   : <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
                       onSubmit={submit} />
                   }      
