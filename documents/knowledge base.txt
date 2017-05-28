@@ -16,4 +16,6 @@ http://sarj-shockwave.rhcloud.com/#/ui/tree-views
 http://sarj-shockwave.rhcloud.com/#/views/timeline
 
 
+Web API (HttpresponseMessage) example
+http://www.agile-code.com/blog/building-an-asp-net-web-api-restful-service/
 
