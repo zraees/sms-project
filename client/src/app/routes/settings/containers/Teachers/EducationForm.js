@@ -16,10 +16,24 @@ import alert from '../../../../components/utils/alerts'
 
 
 class EducationForm extends React.Component {
- 
   
+  constructor(props){
+    super(props);
+    this.state = {
+        // educationDurationTypes: [
+        //     {"label":"Weeks", "value":"Weeks"},
+        //     {"label":"Months", "value":"Months"},
+        //     {"label":"Years", "value":"Years"}],
+        educationScoreTypes: [
+            {"label":"CGPA", "value":"CGPA"},
+            {"label":"Percentage", "value":"Percentage"}],
+      rating: 0
+    }
+  }
+    
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, nationalities, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { educationScoreTypes } = this.state;
 
     return (
 
@@ -30,21 +44,67 @@ class EducationForm extends React.Component {
                     <form id="form-teacher" className="smart-form" 
                         onSubmit={handleSubmit}>
 
-                        <fieldset>
-                    
-                            <div className="row">
+                        <div className="row">
                             <section className="col col-6">
-                                <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                                validate={required} component={RFField} type="text" placeholder="Name"/>    
+                                <Field
+                                    multi={false}
+                                    name="typeId"
+                                    placeholder="Education Type"
+                                    options={nationalities}
+                                    component={RFReactSelect} />
                             </section>
 
                             <section className="col col-6">
-                                <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                                validate={[required,email]} component={RFField} type="text" placeholder="Email Address"/>
                             </section>
-                            </div>
+                        </div>
 
-                        </fieldset>
+                        <div className="row">
+                            <section className="col col-12">
+                                <Field name="title" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                                    validate={required} component={RFField} type="text" placeholder="Title"/>    
+                            </section>
+                        </div>
+
+                        <div>
+                            <section className="col col-6">
+                                
+                            </section>
+
+                            <section className="col col-3">
+                                <Field
+                                    multi={false}
+                                    name="scoreTypeId"
+                                    placeholder="CGPA / Percentage"
+                                    options={educationScoreTypes}
+                                    component={RFReactSelect} />
+                            </section>
+                            
+                            <section className="col col-3">
+                                <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                                    validate={required} component={RFField} type="text" placeholder="Score"/>
+                            </section>
+                        </div>
+
+                        <div className="row">                            
+                            <section className="col col-12">
+                                <Field name="majors" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                                validate={required} component={RFField} type="text" placeholder="Majors"/>
+                            </section>
+                        </div>
+
+                        <div className="row">
+                            <section className="col col-4">
+                                <Field name="dateStart" placeholder="Start Date" minDate={moment()} component={RFDatePicker} />
+                            </section>
+                            <section className="col col-4">
+                                <Field name="dateEnd" placeholder="End Date" component={RFDatePicker} />
+                            </section>
+                            <section className="col col-4">
+                                <Field name="duration" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                                    validate={required} component={RFField} type="text" placeholder="Duration"/>
+                            </section>
+                        </div>
+
                         {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
 
                         <footer>

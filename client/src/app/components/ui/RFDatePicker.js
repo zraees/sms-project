@@ -5,13 +5,14 @@ import classnames from 'classnames'
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-const RFDatePicker = ({input, placeholder, defaultValue, meta: {touched, error, warning} }) => (
+const RFDatePicker = ({input, placeholder, defaultValue, minDate, meta: {touched, error, warning} }) => (
   <section>
     <label>{placeholder}</label>
     <label className={classnames(['input', {'state-error':touched && error!==undefined}])}>
         <i className="icon-append fa fa-calendar"/>
             <DatePicker {...input} showMonthDropdown
                 showYearDropdown 
+                minDate = {minDate}
                 selected={input.value ? moment(input.value, "MM-DD-YYYY") : null} />
     </label>
     {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          

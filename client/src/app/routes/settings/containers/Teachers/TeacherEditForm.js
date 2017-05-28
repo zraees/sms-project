@@ -55,7 +55,8 @@ class TeacherEditForm extends React.Component {
                     onSubmit={onSubmit} />
             </div>
             <div className="tab-pane fade" id="s2">
-                <EducationForm teacherId={teacherId} onSubmit={onSubmitEducation}/>
+                <EducationForm teacherId={teacherId} nationalities={nationalities} 
+                    onSubmit={onSubmitEducation}/>
             </div>
             <div className="tab-pane fade" id="s3">
                 <ExperienceForm teacherId={teacherId} onSubmit={onSubmitExperience}/>
