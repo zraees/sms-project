@@ -19,6 +19,10 @@ const lessThan = otherField =>
 const greaterThan = otherField =>
   (value, previousValue, allValues) => value > allValues[otherField] ? value : previousValue
 
+//http://redux-form.com/6.1.1/examples/normalizing/
+//https://bl.ocks.org/insin/bbf116e8ea10ef38447b
+// datepicker https://github.com/Hacker0x01/react-datepicker/issues/543
+
 
     const { handleSubmit, pristine, reset, submitting } = this.props
     return (
