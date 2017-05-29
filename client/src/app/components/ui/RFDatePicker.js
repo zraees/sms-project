@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-const RFDatePicker = ({input, placeholder, defaultValue, minDate, meta: {touched, error, warning} }) => (
+const RFDatePicker = ({input, placeholder, defaultValue, minDate, handleChange, meta: {touched, error, warning} }) => (
   <section>
     <label>{placeholder}</label>
     <label className={classnames(['input', {'state-error':touched && error!==undefined}])}>

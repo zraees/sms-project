@@ -11,7 +11,15 @@ import RFDatePicker from '../../../components/ui/RFDatePicker'
 import { Field, reduxForm } from 'redux-form'
 
 class Subjects extends React.Component {
+  
   render() {
+    
+const lessThan = otherField =>
+  (value, previousValue, allValues) => value < allValues[otherField] ? value : previousValue
+const greaterThan = otherField =>
+  (value, previousValue, allValues) => value > allValues[otherField] ? value : previousValue
+
+
     const { handleSubmit, pristine, reset, submitting } = this.props
     return (
       <div id="content">
@@ -28,36 +36,47 @@ class Subjects extends React.Component {
                   {/* widget content */}
                   <div className="widget-body">
 
-        <div>
-            <label>date picker</label>
-            <Field 
-                name="date1" 
-                component={RFDatePicker} />
-        </div>
+                      <form id="form-teacher" className="smart-form"  >
+                        <fieldset>
+                          
+                        <div>
+                          <label>Min</label>
+                          <div>
+                            <Field
+                              name="min"
+                              component="input"
+                              type="number"
+                              normalize={lessThan('max')}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label>Max</label>
+                          <div>
+                            <Field
+                              name="max"
+                              component="input"
+                              type="number"
+                              normalize={greaterThan('min')}
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="row">
+                              <section >
+                                  <Field name="dateStart" placeholder="Start Date" minDate={moment()} component={RFDatePicker} />
+                              </section>
+                          </div>
 
-
-                    <div className="row">
-                      <div className="col-md-12">
-                        <form onSubmit={handleSubmit}>
-                          <div>
-                            <label>First Name</label>
-                            <div>
-                              <Field name="firstName" component="input" type="text" placeholder="First Name"/>
-                            </div>
-                          </div>
-                          <div>
-                            <label>Last Name</label>
-                            <div>
-                              <Field name="lastName" component="input" type="text" placeholder="Last Name"/>
-                            </div>
-                          </div>
-                          <div>
-                            <button type="submit" disabled={pristine || submitting}>Submit</button>
-                            <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-                          </div>
+                          <div className="row">
+                              <section >
+                                <label className="textarea textarea-expandable">
+                                  <textarea className="custom-scroll" rows="3" />
+                                  </label>
+                              </section>
+                          </div> 
+                          </fieldset>             
                         </form>
-                      </div>
-                    </div>                      
 
                   </div>
                   {/* end widget content */}
@@ -75,5 +94,6 @@ class Subjects extends React.Component {
 }
 
 export default reduxForm({
-  form: 'simple'  // a unique identifier for this form
+  form: 'simple',  // a unique identifier for this form
+  initialValues: { min: 1, max: 10 }
 })(Subjects)
