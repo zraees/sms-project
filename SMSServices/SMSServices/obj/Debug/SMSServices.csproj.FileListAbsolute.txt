@@ -15,3 +15,4 @@ D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSSer
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\Newtonsoft.Json.xml
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Debug\SMSServices.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Debug\SMSServices.pdb
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Debug\SMSServices.csprojResolveAssemblyReference.cache

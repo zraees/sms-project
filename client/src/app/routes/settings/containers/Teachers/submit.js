@@ -124,4 +124,43 @@ import Msg from '../../../../components/i18n/Msg'
       alert('s', 'Submit experience form')
     }
 
+  export function removeQualification(id, delCell){
+      // console.log('in remove');
+
+        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+           deleteQualificationRecord(ButtonPressed, id, delCell); 
+        });
+
+      }
+
+    function deleteQualificationRecord(ButtonPressed, id, delCell) {
+
+        if (ButtonPressed === "Yes") {
+            // console.log('conf yes');
+            // console.log(id);
+            axios.delete('/api/TeacherQualifications/' + id)      
+              .then(function (response) {
+                
+                alert('s','Qualification details have been deleted.');
+                
+                var table = $('#teacherQualificationsGrid').DataTable();                
+                table
+                  .row( delCell.parents('tr') )
+                  .remove()
+                  .draw();
+
+                  //console.log('after row del ..')
+
+              })
+              .catch(function (error) {
+                  alert('f','');
+              }); 
+
+          
+        }
+        else if (ButtonPressed === "No") {
+          // do nothing
+        }
+      }
+
 export default submit

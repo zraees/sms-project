@@ -18,14 +18,14 @@ namespace SMSServices.Controllers
         public IEnumerable<TeacherQualifications> Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.TeacherQualifications;
+            return entities.TeacherQualifications.Include("QualificationTypes");
         }
 
         // GET api/<controller>/5
-        public TeacherQualifications Get(int id)
+        public TeacherQualifications Get(int teacherId)
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.TeacherQualifications.Where(t => t.QualificationTypeId == id).FirstOrDefault();
+            return entities.TeacherQualifications.Where(t => t.TeacherId == teacherId).FirstOrDefault();
         } 
 
         // POST api/<controller>
