@@ -8,6 +8,7 @@ import RFDatePicker from '../../../../components/ui/RFDatePicker'
 import RFReactSelect from '../../../../components/ui/RFReactSelect'
 import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
 import RFField from '../../../../components/ui/RFField'
+import RFTextArea from '../../../../components/ui/RFTextArea'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import asyncValidate from './asyncValidate'
@@ -15,7 +16,7 @@ import AlertMessage from '../../../../components/common/AlertMessage'
 import alert from '../../../../components/utils/alerts'
 
 
-class EducationForm extends React.Component {
+class QualificationForm extends React.Component {
   
   constructor(props){
     super(props);
@@ -24,16 +25,31 @@ class EducationForm extends React.Component {
         //     {"label":"Weeks", "value":"Weeks"},
         //     {"label":"Months", "value":"Months"},
         //     {"label":"Years", "value":"Years"}],
-        educationScoreTypes: [
+        qualificationTypes: [],
+        qualificationScoreTypes: [
             {"label":"CGPA", "value":"CGPA"},
-            {"label":"Percentage", "value":"Percentage"}],
-      rating: 0
+            {"label":"Percentage", "value":"Percentage"}]
+            
     }
+
   }
     
+componentDidMount(){ 
+    this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
+
+    axios.get('/api/QualificationTypes/')
+        .then(res=>{
+            const qualificationTypes = res.data.map(function(item, index){
+                return {value: item.QualificationTypeId + "", label: item.QualificationType};
+            });                       
+            this.setState({qualificationTypes});
+        });
+ 
+}
+
   render() {
-    const { teacherId, nationalities, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { educationScoreTypes } = this.state;
+    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { qualificationScoreTypes, qualificationTypes } = this.state;
 
     return (
 
@@ -41,71 +57,65 @@ class EducationForm extends React.Component {
             <div className="tab-content padding-10">
                 <div className="tab-pane active" id="AA">
                     
-                    <form id="form-teacher" className="smart-form" 
+                    <form id="form-teacher-qualification" className="smart-form" 
                         onSubmit={handleSubmit}>
+                        <fieldset>
+
+                        <div className="row">
+                            <section>
+                                <Field name="qualification" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
+                                    validate={required} component={RFField} type="text" placeholder="Qualification Title"/>    
+                            </section>
+                        </div>
+
+                        <div className="row">
+                            <section className="col col-4">
+                                <Field name="startDate" placeholder="Start Date" component={RFDatePicker} />
+                            </section>
+                            <section className="col col-4">
+                                <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
+                            </section>
+                            <section className="col col-4">
+                                <Field name="duration" labelClassName="input" labelIconClassName="icon-append fa fa-clock-o"
+                                    validate={required} component={RFField} type="text" placeholder="Qualification Duration"/>
+                            </section>
+                        </div>
 
                         <div className="row">
                             <section className="col col-6">
                                 <Field
                                     multi={false}
-                                    name="typeId"
-                                    placeholder="Education Type"
-                                    options={nationalities}
+                                    name="qualificationTypeId"
+                                    placeholder="Qualification Type"
+                                    options={qualificationTypes}
                                     component={RFReactSelect} />
-                            </section>
-
-                            <section className="col col-6">
-                            </section>
-                        </div>
-
-                        <div className="row">
-                            <section className="col col-12">
-                                <Field name="title" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                                    validate={required} component={RFField} type="text" placeholder="Title"/>    
-                            </section>
-                        </div>
-
-                        <div>
-                            <section className="col col-6">
-                                
                             </section>
 
                             <section className="col col-3">
                                 <Field
                                     multi={false}
-                                    name="scoreTypeId"
+                                    name="scoreType"
                                     placeholder="CGPA / Percentage"
-                                    options={educationScoreTypes}
+                                    options={qualificationScoreTypes}
                                     component={RFReactSelect} />
                             </section>
                             
                             <section className="col col-3">
-                                <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                                    validate={required} component={RFField} type="text" placeholder="Score"/>
+                                <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-list"
+                                    validate={required} component={RFField} type="number" placeholder="Score"/>
                             </section>
                         </div>
 
                         <div className="row">                            
-                            <section className="col col-12">
-                                <Field name="majors" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                                validate={required} component={RFField} type="text" placeholder="Majors"/>
-                            </section>
-                        </div>
-
-                        <div className="row">
-                            <section className="col col-4">
-                                <Field name="dateStart" placeholder="Start Date" minDate={moment()} component={RFDatePicker} />
-                            </section>
-                            <section className="col col-4">
-                                <Field name="dateEnd" placeholder="End Date" component={RFDatePicker} />
-                            </section>
-                            <section className="col col-4">
-                                <Field name="duration" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                                    validate={required} component={RFField} type="text" placeholder="Duration"/>
+                            <section>
+                                <Field name="majors" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                    component={RFField} type="text" placeholder="Majors"/>    
                             </section>
                         </div>
 
                         {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
+
+                        <Field component="input" type="hidden" name="teacherId"/>
 
                         <footer>
                             <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
@@ -115,7 +125,7 @@ class EducationForm extends React.Component {
                             Save
                             </button>
                         </footer>
-                   
+                        </fieldset>
                     </form>
 
                 </div>
@@ -141,13 +151,13 @@ class EducationForm extends React.Component {
        
        
 const afterSubmit = (result, dispatch) =>
-  dispatch(reset('EducationForm'));
+  dispatch(reset('QualificationForm'));
 
 export default reduxForm({
-  form: 'EducationForm',  // a unique identifier for this form
+  form: 'QualificationForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false
   // ,
   // asyncValidate,
   // asyncBlurFields: ['email']
-})(EducationForm) 
+})(QualificationForm) 

@@ -8,6 +8,10 @@
         <EntityTypeShape EntityType="SMSModel.Nationalities" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="SMSModel.FK_Teachers_Nationalities" />
+        <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="2.25" PointX="5" PointY="4.625" />
+        <EntityTypeShape EntityType="SMSModel.TeacherQualifications" Width="1.5" PointX="5" PointY="0.75" />
+        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes" />
+        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,6 +12,28 @@
           <Property Name="NationalityId" Type="int" Nullable="false" />
           <Property Name="Nationality" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <EntityType Name="QualificationTypes">
+          <Key>
+            <PropertyRef Name="QualificationTypeId" />
+          </Key>
+          <Property Name="QualificationTypeId" Type="int" Nullable="false" />
+          <Property Name="QualificationType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeacherQualifications">
+          <Key>
+            <PropertyRef Name="TeacherQualificationId" />
+          </Key>
+          <Property Name="TeacherQualificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="Qualification" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="QualificationTypeId" Type="int" />
+          <Property Name="ScoreType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Score" Type="numeric" Precision="6" Scale="2" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="20" />
+          <Property Name="Majors" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Teachers">
           <Key>
             <PropertyRef Name="TeacherId" />
@@ -25,6 +47,30 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="6" />
           <Property Name="Rating" Type="int" />
         </EntityType>
+        <Association Name="FK_TeacherQualifications_QualificationTypes">
+          <End Role="QualificationTypes" Type="Self.QualificationTypes" Multiplicity="0..1" />
+          <End Role="TeacherQualifications" Type="Self.TeacherQualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualificationTypes">
+              <PropertyRef Name="QualificationTypeId" />
+            </Principal>
+            <Dependent Role="TeacherQualifications">
+              <PropertyRef Name="QualificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherQualifications_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="TeacherQualifications" Type="Self.TeacherQualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="TeacherQualifications">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Teachers_Nationalities">
           <End Role="Nationalities" Type="Self.Nationalities" Multiplicity="0..1" />
           <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
@@ -39,7 +85,17 @@
         </Association>
         <EntityContainer Name="SMSModelStoreContainer">
           <EntitySet Name="Nationalities" EntityType="Self.Nationalities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="Self.FK_TeacherQualifications_QualificationTypes">
+            <End Role="QualificationTypes" EntitySet="QualificationTypes" />
+            <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherQualifications_Teachers" Association="Self.FK_TeacherQualifications_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+          </AssociationSet>
           <AssociationSet Name="FK_Teachers_Nationalities" Association="Self.FK_Teachers_Nationalities">
             <End Role="Nationalities" EntitySet="Nationalities" />
             <End Role="Teachers" EntitySet="Teachers" />
@@ -70,6 +126,7 @@
           <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="Rating" Type="Int32" />
           <NavigationProperty Name="Nationalities" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Teachers" ToRole="Nationalities" />
+          <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
         </EntityType>
         <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Nationalities" EntityType="Self.Nationalities" />
@@ -77,6 +134,16 @@
           <AssociationSet Name="FK_Teachers_Nationalities" Association="SMSModel.FK_Teachers_Nationalities">
             <End Role="Nationalities" EntitySet="Nationalities" />
             <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <EntitySet Name="QualificationTypes" EntityType="SMSModel.QualificationTypes" />
+          <EntitySet Name="TeacherQualifications" EntityType="SMSModel.TeacherQualifications" />
+          <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="SMSModel.FK_TeacherQualifications_QualificationTypes">
+            <End Role="QualificationTypes" EntitySet="QualificationTypes" />
+            <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherQualifications_Teachers" Association="SMSModel.FK_TeacherQualifications_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Teachers_Nationalities">
@@ -88,6 +155,55 @@
             </Principal>
             <Dependent Role="Teachers">
               <PropertyRef Name="NationalityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="QualificationTypes">
+          <Key>
+            <PropertyRef Name="QualificationTypeId" />
+          </Key>
+          <Property Name="QualificationTypeId" Type="Int32" Nullable="false" />
+          <Property Name="QualificationType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_QualificationTypes" FromRole="QualificationTypes" ToRole="TeacherQualifications" />
+        </EntityType>
+        <EntityType Name="TeacherQualifications">
+          <Key>
+            <PropertyRef Name="TeacherQualificationId" />
+          </Key>
+          <Property Name="TeacherQualificationId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Qualification" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="QualificationTypeId" Type="Int32" />
+          <Property Name="ScoreType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="Duration" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Majors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QualificationTypes" Relationship="SMSModel.FK_TeacherQualifications_QualificationTypes" FromRole="TeacherQualifications" ToRole="QualificationTypes" />
+          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="TeacherQualifications" ToRole="Teachers" />
+        </EntityType>
+        <Association Name="FK_TeacherQualifications_QualificationTypes">
+          <End Type="SMSModel.QualificationTypes" Role="QualificationTypes" Multiplicity="0..1" />
+          <End Type="SMSModel.TeacherQualifications" Role="TeacherQualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QualificationTypes">
+              <PropertyRef Name="QualificationTypeId" />
+            </Principal>
+            <Dependent Role="TeacherQualifications">
+              <PropertyRef Name="QualificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherQualifications_Teachers">
+          <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
+          <End Type="SMSModel.TeacherQualifications" Role="TeacherQualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="TeacherQualifications">
+              <PropertyRef Name="TeacherId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -116,6 +232,30 @@
                 <ScalarProperty Name="IDNo" ColumnName="IDNo" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QualificationTypes">
+            <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
+              <MappingFragment StoreEntitySet="QualificationTypes">
+                <ScalarProperty Name="QualificationType" ColumnName="QualificationType" />
+                <ScalarProperty Name="QualificationTypeId" ColumnName="QualificationTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherQualifications">
+            <EntityTypeMapping TypeName="SMSModel.TeacherQualifications">
+              <MappingFragment StoreEntitySet="TeacherQualifications">
+                <ScalarProperty Name="Majors" ColumnName="Majors" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="ScoreType" ColumnName="ScoreType" />
+                <ScalarProperty Name="QualificationTypeId" ColumnName="QualificationTypeId" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="TeacherQualificationId" ColumnName="TeacherQualificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

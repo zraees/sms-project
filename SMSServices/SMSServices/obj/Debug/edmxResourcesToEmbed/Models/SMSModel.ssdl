@@ -7,6 +7,28 @@
     <Property Name="NationalityId" Type="int" Nullable="false" />
     <Property Name="Nationality" Type="nvarchar" MaxLength="150" Nullable="false" />
   </EntityType>
+  <EntityType Name="QualificationTypes">
+    <Key>
+      <PropertyRef Name="QualificationTypeId" />
+    </Key>
+    <Property Name="QualificationTypeId" Type="int" Nullable="false" />
+    <Property Name="QualificationType" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeacherQualifications">
+    <Key>
+      <PropertyRef Name="TeacherQualificationId" />
+    </Key>
+    <Property Name="TeacherQualificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+    <Property Name="Qualification" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="QualificationTypeId" Type="int" />
+    <Property Name="ScoreType" Type="nvarchar" MaxLength="10" />
+    <Property Name="Score" Type="numeric" Precision="6" Scale="2" />
+    <Property Name="Duration" Type="nvarchar" MaxLength="20" />
+    <Property Name="Majors" Type="nvarchar" MaxLength="500" />
+  </EntityType>
   <EntityType Name="Teachers">
     <Key>
       <PropertyRef Name="TeacherId" />
@@ -20,6 +42,30 @@
     <Property Name="Gender" Type="nvarchar" MaxLength="6" />
     <Property Name="Rating" Type="int" />
   </EntityType>
+  <Association Name="FK_TeacherQualifications_QualificationTypes">
+    <End Role="QualificationTypes" Type="Self.QualificationTypes" Multiplicity="0..1" />
+    <End Role="TeacherQualifications" Type="Self.TeacherQualifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QualificationTypes">
+        <PropertyRef Name="QualificationTypeId" />
+      </Principal>
+      <Dependent Role="TeacherQualifications">
+        <PropertyRef Name="QualificationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeacherQualifications_Teachers">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="TeacherQualifications" Type="Self.TeacherQualifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TeacherQualifications">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Teachers_Nationalities">
     <End Role="Nationalities" Type="Self.Nationalities" Multiplicity="0..1" />
     <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
@@ -34,7 +80,17 @@
   </Association>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Nationalities" EntityType="Self.Nationalities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="Self.FK_TeacherQualifications_QualificationTypes">
+      <End Role="QualificationTypes" EntitySet="QualificationTypes" />
+      <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeacherQualifications_Teachers" Association="Self.FK_TeacherQualifications_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+    </AssociationSet>
     <AssociationSet Name="FK_Teachers_Nationalities" Association="Self.FK_Teachers_Nationalities">
       <End Role="Nationalities" EntitySet="Nationalities" />
       <End Role="Teachers" EntitySet="Teachers" />

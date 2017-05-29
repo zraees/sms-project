@@ -31,11 +31,11 @@ import Msg from '../../../../components/i18n/Msg'
 
     function insert(values){
       // console.log(' in insert');
-      // console.log(values);
+      console.log(values);
       axios.post('/api/teachers', values)      
           .then(function (response) {
             
-            alert('s', 'Teacher details has been saved.');
+            alert('s', 'Teacher details have been saved.');
             $('#teacherPopup').modal('hide');  
 
           })
@@ -52,7 +52,7 @@ import Msg from '../../../../components/i18n/Msg'
       axios.put('/api/teachers', values)      
           .then(function (response) {
             
-            alert('s','Teacher details has been updated.');
+            alert('s','Teacher details have been updated.');
             $('#teacherPopup').modal('hide');  
 
           })
@@ -80,7 +80,7 @@ import Msg from '../../../../components/i18n/Msg'
             axios.delete('/api/teachers/' + id)      
               .then(function (response) {
                 
-                alert('s','Teacher details has been deleted.');
+                alert('s','Teacher details have been deleted.');
                 
                 var table = $('#teachersGrid').DataTable();                
                 table
@@ -102,9 +102,21 @@ import Msg from '../../../../components/i18n/Msg'
         }
       }
 
-    export function submitEducation(values){
+    export function submitQualification(values){
       console.log(values);
-      alert('s', 'Submit education form')
+      axios.post('/api/TeacherQualifications', values)      
+          .then(function (response) {
+            
+            alert('s', 'Qualification details have been saved.');
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+            alert('f', '');
+            throw new SubmissionError({   
+                _error: 'Something went wrong, please contact system administrator!'
+              });
+          });
     } 
 
     export function submitExperience(values){

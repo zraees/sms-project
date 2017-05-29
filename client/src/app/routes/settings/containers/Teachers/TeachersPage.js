@@ -17,7 +17,7 @@ import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
-import submit, {remove, submitEducation, submitExperience} from './submit';
+import submit, {remove, submitQualification, submitExperience} from './submit';
 
 class TeachersPage extends React.Component {
   
@@ -277,7 +277,7 @@ class TeachersPage extends React.Component {
                   { this.state.id > 0 ? 
                     <TeacherEditForm teacherId={this.state.id} nationalities={this.state.nationalities} 
                       onSubmit={submit} 
-                      onSubmitEducation={submitEducation} 
+                      onSubmitQualification={submitQualification} 
                       onSubmitExperience={submitExperience} />
                   : <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
                       onSubmit={submit} />

@@ -21,6 +21,7 @@
     <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
     <Property Name="Rating" Type="Int32" />
     <NavigationProperty Name="Nationalities" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Teachers" ToRole="Nationalities" />
+    <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
   </EntityType>
   <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Nationalities" EntityType="Self.Nationalities" />
@@ -28,6 +29,16 @@
     <AssociationSet Name="FK_Teachers_Nationalities" Association="SMSModel.FK_Teachers_Nationalities">
       <End Role="Nationalities" EntitySet="Nationalities" />
       <End Role="Teachers" EntitySet="Teachers" />
+    </AssociationSet>
+    <EntitySet Name="QualificationTypes" EntityType="SMSModel.QualificationTypes" />
+    <EntitySet Name="TeacherQualifications" EntityType="SMSModel.TeacherQualifications" />
+    <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="SMSModel.FK_TeacherQualifications_QualificationTypes">
+      <End Role="QualificationTypes" EntitySet="QualificationTypes" />
+      <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeacherQualifications_Teachers" Association="SMSModel.FK_TeacherQualifications_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
     </AssociationSet>
   </EntityContainer>
   <Association Name="FK_Teachers_Nationalities">
@@ -39,6 +50,55 @@
       </Principal>
       <Dependent Role="Teachers">
         <PropertyRef Name="NationalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QualificationTypes">
+    <Key>
+      <PropertyRef Name="QualificationTypeId" />
+    </Key>
+    <Property Name="QualificationTypeId" Type="Int32" Nullable="false" />
+    <Property Name="QualificationType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_QualificationTypes" FromRole="QualificationTypes" ToRole="TeacherQualifications" />
+  </EntityType>
+  <EntityType Name="TeacherQualifications">
+    <Key>
+      <PropertyRef Name="TeacherQualificationId" />
+    </Key>
+    <Property Name="TeacherQualificationId" Type="Int32" Nullable="false" />
+    <Property Name="TeacherId" Type="Int32" Nullable="false" />
+    <Property Name="Qualification" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="QualificationTypeId" Type="Int32" />
+    <Property Name="ScoreType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Score" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="Duration" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Majors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="QualificationTypes" Relationship="SMSModel.FK_TeacherQualifications_QualificationTypes" FromRole="TeacherQualifications" ToRole="QualificationTypes" />
+    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="TeacherQualifications" ToRole="Teachers" />
+  </EntityType>
+  <Association Name="FK_TeacherQualifications_QualificationTypes">
+    <End Type="SMSModel.QualificationTypes" Role="QualificationTypes" Multiplicity="0..1" />
+    <End Type="SMSModel.TeacherQualifications" Role="TeacherQualifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QualificationTypes">
+        <PropertyRef Name="QualificationTypeId" />
+      </Principal>
+      <Dependent Role="TeacherQualifications">
+        <PropertyRef Name="QualificationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeacherQualifications_Teachers">
+    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
+    <End Type="SMSModel.TeacherQualifications" Role="TeacherQualifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TeacherQualifications">
+        <PropertyRef Name="TeacherId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

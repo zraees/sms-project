@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
 import EditGeneralInfo from './EditGeneralInfo'
-import EducationForm from './EducationForm'
+import QualificationForm from './QualificationForm'
 import ExperienceForm from './ExperienceForm'
 import alert from '../../../../components/utils/alerts'
 
@@ -20,7 +20,7 @@ class TeacherEditForm extends React.Component {
   }
   
   render() {
-    const { teacherId, nationalities, onSubmit, onSubmitEducation, onSubmitExperience } = this.props;
+    const { teacherId, nationalities, onSubmit, onSubmitQualification, onSubmitExperience } = this.props;
 
     return (
 
@@ -33,7 +33,7 @@ class TeacherEditForm extends React.Component {
             </li>
             <li>
                 <a href="#s2" data-toggle="tab"><i className="fa fa-fw fa-lg fa-graduation-cap"/>
-                Education</a>
+                Qualification</a>
             </li>
             <li>
                 <a href="#s3" data-toggle="tab"><i className="fa fa-fw fa-lg fa-trophy"/>
@@ -55,8 +55,8 @@ class TeacherEditForm extends React.Component {
                     onSubmit={onSubmit} />
             </div>
             <div className="tab-pane fade" id="s2">
-                <EducationForm teacherId={teacherId} nationalities={nationalities} 
-                    onSubmit={onSubmitEducation}/>
+                <QualificationForm teacherId={teacherId} 
+                    onSubmit={onSubmitQualification}/>
             </div>
             <div className="tab-pane fade" id="s3">
                 <ExperienceForm teacherId={teacherId} onSubmit={onSubmitExperience}/>

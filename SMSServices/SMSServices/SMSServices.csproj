@@ -88,13 +88,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\QualificationTypesController.cs" />
     <Compile Include="Controllers\NationalitiesController.cs" />
     <Compile Include="Controllers\Nationalities2Controller2.cs" />
+    <Compile Include="Controllers\TeacherQualificationsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Nationalities.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMSModel.Context.cs">
@@ -111,6 +116,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeacherQualifications.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Teachers.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>

@@ -23,5 +23,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="QualificationTypes">
+      <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
+        <MappingFragment StoreEntitySet="QualificationTypes">
+          <ScalarProperty Name="QualificationType" ColumnName="QualificationType" />
+          <ScalarProperty Name="QualificationTypeId" ColumnName="QualificationTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeacherQualifications">
+      <EntityTypeMapping TypeName="SMSModel.TeacherQualifications">
+        <MappingFragment StoreEntitySet="TeacherQualifications">
+          <ScalarProperty Name="Majors" ColumnName="Majors" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="ScoreType" ColumnName="ScoreType" />
+          <ScalarProperty Name="QualificationTypeId" ColumnName="QualificationTypeId" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="TeacherQualificationId" ColumnName="TeacherQualificationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

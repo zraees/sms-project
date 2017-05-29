@@ -106,7 +106,7 @@ class TeacherForm extends React.Component {
 
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="DOB" validate={required} placeholder="Date of Birth" component={RFDatePicker} />
+                    <Field name="dob" validate={required} placeholder="Date of Birth" component={RFDatePicker} />
                   </section>
 
                   <section className="col col-3">
