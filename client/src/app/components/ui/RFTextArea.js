@@ -13,3 +13,19 @@ const RFTextArea = ({textarea, label, type, labelClassName, labelIconClassName, 
     );
 
 export default RFTextArea
+
+//1
+//http://redux-form.com/6.0.0-alpha.6/examples/simple/
+//const  { DOM: { input, select, textarea } } = React
+
+//2
+//http://redux-form.com/6.7.0/examples/simple/
+//<button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+
+//3 ==> Textarea Not Cleared when Blowing Away Form Data 
+//https://github.com/erikras/redux-form/issues/394
+//<textarea value={this.props.value || ''} />
+
+//4 --> Normalizing Floats #1218
+//https://github.com/erikras/redux-form/issues/1218
+//<MaskedInput  {...field}  format={formatInputString}  normalize={convertInputToFloat}/>
