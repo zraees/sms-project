@@ -12,25 +12,20 @@ namespace SMSServices.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Teachers
+    public partial class States
     {
-        public Teachers()
+        public States()
         {
-            this.TeacherQualifications = new HashSet<TeacherQualifications>();
+            this.Cities = new HashSet<Cities>();
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
         }
     
-        public int TeacherId { get; set; }
+        public int StateId { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> NationalityId { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
-        public string IDNo { get; set; }
-        public string Gender { get; set; }
-        public Nullable<int> Rating { get; set; }
+        public int CountryId { get; set; }
     
-        public virtual Nationalities Nationalities { get; set; }
-        public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
+        public virtual ICollection<Cities> Cities { get; set; }
+        public virtual Countries Countries { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
     }
 }

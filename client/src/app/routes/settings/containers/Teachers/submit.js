@@ -30,7 +30,7 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
     function insert(values){
-      // console.log(' in insert');
+      console.log(' in insert');
       console.log(values);
       axios.post('/api/teachers', values)      
           .then(function (response) {
@@ -108,7 +108,8 @@ import Msg from '../../../../components/i18n/Msg'
           .then(function (response) {
             
             alert('s', 'Qualification details have been saved.');
-            
+            $('#teacherQualificationsGrid').DataTable().ajax.reload();  
+
           })
           .catch(function (error) {
             console.log(error);

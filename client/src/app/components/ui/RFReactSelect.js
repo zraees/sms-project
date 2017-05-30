@@ -49,7 +49,7 @@ export default function RFReactSelect({ input , options, multi, className, place
  */
 function singleChangeHandler(func) {
   return function handleSingleChange(value) {
-    func(value ? value.value : '');
+    func(value ? value.value : '');    
   };
 }
 

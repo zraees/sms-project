@@ -26,6 +26,8 @@ class EditGeneralInfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentDidMount --> EditGeneralInfo');
+    
     const {teacherId} = nextProps;
 
     if(teacherId<=0){

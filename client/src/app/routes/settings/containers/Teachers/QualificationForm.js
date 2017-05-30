@@ -38,6 +38,8 @@ class QualificationForm extends React.Component {
   }
     
 componentDidMount(){ 
+    console.log('componentDidMount --> QualificationForm');
+
     this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
     $('#teacherQualificationsGrid').on('click', 'td', function(event) {
@@ -90,8 +92,6 @@ componentDidMount(){
                                 <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
                             </section>
                             <section className="col col-4">
-                                <Field name="duration" labelClassName="input" labelIconClassName="icon-append fa fa-clock-o"
-                                    validate={required} component={RFField} type="text" placeholder="Qualification Duration"/>
                             </section>
                         </div>
 
@@ -133,7 +133,7 @@ componentDidMount(){
 
                         <footer>
                             <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                            { teacherId > 0 ? "Undo Changes" : "Reset" }
+                            Reset
                             </button>
                             <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
                             Save

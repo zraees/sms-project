@@ -88,13 +88,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\QualificationTypesController.cs" />
     <Compile Include="Controllers\NationalitiesController.cs" />
     <Compile Include="Controllers\Nationalities2Controller2.cs" />
     <Compile Include="Controllers\TeacherQualificationsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cities.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Countries.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Nationalities.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
@@ -117,6 +127,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SMSModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\States.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeacherExperiences.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TeacherQualifications.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -124,6 +140,7 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DateUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

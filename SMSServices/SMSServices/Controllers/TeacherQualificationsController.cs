@@ -1,4 +1,5 @@
 ﻿using SMSServices.Models;
+using SMSServices.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -33,16 +34,19 @@ namespace SMSServices.Controllers
         {         
             try
             {
+                DateUtilities dateUtilities = new DateUtilities();
+
                 entities.TeacherQualifications.Add(new TeacherQualifications()
                 {
                     Qualification = teacherQualification.Qualification,
                     Majors = teacherQualification.Majors,
                     StartDate = teacherQualification.StartDate,
                     EndDate = teacherQualification.EndDate,
-                    Duration = teacherQualification.Duration,
+                    //Duration = teacherQualification.Duration,
+                    Duration = CalculateQualificationDuration(teacherQualification),
                     QualificationTypeId = teacherQualification.QualificationTypeId,
                     ScoreType = teacherQualification.ScoreType,
-                    Score = teacherQualification .Score,
+                    Score = teacherQualification.Score,
                     TeacherId = teacherQualification.TeacherId
                 });
                 entities.SaveChanges();
@@ -87,5 +91,19 @@ namespace SMSServices.Controllers
             }
             base.Dispose(disposing);
         }
+
+        private string CalculateQualificationDuration(TeacherQualifications teacherQualification)
+        {
+            string result = string.Empty;
+            int years, months, days;
+            years = months = days = 0;
+
+            DateUtilities dateUtilities = new DateUtilities();
+            if (teacherQualification.StartDate.HasValue && teacherQualification.EndDate.HasValue)
+                dateUtilities.DateDiff(teacherQualification.StartDate.Value, teacherQualification.EndDate.Value, ref years, ref months, ref days);
+
+            return string.Format("{0} year{1} and {2} month{3}", years, years > 1 ? "s" : "", months + (days > 0 ? 1 : 0), (months + (days > 0 ? 1 : 0)) > 1 ? "s" : "");
+        }
+
     }
 }

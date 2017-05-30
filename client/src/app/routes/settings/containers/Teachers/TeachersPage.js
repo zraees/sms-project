@@ -25,12 +25,14 @@ class TeachersPage extends React.Component {
    super(props);
    this.state = {
      id: 0,
-     nationalities: []
+     nationalities: [],
+     countries: []
    }
   }
 
   componentDidMount(){ 
 
+    console.log('componentDidMount --> TeacherPage');
     //var self =this;
     $('#teachersGrid').on('click', 'td', function(event) {
       
@@ -79,21 +81,15 @@ class TeachersPage extends React.Component {
             this.setState({nationalities});
         });
  
-    //https://datatables.net/forums/discussion/29406/delete-row-with-fade-out
-    //https://datatables.net/examples/api/select_single_row.html
-    //https://datatables.net/reference/api/row().remove()
-    
-    // $('#teachersGrid tbody').on( 'click', 'tr', function () {
-    //     var table = $('#teachersGrid').DataTable();
-    //     alert('hi');
-    //     table
-    //         .row( $(this).parents('tr') )
-    //         .remove()
-    //         .draw();
-    // } ).bind(this);
-
+    axios.get('/api/countries/')
+        .then(res=>{
+            const countries = res.data.map(function(item, index){
+                return {value: item.CountryId + "", label: item.Name};
+            });                       
+            this.setState({countries});
+        });
+ 
   }
-
 
   // handleClick() {
 	// 	console.log("clicked");
@@ -275,11 +271,15 @@ class TeachersPage extends React.Component {
               <div className="modal-body">
                   
                   { this.state.id > 0 ? 
-                    <TeacherEditForm teacherId={this.state.id} nationalities={this.state.nationalities} 
+                    <TeacherEditForm teacherId={this.state.id} 
+                      nationalities={this.state.nationalities} 
+                      countries={this.state.countries} 
                       onSubmit={submit} 
                       onSubmitQualification={submitQualification} 
                       onSubmitExperience={submitExperience} />
-                  : <TeacherForm teacherId={this.state.id} nationalities={this.state.nationalities} 
+                  : <TeacherForm teacherId={this.state.id} 
+                      nationalities={this.state.nationalities} 
+                      countries={this.state.countries} 
                       onSubmit={submit} />
                   }      
               </div>

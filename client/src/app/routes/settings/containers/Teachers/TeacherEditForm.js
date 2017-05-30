@@ -19,6 +19,11 @@ class TeacherEditForm extends React.Component {
     }
   }
   
+  componentDidMount(){ 
+
+    console.log('componentDidMount --> TeacherEditForm');
+  }
+
   render() {
     const { teacherId, nationalities, onSubmit, onSubmitQualification, onSubmitExperience } = this.props;
 
