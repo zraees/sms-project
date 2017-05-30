@@ -1,0 +1,15 @@
+
+delete untracked files / directories:   
+-------------------------------------
+ To remove directories, run git clean -f -d or git clean -fd.
+ To remove ignored files, run git clean -f -X or git clean -fX.
+ To remove ignored and non-ignored files, run git clean -f -x or git clean -fx.
+
+
+undo changes:
+-------------
+ To undo all the changes you’ve introduced since the last commit, use the following command:
+        git reset --hard 
+
+you may want to only discard the changes to one file in the repo. You can do this with the checkout command:
+        git checkout -- path/to/the/file.txt 
