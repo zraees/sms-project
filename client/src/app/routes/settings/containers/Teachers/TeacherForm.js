@@ -24,8 +24,13 @@ class TeacherForm extends React.Component {
     super(props);
     this.state = {
       editDataLoaded: false,
-      rating: 0
+      rating: 0,
+      states: [],
+      cities: []
     }
+    this.handleCountryBlur = this.handleCountryBlur.bind(this);
+    this.handleStateBlur = this.handleStateBlur.bind(this);
+    this.handleCityBlur = this.handleCityBlur.bind(this);
   }
   
   componentDidMount(){ 
@@ -76,20 +81,42 @@ class TeacherForm extends React.Component {
           });   
   } 
 
-  handleCountryBlur(value){
+  handleCountryBlur(obj, value){
+    axios.get('/api/states/' + value)
+        .then(res=>{
+            const states = res.data.map(function(item, index){
+                return {value: item.Id + "", label: item.Name};
+            });                       
+            this.setState({states});
+        });
+ 
+  }
+
+  handleStateBlur(obj, value){
+    axios.get('/api/cities/' + value)
+        .then(res=>{
+            const cities = res.data.map(function(item, index){
+                return {value: item.Id + "", label: item.Name};
+            });                       
+            this.setState({cities});
+        });
+ 
+  }
+
+
+  handleCityBlur(obj, value){
+    console.log(obj);
     console.log(value);
   }
 
   changeRate(name, value) {
-    // console.log('changeRate');
-    // console.log(name);
-    // console.log(value);
-      this.props.change(name, value); // function provided by redux-form
+      this.props.change(name, value);
       this.setState({ rating: value })
   }
 
   render() {
     const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { states, cities } = this.state;
 
     return (
             <form id="form-teacher" className="smart-form" 
@@ -172,13 +199,13 @@ class TeacherForm extends React.Component {
                 </div>
 
                 <div className="row">
-                  <section className="col col-11">
+                  <section className="col col-8">
                     <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
                       component={RFField} type="text" placeholder="Street Address"/>
                   </section>
 
-                  <section className="col col-1">
+                  <section className="col col-4">
                     
                   </section>
                 </div>
@@ -195,11 +222,23 @@ class TeacherForm extends React.Component {
                   </section>
 
                   <section className="col col-4">
-                    
+                    <Field
+                        multi={false}
+                        name="stateId"
+                        placeholder="State"
+                        options={states}
+                        onBlur={this.handleStateBlur}
+                        component={RFReactSelect} />
                   </section>
 
                   <section className="col col-4">
-                    
+                    <Field
+                        multi={false}
+                        name="cityId"
+                        placeholder="City"
+                        options={cities}
+                        onBlur={this.handleCityBlur}
+                        component={RFReactSelect} />
                   </section>
                 </div>
 

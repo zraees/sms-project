@@ -15,8 +15,9 @@ namespace SMSServices.Controllers
         // GET api/<controller>
         public IEnumerable<Countries> Get()
         {
+            int[] country = { 101, 166 };
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.Countries;
+            return entities.Countries.Where(c => country.Contains(c.CountryId));
         }
 
         // GET api/<controller>/5

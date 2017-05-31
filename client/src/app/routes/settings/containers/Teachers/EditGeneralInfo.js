@@ -20,10 +20,15 @@ class EditGeneralInfo extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      editDataLoaded: false,
-      rating: 0
+        editDataLoaded: false,
+        rating: 0,
+        states: [],
+        cities: []
+        }
+        this.handleCountryBlur = this.handleCountryBlur.bind(this);
+        this.handleStateBlur = this.handleStateBlur.bind(this);
     }
-  }
+  
 
   componentWillReceiveProps(nextProps) {
     console.log('componentDidMount --> EditGeneralInfo');
@@ -61,7 +66,13 @@ class EditGeneralInfo extends React.Component {
                 "rating": res.data.Rating,
                 "idNo": res.data.IDNo,
                 "nationalityId": "" + res.data.NationalityId,
-                "DOB": res.data.DOB.replace("T00:00:00", "")
+                "DOB": res.data.DOB.replace("T00:00:00", ""),
+                "address": res.data.Address,
+                "phoneNo": res.data.PhoneNo,
+                "mobileNo": res.data.MobileNo,
+                "countryId": res.data.CountryId,
+                "stateId": res.data.StateId,
+                "cityId": res.data.CityId
             }
             
             this.props.initialize(initData); 
@@ -72,6 +83,28 @@ class EditGeneralInfo extends React.Component {
           });   
   } 
 
+  handleCountryBlur(obj, value){
+    axios.get('/api/states/' + value)
+        .then(res=>{
+            const states = res.data.map(function(item, index){
+                return {value: item.Id + "", label: item.Name};
+            });                       
+            this.setState({states});
+        });
+ 
+  }
+
+  handleStateBlur(obj, value){
+    axios.get('/api/cities/' + value)
+        .then(res=>{
+            const cities = res.data.map(function(item, index){
+                return {value: item.Id + "", label: item.Name};
+            });                       
+            this.setState({cities});
+        });
+ 
+  }
+
   changeRate(name, value) {
     // console.log('changeRate');
     // console.log(name);
@@ -81,7 +114,8 @@ class EditGeneralInfo extends React.Component {
   }
 
   render() {
-    const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { states, cities } = this.state;
 
     return (
             <form id="form-teacher" className="smart-form" 
@@ -148,7 +182,65 @@ class EditGeneralInfo extends React.Component {
                             component={RFReactSelect} />
                     </section>
                     </div>
+                        
+                        
+                    <div className="row">
+                    <section className="col col-6">
+                        <Field name="phoneNo" labelClassName="input" 
+                        labelIconClassName="icon-append fa fa-phone"
+                        component={RFField} type="text" placeholder="Phone Number"/>
+                    </section>
 
+                    <section className="col col-6">
+                        <Field name="mobileNo" labelClassName="input" 
+                        labelIconClassName="icon-append fa fa-mobile"
+                        component={RFField} type="text" placeholder="Mobile Number"/>
+                    </section>
+                    </div>
+
+                    <div className="row">
+                    <section className="col col-8">
+                        <Field name="address" labelClassName="input" 
+                        labelIconClassName="icon-append fa fa-map-marker"
+                        component={RFField} type="text" placeholder="Street Address"/>
+                    </section>
+
+                    <section className="col col-4">
+                        
+                    </section>
+                    </div>
+                    
+                    <div className="row">
+                    <section className="col col-4">
+                        <Field
+                            multi={false}
+                            name="countryId"
+                            placeholder="Country"
+                            options={countries}
+                            onBlur={this.handleCountryBlur}
+                            component={RFReactSelect} />
+                    </section>
+
+                    <section className="col col-4">
+                        <Field
+                            multi={false}
+                            name="stateId"
+                            placeholder="State"
+                            options={states}
+                            onBlur={this.handleStateBlur}
+                            component={RFReactSelect} />
+                    </section>
+
+                    <section className="col col-4">
+                        <Field
+                            multi={false}
+                            name="cityId"
+                            placeholder="City"
+                            options={cities}
+                            onBlur={this.handleCityBlur}
+                            component={RFReactSelect} />
+                    </section>
+                    </div>
                 </fieldset>
 
                 {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}

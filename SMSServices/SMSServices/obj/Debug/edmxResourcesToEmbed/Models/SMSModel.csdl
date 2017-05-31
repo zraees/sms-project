@@ -23,6 +23,12 @@
     <NavigationProperty Name="Nationalities" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Teachers" ToRole="Nationalities" />
     <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
   </EntityType>
   <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Nationalities" EntityType="Self.Nationalities" />

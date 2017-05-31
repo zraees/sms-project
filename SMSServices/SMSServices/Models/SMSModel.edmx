@@ -87,6 +87,12 @@
           <Property Name="IDNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nvarchar" MaxLength="6" />
           <Property Name="Rating" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CityId" Type="int" />
         </EntityType>
         <Association Name="FK_Cities_States">
           <End Role="States" Type="Self.States" Multiplicity="1" />
@@ -269,6 +275,12 @@
           <NavigationProperty Name="Nationalities" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Teachers" ToRole="Nationalities" />
           <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
           <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
         </EntityType>
         <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Nationalities" EntityType="Self.Nationalities" />
@@ -518,6 +530,12 @@
           <EntitySetMapping Name="Teachers">
             <EntityTypeMapping TypeName="SMSModel.Teachers">
               <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

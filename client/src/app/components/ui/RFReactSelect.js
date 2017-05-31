@@ -71,12 +71,12 @@ function multiChangeHandler(func) {
  */
 function transformValue(value, options, multi) {
   if (multi && typeof value === 'string') return [];
-
+  
   const filteredOptions = options.filter(option => {
     return multi 
       ? value.indexOf(option.value) !== -1
       : option.value === value;
-  });
-
+  }); 
+  //console.log(filteredOptions[0]);
   return multi ? filteredOptions : filteredOptions[0];
 }

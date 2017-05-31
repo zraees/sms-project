@@ -1,4 +1,5 @@
-﻿using SMSServices.Models;
+﻿using SMSServices.HelperClasses;
+using SMSServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,10 @@ namespace SMSServices.Controllers
         }
 
         // GET api/<controller>/5
-        public IEnumerable<States> Get(int countryId)
+        [Route("api/States/{countryId}")]
+        public IEnumerable<KeyValue> Get(int countryId)
         {
-            return entities.States.Where(n => n.CountryId == countryId);
+            return entities.States.Where(n => n.CountryId == countryId).Select(a => new KeyValue() { Id = a.StateId, Name = a.Name });
         }
 
         // POST api/<controller>

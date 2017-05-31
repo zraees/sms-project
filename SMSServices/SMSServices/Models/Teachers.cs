@@ -28,6 +28,12 @@ namespace SMSServices.Models
         public string IDNo { get; set; }
         public string Gender { get; set; }
         public Nullable<int> Rating { get; set; }
+        public string Address { get; set; }
+        public string PhoneNo { get; set; }
+        public string MobileNo { get; set; }
+        public Nullable<int> CountryId { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public Nullable<int> CityId { get; set; }
     
         public virtual Nationalities Nationalities { get; set; }
         public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }

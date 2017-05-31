@@ -82,6 +82,12 @@
     <Property Name="IDNo" Type="nvarchar" MaxLength="50" />
     <Property Name="Gender" Type="nvarchar" MaxLength="6" />
     <Property Name="Rating" Type="int" />
+    <Property Name="Address" Type="nvarchar" MaxLength="500" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="CityId" Type="int" />
   </EntityType>
   <Association Name="FK_Cities_States">
     <End Role="States" Type="Self.States" Multiplicity="1" />

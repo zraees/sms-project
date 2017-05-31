@@ -18,14 +18,14 @@ class TeacherEditForm extends React.Component {
       rating: 0
     }
   }
-  
+
   componentDidMount(){ 
 
     console.log('componentDidMount --> TeacherEditForm');
   }
 
   render() {
-    const { teacherId, nationalities, onSubmit, onSubmitQualification, onSubmitExperience } = this.props;
+    const { teacherId, nationalities, countries, onSubmit, onSubmitQualification, onSubmitExperience } = this.props;
 
     return (
 
@@ -56,7 +56,9 @@ class TeacherEditForm extends React.Component {
 
         <div id="myTabContent1" className="tab-content padding-10">
             <div className="tab-pane fade in active" id="s1">
-                <EditGeneralInfo teacherId={teacherId} nationalities={nationalities} 
+                <EditGeneralInfo teacherId={teacherId} 
+                    nationalities={nationalities} 
+                    countries={countries}
                     onSubmit={onSubmit} />
             </div>
             <div className="tab-pane fade" id="s2">

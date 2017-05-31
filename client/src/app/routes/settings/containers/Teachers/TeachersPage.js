@@ -81,13 +81,13 @@ class TeachersPage extends React.Component {
             this.setState({nationalities});
         });
  
-    axios.get('/api/countries/')
-        .then(res=>{
-            const countries = res.data.map(function(item, index){
-                return {value: item.CountryId + "", label: item.Name};
-            });                       
-            this.setState({countries});
-        });
+    // axios.get('/api/countries/')
+    //     .then(res=>{
+    //         const countries = res.data.map(function(item, index){
+    //             return {value: item.CountryId + "", label: item.Name};
+    //         });                       
+    //         this.setState({countries});
+    //     });
  
   }
 

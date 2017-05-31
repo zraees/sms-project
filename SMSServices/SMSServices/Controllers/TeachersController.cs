@@ -55,7 +55,13 @@ namespace SMSServices.Controllers
                     Gender = teacher.Gender,
                     IDNo = teacher.IDNo,
                     NationalityId = teacher.NationalityId,
-                    Rating = teacher.Rating
+                    Rating = teacher.Rating,
+                    Address = teacher.Address,
+                    PhoneNo = teacher.PhoneNo,
+                    MobileNo = teacher.MobileNo,
+                    CountryId = teacher.CountryId,
+                    StateId = teacher.StateId,
+                    CityId = teacher.CityId
                 });
                 entities.SaveChanges();
             }
