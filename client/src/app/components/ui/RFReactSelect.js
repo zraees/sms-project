@@ -19,7 +19,7 @@ RFReactSelect.propTypes = {
   multi: PropTypes.bool,
   className: PropTypes.string
 };
-
+//https://github.com/erikras/redux-form/issues/1185
 export default function RFReactSelect({ input , options, multi, className, placeholder }) {
   const { name, value, onBlur, onChange, onFocus } = input;
   const transformedValue = transformValue(value, options, multi);
