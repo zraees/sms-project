@@ -24,7 +24,7 @@ export default function RFReactSelect({ input , options, multi, className, place
   const { name, value, onBlur, onChange, onFocus } = input;
   const transformedValue = transformValue(value, options, multi);
   return (
-    <section>
+    <div>
       <label>{placeholder}</label>
       <Select
         valueKey="value"
@@ -40,7 +40,7 @@ export default function RFReactSelect({ input , options, multi, className, place
         onFocus={onFocus}
         className={className}
       />
-    </section>
+    </div>
   );
 }
 

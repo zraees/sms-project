@@ -22,6 +22,7 @@ class EditGeneralInfo extends React.Component {
     this.state = {
         editDataLoaded: false,
         rating: 0,
+        countries: [],
         states: [],
         cities: []
         }
@@ -31,9 +32,20 @@ class EditGeneralInfo extends React.Component {
   
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentDidMount --> EditGeneralInfo');
+    console.log('componentWillReceiveProps --> EditGeneralInfo');
     
     const {teacherId} = nextProps;
+
+    //if(this.state.countries===[])
+    //{
+        axios.get('/api/countries/')
+        .then(res=>{
+            const countries = res.data.map(function(item, index){
+                return {value: item.CountryId + "", label: item.Name};
+            });                       
+            this.setState({countries});
+        });
+    //}
 
     if(teacherId<=0){
       this.setState({editDataLoaded:false});
@@ -70,12 +82,33 @@ class EditGeneralInfo extends React.Component {
                 "address": res.data.Address,
                 "phoneNo": res.data.PhoneNo,
                 "mobileNo": res.data.MobileNo,
-                "countryId": res.data.CountryId,
-                "stateId": res.data.StateId,
-                "cityId": res.data.CityId
+                "countryId": res.data.CountryId+"",
+                "stateId": res.data.StateId+"",
+                "cityId": res.data.CityId+""
             }
-            
+
+            console.log(this.state.countries);
+            console.log(initData);
+
+            axios.get('/api/states/' + res.data.CountryId)
+                .then(res=>{
+                    const states = res.data.map(function(item, index){
+                        return {value: item.Id + "", label: item.Name};
+                    });                       
+                    this.setState({states});
+            });
+
+            axios.get('/api/cities/' + res.data.StateId)
+                .then(res=>{
+                    const cities = res.data.map(function(item, index){
+                        return {value: item.Id + "", label: item.Name};
+                    });                       
+                    this.setState({cities});
+            });
+
             this.props.initialize(initData); 
+            //this.props.change("countryId", res.data.CountryId+""); // function provided by redux-form
+
           })
           .catch(function (error) {
             console.log(error);
@@ -114,8 +147,8 @@ class EditGeneralInfo extends React.Component {
   }
 
   render() {
-    const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
-    const { states, cities } = this.state;
+    const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
+    const { countries, states, cities } = this.state;
 
     return (
             <form id="form-teacher" className="smart-form" 

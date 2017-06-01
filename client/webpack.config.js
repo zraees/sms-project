@@ -88,7 +88,7 @@ module.exports = (env) => {
       ]
     },
     devServer: {
-
+      headers: { "Access-Control-Allow-Origin": "*" },
       // historyApiFallback: true,
       contentBase: path.join(__dirname, "dist"),
       port: 2200,
@@ -97,7 +97,7 @@ module.exports = (env) => {
       publicPath: '/',
       stats: "minimal",
       proxy: {
-           '*': {target: 'http://localhost:48786'}
+           '*': {target: 'http://localhost:8082'}
         }
     },
     stats: "minimal",

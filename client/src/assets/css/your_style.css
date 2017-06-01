@@ -27,3 +27,23 @@
 table.dataTable td.dt-center {
     text-align: center !important;
 }
+
+fieldset {
+    display: block;
+    padding: 5px 5px 5px !important;
+    border: none;
+    background: rgba(255,255,255,.9);
+    position: relative;
+}
+
+.modal-body {
+    position: relative;
+    padding: 13px !important;
+}
+
+.smart-form footer {
+    display: block;
+    padding: 2px 14px 15px;
+    border-top: 1px solid rgba(0,0,0,.1);
+    background: rgba(248,248,248,.9);
+}

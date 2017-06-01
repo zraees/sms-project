@@ -162,6 +162,7 @@
       <DependentUpon>SMSModel.edmx</DependentUpon>
       <LastGenOutput>SMSModel.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\SMSService.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

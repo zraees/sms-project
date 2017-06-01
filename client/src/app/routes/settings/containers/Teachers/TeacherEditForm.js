@@ -58,7 +58,6 @@ class TeacherEditForm extends React.Component {
             <div className="tab-pane fade in active" id="s1">
                 <EditGeneralInfo teacherId={teacherId} 
                     nationalities={nationalities} 
-                    countries={countries}
                     onSubmit={onSubmit} />
             </div>
             <div className="tab-pane fade" id="s2">
