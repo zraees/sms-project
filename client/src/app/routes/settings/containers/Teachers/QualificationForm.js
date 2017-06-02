@@ -1,6 +1,7 @@
 import React from 'react'
-import { reset } from 'redux-form';
-import axios from 'axios';
+import { reset } from 'redux-form'
+import axios from 'axios'
+import classNames from 'classnames'
 
 import { Field, reduxForm } from 'redux-form'
 
@@ -12,12 +13,12 @@ import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
 import RFField from '../../../../components/ui/RFField'
 import RFTextArea from '../../../../components/ui/RFTextArea'
 
-import {required, email}  from '../../../../components/forms/validation/CustomValidation'
+import {required, email} from '../../../../components/forms/validation/CustomValidation'
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import alert from '../../../../components/utils/alerts'
-import {removeQualification} from './submit';
-
+import {removeQualification} from './submit'
+import mapForCombo from '../../../../components/utils/functions'
 
 class QualificationForm extends React.Component {
   
@@ -29,9 +30,10 @@ class QualificationForm extends React.Component {
         //     {"label":"Months", "value":"Months"},
         //     {"label":"Years", "value":"Years"}],
         qualificationTypes: [],
-        qualificationScoreTypes: [
-            {"label":"CGPA", "value":"CGPA"},
-            {"label":"Percentage", "value":"Percentage"}]
+        qualificationScoreTypes: [],
+            // {"label":"CGPA", "value":"CGPA"},
+            // {"label":"Percentage", "value":"Percentage"}],
+        activeTab: "add"
             
     }
 
@@ -55,21 +57,43 @@ componentDidMount(){
 
     axios.get('/api/QualificationTypes/')
         .then(res=>{
-            const qualificationTypes = res.data.map(function(item, index){
-                return {value: item.QualificationTypeId + "", label: item.QualificationType};
-            });                       
+            const qualificationTypes = mapForCombo(res.data);
+            //  = res.data.map(function(item, index){
+            //     return {value: item.Id + "", label: item.Name};
+            // });                       
             this.setState({qualificationTypes});
         });
+
+    axios.get('assets/api/teachers/qualification-score-types.json')
+        .then(res=>{
+            //console.log(res.data);
+            const qualificationScoreTypes = mapForCombo(res.data);
+            //  = res.data.map(function(item, index){
+            //     return {value: item.Id, label: item.Name};
+            // });                       
+            this.setState({qualificationScoreTypes});
+        });
+        
  
 }
 
   render() {
     const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { qualificationScoreTypes, qualificationTypes } = this.state;
+    const { qualificationScoreTypes, qualificationTypes, activeTab } = this.state;
 
     return (
 
-        <div className="tabbable tabs-below">
+        <div className="tabbable tabs">
+            
+            <ul className="nav nav-tabs">
+                <li id="tabAddLink" className="active">
+                    <a id="tabAdd" data-toggle="tab" href="#AA">Add</a>
+                </li>
+                <li id="tabListLink">
+                    <a id="tabList" data-toggle="tab" href="#BB">List</a>
+                </li> 
+            </ul>
+
             <div className="tab-content padding-10">
                 <div className="tab-pane active" id="AA">
                     
@@ -144,7 +168,7 @@ componentDidMount(){
 
                 </div>
                 <div className="tab-pane" id="BB">
-                    needs to add loading control ....
+                    
                     <Datatable id="teacherQualificationsGrid"  
                       options={{
                         ajax: {"url":'/api/TeacherQualifications/' + teacherId, "dataSrc": ""},
@@ -227,14 +251,6 @@ componentDidMount(){
 
                 </div> 
             </div>
-            <ul className="nav nav-tabs">
-                <li className="active">
-                    <a data-toggle="tab" href="#AA">Add</a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#BB">List</a>
-                </li> 
-            </ul>
         </div>
             
     )

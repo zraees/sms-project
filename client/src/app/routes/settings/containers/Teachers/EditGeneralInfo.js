@@ -36,33 +36,22 @@ class EditGeneralInfo extends React.Component {
     
     const {teacherId} = nextProps;
 
-    //if(this.state.countries===[])
-    //{
+    if (this.state.countries === undefined || this.state.countries.length == 0) {
         axios.get('/api/countries/')
-        .then(res=>{
-            const countries = res.data.map(function(item, index){
-                return {value: item.CountryId + "", label: item.Name};
-            });                       
-            this.setState({countries});
+            .then(res=>{
+                const countries = res.data.map(function(item, index){
+                    return {value: item.CountryId + "", label: item.Name};
+                });                       
+                this.setState({countries});
         });
-    //}
-
-    if(teacherId<=0){
-      this.setState({editDataLoaded:false});
-      const initData = {
-          "id": 0,
-          "name": "",
-          "email": "",
-          "gender": "male",
-          "rating":0
-        }        
-        this.props.initialize(initData);
     }
-    else if(teacherId>0 && !this.state.editDataLoaded){
+
+    if(teacherId>0 && !this.state.editDataLoaded){
       this.setState({editDataLoaded:true});
       this.handleInitialize(teacherId);
     }
-  }
+  
+}
 
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
@@ -87,24 +76,25 @@ class EditGeneralInfo extends React.Component {
                 "cityId": res.data.CityId+""
             }
 
-            console.log(this.state.countries);
-            console.log(initData);
+            if(res.data.CountryId!=null){
+                axios.get('/api/states/' + res.data.CountryId)
+                    .then(res=>{
+                        const states = res.data.map(function(item, index){
+                            return {value: item.Id + "", label: item.Name};
+                        });                       
+                        this.setState({states});
+                });
+            }
 
-            axios.get('/api/states/' + res.data.CountryId)
-                .then(res=>{
-                    const states = res.data.map(function(item, index){
-                        return {value: item.Id + "", label: item.Name};
-                    });                       
-                    this.setState({states});
-            });
-
-            axios.get('/api/cities/' + res.data.StateId)
-                .then(res=>{
-                    const cities = res.data.map(function(item, index){
-                        return {value: item.Id + "", label: item.Name};
-                    });                       
-                    this.setState({cities});
-            });
+            if(res.data.StateId!=null){
+                axios.get('/api/cities/' + res.data.StateId)
+                    .then(res=>{
+                        const cities = res.data.map(function(item, index){
+                            return {value: item.Id + "", label: item.Name};
+                        });                       
+                        this.setState({cities});
+                });
+            }
 
             this.props.initialize(initData); 
             //this.props.change("countryId", res.data.CountryId+""); // function provided by redux-form

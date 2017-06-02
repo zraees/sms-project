@@ -109,6 +109,10 @@ import Msg from '../../../../components/i18n/Msg'
             
             alert('s', 'Qualification details have been saved.');
             $('#teacherQualificationsGrid').DataTable().ajax.reload();  
+            //$('#tabListLink').addClass("active");
+            //$('#tabAddLink').removeClass("active");
+            
+            $('#tabList').trigger('click');
 
           })
           .catch(function (error) {
@@ -122,7 +126,21 @@ import Msg from '../../../../components/i18n/Msg'
 
     export function submitExperience(values){
       console.log(values);
-      alert('s', 'Submit experience form')
+      axios.post('/api/TeacherExperiences', values)      
+          .then(function (response) {
+            
+            alert('s', 'Experience details have been saved.');
+            $('#teacherExperiencesGrid').DataTable().ajax.reload();  
+            $('#tabListExp').trigger('click');
+
+          })
+          .catch(function (error) {
+            console.log(error);
+            alert('f', '');
+            throw new SubmissionError({   
+                _error: 'Something went wrong, please contact system administrator!'
+              });
+          });
     }
 
   export function removeQualification(id, delCell){
@@ -163,5 +181,45 @@ import Msg from '../../../../components/i18n/Msg'
           // do nothing
         }
       }
+
+  export function removeExperience(id, delCell){
+      // console.log('in remove');
+
+        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+           deleteExperienceRecord(ButtonPressed, id, delCell); 
+        });
+
+      }
+
+    function deleteExperienceRecord(ButtonPressed, id, delCell) {
+
+        if (ButtonPressed === "Yes") {
+            // console.log('conf yes');
+            // console.log(id);
+            axios.delete('/api/TeacherExperiences/' + id)      
+              .then(function (response) {
+                
+                alert('s','Experience details have been deleted.');
+                
+                var table = $('#teacherExperiencesGrid').DataTable();                
+                table
+                  .row( delCell.parents('tr') )
+                  .remove()
+                  .draw();
+
+                  //console.log('after row del ..')
+
+              })
+              .catch(function (error) {
+                  alert('f','');
+              }); 
+
+          
+        }
+        else if (ButtonPressed === "No") {
+          // do nothing
+        }
+      }
+
 
 export default submit

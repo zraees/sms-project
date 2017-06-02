@@ -24,6 +24,7 @@ namespace SMSServices.Models
         public Nullable<decimal> Score { get; set; }
         public string Duration { get; set; }
         public string Majors { get; set; }
+        public string InstitutionName { get; set; }
     
         public virtual QualificationTypes QualificationTypes { get; set; }
         public virtual Teachers Teachers { get; set; }

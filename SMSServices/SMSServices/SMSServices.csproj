@@ -93,7 +93,7 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\QualificationTypesController.cs" />
     <Compile Include="Controllers\NationalitiesController.cs" />
-    <Compile Include="Controllers\Nationalities2Controller2.cs" />
+    <Compile Include="Controllers\TeacherExperiencesController.cs" />
     <Compile Include="Controllers\TeacherQualificationsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

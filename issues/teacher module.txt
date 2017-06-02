@@ -1,0 +1,22 @@
+TeacherPage.js
+==============
+1- Grid not refresh on first time when we add teacher after that refreshing fine.
+2- date formatting issue on grid
+	Wishes:
+	-------
+		1- show teacher age in grid
+		2- show rating in stars
+		3- icon for male and female
+
+TeacherForm.js
+==============
+1- city combobox set first value after selection
+
+ 
+Qualification.js
+================
+1- numeric textbox issue
+2- qualification type need to show in grid
+3- needs to add loading control ....
+4- formatting
+

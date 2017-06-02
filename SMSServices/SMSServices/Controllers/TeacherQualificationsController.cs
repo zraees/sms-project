@@ -23,10 +23,11 @@ namespace SMSServices.Controllers
         }
 
         // GET api/<controller>/5
-        public TeacherQualifications Get(int teacherId)
+        [Route("api/TeacherQualifications/{teacherId}")]
+        public IEnumerable<TeacherQualifications> Get(int teacherId)
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.TeacherQualifications.Where(t => t.TeacherId == teacherId).FirstOrDefault();
+            return entities.TeacherQualifications.Where(t => t.TeacherId == teacherId);
         } 
 
         // POST api/<controller>
@@ -34,11 +35,10 @@ namespace SMSServices.Controllers
         {         
             try
             {
-                DateUtilities dateUtilities = new DateUtilities();
-
                 entities.TeacherQualifications.Add(new TeacherQualifications()
                 {
                     Qualification = teacherQualification.Qualification,
+                    InstitutionName = teacherQualification.InstitutionName,
                     Majors = teacherQualification.Majors,
                     StartDate = teacherQualification.StartDate,
                     EndDate = teacherQualification.EndDate,
@@ -102,7 +102,10 @@ namespace SMSServices.Controllers
             if (teacherQualification.StartDate.HasValue && teacherQualification.EndDate.HasValue)
                 dateUtilities.DateDiff(teacherQualification.StartDate.Value, teacherQualification.EndDate.Value, ref years, ref months, ref days);
 
-            return string.Format("{0} year{1} and {2} month{3}", years, years > 1 ? "s" : "", months + (days > 0 ? 1 : 0), (months + (days > 0 ? 1 : 0)) > 1 ? "s" : "");
+            return string.Format("{0} year{1} and {2} month{3}", years,
+                years > 1 ? "s" : "",
+                months + (days > 0 ? 1 : 0),
+                (months + (days > 0 ? 1 : 0)) > 1 ? "s" : "").Replace("0 year and ", "").Replace("0 month", "");
         }
 
     }

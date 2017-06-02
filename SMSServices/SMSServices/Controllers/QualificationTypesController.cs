@@ -1,4 +1,5 @@
-﻿using SMSServices.Models;
+﻿using SMSServices.HelperClasses;
+using SMSServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace SMSServices.Controllers
         private SMSEntities entities = new SMSEntities();
 
         // GET api/<controller>
-        public IEnumerable<QualificationTypes> Get()
+        public IEnumerable<KeyValue> Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.QualificationTypes;
+            return entities.QualificationTypes.Select(a => new KeyValue() { Id = a.QualificationTypeId, Name = a.QualificationType });
         }
 
         // GET api/<controller>/5

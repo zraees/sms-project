@@ -50,7 +50,7 @@
           </Key>
           <Property Name="TeacherExperienceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
-          <Property Name="InstitutionName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="TotalExperience" Type="nvarchar" MaxLength="20" />
@@ -67,6 +67,7 @@
           <Property Name="TeacherQualificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
           <Property Name="Qualification" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="InstitutionName" Type="nvarchar" MaxLength="150" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="QualificationTypeId" Type="int" />
@@ -364,6 +365,7 @@
           <Property Name="Majors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="QualificationTypes" Relationship="SMSModel.FK_TeacherQualifications_QualificationTypes" FromRole="TeacherQualifications" ToRole="QualificationTypes" />
           <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="TeacherQualifications" ToRole="Teachers" />
+          <Property Name="InstitutionName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_TeacherQualifications_QualificationTypes">
           <End Type="SMSModel.QualificationTypes" Role="QualificationTypes" Multiplicity="0..1" />
@@ -427,7 +429,6 @@
           </Key>
           <Property Name="TeacherExperienceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
-          <Property Name="InstitutionName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="TotalExperience" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
@@ -440,6 +441,7 @@
           <NavigationProperty Name="Countries" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="TeacherExperiences" ToRole="Countries" />
           <NavigationProperty Name="States" Relationship="SMSModel.FK_TeacherExperiences_States" FromRole="TeacherExperiences" ToRole="States" />
           <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="TeacherExperiences" ToRole="Teachers" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cities_States">
           <End Type="SMSModel.States" Role="States" Multiplicity="1" />
@@ -558,6 +560,7 @@
           <EntitySetMapping Name="TeacherQualifications">
             <EntityTypeMapping TypeName="SMSModel.TeacherQualifications">
               <MappingFragment StoreEntitySet="TeacherQualifications">
+                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
                 <ScalarProperty Name="Majors" ColumnName="Majors" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
@@ -602,6 +605,7 @@
           <EntitySetMapping Name="TeacherExperiences">
             <EntityTypeMapping TypeName="SMSModel.TeacherExperiences">
               <MappingFragment StoreEntitySet="TeacherExperiences">
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="LeavingReason" ColumnName="LeavingReason" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
@@ -610,7 +614,6 @@
                 <ScalarProperty Name="TotalExperience" ColumnName="TotalExperience" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="TeacherExperienceId" ColumnName="TeacherExperienceId" />
               </MappingFragment>
