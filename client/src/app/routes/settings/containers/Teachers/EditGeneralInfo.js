@@ -14,6 +14,7 @@ import {required, email}  from '../../../../components/forms/validation/CustomVa
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import alert from '../../../../components/utils/alerts'
+import mapForCombo from '../../../../components/utils/functions'
 
 class EditGeneralInfo extends React.Component {
  
@@ -22,7 +23,7 @@ class EditGeneralInfo extends React.Component {
     this.state = {
         editDataLoaded: false,
         rating: 0,
-        countries: [],
+        //countries: [],
         states: [],
         cities: []
         }
@@ -32,19 +33,17 @@ class EditGeneralInfo extends React.Component {
   
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps --> EditGeneralInfo');
+    console.log('componentWillReceiveProps --> EditGeneralInfo 2');
     
     const {teacherId} = nextProps;
 
-    if (this.state.countries === undefined || this.state.countries.length == 0) {
-        axios.get('/api/countries/')
-            .then(res=>{
-                const countries = res.data.map(function(item, index){
-                    return {value: item.CountryId + "", label: item.Name};
-                });                       
-                this.setState({countries});
-        });
-    }
+    // if (this.state.countries === undefined || this.state.countries.length == 0) {
+    //     axios.get('/api/countries/')
+    //         .then(res=>{
+    //             const countries = mapForCombo(res.data);          
+    //             this.setState({countries});
+    //     });
+    // }
 
     if(teacherId>0 && !this.state.editDataLoaded){
       this.setState({editDataLoaded:true});
@@ -76,12 +75,12 @@ class EditGeneralInfo extends React.Component {
                 "cityId": res.data.CityId+""
             }
 
+            //console.log('before state');
+
             if(res.data.CountryId!=null){
                 axios.get('/api/states/' + res.data.CountryId)
                     .then(res=>{
-                        const states = res.data.map(function(item, index){
-                            return {value: item.Id + "", label: item.Name};
-                        });                       
+                        const states = mapForCombo(res.data);             
                         this.setState({states});
                 });
             }
@@ -89,9 +88,7 @@ class EditGeneralInfo extends React.Component {
             if(res.data.StateId!=null){
                 axios.get('/api/cities/' + res.data.StateId)
                     .then(res=>{
-                        const cities = res.data.map(function(item, index){
-                            return {value: item.Id + "", label: item.Name};
-                        });                       
+                        const cities = mapForCombo(res.data);
                         this.setState({cities});
                 });
             }
@@ -109,9 +106,7 @@ class EditGeneralInfo extends React.Component {
   handleCountryBlur(obj, value){
     axios.get('/api/states/' + value)
         .then(res=>{
-            const states = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
+            const states = mapForCombo(res.data);             
             this.setState({states});
         });
  
@@ -120,25 +115,20 @@ class EditGeneralInfo extends React.Component {
   handleStateBlur(obj, value){
     axios.get('/api/cities/' + value)
         .then(res=>{
-            const cities = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
+            const cities = mapForCombo(res.data);             
             this.setState({cities});
         });
  
   }
 
   changeRate(name, value) {
-    // console.log('changeRate');
-    // console.log(name);
-    // console.log(value);
       this.props.change(name, value); // function provided by redux-form
       this.setState({ rating: value })
   }
 
   render() {
-    const { teacherId, handleSubmit, nationalities, pristine, reset, submitting, touched, error, warning } = this.props
-    const { countries, states, cities } = this.state;
+    const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { states, cities } = this.state;
 
     return (
             <form id="form-teacher" className="smart-form" 

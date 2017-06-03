@@ -1,4 +1,5 @@
-﻿using SMSServices.Models;
+﻿using SMSServices.HelperClasses;
+using SMSServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace SMSServices.Controllers
         private SMSEntities entities = new SMSEntities();
 
         // GET api/<controller>
-        public IEnumerable<Countries> Get()
+        public IEnumerable<KeyValue> Get()
         {
-            int[] country = { 101, 166 };
+            //int[] country = { 101, 166 };c => country.Contains(c.CountryId)
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.Countries.Where(c => country.Contains(c.CountryId));
+            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
         }
 
         // GET api/<controller>/5

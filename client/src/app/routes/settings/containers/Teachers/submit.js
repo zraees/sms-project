@@ -4,6 +4,8 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
+import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+
 
     function submit(values){
       console.log(values);
@@ -30,8 +32,7 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
     function insert(values){
-      console.log(' in insert');
-      console.log(values);
+      
       axios.post('/api/teachers', values)      
           .then(function (response) {
             
@@ -74,8 +75,8 @@ import Msg from '../../../../components/i18n/Msg'
 
     function deleteRecord(ButtonPressed, id, delCell) {
 
-        if (ButtonPressed === "Yes") {
-            // console.log('conf yes');
+        if (isYesClicked(ButtonPressed)) {
+            console.log('conf yes by func');
             // console.log(id);
             axios.delete('/api/teachers/' + id)      
               .then(function (response) {
@@ -97,21 +98,18 @@ import Msg from '../../../../components/i18n/Msg'
 
           
         }
-        else if (ButtonPressed === "No") {
+        else if (isNoClicked(ButtonPressed)) {
           // do nothing
         }
       }
 
     export function submitQualification(values){
-      console.log(values);
+      
       axios.post('/api/TeacherQualifications', values)      
           .then(function (response) {
             
             alert('s', 'Qualification details have been saved.');
             $('#teacherQualificationsGrid').DataTable().ajax.reload();  
-            //$('#tabListLink').addClass("active");
-            //$('#tabAddLink').removeClass("active");
-            
             $('#tabList').trigger('click');
 
           })
@@ -144,19 +142,14 @@ import Msg from '../../../../components/i18n/Msg'
     }
 
   export function removeQualification(id, delCell){
-      // console.log('in remove');
-
-        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
-           deleteQualificationRecord(ButtonPressed, id, delCell); 
-        });
-
-      }
+      confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+          deleteQualificationRecord(ButtonPressed, id, delCell); 
+      });
+  }
 
     function deleteQualificationRecord(ButtonPressed, id, delCell) {
 
-        if (ButtonPressed === "Yes") {
-            // console.log('conf yes');
-            // console.log(id);
+        if (isYesClicked(ButtonPressed)) {
             axios.delete('/api/TeacherQualifications/' + id)      
               .then(function (response) {
                 
@@ -177,49 +170,43 @@ import Msg from '../../../../components/i18n/Msg'
 
           
         }
-        else if (ButtonPressed === "No") {
+        else if (isNoClicked(ButtonPressed)) {
           // do nothing
         }
       }
 
   export function removeExperience(id, delCell){
-      // console.log('in remove');
+    confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+        deleteExperienceRecord(ButtonPressed, id, delCell); 
+    });
+  }
 
-        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
-           deleteExperienceRecord(ButtonPressed, id, delCell); 
-        });
+  function deleteExperienceRecord(ButtonPressed, id, delCell) {
 
-      }
-
-    function deleteExperienceRecord(ButtonPressed, id, delCell) {
-
-        if (ButtonPressed === "Yes") {
-            // console.log('conf yes');
-            // console.log(id);
-            axios.delete('/api/TeacherExperiences/' + id)      
-              .then(function (response) {
-                
-                alert('s','Experience details have been deleted.');
-                
-                var table = $('#teacherExperiencesGrid').DataTable();                
-                table
-                  .row( delCell.parents('tr') )
-                  .remove()
-                  .draw();
-
-                  //console.log('after row del ..')
-
-              })
-              .catch(function (error) {
-                  alert('f','');
-              }); 
-
+      if (isYesClicked(ButtonPressed)) {
           
-        }
-        else if (ButtonPressed === "No") {
-          // do nothing
-        }
+          axios.delete('/api/TeacherExperiences/' + id)      
+            .then(function (response) {
+              
+              alert('s','Experience details have been deleted.');
+              
+              var table = $('#teacherExperiencesGrid').DataTable();                
+              table
+                .row( delCell.parents('tr') )
+                .remove()
+                .draw();
+
+            })
+            .catch(function (error) {
+                alert('f','');
+            }); 
+
+        
       }
+      else if (isNoClicked(ButtonPressed)) {
+        // do nothing
+      }
+    }
 
 
 export default submit

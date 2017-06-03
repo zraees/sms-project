@@ -9,6 +9,8 @@ import * as layout from './LayoutActions'
 
 const initialState = {
   smartSkin: localStorage.getItem('sm-skin') || config.smartSkin,
+  lang: JSON.parse(localStorage.getItem('sm-lang')) || config.defaultLang,
+
   skin: config.skins.find((_skin) => {
     return _skin.name == (localStorage.getItem('sm-skin') || config.smartSkin)
   }),
@@ -42,6 +44,12 @@ export default function layoutReducer(state = initialState, action) {
       _state.skin = action.skin;
       _state.smartSkin = action.skin.name;
 
+      return _state;
+
+    case layout.SET_LANG:
+      _state = {...state};
+      _state.lang = action.lang;
+      
       return _state;
 
     case layout.TOGGLE_FIXED_HEADER:

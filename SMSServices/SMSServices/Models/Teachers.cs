@@ -23,7 +23,6 @@ namespace SMSServices.Models
         public int TeacherId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public Nullable<int> NationalityId { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public string IDNo { get; set; }
         public string Gender { get; set; }
@@ -34,9 +33,10 @@ namespace SMSServices.Models
         public Nullable<int> CountryId { get; set; }
         public Nullable<int> StateId { get; set; }
         public Nullable<int> CityId { get; set; }
+        public Nullable<int> NationalityId { get; set; }
     
-        public virtual Nationalities Nationalities { get; set; }
         public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
+        public virtual Countries Countries { get; set; }
     }
 }

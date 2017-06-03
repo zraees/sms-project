@@ -25,7 +25,6 @@ namespace SMSServices.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Nationalities> Nationalities { get; set; }
         public virtual DbSet<Teachers> Teachers { get; set; }
         public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
         public virtual DbSet<TeacherQualifications> TeacherQualifications { get; set; }

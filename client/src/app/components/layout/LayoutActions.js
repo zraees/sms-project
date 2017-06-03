@@ -1,11 +1,16 @@
 import {SmartMessageBox} from "../utils/actions/MessageActions";
 import {bodyAddClass, bodyToggleClass, bodyRemoveClass, htmlToggleClass, htmlRemoveClass} from "../utils/actions/rootContainers";
+
+import LanguageActions from '../i18n/LanguageActions';
+
+
 /**
  * Created by griga on 11/17/16.
  */
 
 
 export const SMART_SKIN = 'SMART_SKIN';
+export const SET_LANG = 'SET_LANG';
 export const TOGGLE_FIXED_HEADER = 'TOGGLE_FIXED_HEADER';
 export const TOGGLE_FIXED_NAVIGATION = 'TOGGLE_FIXED_NAVIGATION';
 export const TOGGLE_FIXED_RIBBON = 'TOGGLE_FIXED_RIBBON';
@@ -24,6 +29,17 @@ export function onSmartSkin(skin) {
   return {
     type: SMART_SKIN,
     skin
+  }
+}
+
+
+export function onSetLang(lang) {
+  //console.log('onSetLang');
+  //console.log(lang);
+  LanguageActions.select(lang);
+  return {
+    type: SET_LANG,
+    lang
   }
 }
 
@@ -167,7 +183,14 @@ export const handleBodyClasses = store => next => action => {
 export const dumpLayoutToStorage = store => next => action => {
   const result = next(action);
   const layout = store.getState().layout;
+  //console.log('dumpLayoutToStorage');
+  //console.log(store.getState());
+  //console.log(JSON.stringify(layout.defaultLang));
+  //console.log(JSON.parse(JSON.stringify(layout.defaultLang)));
+  //console.log('dumpLayoutToStorage end');
+  
   localStorage.setItem('sm-skin', layout.smartSkin);
+  localStorage.setItem('sm-lang', JSON.stringify(layout.lang));
   localStorage.setItem('sm-fixed-header', layout.fixedHeader);
   localStorage.setItem('sm-fixed-navigation', layout.fixedNavigation);
   localStorage.setItem('sm-fixed-ribbon', layout.fixedRibbon);
@@ -187,6 +210,8 @@ export function factoryReset(){
       buttons: '[No][Yes]'
     }, (ButtonPressed) => {
       if (ButtonPressed == "Yes" && localStorage) {
+        console.log(localStorage);
+        console.log('inside localsto clear');
         localStorage.clear();
         location.reload()
         dispatch({

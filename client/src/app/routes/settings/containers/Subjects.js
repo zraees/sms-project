@@ -44,6 +44,10 @@ const greaterThan = otherField =>
                         <fieldset>
                           
                         <div>
+                          <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).key}/>
+                        </div>
+
+                        <div>
                           <label>Min</label>
                           <div>
                             <Field

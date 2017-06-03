@@ -1,6 +1,11 @@
 {
     "Projects": "Проекты",
     "Msgs": "Msgs",
+    "Confirmation!": "!التأكيد",
+    "Are you sure, you want to delete this record?": "هل تريد بالتأكيد حذف هذا السجل؟",
+    "yesText": "نعم",
+    "noText": "لا",
+    "SystemAlertText": "رسالة من النظام",
     "Notify": "Уведомлять",
     "Tasks": "Задачи",
     "Recent projects": "Последние проекты",

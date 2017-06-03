@@ -1,0 +1,12 @@
+all languages in following file:
+================================
+asset \ .. \ languages.js	
+
+
+default language in config file:
+================================
+src\app\config\config.js
+
+
+layoutReducer.js	define reducer to set language in localstorage 
+layoutActions.js	define action to set language in localstorage

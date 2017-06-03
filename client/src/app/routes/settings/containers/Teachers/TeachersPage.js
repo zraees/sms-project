@@ -17,7 +17,8 @@ import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
-import submit, {remove, submitQualification, submitExperience} from './submit';
+import submit, {remove, submitQualification, submitExperience} from './submit'
+import mapForCombo from '../../../../components/utils/functions'
 
 class TeachersPage extends React.Component {
   
@@ -75,17 +76,13 @@ class TeachersPage extends React.Component {
     //https://jsonplaceholder.typicode.com/posts
     axios.get('/api/nationalities/')
         .then(res=>{
-            const nationalities = res.data.map(function(item, index){
-                return {value: item.NationalityId + "", label: item.Nationality};
-            });                       
+            const nationalities = mapForCombo(res.data);      
             this.setState({nationalities});
         });
  
     axios.get('/api/countries/')
         .then(res=>{
-            const countries = res.data.map(function(item, index){
-                return {value: item.CountryId + "", label: item.Name};
-            });                       
+            const countries = mapForCombo(res.data);
             this.setState({countries});
         });
  

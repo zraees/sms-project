@@ -4,6 +4,13 @@ const SmartadminConfig = {
 
     smartSkin: "smart-style-0",
 
+    defaultLang: {
+        "key": "us",
+        "alt": "United States",
+        "title": "English (US)",
+        "rtl": false
+    },
+    
     apiRootUrl: "assets/api",
     buildUrl: "build",
     skins: [

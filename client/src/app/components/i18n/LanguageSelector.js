@@ -3,6 +3,7 @@ import Reflux from 'reflux'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
+import _ from 'lodash';
 
 import classnames from 'classnames'
 
@@ -22,11 +23,25 @@ const LanguageSelector = React.createClass({
         LanguageActions.init();
     },
     render: function () {
+        let store = this.state.store;
         let languages = this.state.store.languages;
-        let language = this.state.store.language;
+        //let language = this.state.store.language;         //get language from language store, but now I'm getting from localStorage
+        let language = this.props.lang;
         
-        // console.log(language);
-        // console.log(languages);
+        //console.log(this.state.store.language);
+        //console.log('before lang ddl render');
+        //console.log(language);
+        //store.phrases ={};
+        //this.setState({store});
+        if(_.isEmpty(store.phrases)){
+            //console.log('isempty');
+            LanguageActions.select(language)
+        }
+        else{
+            console.log(store.phrases);
+        }
+        
+
         return (
             <ul className="header-dropdown-list hidden-xs ng-cloak">
                 <li className="dropdown">
@@ -37,6 +52,7 @@ const LanguageSelector = React.createClass({
                         <i className="fa fa-angle-down" /></a>
                     <ul className="dropdown-menu pull-right">
                         {languages.map(function(_lang, idx){
+                                
                             return (
                                 <li key={idx} className={classnames({
                                     active: _lang.key == language.key
@@ -58,6 +74,9 @@ const LanguageSelector = React.createClass({
         LanguageStore.setLanguage(language)
         LanguageActions.select(language)
         
+        console.log('_selectLanguage');
+        // console.log(language);
+        this.props.onSetLang(language);
         //console.log('before rtl action ' + language.rtl)
         if((!this.props.rtl && language.rtl) || (this.props.rtl && !language.rtl))
             this.props.onRtl();     // toggle RTL 

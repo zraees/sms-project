@@ -18,14 +18,17 @@ namespace SMSServices.Models
         {
             this.States = new HashSet<States>();
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
+            this.Teachers = new HashSet<Teachers>();
         }
     
         public int CountryId { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
         public int PhoneCode { get; set; }
+        public string Nationality { get; set; }
     
         public virtual ICollection<States> States { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
+        public virtual ICollection<Teachers> Teachers { get; set; }
     }
 }

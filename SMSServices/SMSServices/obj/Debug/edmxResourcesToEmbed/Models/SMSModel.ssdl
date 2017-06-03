@@ -16,13 +16,7 @@
     <Property Name="Symbol" Type="nvarchar" MaxLength="3" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="PhoneCode" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Nationalities">
-    <Key>
-      <PropertyRef Name="NationalityId" />
-    </Key>
-    <Property Name="NationalityId" Type="int" Nullable="false" />
-    <Property Name="Nationality" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Nationality" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -78,7 +72,6 @@
     <Property Name="TeacherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Email" Type="nvarchar" MaxLength="150" />
-    <Property Name="NationalityId" Type="int" />
     <Property Name="DOB" Type="smalldatetime" />
     <Property Name="IDNo" Type="nvarchar" MaxLength="50" />
     <Property Name="Gender" Type="nvarchar" MaxLength="6" />
@@ -89,6 +82,7 @@
     <Property Name="CountryId" Type="int" />
     <Property Name="StateId" Type="int" />
     <Property Name="CityId" Type="int" />
+    <Property Name="NationalityId" Type="int" />
   </EntityType>
   <Association Name="FK_Cities_States">
     <End Role="States" Type="Self.States" Multiplicity="1" />
@@ -186,12 +180,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Teachers_Nationalities">
-    <End Role="Nationalities" Type="Self.Nationalities" Multiplicity="0..1" />
+  <Association Name="FK_Teachers_Countries">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
     <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Nationalities">
-        <PropertyRef Name="NationalityId" />
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryId" />
       </Principal>
       <Dependent Role="Teachers">
         <PropertyRef Name="NationalityId" />
@@ -201,7 +195,6 @@
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Nationalities" EntityType="Self.Nationalities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
@@ -239,8 +232,8 @@
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
     </AssociationSet>
-    <AssociationSet Name="FK_Teachers_Nationalities" Association="Self.FK_Teachers_Nationalities">
-      <End Role="Nationalities" EntitySet="Nationalities" />
+    <AssociationSet Name="FK_Teachers_Countries" Association="Self.FK_Teachers_Countries">
+      <End Role="Countries" EntitySet="Countries" />
       <End Role="Teachers" EntitySet="Teachers" />
     </AssociationSet>
   </EntityContainer>

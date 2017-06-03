@@ -1,4 +1,5 @@
-﻿using SMSServices.Models;
+﻿using SMSServices.HelperClasses;
+using SMSServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,31 +14,10 @@ namespace SMSServices.Controllers
         private SMSEntities entities = new SMSEntities();
 
         // GET api/<controller>
-        public IEnumerable<Nationalities> Get()
+        public IEnumerable<KeyValue> Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.Nationalities;
-        }
-
-        // GET api/<controller>/5
-        public Nationalities Get(int id)
-        {
-            return entities.Nationalities.Where(n => n.NationalityId == id).FirstOrDefault();
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Nationality });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,13 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Nationalities">
-    <Key>
-      <PropertyRef Name="NationalityId" />
-    </Key>
-    <Property Name="NationalityId" Type="Int32" Nullable="false" />
-    <Property Name="Nationality" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Nationalities" ToRole="Teachers" />
-  </EntityType>
   <EntityType Name="Teachers">
     <Key>
       <PropertyRef Name="TeacherId" />
@@ -15,12 +7,10 @@
     <Property Name="TeacherId" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="NationalityId" Type="Int32" />
     <Property Name="DOB" Type="DateTime" Precision="0" />
     <Property Name="IDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
     <Property Name="Rating" Type="Int32" />
-    <NavigationProperty Name="Nationalities" Relationship="SMSModel.FK_Teachers_Nationalities" FromRole="Teachers" ToRole="Nationalities" />
     <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
     <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -29,14 +19,11 @@
     <Property Name="CountryId" Type="Int32" />
     <Property Name="StateId" Type="Int32" />
     <Property Name="CityId" Type="Int32" />
+    <Property Name="NationalityId" Type="Int32" />
+    <NavigationProperty Name="Countries" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Teachers" ToRole="Countries" />
   </EntityType>
   <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Nationalities" EntityType="Self.Nationalities" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" />
-    <AssociationSet Name="FK_Teachers_Nationalities" Association="SMSModel.FK_Teachers_Nationalities">
-      <End Role="Nationalities" EntitySet="Nationalities" />
-      <End Role="Teachers" EntitySet="Teachers" />
-    </AssociationSet>
     <EntitySet Name="QualificationTypes" EntityType="SMSModel.QualificationTypes" />
     <EntitySet Name="TeacherQualifications" EntityType="SMSModel.TeacherQualifications" />
     <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="SMSModel.FK_TeacherQualifications_QualificationTypes">
@@ -75,19 +62,11 @@
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
     </AssociationSet>
+    <AssociationSet Name="FK_Teachers_Countries" Association="SMSModel.FK_Teachers_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Teachers" EntitySet="Teachers" />
+    </AssociationSet>
   </EntityContainer>
-  <Association Name="FK_Teachers_Nationalities">
-    <End Type="SMSModel.Nationalities" Role="Nationalities" Multiplicity="0..1" />
-    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Nationalities">
-        <PropertyRef Name="NationalityId" />
-      </Principal>
-      <Dependent Role="Teachers">
-        <PropertyRef Name="NationalityId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="QualificationTypes">
     <Key>
       <PropertyRef Name="QualificationTypeId" />
@@ -158,6 +137,8 @@
     <Property Name="PhoneCode" Type="Int32" Nullable="false" />
     <NavigationProperty Name="States" Relationship="SMSModel.FK_States_Countries" FromRole="Countries" ToRole="States" />
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="Countries" ToRole="TeacherExperiences" />
+    <Property Name="Nationality" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Countries" ToRole="Teachers" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -259,6 +240,18 @@
       </Principal>
       <Dependent Role="TeacherExperiences">
         <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teachers_Countries">
+    <End Type="SMSModel.Countries" Role="Countries" Multiplicity="0..1" />
+    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Teachers">
+        <PropertyRef Name="NationalityId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

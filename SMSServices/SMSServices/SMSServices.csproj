@@ -107,9 +107,6 @@
     <Compile Include="Models\Countries.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Nationalities.cs">
-      <DependentUpon>SMSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>

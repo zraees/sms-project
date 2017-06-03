@@ -25,9 +25,13 @@ class ExperienceForm extends React.Component  {
   
   constructor(props){
     super(props);
-    // this.state = {
-            
-    // }
+     this.state = {
+      states: [],
+      cities: []
+    }
+    this.handleCountryBlur = this.handleCountryBlur.bind(this);
+    this.handleStateBlur = this.handleStateBlur.bind(this);
+    this.handleCityBlur = this.handleCityBlur.bind(this);
 
   }
     
@@ -49,8 +53,33 @@ componentDidMount(){
 
 }
 
+  handleCountryBlur(obj, value){
+    //console.log('before experience states');
+    axios.get('/api/states/' + value)
+        .then(res=>{
+            const states = mapForCombo(res.data);                          
+            this.setState({states});
+        });
+ 
+  }
+
+  handleStateBlur(obj, value){
+    axios.get('/api/cities/' + value)
+        .then(res=>{
+            const cities = mapForCombo(res.data);                          
+            this.setState({cities});
+        });
+ 
+  }
+
+  handleCityBlur(obj, value){
+    //console.log(obj);
+    //console.log(value);
+  }
+
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { states, cities } = this.state;
 
     return (
 
@@ -89,6 +118,38 @@ componentDidMount(){
                             <section className="col col-4">
                                 <Field name="designation" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                                     validate={required} component={RFField} type="text" placeholder="Designation"/>  
+                            </section>
+                        </div>
+
+                        <div className="row">
+                            <section className="col col-4">
+                                <Field
+                                    multi={false}
+                                    name="countryId"
+                                    placeholder="Country"
+                                    options={countries}
+                                    onBlur={this.handleCountryBlur}
+                                    component={RFReactSelect} />
+                            </section>
+
+                            <section className="col col-4">
+                                <Field
+                                    multi={false}
+                                    name="stateId"
+                                    placeholder="State"
+                                    options={states}
+                                    onBlur={this.handleStateBlur}
+                                    component={RFReactSelect} />
+                            </section>
+
+                            <section className="col col-4">
+                                <Field
+                                    multi={false}
+                                    name="cityId"
+                                    placeholder="City"
+                                    options={cities}
+                                    onBlur={this.handleCityBlur}
+                                    component={RFReactSelect} />
                             </section>
                         </div>
 
