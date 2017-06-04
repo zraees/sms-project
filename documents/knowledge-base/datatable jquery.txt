@@ -1,0 +1,34 @@
+1- different lang:
+------------------
+	Links:
+	https://datatables.net/reference/option/language
+	https://datatables.net/plug-ins/i18n/
+
+	a- changes in web.config (not necessary in our case)
+		<system.webserver>
+			<staticContent>
+				<mimeMap fileExtension=".json" mineType="application/json" />
+			</staticContent>
+		</system.webserver>
+
+	b- create .json file for lang
+		e.g: JqueryDatatablesLang-ar.json
+
+	
+	c- $('#example').dataTable( {
+            	"language": {
+                	"url": "dataTables.german.lang"
+            	}
+        	} );
+		
+		or
+		
+		$('#example').dataTable( {
+			$.extend(true, $.fn.dataTable.defaults,{
+            		"language": {
+                		"url": "dataTables.german.lang"
+            		}
+			});
+        	} );		
+		
+
