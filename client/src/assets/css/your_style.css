@@ -18,6 +18,21 @@
  * - CUSTOM STYLES
  */
 
+@font-face {
+font-family: 'droidkufi';
+src: url('../fonts/droidkufi/DroidKufi-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+.smart-rtl body, body.smart-rtl {
+    direction: rtl !important;
+    font-family: 'droidkufi' !important;
+    font-size: 12px;
+    /*line-height: 1.42857;
+    margin: 0;*/
+}
+
  .react-datepicker {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.0rem !important;

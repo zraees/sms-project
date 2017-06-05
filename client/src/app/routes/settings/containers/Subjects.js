@@ -7,6 +7,7 @@ import React from 'react'
 import WidgetGrid from '../../../components/widgets/WidgetGrid'
 import JarvisWidget  from '../../../components/widgets/JarvisWidget'
 import RFDatePicker from '../../../components/ui/RFDatePicker'
+import Msg from '../../../components/i18n/Msg'
 
 import { Field, reduxForm } from 'redux-form'
 
@@ -42,7 +43,9 @@ const greaterThan = otherField =>
 
                       <form id="form-teacher" className="smart-form"  >
                         <fieldset>
-                          
+
+                         <Msg phrase="Are you sure, you want to delete this record?" />
+
                         <div>
                           <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).key}/>
                         </div>
