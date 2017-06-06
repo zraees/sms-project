@@ -32,3 +32,47 @@
         	} );		
 		
 
+
+2- replace datatable error alert with custom alert:
+---------------------------------------------------
+https://stackoverflow.com/questions/28050091/set-an-error-handler-for-jquery-datatables-ajax-call
+See docs here:
+https://datatables.net/reference/event/error
+https://cdn.datatables.net/1.10.5/
+
+$.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
+    console.log(message);
+};
+
+
+3- get all checked checkboxes:
+------------------------------
+
+datatable col:
+
+{
+"data": "primaryKey"
+"render": function (data, type, row){
+		return '<input type="checkbox" data-id=' + data + ' class="checkbox" />'
+	} 
+}
+
+function closePopup(){
+	var table = $('#dataTableName').DataTable();
+	var ids = [];
+	$('input:checkbox:checked', table.rows).map(function(index, chkbox){
+		var id = parseInt($(chkbox.closest('[data-id]')).data('id'));
+		ids.push(id);
+	});
+
+	console.log(ids);
+}
+note: closePopup func called on popup close or any action to get all checkboxes
+
+
+4- destory datatable to avoid "Reinitialize error":
+---------------------------------------------------
+if($.fn.dataTable.isDataTable('#example')){
+	var table = $('#example').DataTable();
+	table.destroy();
+}
