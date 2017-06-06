@@ -37,9 +37,9 @@ const LanguageSelector = React.createClass({
             //console.log('isempty');
             LanguageActions.select(language)
         }
-        else{
-            console.log(store.phrases);
-        }
+        // else{
+        //     console.log(store.phrases);
+        // }
         
 
         return (
@@ -47,7 +47,7 @@ const LanguageSelector = React.createClass({
                 <li className="dropdown">
                     <a className="dropdown-toggle" href="#"  data-toggle="dropdown">
                         <img src="assets/img/blank.gif"
-                             className={classnames(['flag', 'flag-'+language.key])} alt={language.alt} />
+                             className={classnames(['flag', 'flag-'+language.flag])} alt={language.alt} />
                         <span>&nbsp;{language.title}&nbsp;</span>
                         <i className="fa fa-angle-down" /></a>
                     <ul className="dropdown-menu pull-right">
@@ -59,7 +59,7 @@ const LanguageSelector = React.createClass({
                                 })}>
                                     <a href="#" onClick={this._selectLanguage.bind(this, _lang)} >
                                         <img src="assets/img/blank.gif"
-                                             className={classnames(['flag', 'flag-'+_lang.key])} alt={_lang.alt} />
+                                             className={classnames(['flag', 'flag-'+_lang.flag])} alt={_lang.alt} />
                                         <span>&nbsp;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               {_lang.title}</span>
                                     </a>
                                 </li>
@@ -74,7 +74,7 @@ const LanguageSelector = React.createClass({
         LanguageStore.setLanguage(language)
         LanguageActions.select(language)
         
-        console.log('_selectLanguage');
+        //console.log('_selectLanguage');
         // console.log(language);
         this.props.onSetLang(language);
         //console.log('before rtl action ' + language.rtl)

@@ -1,0 +1,11 @@
+navigation language json files:
+================================
+src\app\config\navigation.json
+
+and all navigation title should be in ar.json, us.json etc
+
+
+and navigation-us.json file used in 
+src\app\components\navigation\components\NavMenu.js
+
+

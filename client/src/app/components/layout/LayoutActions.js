@@ -209,6 +209,9 @@ export function factoryReset(){
       content: "Would you like to RESET all your saved widgets and clear LocalStorage?",
       buttons: '[No][Yes]'
     }, (ButtonPressed) => {
+        console.log('inside localsto yes');
+      console.log(localStorage);
+      
       if (ButtonPressed == "Yes" && localStorage) {
         console.log(localStorage);
         console.log('inside localsto clear');

@@ -3,18 +3,21 @@
         "key": "us",
         "alt": "United States",
         "title": "English (US)",
-        "rtl": false
+        "rtl": false,
+        "flag": "us"
     },
     {
         "key": "ur",
         "alt": "Pakistan",
         "title": "Urdu (PK)",
-        "rtl": true
+        "rtl": true,
+        "flag": "pk"
     },
     {
         "key": "ar",
         "alt": "Saudi Arabia",
         "title": "Arabic (KSA)",
-        "rtl": true
+        "rtl": true,
+        "flag": "sa"
     }
 ]

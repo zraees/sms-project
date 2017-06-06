@@ -16,4 +16,12 @@ export function isNoClicked(ButtonPressed){
     return ButtonPressed===noText ? true : false;
 }
 
+export function getLangKey(){
+    return JSON.parse(localStorage.getItem('sm-lang')).key || "us"
+}
+
+export function getLang(){
+    return JSON.parse(localStorage.getItem('sm-lang')) //|| "us"
+}
+
 export default mapForCombo

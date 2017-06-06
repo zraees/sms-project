@@ -10,3 +10,4 @@ src\app\config\config.js
 
 layoutReducer.js	define reducer to set language in localstorage 
 layoutActions.js	define action to set language in localstorage
+

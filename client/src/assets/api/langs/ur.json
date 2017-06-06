@@ -1,11 +1,15 @@
 {
     "PROJECTS": "منصوبه",
     "Msgs": "پیغامات",
+    "ConfirmationTitleText": "Confirmation!",
+    "DeleteConfirmationMessageText": "Are you sure, you want to delete this record?",
+    "yesText": "Yes",
+    "noText": "No",
     "Notify": "مطلع",
     "Tasks": "ٹاسکس",
     "Recent projects": "حالیہ منصوبوں",
     "Find reports and more": "رپورٹوں تلاش کریں",
-    "john.doe": "john.doe",
+    "john.doe": "زيشان رايس",
     "Dashboard": "仪表板",
     "Angular Stuff": "角的东西",
     "UI Bootstrap": "UI引导",
@@ -77,10 +81,14 @@
     "Different Versions": "不同版本",
     "Documentation": "文件",
     "Bug Tracker": "Bug跟踪",
-    "Home": "家",
     "Mail": "邮件",
     "Maps": "地图",
     "My Profile": "我的简历",
     "Page Header": "页眉",
-    "Subtitle": "字幕"
+    "Subtitle": "字幕",
+
+    "Home": "گھر",
+    "Settings": "ترتیبات",
+    "Subjects":"مضامین",
+    "Teachers":"اساتذہ"
 }

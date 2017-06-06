@@ -15,6 +15,8 @@ import {navigationInit} from "../NavigationActions";
 
 import store from '../../../store/configureStore'
 
+import {getLangKey} from '../../utils/functions'
+
 
 function addId(item) {
 
@@ -29,8 +31,9 @@ function addId(item) {
   return item
 }
 
+//const langKey = getLangKey();
+//const navItems = require('../../../config/navigation-'+langKey+'.json').items.map(addId);
 const navItems = require('../../../config/navigation.json').items.map(addId);
-
 
 export default class NavMenu extends React.Component {
 
@@ -126,7 +129,7 @@ export default class NavMenu extends React.Component {
   render() {
     return (
       navItems ?
-        <NavMenuList items={navItems}/>
+        <NavMenuList items={navItems} />
         : this.props.children
     )
   }

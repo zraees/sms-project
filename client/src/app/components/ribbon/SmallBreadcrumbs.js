@@ -1,6 +1,7 @@
 import React from 'react'
-
 import {connect} from 'react-redux'
+
+import Msg from '../i18n/Msg'
 
 
 class SmallBreadcrumbs extends React.Component {
@@ -9,7 +10,7 @@ class SmallBreadcrumbs extends React.Component {
       <ol className="breadcrumb">
         {
           this.props.items.map((it, idx)=> (
-            <li key={it + idx}>{it}</li>
+            <li key={it + idx}><Msg phrase={it}/></li>
           ))
         }
       </ol>

@@ -20,6 +20,8 @@ import TeacherEditForm from './TeacherEditForm'
 import submit, {remove, submitQualification, submitExperience} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 
+// import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+
 class TeachersPage extends React.Component {
   
   constructor(props){
@@ -140,8 +142,9 @@ class TeachersPage extends React.Component {
                         </div>
                     </div>
                     
-                    <Msg phrase="Recent projects" />
-                    <Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />
+                    {/*<Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />*/}
+                    
+
                     <Datatable id="teachersGrid"  
                       options={{
                         ajax: {"url":'/api/teachers', "dataSrc": ""},
@@ -233,6 +236,7 @@ class TeachersPage extends React.Component {
                       </tr>
                       </thead>
                     </Datatable>
+
 
                   </div>
                   {/* end widget content */}

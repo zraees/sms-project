@@ -5,6 +5,7 @@ import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
 import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 
     function submit(values){
@@ -65,9 +66,11 @@ import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
     }
 
     export function remove(id, delCell){
-      // console.log('in remove');
-
-        confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+      
+        let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                                || 'Are you sure, you want to delete this record?';
+    
+        confirmation(messageText, function(ButtonPressed){
            deleteRecord(ButtonPressed, id, delCell); 
         });
 
@@ -142,7 +145,11 @@ import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
     }
 
   export function removeQualification(id, delCell){
-      confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+      
+      let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                                || 'Are you sure, you want to delete this record?';
+    
+      confirmation(messageText, function(ButtonPressed){
           deleteQualificationRecord(ButtonPressed, id, delCell); 
       });
   }
@@ -176,7 +183,11 @@ import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
       }
 
   export function removeExperience(id, delCell){
-    confirmation('Are you sure, you want to delete this record?', function(ButtonPressed){
+    
+    let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                              || 'Are you sure, you want to delete this record?';
+    
+    confirmation(messageText, function(ButtonPressed){
         deleteExperienceRecord(ButtonPressed, id, delCell); 
     });
   }
