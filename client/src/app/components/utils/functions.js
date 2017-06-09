@@ -1,10 +1,24 @@
 import LanguageStore from '../i18n/LanguageStore'
+//import store from '../../store/configureStore'
+//import LoaderActions from '../Loader/LoaderActions'
+
 
 function mapForCombo(keyValues){
     return keyValues.map(function(item, index){
                 return {value: item.Id + "", label: item.Name};
             });                       
 }
+
+// export function LoaderVisibity(visible){
+    
+//     if(visible){
+//         store.dispatch(LoaderActions.visible());
+//     }
+//     else{
+//         store.dispatch(LoaderActions.hide());
+//     }
+
+// } 
 
 export function isYesClicked(ButtonPressed){
     let yesText = LanguageStore.getData().phrases["yesText"] || "Yes!";

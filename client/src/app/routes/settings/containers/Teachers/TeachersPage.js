@@ -5,18 +5,20 @@
 import React from 'react'
 import axios from 'axios' 
 import {SubmissionError} from 'redux-form'
-import moment from 'moment'
+import {connect} from 'react-redux'
+//import moment from 'moment'
+
+import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
-import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 
-import Msg from '../../../../components/i18n/Msg'
-import Moment from '../../../../components/utils/Moment'
+//import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
+//import Test from './Test'
 import submit, {remove, submitQualification, submitExperience} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 
@@ -32,7 +34,11 @@ class TeachersPage extends React.Component {
      countries: []
    }
   }
-
+  
+  componentWillMount() {
+    LoaderVisibility(true);
+  }
+  
   componentDidMount(){ 
 
     console.log('componentDidMount --> TeacherPage');
@@ -42,6 +48,7 @@ class TeachersPage extends React.Component {
       if ($(this).find('#dele').length > 0) {
         
         //alert(  $(this).find('#dele').data('tid'));
+        //LoaderVisibility(true);//
         var id = $(this).find('#dele').data('tid');
         remove(id, $(this));
 
@@ -64,7 +71,14 @@ class TeachersPage extends React.Component {
     
     // call before modal open
     $('#teacherPopup').on('show.bs.modal', function (e) {      
+
+      console.log('modal before call edit page');
+
+      //LoaderVisibility(true);
       var button = $(e.relatedTarget);        // Button that triggered the modal
+      //$(button).find('#edi').removeClass("glyphicon glyphicon-edit").addClass("glyphicon glyphicon-refresh glyphicon-spin");
+
+      //console.log(button);
       var id = button.data('id');             // Extract info from data-* attributes
       this.setState({id});    
     }.bind(this));
@@ -88,12 +102,17 @@ class TeachersPage extends React.Component {
             this.setState({countries});
         });
  
+      //   //console.log(this.props.isLoading);
+      // setTimeout(function(){ 
+      //   console.log('sss'); 
+      //   //this.setState({isLoading:true}) 
+      //   LoaderVisibility(false);
+      // }.bind(this), 6000);
+
+      // console.log('aaaaa'); 
+      LoaderVisibility(false);
   }
 
-  // handleClick() {
-	// 	console.log("clicked");
-	// }
-      
   render() {
   
     var self = this;
@@ -118,7 +137,7 @@ class TeachersPage extends React.Component {
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
 
                   <h2>Teachers</h2>
-
+                  
                 </header>
 
                 {/* widget div*/}
@@ -131,7 +150,7 @@ class TeachersPage extends React.Component {
                     <div className="widget-body-toolbar">
                         <div className="row">
                             <div className="col-xs-9 col-sm-5 col-md-5 col-lg-5">
-                                
+
                             </div>
                             <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
                                 <button className="btn btn-primary" data-toggle="modal"
@@ -144,7 +163,7 @@ class TeachersPage extends React.Component {
                     
                     {/*<Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />*/}
                     
-
+                    <Loader isLoading={this.props.isLoading} />
                     <Datatable id="teachersGrid"  
                       options={{
                         ajax: {"url":'/api/teachers', "dataSrc": ""},
@@ -175,7 +194,7 @@ class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.id);
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
@@ -247,6 +266,7 @@ class TeachersPage extends React.Component {
               </JarvisWidget>
               {/* end widget */}
 
+            
             </article>
             {/* END COL */}
 
@@ -272,7 +292,9 @@ class TeachersPage extends React.Component {
               <div className="modal-body">
                   
                   { this.state.id > 0 ? 
-                    <TeacherEditForm teacherId={this.state.id} 
+                    //Test
+                    <TeacherEditForm
+                      teacherId={this.state.id} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
                       onSubmit={submit} 
@@ -284,7 +306,8 @@ class TeachersPage extends React.Component {
                       onSubmit={submit} />
                   }      
               </div>
-              {/*<div className="modal-footer">
+              {/*  
+                    <div className="modal-footer">
                 <button type="button" className="btn btn-default" data-dismiss="modal">
                   Cancel
                 </button>
@@ -304,5 +327,13 @@ class TeachersPage extends React.Component {
   }
 
 }
+
+
+// //const mapStateToProps = (state, ownProps) => (state.isLoading);
+// function mapStateToProps(state) {
+//     return {
+//         isLoading: state.isLoading
+//     };
+// }
 
 export default TeachersPage;

@@ -16,6 +16,8 @@ import AlertMessage from '../../../../components/common/AlertMessage'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 
+import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
+
 class EditGeneralInfo extends React.Component {
  
   constructor(props){
@@ -51,6 +53,11 @@ class EditGeneralInfo extends React.Component {
     }
   
 }
+
+    componentDidMount(){ 
+        //LoaderVisibility(true);
+        console.log('componentDidMount --> EditGeneralInfo');
+    }
 
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
