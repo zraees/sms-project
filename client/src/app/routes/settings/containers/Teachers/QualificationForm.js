@@ -8,16 +8,15 @@ import { Field, reduxForm } from 'redux-form'
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import Datatable from '../../../../components/tables/Datatable'
 
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
-import RFTextArea from '../../../../components/ui/RFTextArea'
+// import RFDatePicker from '../../../../components/ui/RFDatePicker'
+// import RFReactSelect from '../../../../components/ui/RFReactSelect'
+// import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
+// import RFField from '../../../../components/ui/RFField'
+// import RFTextArea from '../../../../components/ui/RFTextArea'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
-import {required, email} from '../../../../components/forms/validation/CustomValidation'
-import asyncValidate from './asyncValidate'
+import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import alert from '../../../../components/utils/alerts'
 import {removeQualification} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 //import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
@@ -129,7 +128,7 @@ componentDidMount(){
                         </div>
 
                         <div className="row">
-                            <section className="remove-col-padding col-6">
+                            <section className="remove-col-padding col-sm-5 col-md-5 col-lg-5">
                                 <Field
                                     multi={false}
                                     name="qualificationTypeId"
@@ -138,7 +137,7 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
 
-                            <section className="remove-col-padding col-3">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="scoreType"
@@ -147,9 +146,9 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
                             
-                            <section className="remove-col-padding col-3">
+                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
                                 <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-list"
-                                    validate={required} component={RFField} type="number" placeholder="Score"/>
+                                    validate={[required,number]} component={RFField} type="text" placeholder="Score"/>
                             </section>
                         </div>
 

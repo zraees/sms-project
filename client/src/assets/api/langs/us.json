@@ -83,6 +83,13 @@
     "Page Header": "Page Header",
     "Subtitle": "Subtitle",
 
+    "RequiredFieldText": "This field is required",
+    "InvalidEmailAddressText": "Invalid email address",
+    "MustBeANumberText": "Must be a number",
+
+    "NameText": "Name",
+    "EmailAddressText": "Email Address",
+
     "Home": "Home",
     "Settings": "Settings",
     "Subjects": "Subjects",

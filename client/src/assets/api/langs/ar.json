@@ -83,7 +83,14 @@
     "My Profile": "profiilini",
     "Page Header": "Верхний колонтитул страницы",
     "Subtitle": "Подзаголовок",
+
+    "RequiredFieldText": "هذا مجال مطلوب",
+    "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
+    "MustBeANumberText": "يجب أن يكون رقم",
     
+    "NameText": "اسم",
+    "EmailAddressText": "عنوان البريد الإلكتروني",
+
     "Home": "الرئيسية",
     "Settings": "إعدادات",
     "Subjects":"المواضيع",

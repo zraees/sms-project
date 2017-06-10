@@ -6,20 +6,12 @@ import classNames from 'classnames'
 import { Field, reduxForm } from 'redux-form'
 
 import Datatable from '../../../../components/tables/Datatable'
-
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
-import RFTextArea from '../../../../components/ui/RFTextArea'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
-import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import alert from '../../../../components/utils/alerts'
 import {removeExperience} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
-
 
 class ExperienceForm extends React.Component  {
   
@@ -102,27 +94,27 @@ componentDidMount(){
                         <fieldset>
 
                         <div className="row">
-                            <section>
+                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="companyName" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                                     validate={required} component={RFField} type="text" placeholder="Company Name"/>    
                             </section>
                         </div>
 
                         <div className="row">
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="startDate" placeholder="Start Date" component={RFDatePicker} />
                             </section>
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
                             </section>
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="designation" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                                     validate={required} component={RFField} type="text" placeholder="Designation"/>  
                             </section>
                         </div>
 
                         <div className="row">
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="countryId"
@@ -132,7 +124,7 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
 
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="stateId"
@@ -142,7 +134,7 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
 
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="cityId"
@@ -154,7 +146,7 @@ componentDidMount(){
                         </div>
 
                         <div className="row">                            
-                            <section>
+                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="leavingReason" labelClassName="input" labelIconClassName="icon-append fa fa-book"
                                     component={RFField} type="text" placeholder="Reason of leaving"/>    
                             </section>
@@ -176,7 +168,7 @@ componentDidMount(){
                     </form>
 
                 </div>
-                <div className="tab-pane" id="BBB">
+                <div className="tab-pane table-responsive" id="BBB">
                     
                     <Datatable id="teacherExperiencesGrid"  
                       options={{

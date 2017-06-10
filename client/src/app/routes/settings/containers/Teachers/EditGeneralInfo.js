@@ -5,15 +5,10 @@ import axios from 'axios';
 import { Field, reduxForm } from 'redux-form'
 import StarRating from 'react-rating'
 
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
-import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'

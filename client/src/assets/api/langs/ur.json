@@ -87,6 +87,13 @@
     "Page Header": "页眉",
     "Subtitle": "字幕",
 
+    "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
+    "InvalidEmailAddressText": "غلط ای میل ایڈریس",
+    "MustBeANumberText": "نمبر ہونا ضروری ہے",
+
+    "NameText": "نام",
+    "EmailAddressText": "ای میل اڈریس",
+
     "Home": "گھر",
     "Settings": "ترتیبات",
     "Subjects":"مضامین",

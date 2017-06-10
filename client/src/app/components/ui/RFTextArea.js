@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import Msg from '../i18n/Msg'
 
 const RFTextArea = ({textarea, label, type, labelClassName, labelIconClassName, placeholder, meta: {asyncValidating, touched, error, warning}}) => (
       <div>        
@@ -8,7 +9,7 @@ const RFTextArea = ({textarea, label, type, labelClassName, labelIconClassName, 
           <i className={labelIconClassName} aria-hidden="true"/>
           <textarea {...textarea} rows="3" placeholder={placeholder} className="custom-scroll" />            
         </label>
-        {touched && ((error && <span><em className="invalid">{error}</em></span>) || (warning && <span>{warning}</span>))}          
+        {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
       </div>
     );
 

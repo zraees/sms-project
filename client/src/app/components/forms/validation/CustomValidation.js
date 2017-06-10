@@ -1,13 +1,16 @@
     
     export function required (value) {
-       return value ? undefined : 'This field is required';
+       return value ? undefined : 'RequiredFieldText';
       }
  
     export function email (value){
       return value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
-      'Invalid email address' : undefined;
+      'InvalidEmailAddressText' : undefined;
       }
     
+    export function number (value){
+      return value && isNaN(Number(value)) ? 'MustBeANumberText' : undefined
+    }
     // const required = value => value ? undefined : 'This field is required'
     // const maxLength = max => value =>
     //   value && value.length > max ? `Must be ${max} characters or less` : undefined
