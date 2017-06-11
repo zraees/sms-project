@@ -157,7 +157,14 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
     function deleteQualificationRecord(ButtonPressed, id, delCell) {
 
         if (isYesClicked(ButtonPressed)) {
+
+            console.log('del quali yes');
+            console.log(Date());
+
             axios.delete('/api/TeacherQualifications/' + id)      
+            // axios.delete('/api/TeacherQualifications/',{
+            //                   params: { id: id }
+            //                 })
               .then(function (response) {
                 
                 alert('s','Qualification details have been deleted.');
@@ -169,7 +176,7 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
                   .draw();
 
                   //console.log('after row del ..')
-
+                  console.log(Date());
               })
               .catch(function (error) {
                   alert('f','');

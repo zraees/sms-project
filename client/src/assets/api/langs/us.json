@@ -93,5 +93,8 @@
     "Home": "Home",
     "Settings": "Settings",
     "Subjects": "Subjects",
-    "Teachers": "Teachers"
+    "Teachers": "Teachers",
+
+    "Please enter full name": "Please enter full name",
+    "Please enter email address": "Please enter email address"
 }

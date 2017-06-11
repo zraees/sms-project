@@ -129,12 +129,14 @@ class TeacherForm extends React.Component {
                 <div className="row">
                   <section className="col col-6">
                     <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Name" label="NameText" />    
+                      validate={required} component={RFField} type="text" placeholder="Please enter full name" 
+                      label="NameText" />    
                   </section>
 
                   <section className="col col-6">
                     <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={RFField} type="text" placeholder="Email Address" label="EmailAddressText"/>
+                      validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
+                      label="EmailAddressText"/>
                   </section>
                 </div>
 

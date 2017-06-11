@@ -94,5 +94,8 @@
     "Home": "الرئيسية",
     "Settings": "إعدادات",
     "Subjects":"المواضيع",
-    "Teachers":"معلمون"
+    "Teachers":"معلمون",
+
+    "Please enter full name": "الرجاء إدخال الاسم بالكامل",
+    "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني"
 }

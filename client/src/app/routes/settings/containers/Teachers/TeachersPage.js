@@ -6,6 +6,8 @@ import React from 'react'
 import axios from 'axios' 
 import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
+import moment from 'moment'
+
 //import moment from 'moment'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
@@ -14,7 +16,7 @@ import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
 
-//import Moment from '../../../../components/utils/Moment'
+import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
@@ -176,10 +178,16 @@ class TeachersPage extends React.Component {
                         columnDefs: [
                             { 
                                 "type": "date",
-                                "render": function ( data, type, row ) {
+                                //"render": $.fn.dataTable.render.moment( 'Do MMM YYYYY' ),
+                                  "render": function ( data, type, row ) {
                                   //console.log(data);
-                                  return data;
-                                    //return '<Moment date="2017-05-26T00:00:00" format="DD-MM-YYYY" ></Moment>';  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
+                                    //return data;
+                                    //return moment(data).format('Do MMM YYYY' || 'llll')
+                                    moment.locale('ar');
+                                    //return moment(data).format('YYYY-MM-DD','ar')
+                                    
+                                    return moment( data, 'YYYY-MM-DD', 'ar', true )
+                                    //return '<Moment date='+data+' format="YYYY-MM-DD" ></Moment>';  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
                                 },
                                 "targets": 5 
                             },
