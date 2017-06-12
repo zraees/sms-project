@@ -1,0 +1,36 @@
+***
+https://momentjs.com/docs/#/i18n/
+Changing locale globally
+------------------------
+// From 2.8.1 onward
+moment.locale(String);
+moment.locale(String[]);
+moment.locale(String, Object);
+
+
+Changing locales locally
+-------------------------
+// From version 2.8.1 onward
+moment().locale(String);
+
+
+Loading locales in NodeJS
+-------------------------
+moment.locale(String);
+
+
+
+https://www.w3schools.com/js/js_date_formats.asp
+Type 		Example
+ISO Date 	"2015-03-25" (The International Standard)
+Short Date 	"03/25/2015"
+Long Date 	"Mar 25 2015" or "25 Mar 2015"
+Full Date 	"Wednesday March 25 2015"
+
+
+http://blog.stevenlevithan.com/archives/date-time-format
+
+
+https://github.com/requirejs/requirejs/issues/1554#issuecomment-226269905
+I create a module configuration to set the locale once via requirejs. Easier to keep all moments in the same language on the page.
+
