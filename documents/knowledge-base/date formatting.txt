@@ -34,3 +34,24 @@ http://blog.stevenlevithan.com/archives/date-time-format
 https://github.com/requirejs/requirejs/issues/1554#issuecomment-226269905
 I create a module configuration to set the locale once via requirejs. Easier to keep all moments in the same language on the page.
 
+
+e.g:
+render() {
+     
+	var moment = require('moment');
+	
+moment.locale('ur');
+    
+	
+	return (
+		....
+		
+		{//moment().format("YYYY-DD-MM")moment(1316116057189).fromNow()
+          
+		moment("/Date(1198908717056-0700)/").format("YYYY-DD-MM")
+          }
+		
+		....
+		);
+	}
+

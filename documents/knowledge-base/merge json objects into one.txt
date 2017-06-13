@@ -1,0 +1,13 @@
+ES6:	Object.assign
+---------------------
+https://www.quora.com/How-can-I-add-two-JSON-objects-into-one-object-JavaScript
+const allRules = Object.assign({}, obj1, obj2, obj3, etc);
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
+
+jquery:		$.extend
+------------------------
+
+http://jsfiddle.net/qhoc/agp54/
+https://api.jquery.com/jquery.extend/
