@@ -2,6 +2,17 @@ import LanguageStore from '../i18n/LanguageStore'
 //import store from '../../store/configureStore'
 //import LoaderActions from '../Loader/LoaderActions'
 
+// import moment from 'moment'
+
+// export function getDate(){
+//     moment.locale('en'); // default the locale to English
+//     var localLocale = moment();
+
+//     localLocale.locale('fr'); // set this instance to use French
+//     return localLocale.format('LLLL'); // dimanche 15 juillet 2012 11:01
+//     //moment().format('LLLL'); // Sunday, July 15 2012 11:01 AM
+
+// }
 
 function mapForCombo(keyValues){
     return keyValues.map(function(item, index){

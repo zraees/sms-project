@@ -182,11 +182,11 @@ class TeachersPage extends React.Component {
                                   "render": function ( data, type, row ) {
                                   //console.log(data);
                                     //return data;
-                                    //return moment(data).format('Do MMM YYYY' || 'llll')
-                                    moment.locale('ar');
+                                    return moment(data).format('Do MMM YYYY' || 'llll')
+                                    //moment.locale('ar');
                                     //return moment(data).format('YYYY-MM-DD','ar')
                                     
-                                    return moment( data, 'YYYY-MM-DD', 'ar', true )
+                                    //return moment( data, 'YYYY-MM-DD', 'ar', true )
                                     //return '<Moment date='+data+' format="YYYY-MM-DD" ></Moment>';  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
                                 },
                                 "targets": 5 

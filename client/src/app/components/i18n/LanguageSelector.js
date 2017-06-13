@@ -1,5 +1,6 @@
 import React from 'react'
 import Reflux from 'reflux'
+import moment from 'moment'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
@@ -11,6 +12,12 @@ import LanguageActions from './LanguageActions'
 import LanguageStore from './LanguageStore'
 
 import * as LayoutActions from '../layout/LayoutActions'
+
+import 'moment/locale/ar.js'
+import 'moment/locale/ar-sa.js'
+import 'moment/locale/ur.js'
+import 'moment/locale/en-gb.js'
+
 
 const LanguageSelector = React.createClass({
     getInitialState: function(){
@@ -33,6 +40,7 @@ const LanguageSelector = React.createClass({
         //console.log(language);
         //store.phrases ={};
         //this.setState({store});
+        
         if(_.isEmpty(store.phrases)){
             //console.log('isempty');
             LanguageActions.select(language)
@@ -41,6 +49,8 @@ const LanguageSelector = React.createClass({
         //     console.log(store.phrases);
         // }
         
+        moment.locale(language.locale);            
+        //console.log (moment.locale());
 
         return (
             <ul className="header-dropdown-list hidden-xs ng-cloak">
@@ -80,6 +90,8 @@ const LanguageSelector = React.createClass({
         //console.log('before rtl action ' + language.rtl)
         if((!this.props.rtl && language.rtl) || (this.props.rtl && !language.rtl))
             this.props.onRtl();     // toggle RTL 
+
+        moment.locale(language.locale);            
     }
 });
 

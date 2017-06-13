@@ -4,20 +4,23 @@
         "alt": "United States",
         "title": "English (US)",
         "rtl": false,
-        "flag": "us"
+        "flag": "us",
+        "locale": "en"
     },
     {
         "key": "ur",
         "alt": "Pakistan",
         "title": "Urdu (PK)",
         "rtl": true,
-        "flag": "pk"
+        "flag": "pk",
+        "locale": "ur"
     },
     {
         "key": "ar",
         "alt": "Saudi Arabia",
         "title": "Arabic (KSA)",
         "rtl": true,
-        "flag": "sa"
+        "flag": "sa",
+        "locale": "ar-sa"
     }
 ]
