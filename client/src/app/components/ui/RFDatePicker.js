@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import classnames from 'classnames'
 import Msg from '../i18n/Msg'
+//import {getDateFrontEndFormat} from '../utils/functions'
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -14,7 +15,7 @@ const RFDatePicker = ({input, placeholder, defaultValue, minDate, handleChange, 
             <DatePicker {...input} showMonthDropdown
                 showYearDropdown 
                 minDate = {minDate}
-                selected={input.value ? moment(input.value, "MM-DD-YYYY") : null} />
+                selected={input.value ? moment(input.value, "YYYY-MM-DD") : null} />
     </label>
     {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
   </div>

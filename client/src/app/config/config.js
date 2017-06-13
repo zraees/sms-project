@@ -10,7 +10,9 @@ const SmartadminConfig = {
         "title": "English (US)",
         "rtl": false,
         "flag": "us",
-        "locale": "en"
+        "locale": "en",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     
     apiRootUrl: "assets/api",

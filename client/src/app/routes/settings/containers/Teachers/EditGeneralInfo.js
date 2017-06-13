@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { Field, reduxForm } from 'redux-form'
 import StarRating from 'react-rating'
+import moment from 'moment'
 
 import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
@@ -68,7 +69,8 @@ class EditGeneralInfo extends React.Component {
                 "rating": res.data.Rating,
                 "idNo": res.data.IDNo,
                 "nationalityId": "" + res.data.NationalityId,
-                "DOB": res.data.DOB.replace("T00:00:00", ""),
+                //"DOB": res.data.DOB.replace("T00:00:00", ""),
+                "DOB": moment(res.data.DOB, "YYYY-MM-DD"),
                 "address": res.data.Address,
                 "phoneNo": res.data.PhoneNo,
                 "mobileNo": res.data.MobileNo,

@@ -22,7 +22,7 @@ import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
 //import Test from './Test'
 import submit, {remove, submitQualification, submitExperience} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -178,16 +178,9 @@ class TeachersPage extends React.Component {
                         columnDefs: [
                             { 
                                 "type": "date",
-                                //"render": $.fn.dataTable.render.moment( 'Do MMM YYYYY' ),
-                                  "render": function ( data, type, row ) {
-                                  //console.log(data);
-                                    //return data;
-                                    return moment(data).format('Do MMM YYYY' || 'llll')
-                                    //moment.locale('ar');
-                                    //return moment(data).format('YYYY-MM-DD','ar')
-                                    
-                                    //return moment( data, 'YYYY-MM-DD', 'ar', true )
-                                    //return '<Moment date='+data+' format="YYYY-MM-DD" ></Moment>';  //return data !== null ? moment(data, "DD-MM-YYYY") : null;
+                                "render": function ( data, type, row ) {
+                                    //return moment(data).format('Do MMM YYYY' || 'llll')
+                                    return renderDate(data);
                                 },
                                 "targets": 5 
                             },

@@ -5,7 +5,9 @@
         "title": "English (US)",
         "rtl": false,
         "flag": "us",
-        "locale": "en"
+        "locale": "en",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     {
         "key": "ur",
@@ -13,7 +15,9 @@
         "title": "Urdu (PK)",
         "rtl": true,
         "flag": "pk",
-        "locale": "ur"
+        "locale": "ur",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     {
         "key": "ar",
@@ -21,6 +25,8 @@
         "title": "Arabic (KSA)",
         "rtl": true,
         "flag": "sa",
-        "locale": "ar-sa"
+        "locale": "ar-sa",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     }
 ]

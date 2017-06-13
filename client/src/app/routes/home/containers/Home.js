@@ -7,7 +7,7 @@ import React from 'react'
 
 import WidgetGrid from '../../../components/widgets/WidgetGrid'
 import JarvisWidget  from '../../../components/widgets/JarvisWidget'
-//import Moment from '../../../components/utils/Moment'
+import Moment from '../../../components/utils/Moment'
 //import {getDate} from '../../../components/utils/functions'
 
 export default class Home extends React.Component {
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
     // localLocale.locale('fr');
     // //var moment = require('moment');
     // moment.locale('fr');
-console.log('hi = ' + moment.locale());
+    //console.log('hi = ' + moment.locale());
     return (
       <div id="content">
         {moment(1316116057189).fromNow()}
@@ -38,10 +38,9 @@ console.log('hi = ' + moment.locale());
     
                       <p>
                         {moment().format("llll")}
-            
+                        {/*<Moment date="12/25/1995" />*/}
                       </p>
-                                            
-
+                            
                   </div>
                   {/* end widget content */}
                 </div>

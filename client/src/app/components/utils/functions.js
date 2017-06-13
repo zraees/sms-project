@@ -2,7 +2,7 @@ import LanguageStore from '../i18n/LanguageStore'
 //import store from '../../store/configureStore'
 //import LoaderActions from '../Loader/LoaderActions'
 
-// import moment from 'moment'
+import moment from 'moment'
 
 // export function getDate(){
 //     moment.locale('en'); // default the locale to English
@@ -47,6 +47,21 @@ export function getLangKey(){
 
 export function getLang(){
     return JSON.parse(localStorage.getItem('sm-lang')) //|| "us"
+}
+
+/*  Date formatting functions   */
+export function getDateFrontEndFormat(date){
+    return moment(date).format(getLang().backend || 'Do MMM YYYY')
+    //return date;
+}
+
+export function getDateBackEndFormat(date){
+    return moment(date).format(getLang().backend || 'Do MMM YYYY')
+}
+
+/*  Function for dataTable  */
+export function renderDate( data ){
+	return moment(data).format(getLang().frontend || 'Do MMM YYYY')
 }
 
 export default mapForCombo
