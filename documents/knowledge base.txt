@@ -22,3 +22,11 @@ http://www.agile-code.com/blog/building-an-asp-net-web-api-restful-service/
 
 datatable : datetime formatting
 https://datatables.net/plug-ins/dataRender/datetime
+
+
+Setmaximun length
+------------------
+<label className="label">Default text input with maxLength</label>
+                          <label className="input">
+                            <input type="text" maxLength="10"/>
+                          </label>
