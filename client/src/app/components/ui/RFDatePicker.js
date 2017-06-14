@@ -7,9 +7,9 @@ import Msg from '../i18n/Msg'
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-const RFDatePicker = ({input, placeholder, defaultValue, minDate, handleChange, meta: {touched, error, warning} }) => (
-  <div>
-    <label>{placeholder}</label>
+const RFDatePicker = ({input, label, defaultValue, minDate, handleChange, meta: {touched, error, warning} }) => (
+  <div> 
+    <label>{label}</label>
     <label className={classnames(['input', {'state-error':touched && error!==undefined}])}>
         <i className="icon-append fa fa-calendar"/>
             <DatePicker {...input} showMonthDropdown

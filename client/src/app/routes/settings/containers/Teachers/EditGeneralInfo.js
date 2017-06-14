@@ -158,12 +158,12 @@ class EditGeneralInfo extends React.Component {
 
                     <div className="row">
                     <section className="col col-6">
-                        <Field name="DOB" validate={required} placeholder="Date of Birth" component={RFDatePicker} />
+                        <Field name="DOB" validate={required} label="Date of Birth" component={RFDatePicker} />
                     </section>
 
                     <section className="col col-3">
                         <Field component={RFRadioButtonList} name="gender" required={true} 
-                        placeholder="Gender"
+                        label="Gender"
                         options={[
                             { title: 'Male', value: 'male' },
                             { title: 'Female', value: 'female' }
@@ -185,16 +185,16 @@ class EditGeneralInfo extends React.Component {
                 
                     <div className="row">
                     <section className="col col-6">
-                        <Field name="idNo" labelClassName="input" 
+                        <Field name="idNo" labelClassName="input" label="Identity Card Number"
                         labelIconClassName="icon-append fa fa-credit-card-alt"
-                        component={RFField} type="text" placeholder="Identity Card Number"/>
+                        component={RFField} type="text" placeholder="Please enter Identity Card Number"/>
                     </section>
 
                     <section className="col col-6">
                         <Field
                             multi={false}
                             name="nationalityId"
-                            placeholder="Nationality"
+                            label="Nationality"
                             options={nationalities}
                             component={RFReactSelect} />
                     </section>
@@ -203,23 +203,23 @@ class EditGeneralInfo extends React.Component {
                         
                     <div className="row">
                     <section className="col col-6">
-                        <Field name="phoneNo" labelClassName="input" 
-                        labelIconClassName="icon-append fa fa-phone"
-                        component={RFField} type="text" placeholder="Phone Number"/>
+                        <Field name="phoneNo" labelClassName="input" label="Phone Number"
+                            labelIconClassName="icon-append fa fa-phone"
+                            component={RFField} type="text" placeholder="Please enter phone number"/>
                     </section>
 
                     <section className="col col-6">
-                        <Field name="mobileNo" labelClassName="input" 
-                        labelIconClassName="icon-append fa fa-mobile"
-                        component={RFField} type="text" placeholder="Mobile Number"/>
+                        <Field name="mobileNo" labelClassName="input" label="Mobile Number"
+                            labelIconClassName="icon-append fa fa-mobile"
+                            component={RFField} type="text" placeholder="Please enter mobile number"/>
                     </section>
                     </div>
 
                     <div className="row">
                     <section className="col col-8">
-                        <Field name="address" labelClassName="input" 
-                        labelIconClassName="icon-append fa fa-map-marker"
-                        component={RFField} type="text" placeholder="Street Address"/>
+                        <Field name="address" labelClassName="input" label="Street Address"
+                            labelIconClassName="icon-append fa fa-map-marker"
+                            component={RFField} type="text" placeholder="Please enter street address"/>
                     </section>
 
                     <section className="col col-4">
@@ -232,7 +232,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="countryId"
-                            placeholder="Country"
+                            label="Country"
                             options={countries}
                             onBlur={this.handleCountryBlur}
                             component={RFReactSelect} />
@@ -242,7 +242,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="stateId"
-                            placeholder="State"
+                            label="State"
                             options={states}
                             onBlur={this.handleStateBlur}
                             component={RFReactSelect} />
@@ -252,7 +252,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="cityId"
-                            placeholder="City"
+                            label="City"
                             options={cities}
                             onBlur={this.handleCityBlur}
                             component={RFReactSelect} />

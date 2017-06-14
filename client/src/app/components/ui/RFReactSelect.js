@@ -21,12 +21,12 @@ RFReactSelect.propTypes = {
   className: PropTypes.string
 };
 //https://github.com/erikras/redux-form/issues/1185
-export default function RFReactSelect({ input , options, multi, className, placeholder }) {
+export default function RFReactSelect({ input , options, multi, className, label }) {
   const { name, value, onBlur, onChange, onFocus } = input;
   const transformedValue = transformValue(value, options, multi);
   return (
     <div>
-      <label>{placeholder}</label>
+      <label>{label}</label>
       <Select
         valueKey="value"
         name={name}
