@@ -8,12 +8,11 @@ import { Field, reduxForm } from 'redux-form'
 import StarRating from 'react-rating'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
-import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
-import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
+//import MaskedInput from '../../../../components/forms/inputs/MaskedInput'
+//import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
+
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
+
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -103,7 +102,6 @@ class TeacherForm extends React.Component {
  
   }
 
-
   handleCityBlur(obj, value){
     console.log(obj);
     console.log(value);
@@ -131,12 +129,14 @@ class TeacherForm extends React.Component {
                 <div className="row">
                   <section className="col col-6">
                     <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Name"/>    
+                      validate={required} component={RFField} type="text" placeholder="Please enter full name" 
+                      label="NameText" />    
                   </section>
 
                   <section className="col col-6">
                     <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={RFField} type="text" placeholder="Email Address"/>
+                      validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
+                      label="EmailAddressText"/>
                   </section>
                 </div>
 

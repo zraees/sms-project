@@ -8,28 +8,63 @@ import EditGeneralInfo from './EditGeneralInfo'
 import QualificationForm from './QualificationForm'
 import ExperienceForm from './ExperienceForm'
 import alert from '../../../../components/utils/alerts'
+import mapForCombo from '../../../../components/utils/functions'
+
+import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 class TeacherEditForm extends React.Component {
  
   constructor(props){
     super(props);
     this.state = {
-      editDataLoaded: false,
-      rating: 0
+        editDataLoaded: false,
+        rating: 0,
+        nationalities: [],
+        countries: [],
+        nowRender: false
     }
   }
 
-  componentDidMount(){ 
+  componentWillMount() {
+    console.log('componentWillMount --> TeacherEditForm');
 
-    console.log('componentDidMount --> TeacherEditForm');
+    LoaderVisibility(true);
   }
 
+  componentDidMount(){ 
+    //LoaderVisibility(true);
+    console.log('componentDidMount --> TeacherEditForm');
+  
+    // axios.get('/api/nationalities/')
+    //     .then(res=>{
+    //         const nationalities = mapForCombo(res.data);      
+    //         this.setState({nationalities});
+    //     });
+ 
+    // axios.get('/api/countries/')
+    //     .then(res=>{
+    //         const countries = mapForCombo(res.data);
+    //         this.setState({countries});
+    //     });
+    
+     setTimeout(function(){ 
+        
+        this.setState({nowRender:true}) 
+        LoaderVisibility(false);
+        
+      }.bind(this), 250);
+
+    }
+
   render() {
-    const { teacherId, nationalities, countries, onSubmit, onSubmitQualification, onSubmitExperience } = this.props;
+    const { teacherId, onSubmit, nationalities, countries, onSubmitQualification, onSubmitExperience } = this.props;
+    //const {nationalities, countries} = this.state;
 
     return (
 
         <div>
+        
+        {/*<Loader isLoading={this.props.isLoading} />*/}
 
         <ul id="myTab1" className="nav nav-tabs bordered">
             <li className="active">
@@ -56,19 +91,28 @@ class TeacherEditForm extends React.Component {
 
         <div id="myTabContent1" className="tab-content padding-10">
             <div className="tab-pane fade in active" id="s1">
+                { this.state.nowRender ? 
                 <EditGeneralInfo teacherId={teacherId} 
                     nationalities={nationalities} 
                     countries={countries}
                     onSubmit={onSubmit} />
+                : <div></div>
+                }
             </div>
             <div className="tab-pane fade" id="s2">
-                <QualificationForm teacherId={teacherId} 
-                    onSubmit={onSubmitQualification}/>
+                { this.state.nowRender ? 
+                    <QualificationForm teacherId={teacherId} 
+                        onSubmit={onSubmitQualification}/>
+                : <div></div>
+                }
             </div>
             <div className="tab-pane fade" id="s3">
-                <ExperienceForm teacherId={teacherId} 
-                    countries={countries}
-                    onSubmit={onSubmitExperience}/>
+                { this.state.nowRender ? 
+                    <ExperienceForm teacherId={teacherId} 
+                        countries={countries}
+                        onSubmit={onSubmitExperience}/>
+                : <div></div>
+                }
             </div>
             <div className="tab-pane fade" id="s4">
                 <p>

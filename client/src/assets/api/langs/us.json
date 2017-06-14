@@ -1,8 +1,8 @@
 {
     "Projects": "Projects",
     "Msgs": "Msgs",
-    "Confirmation!": "!Confirmation",
-    "Are you sure, you want to delete this record?": "Are you sure, you want to delete this record?",
+    "ConfirmationTitleText": "Confirmation!",
+    "DeleteConfirmationMessageText": "Are you sure, you want to delete this record?",
     "yesText": "Yes",
     "noText": "No",
     "SystemAlertText": "System Alert",
@@ -77,10 +77,24 @@
     "Different Versions": "Different Versions",
     "Documentation": "Documentation",
     "Bug Tracker": "Bug Tracker",
-    "Home": "Home",
     "Mail 14": "Mail 14",
     "Maps": "Maps",
     "My Profile": "My Profile",
     "Page Header": "Page Header",
-    "Subtitle": "Subtitle"
+    "Subtitle": "Subtitle",
+
+    "RequiredFieldText": "This field is required",
+    "InvalidEmailAddressText": "Invalid email address",
+    "MustBeANumberText": "Must be a number",
+
+    "NameText": "Name",
+    "EmailAddressText": "Email Address",
+
+    "Home": "Home",
+    "Settings": "Settings",
+    "Subjects": "Subjects",
+    "Teachers": "Teachers",
+
+    "Please enter full name": "Please enter full name",
+    "Please enter email address": "Please enter email address"
 }

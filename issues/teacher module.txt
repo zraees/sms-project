@@ -1,12 +1,16 @@
+* create multiple lang files as per page and then combine 
+
 TeacherPage.js
 ==============
 1- Grid not refresh on first time when we add teacher after that refreshing fine.
-2- date formatting issue on grid
+2- delete record takes too much time
+3- date formatting issue on grid
 	Wishes:
 	-------
 		1- show teacher age in grid
 		2- show rating in stars
 		3- icon for male and female
+
 
 TeacherForm.js
 ==============

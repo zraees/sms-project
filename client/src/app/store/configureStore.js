@@ -18,6 +18,7 @@ import {userReducer, requestUserInfo} from '../components/user'
 import {chatReducer, chatInit} from '../components/chat'
 import {eventsReducer} from '../components/calendar'
 import outlookReducer from '../routes/outlook/outlookReducer'
+import loaderReducer from '../components/Loader/loaderReducer'
 
 import {voiceReducer, VoiceMiddleware} from '../components/voice-control'
 import {voiceControlOn} from "../components/voice-control/VoiceActions";
@@ -25,6 +26,7 @@ import {voiceControlOn} from "../components/voice-control/VoiceActions";
 export const rootReducer = combineReducers(
   {
     routing: routerReducer,
+    loader: loaderReducer,
     layout: layoutReducer,
     navigation: navigationReducer,
     outlook: outlookReducer,

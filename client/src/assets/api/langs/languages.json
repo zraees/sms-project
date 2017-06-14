@@ -3,18 +3,30 @@
         "key": "us",
         "alt": "United States",
         "title": "English (US)",
-        "rtl": false
+        "rtl": false,
+        "flag": "us",
+        "locale": "en",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     {
         "key": "ur",
         "alt": "Pakistan",
         "title": "Urdu (PK)",
-        "rtl": true
+        "rtl": true,
+        "flag": "pk",
+        "locale": "ur",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     {
         "key": "ar",
         "alt": "Saudi Arabia",
         "title": "Arabic (KSA)",
-        "rtl": true
+        "rtl": true,
+        "flag": "sa",
+        "locale": "ar-sa",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     }
 ]

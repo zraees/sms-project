@@ -8,7 +8,11 @@ const SmartadminConfig = {
         "key": "us",
         "alt": "United States",
         "title": "English (US)",
-        "rtl": false
+        "rtl": false,
+        "flag": "us",
+        "locale": "en",
+        "frontend": "Do MMM YYYY",
+        "backend": "YYYY-DD-MM"
     },
     
     apiRootUrl: "assets/api",

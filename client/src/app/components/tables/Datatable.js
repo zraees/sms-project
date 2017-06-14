@@ -7,6 +7,12 @@ export default class Datatable extends React.Component {
     System.import('script-loader!smartadmin-plugins/datatables-bundle/datatables.min.js').then(()=> {
       this.datatable(this.props.data)
     });
+    // Promise.all([
+    //       System.import('script-loader!smartadmin-plugins/datatables-bundle/datatables.min.js'),
+    //       System.import('script-loader!smartadmin-plugins/datatables-bundle/functions.js')
+    //     ]).then(()=> {
+    //       this.datatable(this.props.data)
+    //   });
   }
 
   datatable() {

@@ -5,20 +5,21 @@ import classNames from 'classnames'
 
 import { Field, reduxForm } from 'redux-form'
 
+import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import Datatable from '../../../../components/tables/Datatable'
 
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
-import RFTextArea from '../../../../components/ui/RFTextArea'
+// import RFDatePicker from '../../../../components/ui/RFDatePicker'
+// import RFReactSelect from '../../../../components/ui/RFReactSelect'
+// import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
+// import RFField from '../../../../components/ui/RFField'
+// import RFTextArea from '../../../../components/ui/RFTextArea'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
-import {required, email} from '../../../../components/forms/validation/CustomValidation'
-import asyncValidate from './asyncValidate'
+import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import alert from '../../../../components/utils/alerts'
 import {removeQualification} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
+//import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 class QualificationForm extends React.Component {
   
@@ -41,6 +42,7 @@ class QualificationForm extends React.Component {
     
 componentDidMount(){ 
     console.log('componentDidMount --> QualificationForm');
+//    LoaderVisibility(true);
 
     this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
@@ -83,6 +85,8 @@ componentDidMount(){
 
     return (
 
+        <WidgetGrid>
+
         <div className="tabbable tabs">
             
             <ul className="nav nav-tabs">
@@ -94,7 +98,7 @@ componentDidMount(){
                 </li> 
             </ul>
 
-            <div className="tab-content padding-10">
+            <div className="tab-content">
                 <div className="tab-pane active" id="AA">
                     
                     <form id="form-teacher-qualification" className="smart-form" 
@@ -102,25 +106,29 @@ componentDidMount(){
                         <fieldset>
 
                         <div className="row">
-                            <section>
+                            {/*<section>*/}
+                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="qualification" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                                     validate={required} component={RFField} type="text" placeholder="Qualification Title"/>    
                             </section>
+                            {/*</section>*/}
                         </div>
 
                         <div className="row">
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="startDate" placeholder="Start Date" component={RFDatePicker} />
                             </section>
-                            <section className="col col-4">
+                            {/*<article className="col-sm-1 col-md-1 col-lg-1">
+                            </article>*/}
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
                             </section>
-                            <section className="col col-4">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                             </section>
                         </div>
 
                         <div className="row">
-                            <section className="col col-6">
+                            <section className="remove-col-padding col-sm-5 col-md-5 col-lg-5">
                                 <Field
                                     multi={false}
                                     name="qualificationTypeId"
@@ -129,7 +137,7 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
 
-                            <section className="col col-3">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="scoreType"
@@ -138,14 +146,14 @@ componentDidMount(){
                                     component={RFReactSelect} />
                             </section>
                             
-                            <section className="col col-3">
+                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
                                 <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-list"
-                                    validate={required} component={RFField} type="number" placeholder="Score"/>
+                                    validate={[required,number]} component={RFField} type="text" placeholder="Score"/>
                             </section>
                         </div>
 
                         <div className="row">                            
-                            <section>
+                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="majors" labelClassName="input" labelIconClassName="icon-append fa fa-book"
                                     component={RFField} type="text" placeholder="Majors"/>    
                             </section>
@@ -167,7 +175,7 @@ componentDidMount(){
                     </form>
 
                 </div>
-                <div className="tab-pane" id="BB">
+                <div className="tab-pane table-responsive" id="BB">
                     
                     <Datatable id="teacherQualificationsGrid"  
                       options={{
@@ -252,7 +260,9 @@ componentDidMount(){
                 </div> 
             </div>
         </div>
-            
+        
+        
+        </WidgetGrid>
     )
   }
 }

@@ -76,23 +76,29 @@ namespace SMSServices.Controllers
         {
             try
             {
-                var result = entities.Teachers.SingleOrDefault(t => t.TeacherId == teacher.TeacherId);
-                if (result != null)
-                {
-                    result.Name = teacher.Name;
-                    result.Email = teacher.Email;
-                    result.DOB = teacher.DOB;
-                    result.Gender = teacher.Gender;
-                    result.IDNo = teacher.IDNo;
-                    result.NationalityId = teacher.NationalityId;
-                    result.Rating = teacher.Rating;
+                var entity = entities.Teachers.Find(teacher.TeacherId);
+                entities.Entry(entity).CurrentValues.SetValues(teacher);
+                entities.SaveChanges();
+
+
+                //var result = entities.Teachers.SingleOrDefault(t => t.TeacherId == teacher.TeacherId);
+                //if (result != null)
+                //{
+                //    //int a = Convert.ToInt32("aaa");
+                //    result.Name = teacher.Name;
+                //    result.Email = teacher.Email;
+                //    result.DOB = teacher.DOB;
+                //    result.Gender = teacher.Gender;
+                //    result.IDNo = teacher.IDNo;
+                //    result.NationalityId = teacher.NationalityId;
+                //    result.Rating = teacher.Rating;
                     
-                    entities.Teachers.Attach(result);
-                    //entities.Entry(result).State = System.Data.Entity.EntityState.Modified;     
-                    entities.SaveChanges();
-                }
+                //    entities.Teachers.Attach(result);
+                //    //entities.Entry(result).State = System.Data.Entity.EntityState.Modified;     
+                //    entities.SaveChanges();
+                //}
             }
-            catch (DbUpdateException)
+            catch //(DbUpdateException)
             {
                 throw;
             }

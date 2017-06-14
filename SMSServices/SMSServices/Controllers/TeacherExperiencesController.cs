@@ -63,6 +63,7 @@ namespace SMSServices.Controllers
         }
 
         // DELETE api/<controller>/5
+        [Route("api/TeacherExperiences/{id}")]
         public void Delete(int id)
         {
             try

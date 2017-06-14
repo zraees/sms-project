@@ -47,7 +47,7 @@ const greaterThan = otherField =>
                          <Msg phrase="Are you sure, you want to delete this record?" />
 
                         <div>
-                          <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).key}/>
+                          <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).flag}/>
                         </div>
 
                         <div>

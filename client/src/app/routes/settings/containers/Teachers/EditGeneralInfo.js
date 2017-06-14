@@ -4,17 +4,15 @@ import axios from 'axios';
 
 import { Field, reduxForm } from 'redux-form'
 import StarRating from 'react-rating'
+import moment from 'moment'
 
-import RFDatePicker from '../../../../components/ui/RFDatePicker'
-import RFReactSelect from '../../../../components/ui/RFReactSelect'
-import RFRadioButtonList from '../../../../components/ui/RFRadioButtonList'
-import RFField from '../../../../components/ui/RFField'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
-import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
+
+import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 class EditGeneralInfo extends React.Component {
  
@@ -52,6 +50,11 @@ class EditGeneralInfo extends React.Component {
   
 }
 
+    componentDidMount(){ 
+        //LoaderVisibility(true);
+        console.log('componentDidMount --> EditGeneralInfo');
+    }
+
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
@@ -66,7 +69,8 @@ class EditGeneralInfo extends React.Component {
                 "rating": res.data.Rating,
                 "idNo": res.data.IDNo,
                 "nationalityId": "" + res.data.NationalityId,
-                "DOB": res.data.DOB.replace("T00:00:00", ""),
+                //"DOB": res.data.DOB.replace("T00:00:00", ""),
+                "DOB": moment(res.data.DOB, "YYYY-MM-DD"),
                 "address": res.data.Address,
                 "phoneNo": res.data.PhoneNo,
                 "mobileNo": res.data.MobileNo,

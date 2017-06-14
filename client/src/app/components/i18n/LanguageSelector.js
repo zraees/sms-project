@@ -1,5 +1,6 @@
 import React from 'react'
 import Reflux from 'reflux'
+import moment from 'moment'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
@@ -11,6 +12,12 @@ import LanguageActions from './LanguageActions'
 import LanguageStore from './LanguageStore'
 
 import * as LayoutActions from '../layout/LayoutActions'
+
+import 'moment/locale/ar.js'
+import 'moment/locale/ar-sa.js'
+import 'moment/locale/ur.js'
+import 'moment/locale/en-gb.js'
+
 
 const LanguageSelector = React.createClass({
     getInitialState: function(){
@@ -33,21 +40,24 @@ const LanguageSelector = React.createClass({
         //console.log(language);
         //store.phrases ={};
         //this.setState({store});
+        
         if(_.isEmpty(store.phrases)){
             //console.log('isempty');
             LanguageActions.select(language)
         }
-        else{
-            console.log(store.phrases);
-        }
+        // else{
+        //     console.log(store.phrases);
+        // }
         
+        moment.locale(language.locale);            
+        //console.log (moment.locale());
 
         return (
             <ul className="header-dropdown-list hidden-xs ng-cloak">
                 <li className="dropdown">
                     <a className="dropdown-toggle" href="#"  data-toggle="dropdown">
                         <img src="assets/img/blank.gif"
-                             className={classnames(['flag', 'flag-'+language.key])} alt={language.alt} />
+                             className={classnames(['flag', 'flag-'+language.flag])} alt={language.alt} />
                         <span>&nbsp;{language.title}&nbsp;</span>
                         <i className="fa fa-angle-down" /></a>
                     <ul className="dropdown-menu pull-right">
@@ -59,7 +69,7 @@ const LanguageSelector = React.createClass({
                                 })}>
                                     <a href="#" onClick={this._selectLanguage.bind(this, _lang)} >
                                         <img src="assets/img/blank.gif"
-                                             className={classnames(['flag', 'flag-'+_lang.key])} alt={_lang.alt} />
+                                             className={classnames(['flag', 'flag-'+_lang.flag])} alt={_lang.alt} />
                                         <span>&nbsp;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               {_lang.title}</span>
                                     </a>
                                 </li>
@@ -74,12 +84,14 @@ const LanguageSelector = React.createClass({
         LanguageStore.setLanguage(language)
         LanguageActions.select(language)
         
-        console.log('_selectLanguage');
+        //console.log('_selectLanguage');
         // console.log(language);
         this.props.onSetLang(language);
         //console.log('before rtl action ' + language.rtl)
         if((!this.props.rtl && language.rtl) || (this.props.rtl && !language.rtl))
             this.props.onRtl();     // toggle RTL 
+
+        moment.locale(language.locale);            
     }
 });
 
