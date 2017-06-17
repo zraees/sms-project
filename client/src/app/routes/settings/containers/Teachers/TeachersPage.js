@@ -74,7 +74,7 @@ class TeachersPage extends React.Component {
     // call before modal open
     $('#teacherPopup').on('show.bs.modal', function (e) {      
 
-      console.log('modal before call edit page');
+      //console.log('modal before call edit page');
 
       //LoaderVisibility(true);
       var button = $(e.relatedTarget);        // Button that triggered the modal
@@ -88,7 +88,12 @@ class TeachersPage extends React.Component {
     // call on modal close
     $('#teacherPopup').on('hidden.bs.modal', function (e) {            
       this.setState({id : 0});
-      $('#teachersGrid').DataTable().ajax.reload();      
+      console.log('close popup');
+      //$('#teachersGrid').DataTable().ajax.reload();      
+          var table = $('#teachersGrid').DataTable();                
+          table.clear();
+          table.ajax.reload();
+          
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts

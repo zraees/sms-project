@@ -13,7 +13,7 @@ import {required, email}  from '../../../../components/forms/validation/CustomVa
 
 import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
-import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
+//import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
@@ -34,52 +34,57 @@ class TeacherForm extends React.Component {
   }
   
   componentDidMount(){ 
-
+      
+    const initData = {
+        "teacherId": 0
+      }        
+    
+    this.props.initialize(initData);
     console.log('componentDidMount --> TeacherForm');
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {teacherId} = nextProps;
+  // componentWillReceiveProps(nextProps) {
+  //   const {teacherId} = nextProps;
 
-    if(teacherId<=0){
-      this.setState({editDataLoaded:false});
-      const initData = {
-          "id": 0,
-          "name": "",
-          "email": "",
-          "gender": "male",
-          "rating":0
-        }        
-        this.props.initialize(initData);
-    }
-    else if(teacherId>0 && !this.state.editDataLoaded){
-      this.setState({editDataLoaded:true});
-      this.handleInitialize(teacherId);
-    }
-  }
+  //   if(teacherId<=0){
+  //     this.setState({editDataLoaded:false});
+  //     const initData = {
+  //         "id": 0,
+  //         "name": "",
+  //         "email": "",
+  //         "gender": "male",
+  //         "rating":0
+  //       }        
+  //       this.props.initialize(initData);
+  //   }
+  //   else if(teacherId>0 && !this.state.editDataLoaded){
+  //     this.setState({editDataLoaded:true});
+  //     this.handleInitialize(teacherId);
+  //   }
+  // }
 
-  handleInitialize(teacherId) { 
-      axios.get('/api/teachers/' + teacherId)
-          .then(res=>{            
-              //var json = res.data;                
-              const initData = {
-                  "id": teacherId,
-                  "name": res.data.Name,
-                  "email": res.data.Email
-                } 
-                this.props.initialize(initData); 
-          })
-          .catch(function (error) {
-            console.log(error);
-            smallBox({
-              title: "System Alert",
-              content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
-              color: "#C46A69",
-              iconSmall: "fa fa-times fa-2x fadeInRight animated",
-              timeout: 5000
-            });
-          });   
-  } 
+  // handleInitialize(teacherId) { 
+  //     axios.get('/api/teachers/' + teacherId)
+  //         .then(res=>{            
+  //             //var json = res.data;                
+  //             const initData = {
+  //                 "id": teacherId,
+  //                 "name": res.data.Name,
+  //                 "email": res.data.Email
+  //               } 
+  //               this.props.initialize(initData); 
+  //         })
+  //         .catch(function (error) {
+  //           console.log(error);
+  //           smallBox({
+  //             title: "System Alert",
+  //             content: "<i class='fa fa-clock-o'></i> <i>Something went wrong, please contact system administrator</i>",
+  //             color: "#C46A69",
+  //             iconSmall: "fa fa-times fa-2x fadeInRight animated",
+  //             timeout: 5000
+  //           });
+  //         });   
+  // } 
 
   handleCountryBlur(obj, value){
     axios.get('/api/states/' + value)

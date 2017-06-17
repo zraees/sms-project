@@ -14,8 +14,8 @@ function alert(type, message){
             title: titleText,
             content: "<i class='fa fa-thumbs-o-up'></i> <i>" + messageText + "</i>",
             color: "#659265",
-            iconSmall: "fa fa-check fa-2x  animated"//,     //messageText
-            //timeout: 3000
+            iconSmall: "fa fa-check fa-2x  animated",     //messageText
+            timeout: 3000
         });
     }
     else if(type === 'f'){

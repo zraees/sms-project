@@ -52,7 +52,7 @@ class TeacherEditForm extends React.Component {
         this.setState({nowRender:true}) 
         LoaderVisibility(false);
         
-      }.bind(this), 250);
+      }.bind(this), 500);
 
     }
 

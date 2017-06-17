@@ -16,7 +16,7 @@ const RFDatePicker = ({input, label, defaultValue, minDate, handleChange, meta: 
             <DatePicker {...input} showMonthDropdown
                 showYearDropdown 
                 minDate = {minDate}
-                selected={input.value ? moment(input.value, "MM-DD-YYYY") : null} />
+                selected={input.value ? moment(input.value, "MM/DD/YYYY") : null} />
     </label>
     {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
   </div>

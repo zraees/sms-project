@@ -58,11 +58,13 @@ class EditGeneralInfo extends React.Component {
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
+console.log('dob');
+              console.log(res.data.DOB != null ? moment(res.data.DOB).format("MM/DD/YYYY") : "");
               //var json = res.data; T00:00:00
               //console.log(res.data.DOB.replace("T00:00:00", ""));
             this.setState({rating:res.data.Rating});
             const initData = {
-                "id": teacherId,
+                "teacherId": teacherId,
                 "name": res.data.Name,
                 "email": res.data.Email,
                 "gender": res.data.Gender,
@@ -70,7 +72,7 @@ class EditGeneralInfo extends React.Component {
                 "idNo": res.data.IDNo,
                 "nationalityId": "" + res.data.NationalityId,
                 //"DOB": res.data.DOB.replace("T00:00:00", ""),
-                "DOB": moment(res.data.DOB, "YYYY-MM-DD"),
+                "DOB": res.data.DOB != null ? moment(res.data.DOB).format("MM/DD/YYYY") : "",
                 "address": res.data.Address,
                 "phoneNo": res.data.PhoneNo,
                 "mobileNo": res.data.MobileNo,

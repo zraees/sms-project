@@ -9,13 +9,13 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 
     function submit(values){
-      console.log(values);
-      return axios.get('/api/teachers/' + values.id + '/' + values.email + '/')
+      //console.log(values);
+      return axios.get('/api/teachers/' + values.teacherId + '/' + values.email + '/')
         .then(res=>{            
             //throw {email: 'That email is already taken'}
             if(res.data.Email===''){
                       
-              if(values.id>0){
+              if(values.teacherId>0){
                 update(values); 
               }
               else{
@@ -49,8 +49,8 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
     }
 
     function update(values){
-      // console.log('in update');
-      // console.log(values);
+      //console.log('in update');
+      //console.log(values);
       axios.put('/api/teachers', values)      
           .then(function (response) {
             

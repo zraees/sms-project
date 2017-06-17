@@ -28,6 +28,8 @@ class Loader extends React.Component{
             
             this.props.isLoading == 1 ?
             <div className="loader">
+                {/*<img src="assets/img/ajax-loader.gif" // place your logo here
+                         alt="SmartAdmin"/>*/}
                 <div className="sk-cube-grid">
                     <div className="sk-cube sk-cube1"></div>
                     <div className="sk-cube sk-cube2"></div>
