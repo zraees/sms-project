@@ -101,10 +101,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\KeyValue.cs" />
+    <Compile Include="Logger\DatabaseLogger.cs" />
+    <Compile Include="Logger\ExecutionTimeFilter.cs" />
+    <Compile Include="Logger\IDbCommandInterceptor.cs" />
     <Compile Include="Models\Cities.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Countries.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Errors.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QualificationTypes.cs">

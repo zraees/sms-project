@@ -43,31 +43,33 @@ namespace SMSServices.Controllers
         }
 
         // POST api/<controller>
-        public void Post(Teachers teacher)
+        public HttpResponseMessage Post(Teachers teacher)
         {         
             try
             {
-                entities.Teachers.Add(new Teachers()
-                {
-                    Name = teacher.Name,
-                    Email = teacher.Email,
-                    DOB = teacher.DOB,
-                    Gender = teacher.Gender,
-                    IDNo = teacher.IDNo,
-                    NationalityId = teacher.NationalityId,
-                    Rating = teacher.Rating,
-                    Address = teacher.Address,
-                    PhoneNo = teacher.PhoneNo,
-                    MobileNo = teacher.MobileNo,
-                    CountryId = teacher.CountryId,
-                    StateId = teacher.StateId,
-                    CityId = teacher.CityId
-                });
-                entities.SaveChanges();
+                //entities.Teachers.Add(new Teachers()
+                //{
+                //    Name = teacher.Name,
+                //    Email = teacher.Email,
+                //    DOB = teacher.DOB,
+                //    Gender = teacher.Gender,
+                //    IDNo = teacher.IDNo,
+                //    NationalityId = teacher.NationalityId,
+                //    Rating = teacher.Rating,
+                //    Address = teacher.Address,
+                //    PhoneNo = teacher.PhoneNo,
+                //    MobileNo = teacher.MobileNo,
+                //    CountryId = teacher.CountryId,
+                //    StateId = teacher.StateId,
+                //    CityId = teacher.CityId
+                //});
+                //entities.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                throw;
+                //throw;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 

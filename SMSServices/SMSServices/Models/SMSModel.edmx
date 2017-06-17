@@ -23,6 +23,22 @@
           <Property Name="PhoneCode" Type="int" Nullable="false" />
           <Property Name="Nationality" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="Errors">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Query" Type="nvarchar(max)" />
+          <Property Name="Parameters" Type="nvarchar(max)" />
+          <Property Name="CommandType" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalSeconds" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="InnerException" Type="nvarchar(max)" />
+          <Property Name="RequestId" Type="int" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="QualificationTypes">
           <Key>
             <PropertyRef Name="QualificationTypeId" />
@@ -200,6 +216,7 @@
         <EntityContainer Name="SMSModelStoreContainer">
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
@@ -312,6 +329,7 @@
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Teachers" EntitySet="Teachers" />
           </AssociationSet>
+          <EntitySet Name="Errors" EntityType="SMSModel.Errors" />
         </EntityContainer>
         <EntityType Name="QualificationTypes">
           <Key>
@@ -501,6 +519,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Errors">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Query" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Parameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommandType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalSeconds" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InnerException" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequestId" Type="Int32" />
+          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -595,6 +629,23 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="TeacherExperienceId" ColumnName="TeacherExperienceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors">
+            <EntityTypeMapping TypeName="SMSModel.Errors">
+              <MappingFragment StoreEntitySet="Errors">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="InnerException" ColumnName="InnerException" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="TotalSeconds" ColumnName="TotalSeconds" />
+                <ScalarProperty Name="CommandType" ColumnName="CommandType" />
+                <ScalarProperty Name="Parameters" ColumnName="Parameters" />
+                <ScalarProperty Name="Query" ColumnName="Query" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

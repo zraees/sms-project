@@ -27,6 +27,8 @@ namespace SMSServices
             json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
+            config.Filters.Add(new ExecutionTimeFilter());
+
         }
     }
 }

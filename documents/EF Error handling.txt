@@ -1,0 +1,8 @@
+https://www.simple-talk.com/dotnet/net-framework/catching-bad-data-in-entity-framework/
+
+https://blogs.infosupport.com/improving-dbentityvalidationexception/
+
+https://www.codeproject.com/Tips/1072374/Entity-Framework-DBInterception-Exception
+
+
+https://stackoverflow.com/questions/20015031/exception-handling-in-entity-framework
