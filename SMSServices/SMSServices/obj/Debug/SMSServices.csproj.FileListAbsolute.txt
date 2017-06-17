@@ -1,4 +1,3 @@
-D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Debug\SMSServices.csprojResolveAssemblyReference.cache
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.dll.config
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.pdb

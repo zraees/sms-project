@@ -36,8 +36,8 @@ namespace SMSServices.Controllers
         {
             entities.Configuration.ProxyCreationEnabled = false;
             Teachers teacher;
-            teacher = entities.Teachers.Where(t => t.TeacherId == id && t.Email == email).FirstOrDefault();
-            if (teacher == null)
+            //teacher = entities.Teachers.Where(t => t.TeacherId == id && t.Email == email).FirstOrDefault();
+            //if (teacher == null)
                 teacher = new Teachers() { Email = string.Empty };
             return teacher;
         }
@@ -77,10 +77,11 @@ namespace SMSServices.Controllers
             try
             {
                 var entity = entities.Teachers.Find(teacher.TeacherId);
-                entities.Entry(entity).CurrentValues.SetValues(teacher);
-                entities.SaveChanges();
-
-
+                if (entity != null)
+                {
+                    entities.Entry(entity).CurrentValues.SetValues(teacher);
+                    entities.SaveChanges();
+                }
                 //var result = entities.Teachers.SingleOrDefault(t => t.TeacherId == teacher.TeacherId);
                 //if (result != null)
                 //{
@@ -92,9 +93,9 @@ namespace SMSServices.Controllers
                 //    result.IDNo = teacher.IDNo;
                 //    result.NationalityId = teacher.NationalityId;
                 //    result.Rating = teacher.Rating;
-                    
+
                 //    entities.Teachers.Attach(result);
-                //    //entities.Entry(result).State = System.Data.Entity.EntityState.Modified;     
+                //    entities.Entry(result).State = System.Data.Entity.EntityState.Modified;
                 //    entities.SaveChanges();
                 //}
             }
