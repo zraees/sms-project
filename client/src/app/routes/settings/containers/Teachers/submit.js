@@ -7,6 +7,8 @@ import Msg from '../../../../components/i18n/Msg'
 import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
+import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
+
 
     function submit(values){
       //console.log(values);
@@ -33,10 +35,12 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
     }
 
     function insert(values){
+      LoaderVisibility(true);
       
       axios.post('/api/teachers', values)      
           .then(function (response) {
             
+            LoaderVisibility(false);
             alert('s', 'Teacher details have been saved.');
             $('#teacherPopup').modal('hide');  
 
@@ -44,24 +48,26 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
           .catch(function (error) {
             console.log(error);
             alert('f', '');
-            
+            LoaderVisibility(false);      
           });      
     }
 
     function update(values){
       //console.log('in update');
       //console.log(values);
+      LoaderVisibility(true);
       axios.put('/api/teachers', values)      
           .then(function (response) {
             
             alert('s','Teacher details have been updated.');
             $('#teacherPopup').modal('hide');  
+            LoaderVisibility(false);
 
           })
           .catch(function (error) {
             console.log(error);
             alert('f', '');
-            
+            LoaderVisibility(false);
           });      
     }
 
@@ -79,65 +85,105 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
     function deleteRecord(ButtonPressed, id, delCell) {
 
         if (isYesClicked(ButtonPressed)) {
-            console.log('conf yes by func');
+            LoaderVisibility(true);
+            console.log('teacher dele conf yes by func');
             // console.log(id);
-            axios.delete('/api/teachers/' + id)      
-              .then(function (response) {
+            
+            ////axios.delete('/api/teachers/' + id)      
+            // axios.post('/api/RemoveTeacher/' + id)
+            //   .then(function (response) {
                 
-                alert('s','Teacher details have been deleted.');
+            //     alert('s','Teacher details have been deleted.');
                 
-                var table = $('#teachersGrid').DataTable();                
-                table
-                  .row( delCell.parents('tr') )
-                  .remove()
-                  .draw();
+            //     var table = $('#teachersGrid').DataTable();                
+            //     table
+            //       .row( delCell.parents('tr') )
+            //       .remove()
+            //       .draw();
 
-                  //console.log('after row del ..')
+            //   })
+            //   .catch(function (error) {
+            //     console.log(error);
+            //       alert('f','');
+            //   }); 
 
-              })
-              .catch(function (error) {
+            $.ajax({
+                url : '/api/RemoveTeacher/' + id,
+                type: "POST",
+                //data : formData,
+                success: function(data, textStatus, jqXHR)
+                {
+                  console.log('success...');
+                  alert('s','Teacher details have been deleted.');
+                  
+                  var table = $('#teachersGrid').DataTable();                
+                  table
+                    .row( delCell.parents('tr') )
+                    .remove()
+                    .draw();
+
+                  LoaderVisibility(false);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                  console.log('error = ', jqXHR, textStatus, errorThrown);
                   alert('f','');
-              }); 
 
-          
+                  LoaderVisibility(false);
+                }
+            });
         }
         else if (isNoClicked(ButtonPressed)) {
           // do nothing
         }
+
+        
       }
 
-    export function submitQualification(values){
-      
+    export function submitQualification(values, teacherId){
+      // console.log('quali submit');
+      // console.log(values);
+      // console.log(teacherId);
+      values = Object.assign({}, values, {teacherId});
+      //console.log(values);
+      LoaderVisibility(true);
       axios.post('/api/TeacherQualifications', values)      
           .then(function (response) {
             
             alert('s', 'Qualification details have been saved.');
             $('#teacherQualificationsGrid').DataTable().ajax.reload();  
             $('#tabList').trigger('click');
+            LoaderVisibility(false);
 
           })
           .catch(function (error) {
             console.log(error);
             alert('f', '');
+            LoaderVisibility(false);
             throw new SubmissionError({   
                 _error: 'Something went wrong, please contact system administrator!'
               });
           });
     } 
 
-    export function submitExperience(values){
-      console.log(values);
+    export function submitExperience(values, teacherId){
+      values = Object.assign({}, values, {teacherId});
+      //console.log(values);
+      LoaderVisibility(true);
       axios.post('/api/TeacherExperiences', values)      
           .then(function (response) {
             
             alert('s', 'Experience details have been saved.');
             $('#teacherExperiencesGrid').DataTable().ajax.reload();  
             $('#tabListExp').trigger('click');
+            LoaderVisibility(false);
 
           })
           .catch(function (error) {
             console.log(error);
             alert('f', '');
+            LoaderVisibility(false);
             throw new SubmissionError({   
                 _error: 'Something went wrong, please contact system administrator!'
               });
@@ -157,14 +203,13 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
     function deleteQualificationRecord(ButtonPressed, id, delCell) {
 
         if (isYesClicked(ButtonPressed)) {
-
+            
+            LoaderVisibility(true);
             console.log('del quali yes');
             console.log(Date());
 
-            axios.delete('/api/TeacherQualifications/' + id)      
-            // axios.delete('/api/TeacherQualifications/',{
-            //                   params: { id: id }
-            //                 })
+            //axios.delete('/api/TeacherQualifications/' + id)      
+            axios.post('/api/RemoveTeacherQualification/' + id)      
               .then(function (response) {
                 
                 alert('s','Qualification details have been deleted.');
@@ -177,9 +222,11 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 
                   //console.log('after row del ..')
                   console.log(Date());
+                  LoaderVisibility(false);
               })
               .catch(function (error) {
                   alert('f','');
+                  LoaderVisibility(false);
               }); 
 
           
@@ -202,8 +249,12 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
   function deleteExperienceRecord(ButtonPressed, id, delCell) {
 
       if (isYesClicked(ButtonPressed)) {
-          
-          axios.delete('/api/TeacherExperiences/' + id)      
+          console.log('del expe yes');
+          console.log(Date());
+          LoaderVisibility(true);
+
+          //axios.delete('/api/TeacherExperiences/' + id)      
+          axios.post('/api/RemoveTeacherExperience/' + id)      
             .then(function (response) {
               
               alert('s','Experience details have been deleted.');
@@ -213,10 +264,13 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
                 .row( delCell.parents('tr') )
                 .remove()
                 .draw();
-
+                
+                console.log(Date());
+                LoaderVisibility(false);
             })
             .catch(function (error) {
                 alert('f','');
+                LoaderVisibility(false);
             }); 
 
         

@@ -17,7 +17,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import {removeQualification} from './submit'
+import {submitQualification, removeQualification} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 //import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
@@ -77,8 +77,8 @@ componentDidMount(){
         });
         
  
-}
-
+} 
+  //
   render() {
     const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
     const { qualificationScoreTypes, qualificationTypes, activeTab } = this.state;
@@ -102,7 +102,7 @@ componentDidMount(){
                 <div className="tab-pane active" id="AA">
                     
                     <form id="form-teacher-qualification" className="smart-form" 
-                        onSubmit={handleSubmit}>
+                        onSubmit={handleSubmit((values)=>{submitQualification(values, teacherId)})}>
                         <fieldset>
 
                         <div className="row">
@@ -161,7 +161,7 @@ componentDidMount(){
 
                         {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
 
-                        <Field component="input" type="hidden" name="teacherId"/>
+                        <Field component="input" type="hidden" name="teacherId" />
 
                         <footer>
                             <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
@@ -268,8 +268,10 @@ componentDidMount(){
 }
        
        
-const afterSubmit = (result, dispatch) =>
-  dispatch(reset('QualificationForm'));
+const afterSubmit = function(result, dispatch) {
+    dispatch(reset('QualificationForm'));
+    //this.props.change('teacherId', this.props.teacherId);
+}//.bind(this);
 
 export default reduxForm({
   form: 'QualificationForm',  // a unique identifier for this form
@@ -278,4 +280,4 @@ export default reduxForm({
   // ,
   // asyncValidate,
   // asyncBlurFields: ['email']
-})(QualificationForm) 
+})(QualificationForm)

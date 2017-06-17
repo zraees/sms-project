@@ -62,6 +62,7 @@ namespace SMSServices.Controllers
             
         }
 
+        /*
         // DELETE api/<controller>/5
         [Route("api/TeacherExperiences/{id}")]
         public void Delete(int id)
@@ -80,6 +81,34 @@ namespace SMSServices.Controllers
             {
 
                 throw;
+            }
+        }
+        */
+        
+        [HttpPost]
+        [Route("api/RemoveTeacherExperience/{id}")]
+        public HttpResponseMessage RemoveTeacherExperience(int id)
+        {
+            try
+            {
+                var teacherExperiences = new TeacherExperiences { TeacherExperienceId = id };
+                if (teacherExperiences != null)
+                {
+                    entities.Entry(teacherExperiences).State = EntityState.Deleted;
+                    entities.TeacherExperiences.Remove(teacherExperiences);
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, "Removed...");
+                }
+                else
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "not found...");
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message + 
+                //    " inner ex: " + ex.InnerException !=null ? ex.InnerException.Message : "null" );
+                //throw;
             }
         }
 

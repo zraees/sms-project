@@ -28,7 +28,7 @@ font-style: normal;
 .smart-rtl body, body.smart-rtl {
     direction: rtl !important;
     font-family: 'droidkufi' !important;
-    font-size: 12px;
+    font-size: 13px;
     /*line-height: 1.42857;
     margin: 0;*/
 }

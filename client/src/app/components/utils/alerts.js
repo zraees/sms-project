@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import {smallBox, bigBox, SmartMessageBox} from "./actions/MessageActions";
 import Msg from '../i18n/Msg'
 import LanguageStore from '../i18n/LanguageStore'
+import {getLang} from '../utils/functions'
 
 function alert(type, message){
     let titleText = LanguageStore.getData().phrases["SystemAlertText"] || "System Alert";
@@ -31,14 +32,16 @@ function alert(type, message){
 }
 
 export function confirmation(message, callback){
-    let titleText = LanguageStore.getData().phrases["Confirmation!"] || "Confirmation!";
+    let titleText = LanguageStore.getData().phrases["ConfirmationTitleText"] || "Confirmation!";
     let noText = LanguageStore.getData().phrases["noText"] || "No";
     let yesText = LanguageStore.getData().phrases["yesText"] || "Yes";
     let messageText = LanguageStore.getData().phrases[message] || message;
+    let RTL = getLang().rtl;
+    
     SmartMessageBox({
         title: titleText,
         content: messageText,
-        buttons: '['+yesText+']['+noText+']'
+        buttons: RTL ? '['+yesText+']['+noText+']' : '['+noText+']['+yesText+']'
     }, callback);
 }
 

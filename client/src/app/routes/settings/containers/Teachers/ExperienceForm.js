@@ -10,7 +10,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import {removeExperience} from './submit'
+import {submitExperience, removeExperience} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 
 class ExperienceForm extends React.Component  {
@@ -90,7 +90,7 @@ componentDidMount(){
                 <div className="tab-pane active" id="AAA">
                     
                     <form id="form-teacher-experience" className="smart-form" 
-                        onSubmit={handleSubmit}>
+                        onSubmit={handleSubmit((values)=>{submitExperience(values, teacherId)})}>
                         <fieldset>
 
                         <div className="row">

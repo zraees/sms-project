@@ -31,7 +31,7 @@ class TeachersPage extends React.Component {
   constructor(props){
    super(props);
    this.state = {
-     id: 0,
+     teacherId: 0,
      nationalities: [],
      countries: []
    }
@@ -81,19 +81,19 @@ class TeachersPage extends React.Component {
       //$(button).find('#edi').removeClass("glyphicon glyphicon-edit").addClass("glyphicon glyphicon-refresh glyphicon-spin");
 
       //console.log(button);
-      var id = button.data('id');             // Extract info from data-* attributes
-      this.setState({id});    
+      var teacherId = button.data('id');             // Extract info from data-* attributes
+      this.setState({teacherId});    
     }.bind(this));
 
     // call on modal close
     $('#teacherPopup').on('hidden.bs.modal', function (e) {            
-      this.setState({id : 0});
-      console.log('close popup');
+      this.setState({teacherId : 0});
+      //console.log('close popup');
       //$('#teachersGrid').DataTable().ajax.reload();      
           var table = $('#teachersGrid').DataTable();                
           table.clear();
-          table.ajax.reload();
-          
+          table.ajax.reload( null, false ); // user paging is not reset on reload
+
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
@@ -199,7 +199,7 @@ class TeachersPage extends React.Component {
                                   //console.log(row);
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
-                                    //console.log(this.state.id);
+                                    //console.log(this.state.teacherId);
                                     return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
@@ -293,20 +293,21 @@ class TeachersPage extends React.Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="teacherPopupLabel">{ this.state.id > 0 ? "Manage Teacher" : "Add New Teacher" }</h4>
+                <h4 className="modal-title" id="teacherPopupLabel">{ this.state.teacherId > 0 ? "Manage Teacher" : "Add New Teacher" }</h4>
               </div>
               <div className="modal-body">
                   
-                  { this.state.id > 0 ? 
+                  { this.state.teacherId > 0 ? 
                     //Test
                     <TeacherEditForm
-                      teacherId={this.state.id} 
+                      teacherId={this.state.teacherId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
                       onSubmit={submit} 
                       onSubmitQualification={submitQualification} 
                       onSubmitExperience={submitExperience} />
-                  : <TeacherForm teacherId={this.state.id} 
+                  : <TeacherForm 
+                      teacherId={this.state.teacherId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
                       onSubmit={submit} />
