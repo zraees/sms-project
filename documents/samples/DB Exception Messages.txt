@@ -1,0 +1,48 @@
+public static string Msg(Exception ex){
+	string message = string.Emptyl
+	if(ex is SqlException)
+	{
+		SqlException sqlex = (SqlException)ex;
+		switch(sqlex.Number)
+		{
+			case -1:
+			case 53:
+				message="";
+				break;
+			case 2601:
+			case 2627:
+				message="already exisits";
+				break;
+			case 201:
+				message="";
+				break;
+			default:
+				message="Error Number: " + sqlex.Number + "<br/>" + "Error Message: " + 
+					Globals.Utilities.CombineListOfStrings(sqlex.Message.ToString(), '\'')
+					+ "<br/>" + " There is an error";
+				break;
+		}
+	}
+	else if (ex is FormatException)
+		message = "there is inconsistency in data";
+	else
+		message ="Error Message: " + 
+					Globals.Utilities.CombineListOfStrings(ex.Message.ToString(), '\'')
+					+ "<br/>" + " There is an error";
+
+	return message;
+}
+
+
+public static string CombineListOfStrings(string lst, char separator)
+{
+	if(lst == null || lst.length == 0)
+	 return "";
+
+	string[] split = lst.Split(new char[] {separator});
+	string result = "";
+	foreach(string str in split)
+		result += str;
+
+	return result;
+}
