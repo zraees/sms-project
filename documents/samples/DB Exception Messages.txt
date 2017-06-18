@@ -1,6 +1,35 @@
+
+static class DatabaseExceptions : IEx
+{
+	public string Msg (Exception ex)
+	{
+		string ss = string.Empty;
+		ex = GetLastInnerException(ex);	
+		if(ex is SqlException)
+		{
+			SqlException sqlex = (SqlException)ex;
+			//ErrorLog(sqlex); // save into DB or blah blah
+			ss = Message.Msg(sqlex);
+		}
+		else if(ex.Source.ToUpper().equals("ENTITYFRAMEWORK"))
+		{
+			DbUpdateException sqlex = (DbUpdateException)ex;
+			//ErrorLog(sqlex); // save into DB or blah blah
+			ss = Message.Msg(sqlex);
+		}
+		else
+		{		
+			//ErrorLog(ex); // save into DB or blah blah
+			ss = Message.Msg(ex);
+		}
+	}
+}
+
+static class Message
+{
 public static string Msg(Exception ex){
-	string message = string.Emptyl
-	if(ex is SqlException)
+	string message = string.Empty;
+	if(ex is SqlException)   // code move to SqlExceptionMessages
 	{
 		SqlException sqlex = (SqlException)ex;
 		switch(sqlex.Number)
@@ -23,6 +52,14 @@ public static string Msg(Exception ex){
 				break;
 		}
 	}
+	else if (ex is DbUpdateException)
+	{
+		DbUpdateException DbUpdateEx = (DbUpdateException)ex;
+		if(DbUpdateEx.InnerException.InnerException is SqlException)
+		{
+			message = SqlExceptionMessages(DbUpdateEx.InnerException.InnerException);
+		}
+	}
 	else if (ex is FormatException)
 		message = "there is inconsistency in data";
 	else
@@ -32,7 +69,7 @@ public static string Msg(Exception ex){
 
 	return message;
 }
-
+}
 
 public static string CombineListOfStrings(string lst, char separator)
 {
@@ -45,4 +82,12 @@ public static string CombineListOfStrings(string lst, char separator)
 		result += str;
 
 	return result;
+}
+
+private Exception GetLastInnerException(Exception ex)
+{
+	if(ex.InnerException == null)
+		return ex;
+	else
+		return GetLastInnerException(ex.InnerException);
 }
