@@ -1,4 +1,4 @@
-﻿using SMSServices.HelperClasses;
+﻿using SMSServices.Helper;
 using SMSServices.Models;
 using System;
 using System.Collections.Generic;

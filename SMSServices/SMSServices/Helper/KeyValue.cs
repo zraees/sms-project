@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SMSServices.HelperClasses
+namespace SMSServices.Helper
 {
     public class KeyValue
     {

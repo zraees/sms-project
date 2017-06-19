@@ -16,3 +16,5 @@ D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSSer
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.csprojResolveAssemblyReference.cache
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.pdb
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\NLog.dll
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\NLog.xml

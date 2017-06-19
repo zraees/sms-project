@@ -45,6 +45,9 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -87,6 +90,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\GlobalExceptionAttribute.cs" />
+    <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
@@ -97,13 +102,18 @@
     <Compile Include="Controllers\TeacherQualificationsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="ErrorHelper\ApiBusinessException.cs" />
+    <Compile Include="ErrorHelper\ApiDataException.cs" />
+    <Compile Include="ErrorHelper\ApiException.cs" />
+    <Compile Include="ErrorHelper\IApiExceptions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HelperClasses\KeyValue.cs" />
-    <Compile Include="Logger\DatabaseLogger.cs" />
+    <Compile Include="Helper\JSONHelper.cs" />
+    <Compile Include="Helper\KeyValue.cs" />
+    <Compile Include="Helper\NLogger.cs" />
+    <Compile Include="Helper\ServiceStatus.cs" />
     <Compile Include="Logger\ExecutionTimeFilter.cs" />
-    <Compile Include="Logger\IDbCommandInterceptor.cs" />
     <Compile Include="Models\Cities.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>

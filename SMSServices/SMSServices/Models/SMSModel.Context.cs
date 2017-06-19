@@ -12,15 +12,12 @@ namespace SMSServices.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Infrastructure.Interception;
     
     public partial class SMSEntities : DbContext
     {
         public SMSEntities()
             : base("name=SMSEntities")
         {
-            //TODO remove this when don't need to log anything
-            DbInterception.Add(new DatabaseLogger());
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

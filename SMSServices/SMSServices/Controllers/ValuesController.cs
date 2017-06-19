@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApi.ErrorHelper;
 
 namespace SMSServices.Controllers
 {
@@ -16,9 +17,10 @@ namespace SMSServices.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            return "value";
+            throw new ApiDataException(1001, "No product found for this id.", HttpStatusCode.NotFound);
+            //return "value";
         }
 
         // POST api/<controller>

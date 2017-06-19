@@ -4,11 +4,13 @@ D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSSer
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.SqlServer.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\Newtonsoft.Json.dll
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\NLog.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Net.Http.Formatting.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.WebHost.dll
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.xml
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.SqlServer.xml
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\NLog.xml
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Net.Http.Formatting.xml
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.xml
 D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.WebHost.xml
