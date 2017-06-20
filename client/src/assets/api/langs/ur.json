@@ -100,5 +100,7 @@
     "Teachers":"اساتذہ",
 
     "Please enter full name": "پورا نام درج کریں",
-    "Please enter email address": "ای میل ایڈریس درج کریں"
+    "Please enter email address": "ای میل ایڈریس درج کریں",
+
+    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
 }

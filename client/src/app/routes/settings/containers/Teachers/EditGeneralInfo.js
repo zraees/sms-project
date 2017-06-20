@@ -58,8 +58,8 @@ class EditGeneralInfo extends React.Component {
   handleInitialize(teacherId) { 
       axios.get('/api/teachers/' + teacherId)
           .then(res=>{            
-console.log('dob');
-              console.log(res.data.DOB != null ? moment(res.data.DOB).format("MM/DD/YYYY") : "");
+            console.log('dob');
+            console.log(res.data.DOB != null ? moment(res.data.DOB).format("MM/DD/YYYY") : "");
               //var json = res.data; T00:00:00
               //console.log(res.data.DOB.replace("T00:00:00", ""));
             this.setState({rating:res.data.Rating});
@@ -277,8 +277,11 @@ console.log('dob');
   }
 }
        
-const afterSubmit = (result, dispatch) =>
-  dispatch(reset('EditGeneralInfo'));
+const afterSubmit = function(result, dispatch) {
+    console.log('hello edit');
+    console.log(result);
+    dispatch(reset('EditGeneralInfo'));
+}
 
 export default reduxForm({
   form: 'EditGeneralInfo',  // a unique identifier for this form

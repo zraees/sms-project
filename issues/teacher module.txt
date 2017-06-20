@@ -15,6 +15,7 @@ TeacherPage.js
 TeacherForm.js
 ==============
 1- city combobox set first value after selection
+2- reset issue: unique email validation from server should not reset fields
 
  
 Qualification.js

@@ -35,7 +35,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     function insert(values){
       LoaderVisibility(true);
-      
+      console.log(values);
       axios.post('/api/teachers', values)      
           .then(function (response) {
             
@@ -48,9 +48,23 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             if (error.response) {
               // The request was made and the server responded with a status code
               // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
+              //console.log(error.response.data);
+              //console.log(error.response.status);
+              //console.log(error.response.headers);
+
+              alert('f', error.response.data.StatusMessage);  
+            
+              LoaderVisibility(false);     
+                   //throw new SubmissionError({ _error: "That's weird. "});   
+                   //reject('error error error');
+                   return Promise.resolve(true).then(() => {
+                    throw new SubmissionError({ email: 'User does not exist', _error: 'Login failed!' });
+                  });
+              // return new SubmissionError({   
+              //   email: 'email is already taken',
+              //   _error: 'You cannot proceed further!'
+              // });
+
             } else if (error.request) {
               // The request was made but no response was received
               // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -60,9 +74,9 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
               // Something happened in setting up the request that triggered an Error
               console.log('Error', error.message);
             }
-            console.log(error.config);
+            //console.log(error.config);
             
-            alert('f', '');
+            //alert('f', '');
             LoaderVisibility(false);      
           });      
     }

@@ -96,5 +96,7 @@
     "Teachers": "Teachers",
 
     "Please enter full name": "Please enter full name",
-    "Please enter email address": "Please enter email address"
+    "Please enter email address": "Please enter email address",
+
+    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
 }

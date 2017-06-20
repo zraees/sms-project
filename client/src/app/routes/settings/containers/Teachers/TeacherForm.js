@@ -268,8 +268,11 @@ class TeacherForm extends React.Component {
   }
 }
        
-const afterSubmit = (result, dispatch) =>
-  dispatch(reset('TeacherForm'));
+const afterSubmit = function(result, dispatch) {
+    console.log('hello');
+    console.log(result);
+    dispatch(reset('TeacherForm'));
+}
 
 export default reduxForm({
   form: 'TeacherForm',  // a unique identifier for this form

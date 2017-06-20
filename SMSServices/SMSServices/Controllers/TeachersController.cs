@@ -3,10 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
+using WebApi.ErrorHelper;
 
 namespace SMSServices.Controllers
 {
@@ -44,33 +48,70 @@ namespace SMSServices.Controllers
 
         // POST api/<controller>
         public HttpResponseMessage Post(Teachers teacher)
-        {         
+        {
             try
             {
-                //entities.Teachers.Add(new Teachers()
-                //{
-                //    Name = teacher.Name,
-                //    Email = teacher.Email,
-                //    DOB = teacher.DOB,
-                //    Gender = teacher.Gender,
-                //    IDNo = teacher.IDNo,
-                //    NationalityId = teacher.NationalityId,
-                //    Rating = teacher.Rating,
-                //    Address = teacher.Address,
-                //    PhoneNo = teacher.PhoneNo,
-                //    MobileNo = teacher.MobileNo,
-                //    CountryId = teacher.CountryId,
-                //    StateId = teacher.StateId,
-                //    CityId = teacher.CityId
-                //});
-                //entities.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
+                entities.Teachers.Add(new Teachers()
+                {
+                    Name = teacher.Name,
+                    Email = teacher.Email,
+                    DOB = teacher.DOB,
+                    Gender = teacher.Gender,
+                    IDNo = teacher.IDNo,
+                    NationalityId = teacher.NationalityId,
+                    Rating = teacher.Rating,
+                    Address = teacher.Address,
+                    PhoneNo = teacher.PhoneNo,
+                    MobileNo = teacher.MobileNo,
+                    CountryId = teacher.CountryId,
+                    StateId = teacher.StateId,
+                    CityId = teacher.CityId
+                });
+                entities.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
             }
-            catch (DbUpdateException ex)
+            //catch (Exception e)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
+                
+            //}
+            catch (DbUpdateException dbEx)
             {
-                //throw;
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                throw dbEx;
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have more issue ...");
+                //StringBuilder sb = new StringBuilder();
+                //foreach (var item in dbEx.EntityValidationErrors)
+                //{
+                //    sb.Append(item + " errors: ");
+                //    foreach (var i in item.ValidationErrors)
+                //    {
+                //        sb.Append(i.PropertyName + " : " + i.ErrorMessage);
+                //    }
+                //    sb.Append(Environment.NewLine);
+                //}
+                ////throw new ApiDataException(GetErrorCode(dbEx), sb.ToString(), HttpStatusCode.BadRequest);
+                //throw new ApiDataException(1021, "too many errors ...", HttpStatusCode.BadRequest);
+                //return Request.CreateResponse(HttpStatusCode.OK, sb.ToString());
             }
+            //catch (DbUpdateException ex)
+            //{
+            //    throw ex;
+            //    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+            //}
+        }
+        private int GetErrorCode(DbEntityValidationException dbEx)
+        {
+            int ErrorCode = (int)HttpStatusCode.BadRequest;
+            if (dbEx.InnerException != null && dbEx.InnerException.InnerException != null)
+            {
+                if (dbEx.InnerException.InnerException is SqlException)
+                {
+                    ErrorCode = (dbEx.InnerException.InnerException as SqlException).Number;
+                }
+            }
+
+            return ErrorCode;
         }
 
         // PUT api/<controller>/5

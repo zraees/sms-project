@@ -202,8 +202,8 @@ componentDidMount(){
                                     return data; //dtStartWrapper.format('DD/MM/YYYY');
                                 },
                                 "targets": 1
-                            }
-                            ,{ 
+                            },
+                            { 
                                 "render": function ( data, type, row ) {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
@@ -215,7 +215,7 @@ componentDidMount(){
                                     //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
                                 }.bind(self),
                                 "className": "dt-center",
-                                "sorting": false,
+                                "sorting": false,   
                                 "targets": 7
                             }
                         ],
@@ -229,7 +229,7 @@ componentDidMount(){
                           {data: "Qualification"},
                           {data: "StartDate"},
                           {data: "EndDate"},    
-                          {data: "QualificationTypes[0].1"},  
+                          {data: "QualificationTypes"},  
                           {data: "ScoreType"},  
                           {data: "Score"},  
                           {data: "Duration"},  

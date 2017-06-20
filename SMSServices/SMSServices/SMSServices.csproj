@@ -126,6 +126,7 @@
     <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SMSEntities.cs" />
     <Compile Include="Models\SMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,8 +1,22 @@
+Error Code:
+https://technet.microsoft.com/en-us/library/cc645611(v=sql.105).aspx
+
+sample
 https://www.simple-talk.com/dotnet/net-framework/catching-bad-data-in-entity-framework/
 
 https://blogs.infosupport.com/improving-dbentityvalidationexception/
 
 https://www.codeproject.com/Tips/1072374/Entity-Framework-DBInterception-Exception
 
-
 https://stackoverflow.com/questions/20015031/exception-handling-in-entity-framework
+
+
+code-project: NLog implementation:
+https://www.codeproject.com/Articles/1028416/RESTful-Day-sharp-Request-logging-and-Exception-ha
+
+NLog:
+https://github.com/NLog/NLog/wiki/Var-Layout-Renderer
+
+NLog: Email
+https://github.com/nlog/NLog/wiki/Examples
+

@@ -8,7 +8,7 @@ import {getLang} from '../utils/functions'
 
 function alert(type, message){
     let titleText = LanguageStore.getData().phrases["SystemAlertText"] || "System Alert";
-    let messageText = LanguageStore.getData().phrases["message"] || message;
+    let messageText = LanguageStore.getData().phrases[message] || message;
     
     if(type === 's'){
         smallBox({
@@ -22,7 +22,8 @@ function alert(type, message){
     else if(type === 'f'){
         smallBox({
             title: titleText,
-            content: "<i class='fa fa-thumbs-o-down'></i> <i>Something went wrong, please contact system administrator</i>",
+            content: "<i class='fa fa-thumbs-o-down'></i> <i>" + messageText + "</i>",
+            //content: "<i class='fa fa-thumbs-o-down'></i> <i>Something went wrong, please contact system administrator</i>",
             //content: "<i class='fa fa-thumbs-o-down'></i> <i>"+<Msg phrase="Recent projects" />+"</i>",
             color: "#C46A69",
             //timeout: 5000,

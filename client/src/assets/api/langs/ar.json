@@ -97,5 +97,7 @@
     "Teachers":"معلمون",
 
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
-    "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني"
+    "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
+
+    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
 }

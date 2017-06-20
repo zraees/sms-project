@@ -120,8 +120,9 @@ namespace WebApi.Helpers
                 else
                     message.Append("").Append("Error: " + record.Exception.GetBaseException().Message + Environment.NewLine);
             }
-
+            //LogManager.Configuration.Variables["exception"] = "there is a fatal error !!!";
             Logger[record.Level](Convert.ToString(message) + Environment.NewLine);
+            
         }
         #endregion
     }
