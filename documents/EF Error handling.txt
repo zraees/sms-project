@@ -20,3 +20,40 @@ https://github.com/NLog/NLog/wiki/Var-Layout-Renderer
 NLog: Email
 https://github.com/nlog/NLog/wiki/Examples
 
+
+http://www.codemag.com/Article/1603031
+function handleException(request, message, error) {
+    var msg = "";
+      
+    switch (request.status) {
+      case 500:
+          // Display error message thrown from the server
+          msg = request.responseJSON.ExceptionMessage;
+          break;
+      
+      default:
+          msg = "Status: " + request.status;
+          msg += "\n" + "Error Message: " +
+                 request.statusText;
+          break;
+    }
+      
+    alert(msg);
+}
+
+
+https://forums.asp.net/t/1970337.aspx?Validation+Entities+error+when+trying+to+save+changes+using+EF6+and+WebApi+Controller+
+catch (DbEntityValidationException dbEx)
+{
+	StringBuilder sb = new StringBuilder();
+	foreach (var item in dbEx.EntityValidationErrors)
+	{
+		sb.Append(item + " errors: ");
+		foreach (var i in item.ValidationErrors)
+		{
+			sb.Append(i.PropertyName + " : " + i.ErrorMessage);
+		}
+		sb.Append(Environment.NewLine);
+	}
+	Logger.ErrorFormat("Validation errors: {0}", sb.ToString());
+}

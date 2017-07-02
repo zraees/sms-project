@@ -2,6 +2,21 @@
  * Created by griga on 11/17/16.
  */
 
+/*  https://github.com/indexiatech/redux-immutablejs  */
+/*
+import { createStore } from 'redux';
+import { combineReducers } from 'redux-immutablejs';
+
+import Immutable from 'immutable';
+import * as reducers from './reducers';
+
+const reducer = combineReducers(reducers);
+const state = Immutable.fromJS({});
+
+const store = reducer(state);
+export default createStore(reducer, store);
+*/
+
 import {createStore, combineReducers,  applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {routerReducer} from 'react-router-redux'
