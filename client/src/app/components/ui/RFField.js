@@ -8,7 +8,9 @@ const RFField = ({input, label, type, labelClassName, labelIconClassName, placeh
         <label><Msg phrase={label}/></label>
         <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
           <i className={labelIconClassName} aria-hidden="true"/>
-          <input {...input} type={type} placeholder={LanguageStore.getData().phrases[placeholder]} />            
+          <input {...input} 
+            type={type} 
+            placeholder={LanguageStore.getData().phrases[placeholder]} />            
         </label>
         {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
       </div>

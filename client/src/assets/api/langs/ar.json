@@ -84,20 +84,40 @@
     "Page Header": "Верхний колонтитул страницы",
     "Subtitle": "Подзаголовок",
 
-    "RequiredFieldText": "هذا مجال مطلوب",
-    "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
-    "MustBeANumberText": "يجب أن يكون رقم",
-    
-    "NameText": "اسم",
-    "EmailAddressText": "عنوان البريد الإلكتروني",
-
     "Home": "الرئيسية",
     "Settings": "إعدادات",
     "Subjects":"المواضيع",
     "Teachers":"معلمون",
 
+    "Add New": " إضافة ",
+
+    "RequiredFieldText": "هذا مجال مطلوب",
+    "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
+    "MustBeANumberText": "يجب أن يكون رقم",
+    "Select": "اختيار...",
+    "Male": "ذكر",
+    "Female": "انثى",
+    
+    "NameText": "اسم",
+    "EmailAddressText": "عنوان البريد الإلكتروني",
+    "IdentityCardNumberText": "رقم بطاقة الهوية",
+    "PhoneNumberText": "رقم الهاتف",
+    "MobileNumberText": "رقم الجوال",
+    "StreetAddressText": "عنوان الشارع",
+    "CountryText":"بلد",
+    "StateText":"محافظة",
+    "CityText":"مدينة",
+    "DOBText":"تاريخ الولادة",
+    "GenderText":"جنس",
+    "RatingText":"تقييم",
+    "NationalityText":"جنسية",
+
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
+    "Please enter Identity card number": "الرجاء إدخال رقم بطاقة الهوية",
+    "Please enter phone number": "الرجاء إدخال رقم الهاتف",
+    "Please enter mobile number": "الرجاء إدخال رقم الجوال",
+    "Please enter street address": "الرجاء إدخال عنوان الشارع",
 
-    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
+    "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة"
 }

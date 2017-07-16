@@ -15,6 +15,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
+import Msg from '../../../../components/i18n/Msg'
 
 import Moment from '../../../../components/utils/Moment'
 
@@ -162,7 +163,8 @@ class TeachersPage extends React.Component {
                             <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
                                 <button className="btn btn-primary" data-toggle="modal"
                                   data-target="#teacherPopup">
-                                    <i className="fa fa-plus"/> <span className="hidden-mobile">Add New</span>
+                                    <i className="fa fa-plus"/> 
+                                    <span className="hidden-mobile"><Msg phrase="Add New" /></span>
                                 </button>
                             </div>
                         </div>

@@ -26,7 +26,7 @@ export default function RFReactSelect({ input , options, multi, className, label
   const transformedValue = transformValue(value, options, multi);
   return (
     <div>
-      <label>{label}</label>
+      <label><Msg phrase={label}/></label>
       <Select
         valueKey="value"
         name={name}

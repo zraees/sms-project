@@ -87,20 +87,40 @@
     "Page Header": "页眉",
     "Subtitle": "字幕",
 
-    "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
-    "InvalidEmailAddressText": "غلط ای میل ایڈریس",
-    "MustBeANumberText": "نمبر ہونا ضروری ہے",
-
-    "NameText": "نام",
-    "EmailAddressText": "ای میل اڈریس",
-
     "Home": "گھر",
     "Settings": "ترتیبات",
     "Subjects":"مضامین",
     "Teachers":"اساتذہ",
 
+    "Add New": " اضافہ ",
+
+    "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
+    "InvalidEmailAddressText": "غلط ای میل ایڈریس",
+    "MustBeANumberText": "نمبر ہونا ضروری ہے",
+    "Select": "منتخب کریں ...",
+    "Male": "مرد",
+    "Female": "عورت",
+    
+    "NameText": "نام",
+    "EmailAddressText": "ای میل اڈریس",
+    "IdentityCardNumberText": "شناختی کارڈ نمبر",
+    "PhoneNumberText": "فون نمبر",
+    "MobileNumberText": "موبائل نمبر",
+    "StreetAddressText": "گلی کا پتہ",
+    "CountryText":"ملک",
+    "StateText":"ریاست",
+    "CityText":"شہر",
+    "DOBText":"پیدائش کی تاریخ",
+    "GenderText":"جنس",
+    "RatingText":"درجہ بندی",
+    "NationalityText":"قومیت",
+
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",
+    "Please enter Identity card number": "شناختی کارڈ نمبر درج کریں",
+    "Please enter phone number": "برائے مہربانی فون نمبر درج کریں",
+    "Please enter mobile number": "برائے مہربانی موبائل نمبر درج کریں",
+    "Please enter street address": "براہ مہربانی سڑک کا پتہ درج کریں",
 
-    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
+    "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے"
 }

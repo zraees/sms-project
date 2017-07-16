@@ -8,10 +8,16 @@ export default class RFRadioButtonList extends React.Component {
 
           return (
             <div>
-                <label>{label}</label>
+                <label><Msg phrase={label}/></label>
                 <div className="inline-group">                
-                    {options.map(o => <label className="radio" key={o.value}>
-                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} /><i/> {o.title}</label>)}
+                    {options.map(o => 
+                        <label className="radio" key={o.value}>
+                            <input type="radio" {...input} 
+                                value={o.value} 
+                                checked={o.value === input.value} /><i/> 
+                            
+                            <label><Msg phrase={o.title}/></label>
+                        </label>)}
                     {hasError && <span className="error"><Msg phrase={meta.error}/></span>}
                 </div>
             </div>

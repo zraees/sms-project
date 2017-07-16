@@ -83,20 +83,40 @@
     "Page Header": "Page Header",
     "Subtitle": "Subtitle",
 
-    "RequiredFieldText": "This field is required",
-    "InvalidEmailAddressText": "Invalid email address",
-    "MustBeANumberText": "Must be a number",
-
-    "NameText": "Name",
-    "EmailAddressText": "Email Address",
-
     "Home": "Home",
     "Settings": "Settings",
     "Subjects": "Subjects",
     "Teachers": "Teachers",
 
+    "Add New": "Add New ",
+
+    "RequiredFieldText": "This field is required",
+    "InvalidEmailAddressText": "Invalid email address",
+    "MustBeANumberText": "Must be a number",
+    "Select": "Select",
+    "Male": "Male",
+    "Female": "Female",
+
+    "NameText": "Name",
+    "EmailAddressText": "Email Address",
+    "IdentityCardNumberText": "Identity Card Number",
+    "PhoneNumberText": "Phone Number",
+    "MobileNumberText": "Mobile Number",
+    "StreetAddressText": "Street Address",
+    "CountryText":"Country",
+    "StateText":"State",
+    "CityText":"City",
+    "DOBText":"Date of Birth",
+    "GenderText":"Gender",
+    "RatingText":"Rating",
+    "NationalityText":"Nationality",
+
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",
+    "Please enter Identity card number": "Please Identity card number",
+    "Please enter phone number": "Please enter phone number",
+    "Please enter mobile number": "Please enter mobile number",
+    "Please enter street address": "Please enter street address",
 
     "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
 }

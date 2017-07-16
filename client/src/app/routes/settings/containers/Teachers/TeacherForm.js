@@ -148,12 +148,14 @@ class TeacherForm extends React.Component {
 
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="dob" validate={required} label="Date of Birth" component={RFDatePicker} />
+                    <Field name="dob" validate={required} 
+                      label="DOBText" 
+                      component={RFDatePicker} />
                   </section>
 
                   <section className="col col-3">
                     <Field component={RFRadioButtonList} name="gender" required={true} 
-                      label="Gender"
+                      label="GenderText"
                       options={[
                         { title: 'Male', value: 'male' },
                         { title: 'Female', value: 'female' }
@@ -161,7 +163,7 @@ class TeacherForm extends React.Component {
                   </section>
 
                   <section className="col col-3">      
-                    <label>Rating</label>              
+                    <label><Msg phrase="RatingText"/></label>              
                     <div className="inline-group">
                       <StarRating onChange={(value) => { this.changeRate("rating", value) } }
                         initialRate={ this.state.rating } 
@@ -175,16 +177,18 @@ class TeacherForm extends React.Component {
             
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="idNo" labelClassName="input" label="Identity Card Number"
+                    <Field name="idNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" placeholder="Please enter Identity Card Number"/>
+                      component={RFField} type="text" 
+                      placeholder="Please enter Identity card number"
+                      label="IdentityCardNumberText"/>
                   </section>
 
                   <section className="col col-6">
                     <Field
                         multi={false}
                         name="nationalityId"
-                        label="Nationality"
+                        label="NationalityText"
                         options={nationalities}
                         component={RFReactSelect} />
                   </section>
@@ -192,23 +196,29 @@ class TeacherForm extends React.Component {
 
                 <div className="row">
                   <section className="col col-6">
-                    <Field name="phoneNo" labelClassName="input" label="Phone Number"
+                    <Field name="phoneNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-phone"
-                      component={RFField} type="text" placeholder="Please enter phone number"/>
+                      component={RFField} type="text" 
+                      label="PhoneNumberText"
+                      placeholder="Please enter phone number"/>
                   </section>
 
                   <section className="col col-6">
-                    <Field name="mobileNo" labelClassName="input" label="Mobile Number"
+                    <Field name="mobileNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-mobile"
-                      component={RFField} type="text" placeholder="Please enter mobile number"/>
+                      component={RFField} type="text" 
+                      label="MobileNumberText"
+                      placeholder="Please enter mobile number"/>
                   </section>
                 </div>
 
                 <div className="row">
                   <section className="col col-8">
-                    <Field name="address" labelClassName="input" label="Street Address"
+                    <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
-                      component={RFField} type="text" placeholder="Please enter street address"/>
+                      component={RFField} type="text" 
+                      label="StreetAddressText"
+                      placeholder="Please enter street address"/>
                   </section>
 
                   <section className="col col-4">
@@ -221,7 +231,7 @@ class TeacherForm extends React.Component {
                     <Field
                         multi={false}
                         name="countryId"
-                        label="Country"
+                        label="CountryText"
                         options={countries}
                         onBlur={this.handleCountryBlur}
                         component={RFReactSelect} />
@@ -231,7 +241,7 @@ class TeacherForm extends React.Component {
                     <Field
                         multi={false}
                         name="stateId"
-                        label="State"
+                        label="StateText"
                         options={states}
                         onBlur={this.handleStateBlur}
                         component={RFReactSelect} />
@@ -241,7 +251,7 @@ class TeacherForm extends React.Component {
                     <Field
                         multi={false}
                         name="cityId"
-                        label="City"
+                        label="CityText"
                         options={cities}
                         onBlur={this.handleCityBlur}
                         component={RFReactSelect} />

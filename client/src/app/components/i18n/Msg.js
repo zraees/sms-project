@@ -15,7 +15,9 @@ let Msg = React.createClass({
         }
     },
     render: function () {
-        let phrase = LanguageStore.getData().phrases[this.props.phrase] || this.props.phrase;
+        let val = this.props.phrase.replace("...", "")
+        //let phrase = LanguageStore.getData().phrases[this.props.phrase] || this.props.phrase;
+        let phrase = LanguageStore.getData().phrases[val] || val;
         return (
             <span>{phrase}</span>
         )
