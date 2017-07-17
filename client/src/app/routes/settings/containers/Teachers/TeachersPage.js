@@ -144,7 +144,7 @@ class TeachersPage extends React.Component {
                 <header>
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
 
-                  <h2>Teachers</h2>
+                  <h2><Msg phrase="Teachers" /></h2>
                   
                 </header>
 
@@ -295,7 +295,9 @@ class TeachersPage extends React.Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="teacherPopupLabel">{ this.state.teacherId > 0 ? "Manage Teacher" : "Add New Teacher" }</h4>
+                <h4 className="modal-title" id="teacherPopupLabel">
+                  { this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/> }
+                </h4>
               </div>
               <div className="modal-body">
                   

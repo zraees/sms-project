@@ -98,6 +98,8 @@
     "Male": "ذكر",
     "Female": "انثى",
     
+    "Manage Teacher":"تحديث المعلم",
+    "Add New Teacher": "إضافة معلم جديد",
     "NameText": "اسم",
     "EmailAddressText": "عنوان البريد الإلكتروني",
     "IdentityCardNumberText": "رقم بطاقة الهوية",
@@ -111,6 +113,11 @@
     "GenderText":"جنس",
     "RatingText":"تقييم",
     "NationalityText":"جنسية",
+    "General":"تفاصيل عامة",
+    "Qualification":"تعليم",
+    "Experience":"خبرة",
+    "SubjectsText":"المواضيع",
+    "Classes":"الطبقات",
 
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",

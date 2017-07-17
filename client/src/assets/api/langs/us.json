@@ -90,6 +90,7 @@
 
     "Add New": "Add New ",
 
+
     "RequiredFieldText": "This field is required",
     "InvalidEmailAddressText": "Invalid email address",
     "MustBeANumberText": "Must be a number",
@@ -97,6 +98,8 @@
     "Male": "Male",
     "Female": "Female",
 
+    "Manage Teacher":"Manage Teacher",
+    "Add New Teacher": "Add New Teacher",
     "NameText": "Name",
     "EmailAddressText": "Email Address",
     "IdentityCardNumberText": "Identity Card Number",
@@ -110,6 +113,11 @@
     "GenderText":"Gender",
     "RatingText":"Rating",
     "NationalityText":"Nationality",
+    "General":"General",
+    "Qualification":"Qualification",
+    "Experience":"Experience",
+    "SubjectsText":"Subjects",
+    "Classes":"Classes",
 
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",

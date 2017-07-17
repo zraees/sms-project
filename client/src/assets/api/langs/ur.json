@@ -101,6 +101,8 @@
     "Male": "مرد",
     "Female": "عورت",
     
+    "Manage Teacher":"ٹیچر ریکارڈ اپ ڈیٹ کریں",
+    "Add New Teacher": "نیا استاد ریکارڈ شامل کریں",
     "NameText": "نام",
     "EmailAddressText": "ای میل اڈریس",
     "IdentityCardNumberText": "شناختی کارڈ نمبر",
@@ -114,6 +116,11 @@
     "GenderText":"جنس",
     "RatingText":"درجہ بندی",
     "NationalityText":"قومیت",
+    "General":"عام تفصیلات",
+    "Qualification":"تعلیم",
+    "Experience":"تجربات",
+    "SubjectsText":"مضامین",
+    "Classes":"کلاسیں",
 
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",

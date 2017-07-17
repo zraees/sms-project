@@ -9,6 +9,7 @@ import QualificationForm from './QualificationForm'
 import ExperienceForm from './ExperienceForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
+import Msg from '../../../../components/i18n/Msg'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
@@ -69,23 +70,28 @@ class TeacherEditForm extends React.Component {
         <ul id="myTab1" className="nav nav-tabs bordered">
             <li className="active">
                 <a href="#s1" data-toggle="tab"><i className="fa fa-fw fa-lg fa-user"/>
-                General</a>
+                <Msg phrase="General" />
+                </a>
             </li>
             <li>
                 <a href="#s2" data-toggle="tab"><i className="fa fa-fw fa-lg fa-graduation-cap"/>
-                Qualification</a>
+                <Msg phrase="Qualification" />
+                </a>
             </li>
             <li>
                 <a href="#s3" data-toggle="tab"><i className="fa fa-fw fa-lg fa-trophy"/>
-                Experience</a>
+                <Msg phrase="Experience" />
+                </a>
             </li>
             <li>
                 <a href="#s4" data-toggle="tab"><i className="fa fa-fw fa-lg fa-book"/>
-                Subjects</a>
+                <Msg phrase="SubjectsText" />
+                </a>
             </li>
             <li>
                 <a href="#s5" data-toggle="tab"><i className="fa fa-fw fa-lg fa-suitcase"/>
-                Classes</a>
+                <Msg phrase="Classes" />
+                </a>
             </li>
         </ul>
 
