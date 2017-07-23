@@ -12,6 +12,7 @@ import {required, email}  from '../../../../components/forms/validation/CustomVa
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitExperience, removeExperience} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
+import Msg from '../../../../components/i18n/Msg'
 
 class ExperienceForm extends React.Component  {
   
@@ -79,10 +80,10 @@ componentDidMount(){
             
             <ul className="nav nav-tabs">
                 <li id="tabAddLink" className="active">
-                    <a id="tabAddExp" data-toggle="tab" href="#AAA">Add</a>
+                    <a id="tabAddExp" data-toggle="tab" href="#AAA"><Msg phrase="AddText" /></a>
                 </li>
                 <li id="tabListLink">
-                    <a id="tabListExp" data-toggle="tab" href="#BBB">List</a>
+                    <a id="tabListExp" data-toggle="tab" href="#BBB"><Msg phrase="ListText" /></a>
                 </li> 
             </ul>
 
@@ -96,20 +97,24 @@ componentDidMount(){
                         <div className="row">
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="companyName" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} type="text" placeholder="Company Name"/>    
+                                    validate={required} component={RFField} type="text" 
+                                    label="CompanyNameText"
+                                    placeholder="Please enter company name"/>
                             </section>
                         </div>
 
                         <div className="row">
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                                <Field name="startDate" placeholder="Start Date" component={RFDatePicker} />
+                                <Field name="startDate" label="StartDateText" component={RFDatePicker} />
                             </section>
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                                <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
+                                <Field name="endDate" label="EndDateText" component={RFDatePicker} />
                             </section>
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="designation" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} type="text" placeholder="Designation"/>  
+                                    validate={required} component={RFField} type="text" 
+                                    placeholder="Please enter designation" 
+                                    label="DesignationText"/>
                             </section>
                         </div>
 
@@ -118,7 +123,7 @@ componentDidMount(){
                                 <Field
                                     multi={false}
                                     name="countryId"
-                                    placeholder="Country"
+                                    label="CountryText"
                                     options={countries}
                                     onBlur={this.handleCountryBlur}
                                     component={RFReactSelect} />
@@ -128,7 +133,7 @@ componentDidMount(){
                                 <Field
                                     multi={false}
                                     name="stateId"
-                                    placeholder="State"
+                                    label="StateText"
                                     options={states}
                                     onBlur={this.handleStateBlur}
                                     component={RFReactSelect} />
@@ -138,7 +143,7 @@ componentDidMount(){
                                 <Field
                                     multi={false}
                                     name="cityId"
-                                    placeholder="City"
+                                    label="CityText"
                                     options={cities}
                                     onBlur={this.handleCityBlur}
                                     component={RFReactSelect} />
@@ -148,7 +153,9 @@ componentDidMount(){
                         <div className="row">                            
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="leavingReason" labelClassName="input" labelIconClassName="icon-append fa fa-book"
-                                    component={RFField} type="text" placeholder="Reason of leaving"/>    
+                                    component={RFField} type="text" 
+                                    label="LeavingReasonText"
+                                    placeholder="Please enter reason of leaving"/>
                             </section>
                         </div>
 
@@ -158,10 +165,10 @@ componentDidMount(){
 
                         <footer>
                             <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                            Reset
+                            <Msg phrase="ResetText"/>
                             </button>
                             <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
-                            Save
+                            <Msg phrase="SaveText"/>
                             </button>
                         </footer>
                         </fieldset>
@@ -237,12 +244,12 @@ componentDidMount(){
                       width="100%">
                       <thead>
                       <tr>
-                        <th data-hide="mobile-p">Company Name</th>
-                        <th data-class="expand">Start Date</th>
-                        <th data-hide="mobile-p">End Date</th>
-                        <th data-hide="mobile-p">Total Experience</th>
-                        <th data-hide="mobile-p">Designation</th>
-                        <th data-hide="mobile-p">Reason of Leaving</th>
+                        <th data-hide="mobile-p"><Msg phrase="CompanyNameText"/></th>
+                        <th data-class="expand"><Msg phrase="StartDateText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="EndDateText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="TotalExperienceText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="DesignationText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="LeavingReasonText"/></th>
                         <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>

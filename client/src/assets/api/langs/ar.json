@@ -90,6 +90,11 @@
     "Teachers":"معلمون",
 
     "Add New": " إضافة ",
+    "SaveText": "حفظ",
+    "UndoChangesText": "فك",
+    "ResetText": "إعادة تعيين",
+    "AddText": "جديد",
+    "ListText": "تسجيل",
 
     "RequiredFieldText": "هذا مجال مطلوب",
     "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
@@ -97,6 +102,7 @@
     "Select": "اختيار...",
     "Male": "ذكر",
     "Female": "انثى",
+    "IDText": "رقم السجل",    
     
     "Manage Teacher":"تحديث المعلم",
     "Add New Teacher": "إضافة معلم جديد",
@@ -118,6 +124,18 @@
     "Experience":"خبرة",
     "SubjectsText":"المواضيع",
     "Classes":"الطبقات",
+    "CompanyNameText":"اسم الشركة",
+    "StartDateText":"تاريخ البدء",
+    "EndDateText":"تاريخ الانتهاء",
+    "TotalExperienceText":"عدد سنوات الخبرة",
+    "DesignationText":"تعيين",
+    "LeavingReasonText":"سبب ترك العمل",
+    "QualificationTitleText":"المؤهل",
+    "QualificationTypeText":"نوع التأهيل",
+    "CGPAPercentageText":"نوع النتيجة",
+    "ScoreText":"النتيجة",
+    "MajorsText":"المواضيع الرئيسية",
+    "DurationText":"المدة الزمنية",
 
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
@@ -125,6 +143,12 @@
     "Please enter phone number": "الرجاء إدخال رقم الهاتف",
     "Please enter mobile number": "الرجاء إدخال رقم الجوال",
     "Please enter street address": "الرجاء إدخال عنوان الشارع",
+    "Please enter reason of leaving": "الرجاء إدخال سبب ترك الوظيفة",
+    "Please enter designation": "الرجاء إدخال تعيين",
+    "Please enter company name": "الرجاء إدخال اسم الشركة",
+    "Please enter qualification title": "الرجاء إدخال المؤهل",
+    "Please enter score": "الرجاء إدخال النتيجة",
+    "Please enter majors": "الرجاء إدخال المواضيع الرئيسية",
 
     "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة"
 }

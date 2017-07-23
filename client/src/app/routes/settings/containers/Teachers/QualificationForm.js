@@ -20,6 +20,7 @@ import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitQualification, removeQualification} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 //import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
+import Msg from '../../../../components/i18n/Msg'
 
 class QualificationForm extends React.Component {
   
@@ -91,10 +92,10 @@ componentDidMount(){
             
             <ul className="nav nav-tabs">
                 <li id="tabAddLink" className="active">
-                    <a id="tabAdd" data-toggle="tab" href="#AA">Add</a>
+                    <a id="tabAdd" data-toggle="tab" href="#AA"><Msg phrase="AddText" /></a>
                 </li>
                 <li id="tabListLink">
-                    <a id="tabList" data-toggle="tab" href="#BB">List</a>
+                    <a id="tabList" data-toggle="tab" href="#BB"><Msg phrase="ListText" /></a>
                 </li> 
             </ul>
 
@@ -109,19 +110,21 @@ componentDidMount(){
                             {/*<section>*/}
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="qualification" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} type="text" placeholder="Qualification Title"/>    
+                                    validate={required} component={RFField} type="text" 
+                                    label="QualificationTitleText"
+                                    placeholder="Please enter qualification title"/>
                             </section>
                             {/*</section>*/}
                         </div>
 
                         <div className="row">
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                                <Field name="startDate" placeholder="Start Date" component={RFDatePicker} />
+                                <Field name="startDate" label="StartDateText" component={RFDatePicker} />
                             </section>
                             {/*<article className="col-sm-1 col-md-1 col-lg-1">
                             </article>*/}
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                                <Field name="endDate" placeholder="End Date" component={RFDatePicker} />
+                                <Field name="endDate" label="EndDateText" component={RFDatePicker} />
                             </section>
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                             </section>
@@ -132,7 +135,7 @@ componentDidMount(){
                                 <Field
                                     multi={false}
                                     name="qualificationTypeId"
-                                    placeholder="Qualification Type"
+                                    label="QualificationTypeText"
                                     options={qualificationTypes}
                                     component={RFReactSelect} />
                             </section>
@@ -141,21 +144,25 @@ componentDidMount(){
                                 <Field
                                     multi={false}
                                     name="scoreType"
-                                    placeholder="CGPA / Percentage"
+                                    label="CGPAPercentageText"
                                     options={qualificationScoreTypes}
                                     component={RFReactSelect} />
                             </section>
                             
                             <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
                                 <Field name="score" labelClassName="input" labelIconClassName="icon-append fa fa-list"
-                                    validate={[required,number]} component={RFField} type="text" placeholder="Score"/>
+                                    validate={[required,number]} component={RFField} type="text" 
+                                    label="ScoreText"
+                                    placeholder="Please enter score"/>
                             </section>
                         </div>
 
                         <div className="row">                            
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="majors" labelClassName="input" labelIconClassName="icon-append fa fa-book"
-                                    component={RFField} type="text" placeholder="Majors"/>    
+                                    component={RFField} type="text" 
+                                    label="MajorsText"
+                                    placeholder="Please enter majors"/>
                             </section>
                         </div>
 
@@ -165,10 +172,10 @@ componentDidMount(){
 
                         <footer>
                             <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                            Reset
+                            <Msg phrase="ResetText"/>
                             </button>
                             <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
-                            Save
+                            <Msg phrase="SaveText"/>
                             </button>
                         </footer>
                         </fieldset>
@@ -245,13 +252,13 @@ componentDidMount(){
                       width="100%">
                       <thead>
                       <tr>
-                        <th data-hide="mobile-p">Qualification</th>
-                        <th data-class="expand">Start Date</th>
-                        <th data-hide="mobile-p">End Date</th>
-                        <th data-hide="mobile-p">QualificationType</th>
-                        <th data-hide="mobile-p">Score Type</th>
-                        <th data-hide="mobile-p">Score</th>
-                        <th data-hide="mobile-p">Duration</th>
+                        <th data-hide="mobile-p"><Msg phrase="QualificationTitleText"/></th>
+                        <th data-class="expand"><Msg phrase="StartDateText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="EndDateText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="QualificationTypeText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="CGPAPercentageText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="ScoreText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="DurationText"/></th>
                         <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>

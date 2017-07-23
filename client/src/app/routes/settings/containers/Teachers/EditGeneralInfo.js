@@ -13,6 +13,7 @@ import AlertMessage from '../../../../components/common/AlertMessage'
 import mapForCombo from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
+import Msg from '../../../../components/i18n/Msg'
 
 class EditGeneralInfo extends React.Component {
  
@@ -149,23 +150,26 @@ class EditGeneralInfo extends React.Component {
                     <div className="row">
                     <section className="col col-6">
                         <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                        validate={required} component={RFField} type="text" placeholder="Name"/>    
+                            validate={required} component={RFField} type="text" placeholder="Please enter full name" 
+                            label="NameText" />
                     </section>
 
                     <section className="col col-6">
                         <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                        validate={[required,email]} component={RFField} type="text" placeholder="Email Address"/>
+                            validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
+                            label="EmailAddressText"/>
                     </section>
                     </div>
 
                     <div className="row">
                     <section className="col col-6">
-                        <Field name="DOB" validate={required} label="Date of Birth" component={RFDatePicker} />
+                        <Field name="DOB" validate={required} 
+                            label="DOBText" component={RFDatePicker} />
                     </section>
 
                     <section className="col col-3">
                         <Field component={RFRadioButtonList} name="gender" required={true} 
-                        label="Gender"
+                        label="GenderText"
                         options={[
                             { title: 'Male', value: 'male' },
                             { title: 'Female', value: 'female' }
@@ -173,7 +177,7 @@ class EditGeneralInfo extends React.Component {
                     </section>
 
                     <section className="col col-3">      
-                        <label>Rating</label>              
+                    <label><Msg phrase="RatingText"/></label>        
                         <div className="inline-group">
                         <StarRating onChange={(value) => { this.changeRate("rating", value) } }
                             initialRate={ this.state.rating } 
@@ -189,14 +193,16 @@ class EditGeneralInfo extends React.Component {
                     <section className="col col-6">
                         <Field name="idNo" labelClassName="input" label="Identity Card Number"
                         labelIconClassName="icon-append fa fa-credit-card-alt"
-                        component={RFField} type="text" placeholder="Please enter Identity Card Number"/>
+                        component={RFField} type="text" 
+                        placeholder="Please enter Identity card number"
+                        label="IdentityCardNumberText"/>
                     </section>
 
                     <section className="col col-6">
                         <Field
                             multi={false}
                             name="nationalityId"
-                            label="Nationality"
+                            label="NationalityText"
                             options={nationalities}
                             component={RFReactSelect} />
                     </section>
@@ -207,13 +213,17 @@ class EditGeneralInfo extends React.Component {
                     <section className="col col-6">
                         <Field name="phoneNo" labelClassName="input" label="Phone Number"
                             labelIconClassName="icon-append fa fa-phone"
-                            component={RFField} type="text" placeholder="Please enter phone number"/>
+                            component={RFField} type="text" 
+                            label="PhoneNumberText"
+                            placeholder="Please enter phone number"/>
                     </section>
 
                     <section className="col col-6">
                         <Field name="mobileNo" labelClassName="input" label="Mobile Number"
                             labelIconClassName="icon-append fa fa-mobile"
-                            component={RFField} type="text" placeholder="Please enter mobile number"/>
+                            component={RFField}  type="text" 
+                            label="MobileNumberText"
+                            placeholder="Please enter mobile number"/>
                     </section>
                     </div>
 
@@ -221,7 +231,9 @@ class EditGeneralInfo extends React.Component {
                     <section className="col col-8">
                         <Field name="address" labelClassName="input" label="Street Address"
                             labelIconClassName="icon-append fa fa-map-marker"
-                            component={RFField} type="text" placeholder="Please enter street address"/>
+                            component={RFField} type="text" 
+                            label="StreetAddressText"
+                            placeholder="Please enter street address"/>
                     </section>
 
                     <section className="col col-4">
@@ -234,7 +246,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="countryId"
-                            label="Country"
+                            label="CountryText" 
                             options={countries}
                             onBlur={this.handleCountryBlur}
                             component={RFReactSelect} />
@@ -244,7 +256,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="stateId"
-                            label="State"
+                            label="StateText"
                             options={states}
                             onBlur={this.handleStateBlur}
                             component={RFReactSelect} />
@@ -254,7 +266,7 @@ class EditGeneralInfo extends React.Component {
                         <Field
                             multi={false}
                             name="cityId"
-                            label="City"
+                            label="CityText"
                             options={cities}
                             onBlur={this.handleCityBlur}
                             component={RFReactSelect} />
@@ -265,11 +277,11 @@ class EditGeneralInfo extends React.Component {
                 {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
 
                 <footer>
-                    <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                    { teacherId > 0 ? "Undo Changes" : "Reset" }
+                    <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">                    
+                    { teacherId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText"/> }
                     </button>
                     <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
-                    Save
+                        <Msg phrase="SaveText"/>
                     </button>
                 </footer>
             </form>
@@ -278,8 +290,8 @@ class EditGeneralInfo extends React.Component {
 }
        
 const afterSubmit = function(result, dispatch) {
-    console.log('hello edit');
-    console.log(result);
+    //console.log('hello edit');
+    //console.log(result);
     dispatch(reset('EditGeneralInfo'));
 }
 

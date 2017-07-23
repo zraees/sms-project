@@ -93,6 +93,11 @@
     "Teachers":"اساتذہ",
 
     "Add New": " اضافہ ",
+    "SaveText": "اندراج",
+    "UndoChangesText": "واپس کریں",
+    "ResetText": "ری سیٹ",
+    "AddText": "جديد",
+    "ListText": "ریکارڈ",
 
     "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
     "InvalidEmailAddressText": "غلط ای میل ایڈریس",
@@ -100,6 +105,7 @@
     "Select": "منتخب کریں ...",
     "Male": "مرد",
     "Female": "عورت",
+    "IDText": "ریکارڈ نمبر",
     
     "Manage Teacher":"ٹیچر ریکارڈ اپ ڈیٹ کریں",
     "Add New Teacher": "نیا استاد ریکارڈ شامل کریں",
@@ -121,6 +127,18 @@
     "Experience":"تجربات",
     "SubjectsText":"مضامین",
     "Classes":"کلاسیں",
+    "CompanyNameText":"کمپنی کا نام",
+    "StartDateText":"تاریخ شروع",
+    "EndDateText":"تاریخ اختتام",
+    "TotalExperienceText":"کل تجربہ",
+    "DesignationText":"عہدہ",
+    "LeavingReasonText":"ملازمت چھوڑنے کی وجہ",
+    "QualificationTitleText":"اہلیت / عنوان",
+    "QualificationTypeText":"اہلیت کی قسم",
+    "CGPAPercentageText":"نتيجة کی قسم",
+    "ScoreText":"نتيجة",
+    "MajorsText":"اہم مضامین",
+    "DurationText":"دورانیہ",
 
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",
@@ -128,6 +146,12 @@
     "Please enter phone number": "برائے مہربانی فون نمبر درج کریں",
     "Please enter mobile number": "برائے مہربانی موبائل نمبر درج کریں",
     "Please enter street address": "براہ مہربانی سڑک کا پتہ درج کریں",
+    "Please enter reason of leaving": "براہ کرم ملازمت چھوڑنے کی وجہ درج کریں",
+    "Please enter designation": "براہ کرم عہدہ کریں",
+    "Please enter company name": "برائے مہربانی کمپنی کا نام درج کریں",
+    "Please enter qualification title": "برائے مہربانی اہلیت درج کریں",
+    "Please enter score": "برائے مہربانی نتيجة درج کریں",
+    "Please enter majors": "برائے مہربانی اہم مضامین درج کریں",
 
     "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے"
 }

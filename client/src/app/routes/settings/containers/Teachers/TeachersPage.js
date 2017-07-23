@@ -251,13 +251,13 @@ class TeachersPage extends React.Component {
                       width="100%">
                       <thead>
                       <tr>
-                        <th data-hide="mobile-p">ID</th>
-                        <th data-class="expand">Name</th>
-                        <th data-hide="mobile-p">Email</th>
-                        <th data-hide="mobile-p">ID Number</th>
-                        <th data-hide="mobile-p">Gender</th>
-                        <th data-hide="mobile-p">DOB</th>
-                        <th data-hide="mobile-p">Rating</th>
+                        <th data-hide="mobile-p"><Msg phrase="IDText"/></th>
+                        <th data-class="expand"><Msg phrase="NameText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="EmailAddressText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="DOBText"/>DOB</th>
+                        <th data-hide="mobile-p"><Msg phrase="RatingText"/></th>
                         <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
                       </tr>

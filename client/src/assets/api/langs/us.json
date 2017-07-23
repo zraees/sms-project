@@ -89,7 +89,11 @@
     "Teachers": "Teachers",
 
     "Add New": "Add New ",
-
+    "SaveText": "Save",
+    "UndoChangesText": "Undo Changes",
+    "ResetText": "Reset",
+    "AddText": "Add",
+    "ListText": "List",
 
     "RequiredFieldText": "This field is required",
     "InvalidEmailAddressText": "Invalid email address",
@@ -97,6 +101,7 @@
     "Select": "Select",
     "Male": "Male",
     "Female": "Female",
+    "IDText": "",
 
     "Manage Teacher":"Manage Teacher",
     "Add New Teacher": "Add New Teacher",
@@ -118,6 +123,18 @@
     "Experience":"Experience",
     "SubjectsText":"Subjects",
     "Classes":"Classes",
+    "CompanyNameText":"Company Name",
+    "StartDateText":"Start Date",
+    "EndDateText":"End Date",
+    "TotalExperienceText":"Total Experience",
+    "DesignationText":"Designation",
+    "LeavingReasonText":"Leaving Reason",
+    "QualificationTitleText":"Qualification Title",
+    "QualificationTypeText":"Qualification Type",
+    "CGPAPercentageText":"CGPA / Percentage",
+    "ScoreText":"Score",
+    "MajorsText":"Majors",
+    "DurationText":"Duration",
 
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",
@@ -125,6 +142,12 @@
     "Please enter phone number": "Please enter phone number",
     "Please enter mobile number": "Please enter mobile number",
     "Please enter street address": "Please enter street address",
+    "Please enter reason of leaving": "Please enter reason of leaving",
+    "Please enter designation": "Please enter designation",
+    "Please enter company name": "Please enter company name",
+    "Please enter qualification title": "Please enter qualification title",
+    "Please enter score": "Please enter score",
+    "Please enter majors": "Please enter majors",
 
     "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
 }

@@ -266,7 +266,7 @@ class TeacherForm extends React.Component {
 
               <footer>
                 <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-                  { teacherId > 0 ? "Undo Changes" : "Reset" }
+                  { teacherId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText"/> }
                 </button>
                 <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
                   <Msg phrase="SaveText"/>
