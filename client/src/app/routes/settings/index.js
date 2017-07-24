@@ -6,14 +6,21 @@ export default {
 
   childRoutes: [
     {
+      path: 'students',
+      getComponent(nextState, cb){
+        System.import('./containers/Students/StudentsPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
+    {
       path: 'subjects',
       getComponent(nextState, cb){
         System.import('./containers/Subjects').then((m)=> {
           cb(null, m.default)
         })
       }
-    }
-    ,
+    },
     {
       path: 'teachers',
       getComponent(nextState, cb){

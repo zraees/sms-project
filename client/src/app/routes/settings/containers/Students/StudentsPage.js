@@ -8,8 +8,6 @@ import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
-//import moment from 'moment'
-
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
@@ -19,20 +17,18 @@ import Msg from '../../../../components/i18n/Msg'
 
 import Moment from '../../../../components/utils/Moment'
 
-import TeacherForm from './TeacherForm'
-import TeacherEditForm from './TeacherEditForm'
-//import Test from './Test'
-import submit, {remove, submitQualification, submitExperience} from './submit'
+import StudentForm from './StudentForm'
+import StudentEditForm from './StudentEditForm'
+
+import submit, {remove} from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
-// import {OverlayTrigger, Tooltip} from 'react-bootstrap'
-
-class TeachersPage extends React.Component {
+class StudentsPage extends React.Component {
   
   constructor(props){
    super(props);
    this.state = {
-     teacherId: 0,
+     StudentId: 0,
      nationalities: [],
      countries: []
    }
@@ -44,9 +40,9 @@ class TeachersPage extends React.Component {
   
   componentDidMount(){ 
 
-    console.log('componentDidMount --> TeacherPage');
+    console.log('componentDidMount --> StudentPage');
     //var self =this;
-    $('#teachersGrid').on('click', 'td', function(event) {
+    $('#StudentsGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) {
         
@@ -59,7 +55,7 @@ class TeachersPage extends React.Component {
         // console.log(success);
         
         // if(success){
-        //   var table = $('#teachersGrid').DataTable();                
+        //   var table = $('#StudentsGrid').DataTable();                
         //   table
         //     .row( $(this).parents('tr') )
         //     .remove()
@@ -73,25 +69,19 @@ class TeachersPage extends React.Component {
     });
     
     // call before modal open
-    $('#teacherPopup').on('show.bs.modal', function (e) {      
-
-      //console.log('modal before call edit page');
+    $('#StudentPopup').on('show.bs.modal', function (e) {      
 
       //LoaderVisibility(true);
       var button = $(e.relatedTarget);        // Button that triggered the modal
-      //$(button).find('#edi').removeClass("glyphicon glyphicon-edit").addClass("glyphicon glyphicon-refresh glyphicon-spin");
-
-      //console.log(button);
-      var teacherId = button.data('id');             // Extract info from data-* attributes
-      this.setState({teacherId});    
+   
+      var StudentId = button.data('id');             // Extract info from data-* attributes
+      this.setState({StudentId});    
     }.bind(this));
 
     // call on modal close
-    $('#teacherPopup').on('hidden.bs.modal', function (e) {            
-      this.setState({teacherId : 0});
-      //console.log('close popup');
-      //$('#teachersGrid').DataTable().ajax.reload();      
-          var table = $('#teachersGrid').DataTable();                
+    $('#StudentPopup').on('hidden.bs.modal', function (e) {            
+      this.setState({StudentId : 0});     
+          var table = $('#StudentsGrid').DataTable();                
           table.clear();
           table.ajax.reload( null, false ); // user paging is not reset on reload
 
@@ -110,14 +100,6 @@ class TeachersPage extends React.Component {
             this.setState({countries});
         });
  
-      //   //console.log(this.props.isLoading);
-      // setTimeout(function(){ 
-      //   console.log('sss'); 
-      //   //this.setState({isLoading:true}) 
-      //   LoaderVisibility(false);
-      // }.bind(this), 6000);
-
-      // console.log('aaaaa'); 
       LoaderVisibility(false);
   }
 
@@ -144,7 +126,7 @@ class TeachersPage extends React.Component {
                 <header>
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
 
-                  <h2><Msg phrase="Teachers" /></h2>
+                  <h2><Msg phrase="Students" /></h2>
                   
                 </header>
 
@@ -162,7 +144,7 @@ class TeachersPage extends React.Component {
                             </div>
                             <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
                                 <button className="btn btn-primary" data-toggle="modal"
-                                  data-target="#teacherPopup">
+                                  data-target="#StudentPopup">
                                     <i className="fa fa-plus"/> 
                                     <span className="hidden-mobile"><Msg phrase="Add New" /></span>
                                 </button>
@@ -173,9 +155,9 @@ class TeachersPage extends React.Component {
                     {/*<Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />*/}
                     
                     <Loader isLoading={this.props.isLoading} />
-                    <Datatable id="teachersGrid"  
+                    <Datatable id="StudentsGrid"  
                       options={{
-                        ajax: {"url":'/api/teachers', "dataSrc": ""},
+                        ajax: {"url":'/api/Students', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -196,28 +178,15 @@ class TeachersPage extends React.Component {
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                  //console.log(data);
-                                  //console.log(type);
-                                  //console.log(row);
-                                    //return data +' ('+ row[0]+')';
-                                    //id = data;
-                                    //console.log(this.state.teacherId);
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
                                 "targets": 7
                             }
                             ,{ 
-                                "render": function ( data, type, row ) {
-                                  //return (<a onClick={onOrderRestaurant.bind(self, this)} 
-                                  //                className="btn btn-primary btn-sm">Order this restaurant
-                                  //                </a>);
+                                "render": function ( data, type, row ) { 
                                   return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
-                                    //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
-                                    //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
-                                    //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
-                                    //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
@@ -231,15 +200,14 @@ class TeachersPage extends React.Component {
                           //    "data":           null,
                           //    "defaultContent": ''
                           //},
-                          {data: "TeacherId"},
+                          {data: "StudentId"},
                           {data: "Name"},
                           {data: "Email"},    
                           {data: "IDNo"},  
                           {data: "Gender"},  
-                          {data: "DOB"},  
-                          {data: "Rating"},  
-                          {data: "TeacherId"},
-                          {data: "TeacherId"}
+                          {data: "DOB"},   
+                          {data: "StudentId"},
+                          {data: "StudentId"}
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'
@@ -256,8 +224,7 @@ class TeachersPage extends React.Component {
                         <th data-hide="mobile-p"><Msg phrase="EmailAddressText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>
-                        <th data-hide="mobile-p"><Msg phrase="DOBText"/></th>
-                        <th data-hide="mobile-p"><Msg phrase="RatingText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="DOBText"/></th> 
                         <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
                       </tr>
@@ -286,46 +253,34 @@ class TeachersPage extends React.Component {
 
         {/* end widget grid */}
   
-        <div className="modal fade" id="teacherPopup" tabIndex="-1" role="dialog" 
+        <div className="modal fade" id="StudentPopup" tabIndex="-1" role="dialog" 
             data-backdrop="static" data-keyboard="false"
-            aria-labelledby="teacherPopupLabel" aria-hidden="true">
+            aria-labelledby="StudentPopupLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="teacherPopupLabel">
-                  { this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/> }
+                <h4 className="modal-title" id="StudentPopupLabel">
+                  { this.state.StudentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/> }
                 </h4>
               </div>
               <div className="modal-body">
                   
-                  { this.state.teacherId > 0 ? 
-                    //Test
-                    <TeacherEditForm
-                      teacherId={this.state.teacherId} 
+                  { this.state.StudentId > 0 ?                     
+                    <StudentEditForm
+                      StudentId={this.state.StudentId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
-                      onSubmit={submit} 
-                      onSubmitQualification={submitQualification} 
-                      onSubmitExperience={submitExperience} />
-                  : <TeacherForm 
-                      teacherId={this.state.teacherId} 
+                      onSubmit={submit}  />
+                  : <StudentForm 
+                      StudentId={this.state.StudentId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
                       onSubmit={submit} />
                   }      
               </div>
-              {/*  
-                    <div className="modal-footer">
-                <button type="button" className="btn btn-default" data-dismiss="modal">
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Post Article
-                </button>
-              </div>*/}
             </div>
             {/* /.modal-content */}
           </div>
@@ -339,12 +294,4 @@ class TeachersPage extends React.Component {
 
 }
 
-
-// //const mapStateToProps = (state, ownProps) => (state.isLoading);
-// function mapStateToProps(state) {
-//     return {
-//         isLoading: state.isLoading
-//     };
-// }
-
-export default TeachersPage;
+export default StudentsPage;

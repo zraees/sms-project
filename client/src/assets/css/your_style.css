@@ -72,6 +72,20 @@ fieldset {
     background: rgba(248,248,248,.9);
 }
 
+.inline-group .radio {
+    float: left;
+    margin-right: 10px;
+}
+
+.smart-form .radio {
+    margin-bottom: 4px;
+    padding-left: 5px;
+    line-height: 25px;
+    color: #404040;
+    cursor: pointer;
+    font-size: 13px;
+}
+
 .loader {
   position: fixed;
   top: 0;

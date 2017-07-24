@@ -11,6 +11,10 @@
       "icon": "fa fa-lg fa-fw fa-cogs",
       "items": [
         {
+          "route": "/settings/students",
+          "title": "Students"
+        },
+        {
           "route": "/settings/subjects",
           "title": "Subjects"
         },
