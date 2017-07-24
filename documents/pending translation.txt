@@ -1,0 +1,29 @@
+Students
+Manage Student
+Add New Student
+
+Name1Text
+Name2Text
+Name3Text
+Name4Text
+NameAr1Text
+NameAr2Text
+NameAr3Text
+NameAr4Text
+FatherIdentityCardNumberText
+CodeText
+Language1Text
+Language2Text
+
+Please enter name1
+Please enter name2
+Please enter name3
+Please enter name4
+
+Please enter nameAr1
+Please enter nameAr2
+Please enter nameAr3
+Please enter nameAr4
+
+Please enter student code
+Please enter Father's Identity card number
