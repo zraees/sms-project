@@ -103,6 +103,10 @@ class StudentForm extends React.Component {
                   </section>
                 </div>
 
+              </fieldset>
+
+              <fieldset>
+                
                 <div className="row">
                   <section className="col col-3">
                     <Field name="name1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
@@ -175,6 +179,10 @@ class StudentForm extends React.Component {
                     {/*</section>*/}
                 </div>
 
+              </fieldset>
+
+              <fieldset>
+                
                 <div className="row">
                   <section className="col col-3">
                     <Field name="dob" validate={required} 
