@@ -78,21 +78,21 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="studentCode" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" 
+                      component={RFField} validate={required} type="text" 
                       placeholder="Please enter student code"
                       label="CodeText"/>
                   </section>
                   <section className="col col-3">
                     <Field name="idNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" 
+                      component={RFField} validate={required} type="text" 
                       placeholder="Please enter Identity card number"
                       label="IdentityCardNumberText"/>
                   </section>
                   <section className="col col-3">
                     <Field name="fatherIdNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" 
+                      component={RFField} validate={required} type="text" 
                       placeholder="Please enter Father's Identity card number"
                       label="FatherIdentityCardNumberText"/>
                   </section>
@@ -112,46 +112,20 @@ class StudentForm extends React.Component {
 
                   <section className="col col-3">
                     <Field name="name2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter name2" 
+                      component={RFField} type="text" placeholder="Please enter name2" 
                       label="Name2Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="name3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter name3" 
+                      component={RFField} type="text" placeholder="Please enter name3" 
                       label="Name3Text" />    
                   </section>
                   
                   <section className="col col-3">
                     <Field name="name4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter name4" 
+                      component={RFField} type="text" placeholder="Please enter name4" 
                       label="Name4Text" />    
-                  </section>
-                </div>
-
-                <div className="row">
-                  <section className="col col-3">
-                    <Field name="nameAr1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter nameAr1" 
-                      label="NameAr1Text" />    
-                  </section>
-
-                  <section className="col col-3">
-                    <Field name="nameAr2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter nameAr2" 
-                      label="NameAr2Text" />    
-                  </section>
-
-                  <section className="col col-3">
-                    <Field name="nameAr3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter nameAr3" 
-                      label="NameAr3Text" />    
-                  </section>
-                  
-                  <section className="col col-3">
-                    <Field name="nameAr4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter nameAr4" 
-                      label="NameAr4Text" />    
                   </section>
                 </div>
 
@@ -163,6 +137,32 @@ class StudentForm extends React.Component {
                             placeholder="Please enter full name as per passport"/>
                     </section>
                     {/*</section>*/}
+                </div>
+
+                <div className="row">
+                  <section className="col col-3">
+                    <Field name="nameAr1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                      validate={required} component={RFField} type="text" placeholder="Please enter nameAr1" 
+                      label="NameAr1Text" />    
+                  </section>
+
+                  <section className="col col-3">
+                    <Field name="nameAr2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                      component={RFField} type="text" placeholder="Please enter nameAr2" 
+                      label="NameAr2Text" />    
+                  </section>
+
+                  <section className="col col-3">
+                    <Field name="nameAr3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                      component={RFField} type="text" placeholder="Please enter nameAr3" 
+                      label="NameAr3Text" />    
+                  </section>
+                  
+                  <section className="col col-3">
+                    <Field name="nameAr4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
+                      component={RFField} type="text" placeholder="Please enter nameAr4" 
+                      label="NameAr4Text" />    
+                  </section>
                 </div>
 
                 <div className="row">
@@ -203,8 +203,8 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field
                         multi={false}
-                        name="lang2Id"
-                        label="Language2Text"
+                        name="religionId"
+                        label="ReligionText"
                         options={nationalities}
                         component={RFReactSelect} />
                   </section>
@@ -212,22 +212,51 @@ class StudentForm extends React.Component {
                 </div>
             
                 <div className="row">
-                  <section className="col col-6">
-                    
+                  
+                  <section className="col col-3">
+                    <label><Msg phrase="StudentStayWithText"/></label>
                   </section>
 
                   <section className="col col-6">
+                    <Field component={RFRadioButtonList} name="studentStayWith" required={true} 
+                      label=""
+                      options={[
+                        { title: 'Both Parent', value: 'Both' },
+                        { title: 'Father', value: 'Father' },
+                        { title: 'Mother', value: 'Mother' },
+                        { title: 'Other', value: 'Other' }
+                    ]} />
+                  </section>
+
+                  <section className="col col-3">
+                    <Field name="birthPlace" labelClassName="input" 
+                      labelIconClassName="icon-append fa fa-credit-card-alt"
+                      component={RFField} type="text" 
+                      placeholder="Please enter place of birth"
+                      label="BirthPlaceText"/>
+                  </section>
+
+                </div>
+
+                <div className="row">
+                  <section className="col col-3">
+                    <Field name="birthPlace" labelClassName="input" 
+                      labelIconClassName="icon-append fa fa-credit-card-alt"
+                      component={RFField} type="text" 
+                      placeholder="Please enter place of birth"
+                      label="BirthPlaceText"/>
+                  </section>
+
+                  <section className="col col-3">
                     <Field
                         multi={false}
                         name="nationalityId"
                         label="NationalityText"
                         options={nationalities}
                         component={RFReactSelect} />
-                  </section>
-                </div>
+                  </section> 
 
-                <div className="row">
-                  <section className="col col-6">
+                  <section className="col col-3">
                     <Field name="phoneNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-phone"
                       component={RFField} type="text" 
@@ -235,7 +264,7 @@ class StudentForm extends React.Component {
                       placeholder="Please enter phone number"/>
                   </section>
 
-                  <section className="col col-6">
+                  <section className="col col-3">
                     <Field name="mobileNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-mobile"
                       component={RFField} type="text" 
@@ -245,17 +274,13 @@ class StudentForm extends React.Component {
                 </div>
 
                 <div className="row">
-                  <section className="col col-8">
+                  <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                     <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
                       component={RFField} type="text" 
                       label="StreetAddressText"
                       placeholder="Please enter street address"/>
-                  </section>
-
-                  <section className="col col-4">
-                    
-                  </section>
+                  </section> 
                 </div>
                 
                 <div className="row">

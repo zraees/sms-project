@@ -213,17 +213,13 @@ class TeacherForm extends React.Component {
                 </div>
 
                 <div className="row">
-                  <section className="col col-8">
+                  <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                     <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
                       component={RFField} type="text" 
                       label="StreetAddressText"
                       placeholder="Please enter street address"/>
-                  </section>
-
-                  <section className="col col-4">
-                    
-                  </section>
+                  </section> 
                 </div>
                 
                 <div className="row">
