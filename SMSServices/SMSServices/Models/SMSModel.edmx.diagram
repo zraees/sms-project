@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1" ZoomLevel="114">
+      <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1" ZoomLevel="96">
         <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="2.25" PointX="5" PointY="4.625" />
         <EntityTypeShape EntityType="SMSModel.TeacherQualifications" Width="1.5" PointX="5" PointY="0.75" />
@@ -22,6 +22,15 @@
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
         <AssociationConnector Association="SMSModel.FK_Teachers_Countries" />
         <EntityTypeShape EntityType="SMSModel.Errors" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SMSModel.Admissions" Width="1.5" PointX="10.25" PointY="13.375" />
+        <EntityTypeShape EntityType="SMSModel.Languages" Width="1.5" PointX="5.75" PointY="14.375" />
+        <EntityTypeShape EntityType="SMSModel.Religions" Width="1.5" PointX="5.75" PointY="12.125" />
+        <EntityTypeShape EntityType="SMSModel.Students" Width="1.5" PointX="8" PointY="9.875" />
+        <AssociationConnector Association="SMSModel.FK_Admissions_Students" />
+        <AssociationConnector Association="SMSModel.FK_Students_Countries" />
+        <AssociationConnector Association="SMSModel.FK_Students_Languages" />
+        <AssociationConnector Association="SMSModel.FK_Students_Languages1" />
+        <AssociationConnector Association="SMSModel.FK_Students_Religions" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -94,6 +94,8 @@
     <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\ReligionsController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\QualificationTypesController.cs" />
@@ -114,6 +116,9 @@
     <Compile Include="Helper\NLogger.cs" />
     <Compile Include="Helper\ServiceStatus.cs" />
     <Compile Include="Logger\ExecutionTimeFilter.cs" />
+    <Compile Include="Models\Admissions.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cities.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -123,7 +128,13 @@
     <Compile Include="Models\Errors.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Languages.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\QualificationTypes.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Religions.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SMSEntities.cs" />
@@ -143,6 +154,9 @@
       <DependentUpon>SMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\States.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Students.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TeacherExperiences.cs">

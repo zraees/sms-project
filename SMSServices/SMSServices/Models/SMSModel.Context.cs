@@ -33,5 +33,9 @@ namespace SMSServices.Models
         public virtual DbSet<States> States { get; set; }
         public virtual DbSet<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual DbSet<Errors> Errors { get; set; }
+        public virtual DbSet<Admissions> Admissions { get; set; }
+        public virtual DbSet<Languages> Languages { get; set; }
+        public virtual DbSet<Religions> Religions { get; set; }
+        public virtual DbSet<Students> Students { get; set; }
     }
 }
