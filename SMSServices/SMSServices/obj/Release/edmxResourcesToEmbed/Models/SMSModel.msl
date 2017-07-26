@@ -109,5 +109,73 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Admissions">
+      <EntityTypeMapping TypeName="SMSModel.Admissions">
+        <MappingFragment StoreEntitySet="Admissions">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="AdmissionID" ColumnName="AdmissionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="SMSModel.Languages">
+        <MappingFragment StoreEntitySet="Languages">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Religions">
+      <EntityTypeMapping TypeName="SMSModel.Religions">
+        <MappingFragment StoreEntitySet="Religions">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="SMSModel.Students">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
+          <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />
+          <ScalarProperty Name="SkippedGrades" ColumnName="SkippedGrades" />
+          <ScalarProperty Name="HasStudentEverSkippedGrade" ColumnName="HasStudentEverSkippedGrade" />
+          <ScalarProperty Name="SchoolAttendedEndDate" ColumnName="SchoolAttendedEndDate" />
+          <ScalarProperty Name="SchoolAttendedStartDate" ColumnName="SchoolAttendedStartDate" />
+          <ScalarProperty Name="HasSameSchoolAttendedBefore" ColumnName="HasSameSchoolAttendedBefore" />
+          <ScalarProperty Name="StudentStayWith" ColumnName="StudentStayWith" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="ReligionId" ColumnName="ReligionId" />
+          <ScalarProperty Name="Lang2Id" ColumnName="Lang2Id" />
+          <ScalarProperty Name="Lang1ID" ColumnName="Lang1ID" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
+          <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
+          <ScalarProperty Name="StudentIDNo" ColumnName="StudentIDNo" />
+          <ScalarProperty Name="FatherIDNo" ColumnName="FatherIDNo" />
+          <ScalarProperty Name="FullNameArPassport" ColumnName="FullNameArPassport" />
+          <ScalarProperty Name="FullNamePassport" ColumnName="FullNamePassport" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
+          <ScalarProperty Name="NameAr4" ColumnName="NameAr4" />
+          <ScalarProperty Name="NameAr3" ColumnName="NameAr3" />
+          <ScalarProperty Name="NameAr2" ColumnName="NameAr2" />
+          <ScalarProperty Name="NameAr1" ColumnName="NameAr1" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Name4" ColumnName="Name4" />
+          <ScalarProperty Name="Name3" ColumnName="Name3" />
+          <ScalarProperty Name="Name2" ColumnName="Name2" />
+          <ScalarProperty Name="Name1" ColumnName="Name1" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

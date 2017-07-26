@@ -19,7 +19,8 @@ namespace SMSServices.Models
             this.Students = new HashSet<Students>();
         }
     
-        public int ReligionId { get; set; }
+        public int ID { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Students> Students { get; set; }

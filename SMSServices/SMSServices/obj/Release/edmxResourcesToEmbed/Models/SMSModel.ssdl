@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admissions">
+    <Key>
+      <PropertyRef Name="AdmissionID" />
+    </Key>
+    <Property Name="AdmissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+  </EntityType>
   <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="CityId" />
@@ -34,12 +42,28 @@
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
   </EntityType>
+  <EntityType Name="Languages">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="QualificationTypes">
     <Key>
       <PropertyRef Name="QualificationTypeId" />
     </Key>
     <Property Name="QualificationTypeId" Type="int" Nullable="false" />
     <Property Name="QualificationType" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Religions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -48,6 +72,46 @@
     <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CountryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="20" />
+    <Property Name="Name1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name3" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name4" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="210" Nullable="false" />
+    <Property Name="NameAr1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr2" Type="nvarchar" MaxLength="50" />
+    <Property Name="NameAr3" Type="nvarchar" MaxLength="50" />
+    <Property Name="NameAr4" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullNameAr" Type="nvarchar" MaxLength="210" Nullable="false" />
+    <Property Name="DOB" Type="datetime" />
+    <Property Name="FullNamePassport" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="FullNameArPassport" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="FatherIDNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="StudentIDNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="PlaceOfBirth" Type="nvarchar" MaxLength="50" />
+    <Property Name="NationalityId" Type="int" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="6" />
+    <Property Name="Lang1ID" Type="int" />
+    <Property Name="Lang2Id" Type="int" />
+    <Property Name="ReligionId" Type="int" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="Address" Type="nvarchar" MaxLength="500" />
+    <Property Name="StudentStayWith" Type="nvarchar" MaxLength="50" />
+    <Property Name="HasSameSchoolAttendedBefore" Type="bit" />
+    <Property Name="SchoolAttendedStartDate" Type="datetime" />
+    <Property Name="SchoolAttendedEndDate" Type="datetime" />
+    <Property Name="HasStudentEverSkippedGrade" Type="bit" />
+    <Property Name="SkippedGrades" Type="nvarchar" MaxLength="50" />
+    <Property Name="HasStudentRepeatGrade" Type="bit" />
+    <Property Name="RepeatGrades" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="TeacherExperiences">
     <Key>
@@ -100,6 +164,18 @@
     <Property Name="CityId" Type="int" />
     <Property Name="NationalityId" Type="int" />
   </EntityType>
+  <Association Name="FK_Admissions_Students">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="Admissions" Type="Self.Admissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Admissions">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Cities_States">
     <End Role="States" Type="Self.States" Multiplicity="1" />
     <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
@@ -121,6 +197,54 @@
       </Principal>
       <Dependent Role="States">
         <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Countries">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="NationalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Languages">
+    <End Role="Languages" Type="Self.Languages" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Lang1ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Languages1">
+    <End Role="Languages" Type="Self.Languages" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Lang2Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Religions">
+    <End Role="Religions" Type="Self.Religions" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Religions">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="ReligionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -209,14 +333,22 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="SMSModelStoreContainer">
+    <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Religions" EntityType="Self.Religions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Admissions_Students" Association="Self.FK_Admissions_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Admissions" EntitySet="Admissions" />
+    </AssociationSet>
     <AssociationSet Name="FK_Cities_States" Association="Self.FK_Cities_States">
       <End Role="States" EntitySet="States" />
       <End Role="Cities" EntitySet="Cities" />
@@ -224,6 +356,22 @@
     <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="States" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Countries" Association="Self.FK_Students_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Languages" Association="Self.FK_Students_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Languages1" Association="Self.FK_Students_Languages1">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Religions" Association="Self.FK_Students_Religions">
+      <End Role="Religions" EntitySet="Religions" />
+      <End Role="Students" EntitySet="Students" />
     </AssociationSet>
     <AssociationSet Name="FK_TeacherExperiences_Cities" Association="Self.FK_TeacherExperiences_Cities">
       <End Role="Cities" EntitySet="Cities" />

@@ -67,6 +67,30 @@
       <End Role="Teachers" EntitySet="Teachers" />
     </AssociationSet>
     <EntitySet Name="Errors" EntityType="SMSModel.Errors" />
+    <EntitySet Name="Admissions" EntityType="SMSModel.Admissions" />
+    <EntitySet Name="Languages" EntityType="SMSModel.Languages" />
+    <EntitySet Name="Religions" EntityType="SMSModel.Religions" />
+    <EntitySet Name="Students" EntityType="SMSModel.Students" />
+    <AssociationSet Name="FK_Admissions_Students" Association="SMSModel.FK_Admissions_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Admissions" EntitySet="Admissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Countries" Association="SMSModel.FK_Students_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Languages" Association="SMSModel.FK_Students_Languages">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Languages1" Association="SMSModel.FK_Students_Languages1">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Religions" Association="SMSModel.FK_Students_Religions">
+      <End Role="Religions" EntitySet="Religions" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -140,6 +164,7 @@
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="Countries" ToRole="TeacherExperiences" />
     <Property Name="Nationality" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Countries" ToRole="Teachers" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Countries" FromRole="Countries" ToRole="Students" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -272,4 +297,137 @@
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="Active" Type="Boolean" />
   </EntityType>
+  <EntityType Name="Admissions">
+    <Key>
+      <PropertyRef Name="AdmissionID" />
+    </Key>
+    <Property Name="AdmissionID" Type="Int32" Nullable="false" />
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_Admissions_Students" FromRole="Admissions" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="Languages">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Languages" FromRole="Languages" ToRole="Students" />
+    <NavigationProperty Name="Students1" Relationship="SMSModel.FK_Students_Languages1" FromRole="Languages" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="Religions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Religions" FromRole="Religions" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="210" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FullNameAr" Type="String" Nullable="false" MaxLength="210" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="FullNamePassport" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FullNameArPassport" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FatherIDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="StudentIDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PlaceOfBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NationalityId" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="Lang1ID" Type="Int32" />
+    <Property Name="Lang2Id" Type="Int32" />
+    <Property Name="ReligionId" Type="Int32" />
+    <Property Name="PhoneNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StudentStayWith" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HasSameSchoolAttendedBefore" Type="Boolean" />
+    <Property Name="SchoolAttendedStartDate" Type="DateTime" Precision="3" />
+    <Property Name="SchoolAttendedEndDate" Type="DateTime" Precision="3" />
+    <Property Name="HasStudentEverSkippedGrade" Type="Boolean" />
+    <Property Name="SkippedGrades" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HasStudentRepeatGrade" Type="Boolean" />
+    <Property Name="RepeatGrades" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admissions" Relationship="SMSModel.FK_Admissions_Students" FromRole="Students" ToRole="Admissions" />
+    <NavigationProperty Name="Countries" Relationship="SMSModel.FK_Students_Countries" FromRole="Students" ToRole="Countries" />
+    <NavigationProperty Name="Languages" Relationship="SMSModel.FK_Students_Languages" FromRole="Students" ToRole="Languages" />
+    <NavigationProperty Name="Languages1" Relationship="SMSModel.FK_Students_Languages1" FromRole="Students" ToRole="Languages" />
+    <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
+  </EntityType>
+  <Association Name="FK_Admissions_Students">
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+    <End Type="SMSModel.Admissions" Role="Admissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Admissions">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Countries">
+    <End Type="SMSModel.Countries" Role="Countries" Multiplicity="0..1" />
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="NationalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Languages">
+    <End Type="SMSModel.Languages" Role="Languages" Multiplicity="0..1" />
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Lang1ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Languages1">
+    <End Type="SMSModel.Languages" Role="Languages" Multiplicity="0..1" />
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="Lang2Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Religions">
+    <End Type="SMSModel.Religions" Role="Religions" Multiplicity="0..1" />
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Religions">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="ReligionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

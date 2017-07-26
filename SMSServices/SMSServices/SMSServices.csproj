@@ -94,8 +94,7 @@
     <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
-    <Compile Include="Controllers\LanguagesController.cs" />
-    <Compile Include="Controllers\ReligionsController.cs" />
+    <Compile Include="Controllers\LookupController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\QualificationTypesController.cs" />

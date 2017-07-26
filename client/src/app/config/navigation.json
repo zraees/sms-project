@@ -11,16 +11,55 @@
       "icon": "fa fa-lg fa-fw fa-cogs",
       "items": [
         {
+          "icon": "fa fa-child",
           "route": "/settings/students",
           "title": "Students"
         },
         {
-          "route": "/settings/subjects",
-          "title": "Subjects"
-        },
-        {
+          "icon": "fa fa-male",
           "route": "/settings/teachers",
           "title": "Teachers"
+        }, 
+        {
+          "icon": "fa fa-calendar",
+          "route": "/settings/timetable",
+          "title": "Time Tables"
+        }, 
+        {
+          "icon": "fa fa-money",
+          "route": "/settings/feestructures",
+          "title": "Fee Structures"
+        }, 
+        {
+          "icon": "fa fa-cog",
+          "title": "General",
+          "items": [
+            {
+              "icon": "fa fa-book",
+              "route": "/settings/subjects",
+              "title": "Subjects"
+            },
+            {
+              "icon": "fa fa-send-o",
+              "route": "/settings/shifts",
+              "title": "Shifts"
+            },
+            {
+              "icon": "fa fa-chain",
+              "route": "/settings/sections",
+              "title": "Sections"
+            },
+            {
+              "icon": "fa fa-file-text",
+              "route": "/settings/batches",
+              "title": "Batches"
+            },
+            {
+              "icon": "fa fa-institution",
+              "route": "/settings/classes",
+              "title": "Classes"
+            }
+          ]
         }
       ]
     }

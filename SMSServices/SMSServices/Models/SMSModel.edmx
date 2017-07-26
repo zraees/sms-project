@@ -49,9 +49,9 @@
         </EntityType>
         <EntityType Name="Languages">
           <Key>
-            <PropertyRef Name="LangId" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="LangId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -64,9 +64,10 @@
         </EntityType>
         <EntityType Name="Religions">
           <Key>
-            <PropertyRef Name="ReligionId" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ReligionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="States">
@@ -221,7 +222,7 @@
           <End Role="Students" Type="Self.Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Languages">
-              <PropertyRef Name="LangId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="Lang1ID" />
@@ -233,7 +234,7 @@
           <End Role="Students" Type="Self.Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Languages">
-              <PropertyRef Name="LangId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="Lang2Id" />
@@ -245,7 +246,7 @@
           <End Role="Students" Type="Self.Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Religions">
-              <PropertyRef Name="ReligionId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="ReligionId" />
@@ -501,7 +502,7 @@
             <End Role="Religions" EntitySet="Religions" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="QualificationTypes">
           <Key>
             <PropertyRef Name="QualificationTypeId" />
@@ -718,20 +719,20 @@
         </EntityType>
         <EntityType Name="Languages">
           <Key>
-            <PropertyRef Name="LangId" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="LangId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Languages" FromRole="Languages" ToRole="Students" />
           <NavigationProperty Name="Students1" Relationship="SMSModel.FK_Students_Languages1" FromRole="Languages" ToRole="Students" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Religions">
           <Key>
-            <PropertyRef Name="ReligionId" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ReligionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Religions" FromRole="Religions" ToRole="Students" />
         </EntityType>
@@ -809,7 +810,7 @@
           <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Languages">
-              <PropertyRef Name="LangId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="Lang1ID" />
@@ -821,7 +822,7 @@
           <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Languages">
-              <PropertyRef Name="LangId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="Lang2Id" />
@@ -833,14 +834,14 @@
           <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Religions">
-              <PropertyRef Name="ReligionId" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="ReligionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -966,9 +967,9 @@
           <EntitySetMapping Name="Languages">
             <EntityTypeMapping TypeName="SMSModel.Languages">
               <MappingFragment StoreEntitySet="Languages">
-                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -976,7 +977,8 @@
             <EntityTypeMapping TypeName="SMSModel.Religions">
               <MappingFragment StoreEntitySet="Religions">
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ReligionId" ColumnName="ReligionId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

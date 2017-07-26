@@ -20,10 +20,9 @@ namespace SMSServices.Models
             this.Students1 = new HashSet<Students>();
         }
     
-        public int LangId { get; set; }
-        public string Name { get; set; }
-        public string Symbol { get; set; }
+        public int ID { get; set; }
         public string Code { get; set; }
+        public string Name { get; set; }
     
         public virtual ICollection<Students> Students { get; set; }
         public virtual ICollection<Students> Students1 { get; set; }

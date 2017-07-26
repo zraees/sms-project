@@ -12,7 +12,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
 
 class StudentForm extends React.Component {
  
@@ -23,6 +23,8 @@ class StudentForm extends React.Component {
       states: [],
       cities: [],
       genderOptions: [],
+      languageOptions: [],
+      religionOptions: [],
       studentStayWithOptions: [],
       disabledStudentStayWithOther: true
     }
@@ -46,11 +48,21 @@ class StudentForm extends React.Component {
         });
 
       axios.get('assets/api/common/gender.json')
-        .then(res=>{
-            console.log('gender.json');            
-            const genderOptions = mapForRadioList(res.data);
-            console.log(genderOptions);
+        .then(res=>{           
+            const genderOptions = mapForRadioList(res.data); 
             this.setState({genderOptions});
+        });
+
+      axios.get('/api/lookup/languages/')
+        .then(res=>{            
+            const languageOptions = mapForCombo(res.data);
+            this.setState({languageOptions});
+        });
+
+      axios.get('/api/lookup/religions/')
+        .then(res=>{            
+            const religionOptions = mapForCombo(res.data);
+            this.setState({religionOptions});
         });
 
     this.props.initialize(initData);
@@ -95,7 +107,7 @@ class StudentForm extends React.Component {
 
   render() {
     const { studentId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
-    const { states, cities, studentStayWithOptions, disabledStudentStayWithOther, genderOptions } = this.state;
+    const { states, cities, studentStayWithOptions, disabledStudentStayWithOther, genderOptions, languageOptions, religionOptions } = this.state;
 
     return (
             <form id="form-Student" className="smart-form" 
@@ -225,7 +237,7 @@ class StudentForm extends React.Component {
                         multi={false}
                         name="lang1Id"
                         label="Language1Text"
-                        options={nationalities}
+                        options={languageOptions}
                         component={RFReactSelect} />
                   </section>                  
 
@@ -234,7 +246,7 @@ class StudentForm extends React.Component {
                         multi={false}
                         name="religionId"
                         label="ReligionText"
-                        options={nationalities}
+                        options={religionOptions}
                         component={RFReactSelect} />
                   </section>
 
