@@ -12,6 +12,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
+import {mapForRadioList} from '../../../../components/utils/functions'
 
 class StudentForm extends React.Component {
  
@@ -20,11 +21,15 @@ class StudentForm extends React.Component {
     this.state = {
       editDataLoaded: false,
       states: [],
-      cities: []
+      cities: [],
+      genderOptions: [],
+      studentStayWithOptions: [],
+      disabledStudentStayWithOther: true
     }
     this.handleCountryBlur = this.handleCountryBlur.bind(this);
     this.handleStateBlur = this.handleStateBlur.bind(this);
     this.handleCityBlur = this.handleCityBlur.bind(this);
+    this.handleStudentStayWithChange = this.handleStudentStayWithChange.bind(this);
   }
   
   componentDidMount(){ 
@@ -32,7 +37,22 @@ class StudentForm extends React.Component {
     const initData = {
         "studentId": 0
       }        
-    
+      
+      axios.get('assets/api/students/student-stay-with.json')
+        .then(res=>{
+            //console.log('student-stay-with');            
+            const studentStayWithOptions = mapForRadioList(res.data);
+            this.setState({studentStayWithOptions});
+        });
+
+      axios.get('assets/api/common/gender.json')
+        .then(res=>{
+            console.log('gender.json');            
+            const genderOptions = mapForRadioList(res.data);
+            console.log(genderOptions);
+            this.setState({genderOptions});
+        });
+
     this.props.initialize(initData);
     console.log('componentDidMount --> StudentForm');
   }
@@ -46,6 +66,15 @@ class StudentForm extends React.Component {
             this.setState({states});
         });
  
+  }
+
+  handleStudentStayWithChange(obj, value){ 
+    if(value=="Other"){
+      this.setState({disabledStudentStayWithOther:false});
+    }
+    else{
+      this.setState({disabledStudentStayWithOther:true});
+    }
   }
 
   handleStateBlur(obj, value){
@@ -66,7 +95,7 @@ class StudentForm extends React.Component {
 
   render() {
     const { studentId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
-    const { states, cities } = this.state;
+    const { states, cities, studentStayWithOptions, disabledStudentStayWithOther, genderOptions } = this.state;
 
     return (
             <form id="form-Student" className="smart-form" 
@@ -75,32 +104,27 @@ class StudentForm extends React.Component {
               <fieldset>
 
                 <div className="row">
-                  <section className="col col-3">
+                  <section className="col col-2">
                     <Field name="studentCode" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} validate={required} type="text" 
                       placeholder="Please enter student code"
                       label="CodeText"/>
                   </section>
-                  <section className="col col-3">
+                  <section className="col col-5">
                     <Field name="idNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} validate={required} type="text" 
                       placeholder="Please enter Identity card number"
                       label="IdentityCardNumberText"/>
                   </section>
-                  <section className="col col-3">
+                  <section className="col col-5">
                     <Field name="fatherIdNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} validate={required} type="text" 
                       placeholder="Please enter Father's Identity card number"
                       label="FatherIdentityCardNumberText"/>
-                  </section>
-                  <section className="col col-3">
-                    <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
-                      label="EmailAddressText"/>
-                  </section>
+                  </section> 
                 </div>
 
               </fieldset>
@@ -193,10 +217,7 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field component={RFRadioButtonList} name="gender" required={true} 
                       label="GenderText"
-                      options={[
-                        { title: 'Male', value: 'male' },
-                        { title: 'Female', value: 'female' }
-                    ]} />
+                      options={genderOptions} />
                   </section>
 
                   <section className="col col-3">      
@@ -222,26 +243,25 @@ class StudentForm extends React.Component {
                 <div className="row">
                   
                   <section className="col col-3">
-                    <label><Msg phrase="StudentStayWithText"/></label>
+                    <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                      validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
+                      label="EmailAddressText"/>
                   </section>
 
                   <section className="col col-6">
                     <Field component={RFRadioButtonList} name="studentStayWith" required={true} 
-                      label=""
-                      options={[
-                        { title: 'Both Parent', value: 'Both' },
-                        { title: 'Father', value: 'Father' },
-                        { title: 'Mother', value: 'Mother' },
-                        { title: 'Other', value: 'Other' }
-                    ]} />
+                      label="StudentStayWithText"
+                      onChange={this.handleStudentStayWithChange}
+                      options={studentStayWithOptions}
+                      />
                   </section>
 
                   <section className="col col-3">
-                    <Field name="birthPlace" labelClassName="input" 
+                    <Field name="studentStayWithOther" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" 
-                      placeholder="Please enter place of birth"
-                      label="BirthPlaceText"/>
+                      component={RFField} disabled={disabledStudentStayWithOther} type="text" 
+                      placeholder="Please enter student stay with"
+                      label="StudentStayWithOtherText"/>
                   </section>
 
                 </div>

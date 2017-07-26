@@ -13,7 +13,7 @@ import AlertMessage from '../../../../components/common/AlertMessage'
 import mapForCombo from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
-import Msg from '../../../../components/i18n/Msg'
+import Msg from '../../../../components/i18n/Msg' 
 
 class EditGeneralInfo extends React.Component {
  
@@ -24,7 +24,7 @@ class EditGeneralInfo extends React.Component {
         rating: 0,
         //countries: [],
         states: [],
-        cities: []
+        cities: [] 
         }
         this.handleCountryBlur = this.handleCountryBlur.bind(this);
         this.handleStateBlur = this.handleStateBlur.bind(this);
@@ -42,7 +42,7 @@ class EditGeneralInfo extends React.Component {
     //             const countries = mapForCombo(res.data);          
     //             this.setState({countries});
     //     });
-    // }
+    // } 
 
     if(teacherId>0 && !this.state.editDataLoaded){
       this.setState({editDataLoaded:true});
@@ -134,7 +134,7 @@ class EditGeneralInfo extends React.Component {
   }
 
   render() {
-    const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, nationalities, countries, genderOptions, pristine, reset, submitting, touched, error, warning } = this.props
     const { states, cities } = this.state;
 
     return (
@@ -170,10 +170,7 @@ class EditGeneralInfo extends React.Component {
                     <section className="col col-3">
                         <Field component={RFRadioButtonList} name="gender" required={true} 
                         label="GenderText"
-                        options={[
-                            { title: 'Male', value: 'male' },
-                            { title: 'Female', value: 'female' }
-                        ]} />
+                        options={genderOptions} />
                     </section>
 
                     <section className="col col-3">      

@@ -16,7 +16,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 //import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import Msg from '../../../../components/i18n/Msg'
+import Msg from '../../../../components/i18n/Msg' 
 
 class TeacherForm extends React.Component {
  
@@ -38,7 +38,7 @@ class TeacherForm extends React.Component {
     const initData = {
         "teacherId": 0
       }        
-    
+
     this.props.initialize(initData);
     console.log('componentDidMount --> TeacherForm');
   }
@@ -119,7 +119,7 @@ class TeacherForm extends React.Component {
   }
 
   render() {
-    const { teacherId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, handleSubmit, nationalities, countries, genderOptions, pristine, reset, submitting, touched, error, warning } = this.props
     const { states, cities } = this.state;
 
     return (
@@ -156,10 +156,7 @@ class TeacherForm extends React.Component {
                   <section className="col col-3">
                     <Field component={RFRadioButtonList} name="gender" required={true} 
                       label="GenderText"
-                      options={[
-                        { title: 'Male', value: 'male' },
-                        { title: 'Female', value: 'female' }
-                    ]} />
+                      options={genderOptions} />
                   </section>
 
                   <section className="col col-3">      

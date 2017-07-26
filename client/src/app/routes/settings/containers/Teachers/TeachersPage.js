@@ -23,7 +23,7 @@ import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
 //import Test from './Test'
 import submit, {remove, submitQualification, submitExperience} from './submit'
-import mapForCombo, {renderDate} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -34,7 +34,8 @@ class TeachersPage extends React.Component {
    this.state = {
      teacherId: 0,
      nationalities: [],
-     countries: []
+     countries: [],
+     genderOptions: []
    }
   }
   
@@ -110,6 +111,14 @@ class TeachersPage extends React.Component {
             this.setState({countries});
         });
  
+    axios.get('assets/api/common/gender.json')
+        .then(res=>{
+            console.log('gender.json');            
+            const genderOptions = mapForRadioList(res.data);
+            console.log(genderOptions);
+            this.setState({genderOptions});
+        });
+
       //   //console.log(this.props.isLoading);
       // setTimeout(function(){ 
       //   console.log('sss'); 
@@ -307,6 +316,7 @@ class TeachersPage extends React.Component {
                       teacherId={this.state.teacherId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
+                      genderOptions={this.state.genderOptions}
                       onSubmit={submit} 
                       onSubmitQualification={submitQualification} 
                       onSubmitExperience={submitExperience} />
@@ -314,6 +324,7 @@ class TeachersPage extends React.Component {
                       teacherId={this.state.teacherId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
+                      genderOptions={this.state.genderOptions}
                       onSubmit={submit} />
                   }      
               </div>

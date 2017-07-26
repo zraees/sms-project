@@ -20,6 +20,11 @@ function mapForCombo(keyValues){
             });                       
 }
 
+export function mapForRadioList(keyValues){
+    return keyValues.map(function(item, index){
+                return {title: item.Name, value: item.Id + ""};
+            });                       
+}
 // export function LoaderVisibity(visible){
     
 //     if(visible){

@@ -3,7 +3,8 @@ import Msg from '../i18n/Msg'
 
 export default class RFRadioButtonList extends React.Component {
       render() {
-          const { input, meta, options, label } = this.props
+          const { input, meta, options, label } = this.props;
+          const { onChange } = input;
           const hasError = meta.touched && meta.error;
 
           return (
@@ -14,8 +15,9 @@ export default class RFRadioButtonList extends React.Component {
                         <label className="radio" key={o.value}>
                             <input type="radio" {...input} 
                                 value={o.value} 
-                                checked={o.value === input.value} /><i/> 
-                            
+                                checked={o.value === input.value} 
+                                onChange={() => onChange(o.value)}
+                                /><i/>                             
                             <label><Msg phrase={o.title}/></label>
                         </label>)}
                     {hasError && <span className="error"><Msg phrase={meta.error}/></span>}

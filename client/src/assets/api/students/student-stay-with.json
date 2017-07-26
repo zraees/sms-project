@@ -1,0 +1,6 @@
+[
+    { "Name": "Both Parent", "Id": "Both" },
+    { "Name": "Father", "Id": "Father" },
+    { "Name": "Mother", "Id": "Mother" },
+    { "Name": "Other", "Id": "Other" }
+]
