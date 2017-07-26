@@ -19,6 +19,7 @@ Language2Text
 BirthPlaceText
 ReligionText
 StudentStayWithText
+StudentStayWithOtherText
 
 Please enter name1
 Please enter name2
@@ -36,3 +37,4 @@ Please enter full nameAr as per passport
 Please enter student code
 Please enter Father's Identity card number
 Please enter place of birth
+Please enter student stay with
