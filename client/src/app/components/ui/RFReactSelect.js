@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames'
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import Msg from '../i18n/Msg'
@@ -21,12 +22,12 @@ RFReactSelect.propTypes = {
   className: PropTypes.string
 };
 //https://github.com/erikras/redux-form/issues/1185
-export default function RFReactSelect({ input , options, multi, className, label }) {
+export default function RFReactSelect({ input , options, multi, className, label, meta: {asyncValidating, touched, error, warning} }) {
   const { name, value, onBlur, onChange, onFocus } = input;
   const transformedValue = transformValue(value, options, multi);
   return (
     <div>
-      <label><Msg phrase={label}/></label>
+      <label><Msg phrase={label}/></label>      
       <Select
         valueKey="value"
         name={name}
@@ -40,7 +41,8 @@ export default function RFReactSelect({ input , options, multi, className, label
         onBlur={() => onBlur(value)}
         onFocus={onFocus}
         className={className}
-      />
+      /> 
+      {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
     </div>
   );
 }

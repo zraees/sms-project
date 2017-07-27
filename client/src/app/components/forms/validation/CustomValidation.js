@@ -1,8 +1,16 @@
     
     export function required (value) {
+      // console.log('required');
+      // console.log(value);
        return value ? undefined : 'RequiredFieldText';
       }
  
+    export function requiredCombo (value) {
+      // console.log('requiredCombo');
+      // console.log(value);
+       return value ? undefined : 'RequiredFieldText';
+      }
+
     export function email (value){
       return value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
       'InvalidEmailAddressText' : undefined;

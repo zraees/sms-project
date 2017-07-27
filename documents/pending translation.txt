@@ -1,40 +1,4 @@
-Students
-Manage Student
-Add New Student
-
-Name1Text
-Name2Text
-Name3Text
-Name4Text
-NameAr1Text
-NameAr2Text
-NameAr3Text
-NameAr4Text
-Name1AsPerPassportText
-Name2AsPerPassportText
-FatherIdentityCardNumberText
-CodeText
-Language1Text
-Language2Text
-BirthPlaceText
-ReligionText
-StudentStayWithText
-StudentStayWithOtherText
-
-Please enter name1
-Please enter name2
-Please enter name3
-Please enter name4
-
-Please enter nameAr1
-Please enter nameAr2
-Please enter nameAr3
-Please enter nameAr4
-
-Please enter full name as per passport
-Please enter full nameAr as per passport
-
-Please enter student code
-Please enter Father's Identity card number
-Please enter place of birth
-Please enter student stay with
+ShiftText
+ClassText
+SectionText
+BatchText

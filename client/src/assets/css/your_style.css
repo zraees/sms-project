@@ -72,6 +72,15 @@ fieldset {
     background: rgba(248,248,248,.9);
 }
 
+.smart-form {
+    color: #3A3633;
+}
+
+.invalid {
+    color: #A90329;
+}
+
+
 .inline-group .radio {
     float: left;
     margin-right: 10px;
