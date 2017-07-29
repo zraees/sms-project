@@ -91,6 +91,7 @@
       <End Role="Religions" EntitySet="Religions" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
+    <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
   </EntityContainer>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -430,4 +431,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Batches">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
 </Schema>

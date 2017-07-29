@@ -31,6 +31,7 @@
         <AssociationConnector Association="SMSModel.FK_Students_Languages" />
         <AssociationConnector Association="SMSModel.FK_Students_Languages1" />
         <AssociationConnector Association="SMSModel.FK_Students_Religions" />
+        <EntityTypeShape EntityType="SMSModel.Batches" Width="1.5" PointX="7.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

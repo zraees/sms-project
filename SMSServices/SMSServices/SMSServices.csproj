@@ -118,6 +118,9 @@
     <Compile Include="Models\Admissions.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Batches.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cities.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>

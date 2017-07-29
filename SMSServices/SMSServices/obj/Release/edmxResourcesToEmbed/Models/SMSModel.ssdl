@@ -8,6 +8,16 @@
     <Property Name="StudentID" Type="int" Nullable="false" />
     <Property Name="Date" Type="datetime" />
   </EntityType>
+  <EntityType Name="Batches">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+  </EntityType>
   <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="CityId" />
@@ -334,6 +344,7 @@
   </Association>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
