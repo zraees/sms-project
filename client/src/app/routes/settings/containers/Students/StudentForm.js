@@ -75,6 +75,30 @@ class StudentForm extends React.Component {
             this.setState({religionOptions});
         });
 
+      axios.get('/api/lookup/shifts/')
+        .then(res=>{            
+            const shiftOptions = mapForCombo(res.data);
+            this.setState({shiftOptions});
+        });
+
+      axios.get('/api/lookup/classes/')
+        .then(res=>{            
+            const classOptions = mapForCombo(res.data);
+            this.setState({classOptions});
+        });
+
+      axios.get('/api/lookup/sections/')
+        .then(res=>{            
+            const sectionOptions = mapForCombo(res.data);
+            this.setState({sectionOptions});
+        });
+
+      axios.get('/api/lookup/batches/')
+        .then(res=>{            
+            const batchOptions = mapForCombo(res.data);
+            this.setState({batchOptions});
+        });
+
     this.props.initialize(initData);
     console.log('componentDidMount --> StudentForm');
   }
