@@ -36,7 +36,7 @@ namespace SMSServices.Models
         public virtual DbSet<Admissions> Admissions { get; set; }
         public virtual DbSet<Languages> Languages { get; set; }
         public virtual DbSet<Religions> Religions { get; set; }
-        public virtual DbSet<Students> Students { get; set; }
         public virtual DbSet<Batches> Batches { get; set; }
+        public virtual DbSet<Students> Students { get; set; }
     }
 }

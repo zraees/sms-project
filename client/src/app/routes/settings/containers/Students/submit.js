@@ -10,13 +10,13 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
     function submit(values){
-      //console.log(values);
-      return axios.get('/api/teachers/' + values.teacherId + '/' + values.email + '/')
+      console.log(values);
+      return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
         .then(res=>{            
             //throw {email: 'That email is already taken'}
             if(res.data.Email===''){
                       
-              if(values.teacherId>0){
+              if(values.studentId>0){
                 update(values); 
               }
               else{
@@ -36,12 +36,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     function insert(values){
       LoaderVisibility(true);
       console.log(values);
-      axios.post('/api/teachers', values)      
+      axios.post('/api/students', values)      
           .then(function (response) {
             
             LoaderVisibility(false);
-            alert('s', 'Teacher details have been saved.');
-            $('#teacherPopup').modal('hide');  
+            alert('s', 'student details have been saved.');
+            $('#studentPopup').modal('hide');  
 
           })
           .catch(function (error) {
@@ -85,11 +85,11 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       //console.log('in update');
       //console.log(values);
       LoaderVisibility(true);
-      axios.put('/api/teachers', values)      
+      axios.put('/api/students', values)      
           .then(function (response) {
             
-            alert('s','Teacher details have been updated.');
-            $('#teacherPopup').modal('hide');  
+            alert('s','student details have been updated.');
+            $('#studentPopup').modal('hide');  
             LoaderVisibility(false);
 
           })
@@ -115,16 +115,16 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
         if (isYesClicked(ButtonPressed)) {
             LoaderVisibility(true);
-            console.log('teacher dele conf yes by func');
+            console.log('student dele conf yes by func');
             // console.log(id);
             
-            ////axios.delete('/api/teachers/' + id)      
-            // axios.post('/api/RemoveTeacher/' + id)
+            ////axios.delete('/api/students/' + id)      
+            // axios.post('/api/Removestudent/' + id)
             //   .then(function (response) {
                 
-            //     alert('s','Teacher details have been deleted.');
+            //     alert('s','student details have been deleted.');
                 
-            //     var table = $('#teachersGrid').DataTable();                
+            //     var table = $('#studentsGrid').DataTable();                
             //     table
             //       .row( delCell.parents('tr') )
             //       .remove()
@@ -137,15 +137,15 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             //   }); 
 
             $.ajax({
-                url : '/api/RemoveTeacher/' + id,
+                url : '/api/Removestudent/' + id,
                 type: "POST",
                 //data : formData,
                 success: function(data, textStatus, jqXHR)
                 {
                   console.log('success...');
-                  alert('s','Teacher details have been deleted.');
+                  alert('s','student details have been deleted.');
                   
-                  var table = $('#teachersGrid').DataTable();                
+                  var table = $('#studentsGrid').DataTable();                
                   table
                     .row( delCell.parents('tr') )
                     .remove()

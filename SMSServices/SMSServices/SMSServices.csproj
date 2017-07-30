@@ -101,6 +101,7 @@
     <Compile Include="Controllers\NationalitiesController.cs" />
     <Compile Include="Controllers\TeacherExperiencesController.cs" />
     <Compile Include="Controllers\TeacherQualificationsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="ErrorHelper\ApiBusinessException.cs" />

@@ -200,10 +200,11 @@ class StudentsPage extends React.Component {
                           //    "data":           null,
                           //    "defaultContent": ''
                           //},
-                          {data: "StudentId"},
-                          {data: "Name"},
+                          {data: "Code"},
+                          {data: "FullName"},
+                          {data: "FullNameAr"},
                           {data: "Email"},    
-                          {data: "IDNo"},  
+                          {data: "StudentIDNo"},  
                           {data: "Gender"},  
                           {data: "DOB"},   
                           {data: "StudentId"},
@@ -219,7 +220,9 @@ class StudentsPage extends React.Component {
                       width="100%">
                       <thead>
                       <tr>
+                        <th data-hide="mobile-p"><Msg phrase="CodeText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="IDText"/></th>
+                        <th data-class="expand"><Msg phrase="NameText"/></th>
                         <th data-class="expand"><Msg phrase="NameText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="EmailAddressText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>

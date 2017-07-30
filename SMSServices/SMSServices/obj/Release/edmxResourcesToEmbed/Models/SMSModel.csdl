@@ -70,6 +70,7 @@
     <EntitySet Name="Admissions" EntityType="SMSModel.Admissions" />
     <EntitySet Name="Languages" EntityType="SMSModel.Languages" />
     <EntitySet Name="Religions" EntityType="SMSModel.Religions" />
+    <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
     <EntitySet Name="Students" EntityType="SMSModel.Students" />
     <AssociationSet Name="FK_Admissions_Students" Association="SMSModel.FK_Admissions_Students">
       <End Role="Students" EntitySet="Students" />
@@ -91,7 +92,6 @@
       <End Role="Religions" EntitySet="Religions" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
   </EntityContainer>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -326,11 +326,21 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Religions" FromRole="Religions" ToRole="Students" />
   </EntityType>
+  <EntityType Name="Batches">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
   <EntityType Name="Students">
     <Key>
-      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="StudentId" />
     </Key>
-    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Name1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -376,7 +386,7 @@
     <End Type="SMSModel.Admissions" Role="Admissions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Students">
-        <PropertyRef Name="StudentID" />
+        <PropertyRef Name="StudentId" />
       </Principal>
       <Dependent Role="Admissions">
         <PropertyRef Name="StudentID" />
@@ -431,14 +441,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Batches">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-  </EntityType>
 </Schema>

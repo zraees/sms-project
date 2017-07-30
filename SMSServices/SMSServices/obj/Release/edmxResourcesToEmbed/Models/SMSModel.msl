@@ -136,6 +136,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Batches">
+      <EntityTypeMapping TypeName="SMSModel.Batches">
+        <MappingFragment StoreEntitySet="Batches">
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="SMSModel.Students">
         <MappingFragment StoreEntitySet="Students">
@@ -173,18 +184,7 @@
           <ScalarProperty Name="Name2" ColumnName="Name2" />
           <ScalarProperty Name="Name1" ColumnName="Name1" />
           <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Batches">
-      <EntityTypeMapping TypeName="SMSModel.Batches">
-        <MappingFragment StoreEntitySet="Batches">
-          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

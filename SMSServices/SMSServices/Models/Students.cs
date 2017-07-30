@@ -19,7 +19,7 @@ namespace SMSServices.Models
             this.Admissions = new HashSet<Admissions>();
         }
     
-        public int StudentID { get; set; }
+        public int StudentId { get; set; }
         public string Code { get; set; }
         public string Name1 { get; set; }
         public string Name2 { get; set; }
