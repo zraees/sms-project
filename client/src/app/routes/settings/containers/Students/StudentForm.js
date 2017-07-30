@@ -8,7 +8,7 @@ import {connect} from 'react-redux'
 import {Field, reduxForm, formValueSelector, getFormValues} from 'redux-form'
 import {required, email, requiredCombo}  from '../../../../components/forms/validation/CustomValidation'
 
-import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
+import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea, RFFileUpload} from '../../../../components/ui'
 
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -41,7 +41,8 @@ class StudentForm extends React.Component {
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
     this.handleSectionBlur = this.handleSectionBlur.bind(this);
-    this.handleName1Blur = this.handleName1Blur.bind(this);
+    this.handleNameBlur = this.handleNameBlur.bind(this);
+    this.handleNameArBlur = this.handleNameArBlur.bind(this);
   }
   
   componentDidMount(){ 
@@ -166,19 +167,13 @@ class StudentForm extends React.Component {
     console.log(value);
   }
   
-  handleName1Blur(obj, value){
-     //const selector = formValueSelector('StudentForm')
-     //const formValues= getFormValues('myForm')(state)
-    //const value1 = selector(state, 'name1')
-console.log(this.state.name1);
-    //   console.log(formValues);
+  handleNameBlur(obj, value){
+    this.props.change("nameAsPerPassport", this.props.fullName)
+  } 
 
-    //console.log('name 1 blur', this.state.name1)
-    //const values = selector(state, 'name1', 'name2', 'name3', 'name4')
-    //this.props.change("nameAsPerPassport", values.name1 || '' + ' ' + values.name2 || '' + ' ' + values.name3 || '' + ' ' + values.name4 || '');
+  handleNameArBlur(obj, value){
+    this.props.change("nameArAsPerPassport", this.props.fullNameAr)
   }
-
- 
 
   render() {
     const { studentId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
@@ -224,7 +219,7 @@ console.log(this.state.name1);
                   <section className="col col-3">
                     <Field name="name1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       validate={required} component={RFField} normalize={upper}  
-                      onBlur={this.handleName1Blur} 
+                      onBlur={this.handleNameBlur} 
                       type="text" placeholder="Please enter name1" 
                       label="Name1Text" />    
                   </section>
@@ -232,66 +227,84 @@ console.log(this.state.name1);
                   <section className="col col-3">
                     <Field name="name2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name2" 
+                      onBlur={this.handleNameBlur} 
                       label="Name2Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="name3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name3" 
+                      onBlur={this.handleNameBlur} 
                       label="Name3Text" />    
                   </section>
                   
                   <section className="col col-3">
                     <Field name="name4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name4" 
+                      onBlur={this.handleNameBlur} 
                       label="Name4Text" />    
                   </section>
-                </div>
-
-                <div className="row"> 
-                    <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
-                        <Field name="nameAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                            validate={required} component={RFField} normalize={upper} type="text" 
-                            label="Name1AsPerPassportText"
-                            placeholder="Please enter full name as per passport"/>
-                    </section>
-                    {/*</section>*/}
                 </div>
 
                 <div className="row">
                   <section className="col col-3">
                     <Field name="nameAr1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       validate={required} component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr1" 
+                      onBlur={this.handleNameArBlur} 
                       label="NameAr1Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="nameAr2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr2" 
+                      onBlur={this.handleNameArBlur} 
                       label="NameAr2Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="nameAr3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr3" 
+                      onBlur={this.handleNameArBlur} 
                       label="NameAr3Text" />    
                   </section>
                   
                   <section className="col col-3">
                     <Field name="nameAr4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr4" 
+                      onBlur={this.handleNameArBlur} 
                       label="NameAr4Text" />    
                   </section>
                 </div>
 
-                <div className="row">
-                    <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <div className="row"> 
+
+                  <section className="col col-9">
+                    <div className="row"> 
+                      <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                        <Field name="nameAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
+                          validate={required} component={RFField} normalize={upper} 
+                          type="text" 
+                          label="Name1AsPerPassportText"
+                          placeholder="Please enter full name as per passport"/>
+                      </section>       
+                    </div>
+                    
+                    <div className="row"> 
+                      <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                         <Field name="nameArAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                            validate={required} component={RFField} normalize={upper} type="text" 
-                            label="Name2AsPerPassportText"
-                            placeholder="Please enter full nameAr as per passport"/>
-                    </section>
-                    {/*</section>*/}
+                          validate={required} component={RFField} normalize={upper} type="text" 
+                          label="Name2AsPerPassportText"
+                          placeholder="Please enter full nameAr as per passport"/>
+                      </section>       
+                    </div>
+                  </section> 
+                  <section className="col col-3">
+                     <Field
+                        name="files"
+                        component={RFFileUpload}
+                      />
+                  </section>                     
+                    
                 </div>
 
                 <div className="row">
@@ -501,27 +514,26 @@ const afterSubmit = function(result, dispatch) {
     dispatch(reset('StudentForm'));
 }
 
-export default reduxForm({
+//export default 
+StudentForm = reduxForm({
   form: 'StudentForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false 
 })(StudentForm)
 
-
-connect(
-  state => ({
-    name1: selector(state, 'name1'),
-    name2: selector(state, 'name2')
-  })
+const selector = formValueSelector('StudentForm') // <-- same as form name
+StudentForm = connect(
+  state => { 
+    const { name1, name2, name3, name4 } = selector(state, 'name1', 'name2', 'name3', 'name4')
+    const { nameAr1, nameAr2, nameAr3, nameAr4 } = selector(state, 'nameAr1', 'nameAr2', 'nameAr3', 'nameAr4')
+    return {
+      fullName: `${name1 || ''}${name2?' '+name2:''}${name3?' '+name3:''}${name4?' '+name4:''}`,
+      fullNameAr: `${nameAr1 || ''}${nameAr2?' '+nameAr2:''}${nameAr3?' '+nameAr3:''}${nameAr4?' '+nameAr4:''}`
+    }
+  }
 )(StudentForm)
 
-// const selector = (form, ...other) => (formValueSelector('StudentForm'))(...other);
-
-// const mapStateToProps = (state, initialProps) => {
-//   return {
-//     name1: selector('StudentForm', state, 'name1'),
-//   };
-// };
+export default StudentForm;
 
 // export default connect(mapStateToProps, null)(StudentForm);
 // //https://github.com/erikras/redux-form/issues/1987

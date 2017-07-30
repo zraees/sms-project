@@ -104,6 +104,8 @@
     "Female": "Female",
     "IDText": "",
     "CodeText": "Code",
+    "DropPicText": "Drop picture here or click!",
+    "image preview": "Image Preview...",
 
     "Manage Teacher":"Manage Teacher",
     "Add New Teacher": "Add New Teacher",

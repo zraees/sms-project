@@ -1,6 +1,6 @@
 
 export function upper(value){ 
-    console.log('in upper');
+    //console.log('in upper');
     return value && value.toUpperCase()
 }
 

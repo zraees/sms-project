@@ -80,7 +80,6 @@ fieldset {
     color: #A90329;
 }
 
-
 .inline-group .radio {
     float: left;
     margin-right: 10px;
@@ -108,6 +107,33 @@ fieldset {
   -moz-opacity:0.6; /* Mozilla */
   opacity: 0.6; /* CSS3 */
   z-index: 9999;
+}
+
+.react-dropzone {
+  width : 100%;
+  height : 25px;
+  border : 1px dashed gray;
+}
+
+.active-react-dropzone {
+  width : 100%;
+  height : 25px;
+  border : 1px solid green;
+  background: r(238, 238, 238);
+}
+
+.padding1px{
+    padding: 1px;
+}
+
+.padding2px{
+    padding: 2px;
+}
+
+.studentImgAdd{
+    width: 80px;
+    height: 80px;
+    padding: 3px; 
 }
 
 .sk-cube-grid {

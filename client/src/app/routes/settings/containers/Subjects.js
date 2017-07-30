@@ -3,22 +3,23 @@
  */
 
 import React from 'react'
+import { connect } from 'react-redux'
 
 import WidgetGrid from '../../../components/widgets/WidgetGrid'
 import JarvisWidget  from '../../../components/widgets/JarvisWidget'
 import RFDatePicker from '../../../components/ui/RFDatePicker'
 import Msg from '../../../components/i18n/Msg'
 
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector  } from 'redux-form'
 
 class Subjects extends React.Component {
   
   render() {
     
-const lessThan = otherField =>
-  (value, previousValue, allValues) => value < allValues[otherField] ? value : previousValue
-const greaterThan = otherField =>
-  (value, previousValue, allValues) => value > allValues[otherField] ? value : previousValue
+    const lessThan = otherField =>
+      (value, previousValue, allValues) => value < allValues[otherField] ? value : previousValue
+    const greaterThan = otherField =>
+      (value, previousValue, allValues) => value > allValues[otherField] ? value : previousValue
 
 //http://redux-form.com/6.1.1/examples/normalizing/
 //https://bl.ocks.org/insin/bbf116e8ea10ef38447b
@@ -49,6 +50,31 @@ const greaterThan = otherField =>
                         <div>
                           <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).flag}/>
                         </div>
+                        
+                        <div>
+                          <label>First Name</label>
+                          <div>
+                            <Field
+                              name="fname"
+                              component="input"
+                              type="text"                              
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label>Last Name</label>
+                          <div>
+                            <Field
+                              name="lname"
+                              component="input"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+
+                        fullName : 
+                        {this.props.fullName}
 
                         <div>
                           <label>Min</label>
@@ -104,7 +130,28 @@ const greaterThan = otherField =>
   }
 }
 
-export default reduxForm({
-  form: 'simple',  // a unique identifier for this form
+//export default 
+Subjects = reduxForm({
+  form: 'Subjects',  // a unique identifier for this form
   initialValues: { min: 1, max: 10 }
 })(Subjects)
+
+// Decorate with connect to read form values
+const selector = formValueSelector('Subjects') // <-- same as form name
+Subjects = connect(
+  state => {
+    // can select values individually
+    // const hasEmailValue = selector(state, 'hasEmail')
+    // const favoriteColorValue = selector(state, 'favoriteColor')
+    // or together as a group
+    const { fname, lname } = selector(state, 'fname', 'lname')
+    //console.log(fname);
+    return {
+      // hasEmailValue,
+      // favoriteColorValue,
+      fullName: `${fname || ''} ${lname || ''}`
+    }
+  }
+)(Subjects)
+
+export default Subjects

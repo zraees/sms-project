@@ -105,6 +105,8 @@
     "Female": "انثى",
     "IDText": "رقم السجل",    
     "CodeText": "",
+    "DropPicText": "Drop picture here!",
+    "image preview": "Image Preview...",
     
     "Manage Teacher":"تحديث المعلم",
     "Add New Teacher": "إضافة معلم جديد",
