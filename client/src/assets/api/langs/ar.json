@@ -90,11 +90,11 @@
     "Teachers":"معلمون",
     "Students": "Students",
     "GeneralSettings":"تفاصيل عامة",
-    "Shifts": "",
+    "Shifts": "التحولات",
     "Classes":"الطبقات",
-    "Sections": "",
-    "Batcher": "",
-    "Classes & Sections": "",
+    "Sections": "الأبواب",
+    "Batches": "دفعات",
+    "Classes & Sections": "الطبقات والأبواب",
 
     "AddNewText": " إضافة ",
     "SaveText": "حفظ",
@@ -102,7 +102,7 @@
     "ResetText": "إعادة تعيين",
     "AddText": "جديد",
     "ListText": "تسجيل",
-    "ManageText": "",
+    "ManageText": "تصحيح",
 
     "RequiredFieldText": "هذا مجال مطلوب",
     "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
@@ -111,7 +111,7 @@
     "Male": "ذكر",
     "Female": "انثى",
     "IDText": "رقم السجل",    
-    "CodeText": "",
+    "CodeText": "رمز",
     "DropPicText": "Drop picture here!",
     "image preview": "Image Preview...",
     "ShiftText": "",
@@ -203,8 +203,8 @@
     "Please enter student stay with" :"",
 
     "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة",
-    "data has been saved successfully": "",
-    "data has been updated successfully": "",
-    "data has been deleted successfully": "",
-    "Something went wrong, please contact system administrator!": ""
+    "data has been saved successfully": "تم حفظ السجل بنجاح",
+    "data has been updated successfully": "تم تحديث السجل بنجاح",
+    "data has been deleted successfully": "تم حذف السجل بنجاح",
+    "Something went wrong, please contact system administrator!": "حدث خطأ ما، يرجى الاتصال بمسؤول النظام!"
 }

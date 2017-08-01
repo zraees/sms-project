@@ -93,11 +93,11 @@
     "Teachers":"اساتذہ",
     "Students": "Students",
     "GeneralSettings":"عام تفصیلات",
-    "Shifts": "",
+    "Shifts": "شفٹس",
     "Classes":"کلاسیں",
-    "Sections": "",
-    "Batcher": "",
-    "Classes & Sections": "",
+    "Sections": "سیکشنس",
+    "Batches": "بیچ",
+    "Classes & Sections": "کلاسیں اور سیکشنس",
 
     "AddNewText": " اضافہ ",
     "SaveText": "اندراج",
@@ -105,7 +105,7 @@
     "ResetText": "ری سیٹ",
     "AddText": "جديد",
     "ListText": "ریکارڈ",
-    "ManageText": "",
+    "ManageText": "ترمیم",
 
     "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
     "InvalidEmailAddressText": "غلط ای میل ایڈریس",
@@ -114,10 +114,10 @@
     "Male": "مرد",
     "Female": "عورت",
     "IDText": "ریکارڈ نمبر",
-    "CodeText": "",
+    "CodeText": "کوڈ",
     "DropPicText": "Drop picture here!",
     "image preview": "Image Preview...",
-    "ShiftText": "",
+    "ShiftText":  "شفٹ",
     "ClassText": "",
     "SectionText": "",
     "BatchText": "",    
@@ -206,8 +206,8 @@
     "Please enter student stay with" :"",
 
     "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے",
-    "data has been saved successfully": "",
-    "data has been updated successfully": "",
-    "data has been deleted successfully": "",
-    "Something went wrong, please contact system administrator!": ""
+    "data has been saved successfully": "ریکارڈ کامیابی سے محفوظ ہوگیا",
+    "data has been updated successfully": "ریکارڈ کو کامیابی سے اپ ڈیٹ کیا گیا ہے",
+    "data has been deleted successfully": "ریکارڈ کامیابی سے ختم ہوگیا ہے",
+    "Something went wrong, please contact system administrator!": "کچھ غلط ہو گیا، برائے مہربانی نظام منتظم سے رابطہ کریں!"
 }
