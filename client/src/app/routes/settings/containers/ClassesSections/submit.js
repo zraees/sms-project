@@ -11,12 +11,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     function submit(values){
       console.log(values);
-      return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
-        .then(res=>{            
-            //throw {email: 'That email is already taken'}
-            if(res.data.Email===''){
+      return axios.get('/api/ClassesSections/' + values.shiftId + '/' + values.classId + '/' + values.sectionId + '/')
+        .then(res=>{             
+
+            if(res.data.ClassID>0){
                       
-              if(values.studentId>0){
+              if(values.classSectionId>0){
                 update(values); 
               }
               else{
@@ -26,7 +26,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             }
             else{
               throw new SubmissionError({   
-                email: 'email is already taken',
+                shiftId: 'Class and section is already exists',
                 _error: 'You cannot proceed further!'
               })
             }
@@ -35,69 +35,55 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     function insert(values){
       LoaderVisibility(true);
-      //console.log(values);
-      axios.post('/api/students', values)      
-          .then(function (response) {
-            
-            LoaderVisibility(false);
-            alert('s', 'student details have been saved.');
-            $('#studentPopup').modal('hide');  
+      console.log(values);
+      axios.post('/api/ClassesSections', values)      
+        .then(function (response) {
+          
+          LoaderVisibility(false);
+          alert('s', 'data has been saved successfully');
+          $('#ClassSectionPopup').modal('hide');  
 
-          })
-          .catch(function (error) {
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              //console.log(error.response.data);
-              //console.log(error.response.status);
-              //console.log(error.response.headers);
-
-              alert('f', error.response.data.StatusMessage);  
-            
-              LoaderVisibility(false);     
-                   //throw new SubmissionError({ _error: "That's weird. "});   
-                   //reject('error error error');
-                   return Promise.resolve(true).then(() => {
-                    throw new SubmissionError({ email: 'User does not exist', _error: 'Login failed!' });
-                  });
-              // return new SubmissionError({   
-              //   email: 'email is already taken',
-              //   _error: 'You cannot proceed further!'
-              // });
-
-            } else if (error.request) {
-              // The request was made but no response was received
-              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-              // http.ClientRequest in node.js
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
-            }
-            //console.log(error.config);
-            
-            //alert('f', '');
-            LoaderVisibility(false);      
-          });      
+        })
+        .catch(function (error) {
+          if (error.response) { 
+            alert('f', error.response.data.StatusMessage);  
+          
+            LoaderVisibility(false);     
+                  //throw new SubmissionError({ _error: "That's weird. "});   
+                  //reject('error error error');
+            // return Promise.resolve(true).then(() => {
+            //   throw new SubmissionError({ email: 'User does not exist', _error: 'Login failed!' });
+            // }); 
+          } else if (error.request) { 
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          //console.log(error.config);
+          
+          //alert('f', '');
+          LoaderVisibility(false);      
+        });      
     }
 
     function update(values){
       //console.log('in update');
       //console.log(values);
       LoaderVisibility(true);
-      axios.put('/api/students', values)      
-          .then(function (response) {
-            
-            alert('s','student details have been updated.');
-            $('#studentPopup').modal('hide');  
-            LoaderVisibility(false);
+      axios.put('/api/ClassesSections', values)      
+        .then(function (response) {
+          
+          alert('s','data has been updated successfully');
+          $('#ClassSectionPopup').modal('hide');  
+          LoaderVisibility(false);
 
-          })
-          .catch(function (error) {
-            console.log(error);
-            alert('f', '');
-            LoaderVisibility(false);
-          });      
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert('f', '');
+          LoaderVisibility(false);
+        });      
     }
 
     export function remove(id, delCell){
@@ -115,16 +101,16 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
         if (isYesClicked(ButtonPressed)) {
             LoaderVisibility(true);
-            console.log('student dele conf yes by func');
+            //console.log('classsection dele conf yes by func');
             // console.log(id);
             
-            ////axios.delete('/api/students/' + id)      
+            ////axios.delete('/api/ClassesSections/' + id)      
             // axios.post('/api/Removestudent/' + id)
             //   .then(function (response) {
                 
             //     alert('s','student details have been deleted.');
                 
-            //     var table = $('#studentsGrid').DataTable();                
+            //     var table = $('#ClassSectionGrid').DataTable();                
             //     table
             //       .row( delCell.parents('tr') )
             //       .remove()
@@ -137,15 +123,15 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             //   }); 
 
             $.ajax({
-                url : '/api/Removestudent/' + id,
+                url : '/api/RemoveClassesSections/' + id,
                 type: "POST",
                 //data : formData,
                 success: function(data, textStatus, jqXHR)
                 {
                   console.log('success...');
-                  alert('s','student details have been deleted.');
+                  alert('s','data has been deleted successfully');
                   
-                  var table = $('#studentsGrid').DataTable();                
+                  var table = $('#ClassSectionGrid').DataTable();                
                   table
                     .row( delCell.parents('tr') )
                     .remove()

@@ -28,6 +28,14 @@ export default {
           cb(null, m.default)
         })
       }
+    },
+    {
+      path: 'classesSections',
+      getComponent(nextState, cb){
+        System.import('./containers/ClassesSections/ClassesSectionsPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
     }
   ]
 

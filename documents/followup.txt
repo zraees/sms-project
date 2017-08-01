@@ -1,0 +1,9 @@
+Database:
+- no need shift type and subject type tables
+- studentClass table we'll save shiftID, classID and batchID
+- 
+
+Server Side working:
+- save classes & section page
+- save teachersubjects
+- save teacherclasses

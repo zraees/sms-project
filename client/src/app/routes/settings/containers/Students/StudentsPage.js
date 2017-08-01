@@ -171,7 +171,7 @@ class StudentsPage extends React.Component {
                                     //return moment(data).format('Do MMM YYYY' || 'llll')
                                     return renderDate(data);
                                 },
-                                "targets": 5 
+                                "targets": 6
                             },
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the
@@ -221,9 +221,8 @@ class StudentsPage extends React.Component {
                       <thead>
                       <tr>
                         <th data-hide="mobile-p"><Msg phrase="CodeText"/></th>
-                        <th data-hide="mobile-p"><Msg phrase="IDText"/></th>
-                        <th data-class="expand"><Msg phrase="NameText"/></th>
-                        <th data-class="expand"><Msg phrase="NameText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="FullNameText"/></th>
+                        <th data-class="expand"><Msg phrase="FullNameArText"/></th>                        
                         <th data-hide="mobile-p"><Msg phrase="EmailAddressText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>

@@ -32,7 +32,7 @@
         }, 
         {
           "icon": "fa fa-cog",
-          "title": "General",
+          "title": "GeneralSettings",
           "items": [
             {
               "icon": "fa fa-book",
@@ -58,6 +58,11 @@
               "icon": "fa fa-institution",
               "route": "/settings/classes",
               "title": "Classes"
+            },
+            {
+              "icon": "fa fa-share-alt",
+              "route": "/settings/classesSections",
+              "title": "Classes & Sections"
             }
           ]
         }

@@ -89,13 +89,20 @@
     "Subjects":"المواضيع",
     "Teachers":"معلمون",
     "Students": "Students",
+    "GeneralSettings":"تفاصيل عامة",
+    "Shifts": "",
+    "Classes":"الطبقات",
+    "Sections": "",
+    "Batcher": "",
+    "Classes & Sections": "",
 
-    "Add New": " إضافة ",
+    "AddNewText": " إضافة ",
     "SaveText": "حفظ",
     "UndoChangesText": "فك",
     "ResetText": "إعادة تعيين",
     "AddText": "جديد",
     "ListText": "تسجيل",
+    "ManageText": "",
 
     "RequiredFieldText": "هذا مجال مطلوب",
     "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
@@ -107,6 +114,11 @@
     "CodeText": "",
     "DropPicText": "Drop picture here!",
     "image preview": "Image Preview...",
+    "ShiftText": "",
+    "ClassText": "",
+    "SectionText": "",
+    "BatchText": "",
+    "SubjectText": "",
     
     "Manage Teacher":"تحديث المعلم",
     "Add New Teacher": "إضافة معلم جديد",
@@ -122,12 +134,11 @@
     "DOBText":"تاريخ الولادة",
     "GenderText":"جنس",
     "RatingText":"تقييم",
-    "NationalityText":"جنسية",
     "General":"تفاصيل عامة",
+    "NationalityText":"جنسية",    
     "Qualification":"تعليم",
     "Experience":"خبرة",
-    "SubjectsText":"المواضيع",
-    "Classes":"الطبقات",
+    "SubjectsText":"المواضيع",    
     "CompanyNameText":"اسم الشركة",
     "StartDateText":"تاريخ البدء",
     "EndDateText":"تاريخ الانتهاء",
@@ -160,7 +171,9 @@
     "ReligionText": "",
     "StudentStayWithText": "",
     "StudentStayWithOtherText": "",
-
+    "FullNameText": "Full Name",
+    "FullNameArText": "Full Name (Ar)",
+    
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
     "Please enter Identity card number": "الرجاء إدخال رقم بطاقة الهوية",
@@ -189,5 +202,9 @@
     "Please enter place of birth" :"",
     "Please enter student stay with" :"",
 
-    "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة"
+    "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة",
+    "data has been saved successfully": "",
+    "data has been updated successfully": "",
+    "data has been deleted successfully": "",
+    "Something went wrong, please contact system administrator!": ""
 }

@@ -169,10 +169,12 @@ class StudentForm extends React.Component {
   
   handleNameBlur(obj, value){
     this.props.change("nameAsPerPassport", this.props.fullName)
+    this.props.change("fullName", this.props.fullName)
   } 
 
   handleNameArBlur(obj, value){
     this.props.change("nameArAsPerPassport", this.props.fullNameAr)
+    this.props.change("fullNameAr", this.props.fullNameAr)
   }
 
   render() {
@@ -192,21 +194,21 @@ class StudentForm extends React.Component {
                     <Field name="studentCode" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
-                      placeholder="Please enter student code"
+                      placeholder="Please enter student code" maxLength="20"
                       label="CodeText"/>
                   </section>
                   <section className="col col-5">
                     <Field name="idNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
-                      placeholder="Please enter Identity card number"
+                      placeholder="Please enter Identity card number" maxLength="20"
                       label="IdentityCardNumberText"/>
                   </section>
                   <section className="col col-5">
                     <Field name="fatherIdNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
-                      placeholder="Please enter Father's Identity card number"
+                      placeholder="Please enter Father's Identity card number" maxLength="20"
                       label="FatherIdentityCardNumberText"/>
                   </section> 
                 </div>
@@ -219,7 +221,7 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="name1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       validate={required} component={RFField} normalize={upper}  
-                      onBlur={this.handleNameBlur} 
+                      onBlur={this.handleNameBlur} maxLength="50"
                       type="text" placeholder="Please enter name1" 
                       label="Name1Text" />    
                   </section>
@@ -227,21 +229,21 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="name2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name2" 
-                      onBlur={this.handleNameBlur} 
+                      onBlur={this.handleNameBlur} maxLength="50"
                       label="Name2Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="name3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name3" 
-                      onBlur={this.handleNameBlur} 
+                      onBlur={this.handleNameBlur} maxLength="50"
                       label="Name3Text" />    
                   </section>
                   
                   <section className="col col-3">
                     <Field name="name4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter name4" 
-                      onBlur={this.handleNameBlur} 
+                      onBlur={this.handleNameBlur} maxLength="50"
                       label="Name4Text" />    
                   </section>
                 </div>
@@ -250,28 +252,28 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="nameAr1" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       validate={required} component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr1" 
-                      onBlur={this.handleNameArBlur} 
+                      onBlur={this.handleNameArBlur} maxLength="50" 
                       label="NameAr1Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="nameAr2" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr2" 
-                      onBlur={this.handleNameArBlur} 
+                      onBlur={this.handleNameArBlur} maxLength="50" 
                       label="NameAr2Text" />    
                   </section>
 
                   <section className="col col-3">
                     <Field name="nameAr3" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr3" 
-                      onBlur={this.handleNameArBlur} 
+                      onBlur={this.handleNameArBlur} maxLength="50" 
                       label="NameAr3Text" />    
                   </section>
                   
                   <section className="col col-3">
                     <Field name="nameAr4" labelClassName="input" labelIconClassName="icon-append fa fa-user"
                       component={RFField} normalize={upper} type="text" placeholder="Please enter nameAr4" 
-                      onBlur={this.handleNameArBlur} 
+                      onBlur={this.handleNameArBlur} maxLength="50" 
                       label="NameAr4Text" />    
                   </section>
                 </div>
@@ -283,9 +285,11 @@ class StudentForm extends React.Component {
                       <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                         <Field name="nameAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                           validate={required} component={RFField} normalize={upper} 
-                          type="text" 
+                          type="text" maxLength="250" 
                           label="Name1AsPerPassportText"
                           placeholder="Please enter full name as per passport"/>
+                          
+                        <Field component="input" type="hidden" name="fullName"/>
                       </section>       
                     </div>
                     
@@ -293,8 +297,10 @@ class StudentForm extends React.Component {
                       <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                         <Field name="nameArAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                           validate={required} component={RFField} normalize={upper} type="text" 
-                          label="Name2AsPerPassportText"
+                          label="Name2AsPerPassportText" maxLength="250"
                           placeholder="Please enter full nameAr as per passport"/>
+
+                        <Field component="input" type="hidden" name="fullNameAr"/>
                       </section>       
                     </div>
                   </section> 
@@ -313,12 +319,12 @@ class StudentForm extends React.Component {
                         multi={false}
                         name="shiftId"
                         label="ShiftText"
-                        validate={requiredCombo}
                         options={shiftOptions}
                         onBlur={this.handleShiftBlur}
                         component={RFReactSelect} />
                   </section>
 
+                        {/* validate={requiredCombo} */}
                   <section className="col col-3">
                     <Field
                         multi={false}
@@ -391,7 +397,8 @@ class StudentForm extends React.Component {
                   
                   <section className="col col-3">
                     <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={RFField} normalize={lower} type="text" placeholder="Please enter email address" 
+                      validate={[required,email]} component={RFField} normalize={lower} 
+                       maxLength="150" type="text" placeholder="Please enter email address" 
                       label="EmailAddressText"/>
                   </section>
 
@@ -406,7 +413,8 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="studentStayWithOther" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} normalize={upper} disabled={disabledStudentStayWithOther} type="text" 
+                      component={RFField} normalize={upper} disabled={disabledStudentStayWithOther} 
+                      maxLength="50" type="text" 
                       placeholder="Please enter student stay with"
                       label="StudentStayWithOtherText"/>
                   </section>
@@ -417,7 +425,8 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="birthPlace" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} normalize={upper} type="text" 
+                      component={RFField} normalize={upper} 
+                      maxLength="50" type="text" 
                       placeholder="Please enter place of birth"
                       label="BirthPlaceText"/>
                   </section>
@@ -434,7 +443,8 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="phoneNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-phone"
-                      component={RFField} normalize={upper} type="text" 
+                      component={RFField} normalize={upper} 
+                      maxLength="20" type="text" 
                       label="PhoneNumberText"
                       placeholder="Please enter phone number"/>
                   </section>
@@ -442,7 +452,8 @@ class StudentForm extends React.Component {
                   <section className="col col-3">
                     <Field name="mobileNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-mobile"
-                      component={RFField} normalize={upper} type="text" 
+                      component={RFField} normalize={upper} 
+                      maxLength="20" type="text" 
                       label="MobileNumberText"
                       placeholder="Please enter mobile number"/>
                   </section>
@@ -452,7 +463,8 @@ class StudentForm extends React.Component {
                   <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                     <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
-                      component={RFField} normalize={upper} type="text" 
+                      component={RFField} normalize={upper} 
+                      maxLength="500" type="text" 
                       label="StreetAddressText"
                       placeholder="Please enter street address"/>
                   </section> 

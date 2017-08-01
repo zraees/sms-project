@@ -88,13 +88,20 @@
     "Subjects": "Subjects",
     "Teachers": "Teachers",
     "Students": "Students",
+    "GeneralSettings":"General",
+    "Shifts": "",
+    "Classes": "",
+    "Sections": "",
+    "Batcher": "",
+    "Classes & Sections": "",
 
-    "Add New": "Add New ",
+    "AddNewText": " Add New ",
     "SaveText": "Save",
     "UndoChangesText": "Undo Changes",
     "ResetText": "Reset",
     "AddText": "Add",
     "ListText": "List",
+    "ManageText": "",
 
     "RequiredFieldText": "This field is required",
     "InvalidEmailAddressText": "Invalid email address",
@@ -106,6 +113,11 @@
     "CodeText": "Code",
     "DropPicText": "Drop picture here or click!",
     "image preview": "Image Preview...",
+    "ShiftText": "",
+    "ClassText": "",
+    "SectionText": "",
+    "BatchText": "",
+    "SubjectText": "",
 
     "Manage Teacher":"Manage Teacher",
     "Add New Teacher": "Add New Teacher",
@@ -121,12 +133,11 @@
     "DOBText":"Date of Birth",
     "GenderText":"Gender",
     "RatingText":"Rating",
-    "NationalityText":"Nationality",
     "General":"General",
+    "NationalityText":"Nationality",    
     "Qualification":"Qualification",
     "Experience":"Experience",
-    "SubjectsText":"Subjects",
-    "Classes":"Classes",
+    "SubjectsText":"Subjects",    
     "CompanyNameText":"Company Name",
     "StartDateText":"Start Date",
     "EndDateText":"End Date",
@@ -159,6 +170,8 @@
     "ReligionText": "Religion",
     "StudentStayWithText": "Stay with",
     "StudentStayWithOtherText": "Stay with whom",
+    "FullNameText": "Full Name",
+    "FullNameArText": "Full Name (Ar)",
 
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",
@@ -188,5 +201,9 @@
     "Please enter place of birth" :"",
     "Please enter student stay with" :"",
 
-    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value."
+    "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value.",
+    "data has been saved successfully": "",
+    "data has been updated successfully": "",
+    "data has been deleted successfully": "",
+    "Something went wrong, please contact system administrator!": ""
 }

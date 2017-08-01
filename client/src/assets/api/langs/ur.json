@@ -92,13 +92,20 @@
     "Subjects":"مضامین",
     "Teachers":"اساتذہ",
     "Students": "Students",
+    "GeneralSettings":"عام تفصیلات",
+    "Shifts": "",
+    "Classes":"کلاسیں",
+    "Sections": "",
+    "Batcher": "",
+    "Classes & Sections": "",
 
-    "Add New": " اضافہ ",
+    "AddNewText": " اضافہ ",
     "SaveText": "اندراج",
     "UndoChangesText": "واپس کریں",
     "ResetText": "ری سیٹ",
     "AddText": "جديد",
     "ListText": "ریکارڈ",
+    "ManageText": "",
 
     "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
     "InvalidEmailAddressText": "غلط ای میل ایڈریس",
@@ -110,7 +117,12 @@
     "CodeText": "",
     "DropPicText": "Drop picture here!",
     "image preview": "Image Preview...",
-    
+    "ShiftText": "",
+    "ClassText": "",
+    "SectionText": "",
+    "BatchText": "",    
+    "SubjectText": "",
+
     "Manage Teacher":"ٹیچر ریکارڈ اپ ڈیٹ کریں",
     "Add New Teacher": "نیا استاد ریکارڈ شامل کریں",
     "NameText": "نام",
@@ -124,13 +136,12 @@
     "CityText":"شہر",
     "DOBText":"پیدائش کی تاریخ",
     "GenderText":"جنس",
-    "RatingText":"درجہ بندی",
-    "NationalityText":"قومیت",
     "General":"عام تفصیلات",
+    "RatingText":"درجہ بندی",
+    "NationalityText":"قومیت",    
     "Qualification":"تعلیم",
     "Experience":"تجربات",
-    "SubjectsText":"مضامین",
-    "Classes":"کلاسیں",
+    "SubjectsText":"مضامین",    
     "CompanyNameText":"کمپنی کا نام",
     "StartDateText":"تاریخ شروع",
     "EndDateText":"تاریخ اختتام",
@@ -163,6 +174,8 @@
     "ReligionText": "",
     "StudentStayWithText": "",
     "StudentStayWithOtherText": "",
+    "FullNameText": "Full Name",
+    "FullNameArText": "Full Name (Ar)",
 
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",
@@ -192,5 +205,9 @@
     "Please enter place of birth" :"",
     "Please enter student stay with" :"",
 
-    "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے"
+    "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے",
+    "data has been saved successfully": "",
+    "data has been updated successfully": "",
+    "data has been deleted successfully": "",
+    "Something went wrong, please contact system administrator!": ""
 }

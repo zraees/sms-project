@@ -135,13 +135,15 @@ class TeacherForm extends React.Component {
                 <div className="row">
                   <section className="col col-6">
                     <Field name="name" labelClassName="input" labelIconClassName="icon-append fa fa-user"
-                      validate={required} component={RFField} type="text" placeholder="Please enter full name" 
+                      validate={required} component={RFField} 
+                      maxLength="150" type="text" placeholder="Please enter full name" 
                       label="NameText" />    
                   </section>
 
                   <section className="col col-6">
                     <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
-                      validate={[required,email]} component={RFField} type="text" placeholder="Please enter email address" 
+                      validate={[required,email]} component={RFField} 
+                      maxLength="150" type="text" placeholder="Please enter email address" 
                       label="EmailAddressText"/>
                   </section>
                 </div>
@@ -176,7 +178,7 @@ class TeacherForm extends React.Component {
                   <section className="col col-6">
                     <Field name="idNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
-                      component={RFField} type="text" 
+                      component={RFField} maxLength="20" type="text" 
                       placeholder="Please enter Identity card number"
                       label="IdentityCardNumberText"/>
                   </section>
@@ -195,7 +197,8 @@ class TeacherForm extends React.Component {
                   <section className="col col-6">
                     <Field name="phoneNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-phone"
-                      component={RFField} type="text" 
+                      component={RFField} 
+                      maxLength="30" type="text" 
                       label="PhoneNumberText"
                       placeholder="Please enter phone number"/>
                   </section>
@@ -203,7 +206,8 @@ class TeacherForm extends React.Component {
                   <section className="col col-6">
                     <Field name="mobileNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-mobile"
-                      component={RFField} type="text" 
+                      component={RFField} 
+                      maxLength="30" type="text" 
                       label="MobileNumberText"
                       placeholder="Please enter mobile number"/>
                   </section>
@@ -213,7 +217,8 @@ class TeacherForm extends React.Component {
                   <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                     <Field name="address" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-map-marker"
-                      component={RFField} type="text" 
+                      component={RFField} 
+                      maxLength="500" type="text" 
                       label="StreetAddressText"
                       placeholder="Please enter street address"/>
                   </section> 

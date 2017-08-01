@@ -97,7 +97,8 @@ componentDidMount(){
                         <div className="row">
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="companyName" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} type="text" 
+                                    validate={required} component={RFField} 
+                                    maxLength="150" type="text" 
                                     label="CompanyNameText"
                                     placeholder="Please enter company name"/>
                             </section>
@@ -112,7 +113,8 @@ componentDidMount(){
                             </section>
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="designation" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} type="text" 
+                                    validate={required} component={RFField} 
+                                    maxLength="50" type="text" 
                                     placeholder="Please enter designation" 
                                     label="DesignationText"/>
                             </section>

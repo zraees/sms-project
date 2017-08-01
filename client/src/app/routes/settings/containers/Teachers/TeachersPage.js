@@ -22,7 +22,7 @@ import Moment from '../../../../components/utils/Moment'
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
 //import Test from './Test'
-import submit, {remove, submitQualification, submitExperience} from './submit'
+import submit, {remove, submitQualification, submitExperience, submitTeacherSubject, submitTeacherClass} from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
@@ -308,25 +308,26 @@ class TeachersPage extends React.Component {
                   { this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/> }
                 </h4>
               </div>
-              <div className="modal-body">
-                  
-                  { this.state.teacherId > 0 ? 
-                    //Test
-                    <TeacherEditForm
-                      teacherId={this.state.teacherId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      genderOptions={this.state.genderOptions}
-                      onSubmit={submit} 
-                      onSubmitQualification={submitQualification} 
-                      onSubmitExperience={submitExperience} />
-                  : <TeacherForm 
-                      teacherId={this.state.teacherId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      genderOptions={this.state.genderOptions}
-                      onSubmit={submit} />
-                  }      
+              <div className="modal-body">                  
+                { this.state.teacherId > 0 ? 
+                  //Test
+                  <TeacherEditForm
+                    teacherId={this.state.teacherId} 
+                    nationalities={this.state.nationalities} 
+                    countries={this.state.countries} 
+                    genderOptions={this.state.genderOptions}
+                    onSubmit={submit} 
+                    onSubmitQualification={submitQualification} 
+                    onSubmitExperience={submitExperience} 
+                    onSubmitTeacherSubject={submitTeacherSubject} 
+                    onSubmitTeacherClass={submitTeacherClass} />
+                : <TeacherForm 
+                    teacherId={this.state.teacherId} 
+                    nationalities={this.state.nationalities} 
+                    countries={this.state.countries} 
+                    genderOptions={this.state.genderOptions}
+                    onSubmit={submit} />
+                }      
               </div>
               {/*  
                     <div className="modal-footer">

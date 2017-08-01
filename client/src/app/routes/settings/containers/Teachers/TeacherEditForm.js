@@ -7,6 +7,8 @@ import isEmpty from 'lodash/isEmpty';
 import EditGeneralInfo from './EditGeneralInfo'
 import QualificationForm from './QualificationForm'
 import ExperienceForm from './ExperienceForm'
+import TeacherSubjectsForm from './TeacherSubjectsForm'
+import TeacherClassesForm from './TeacherClassesForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -35,19 +37,7 @@ class TeacherEditForm extends React.Component {
   componentDidMount(){ 
     //LoaderVisibility(true);
     console.log('componentDidMount --> TeacherEditForm');
-  
-    // axios.get('/api/nationalities/')
-    //     .then(res=>{
-    //         const nationalities = mapForCombo(res.data);      
-    //         this.setState({nationalities});
-    //     });
- 
-    // axios.get('/api/countries/')
-    //     .then(res=>{
-    //         const countries = mapForCombo(res.data);
-    //         this.setState({countries});
-    //     });
-    
+        
      setTimeout(function(){ 
         
         this.setState({nowRender:true}) 
@@ -58,7 +48,7 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { teacherId, onSubmit, nationalities, countries, onSubmitQualification, onSubmitExperience } = this.props;
+    const { teacherId, onSubmit, nationalities, countries, onSubmitQualification, onSubmitExperience, onSubmitTeacherSubject, onSubmitTeacherClass } = this.props;
     //const {nationalities, countries} = this.state;
 
     return (
@@ -121,20 +111,18 @@ class TeacherEditForm extends React.Component {
                 }
             </div>
             <div className="tab-pane fade" id="s4">
-                <p>
-                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                single-origin coffee squid. Exercitation +1 labore velit, blog
-                sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee.
-                </p>
+                { this.state.nowRender ? 
+                    <TeacherSubjectsForm teacherId={teacherId}                         
+                        onSubmit={onSubmitTeacherSubject}/>
+                : <div></div>
+                }
             </div>
             <div className="tab-pane fade" id="s5">
-                <p>
-                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                single-origin coffee squid. Exercitation +1 labore velit, blog
-                sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee.
-                </p>
+                { this.state.nowRender ? 
+                    <TeacherClassesForm teacherId={teacherId}                         
+                        onSubmit={onSubmitTeacherClass}/>
+                : <div></div>
+                }
             </div>
         </div>
         
