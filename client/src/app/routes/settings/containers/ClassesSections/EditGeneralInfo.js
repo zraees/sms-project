@@ -61,13 +61,14 @@ class EditGeneralInfo extends React.Component {
     }
 
     handleInitialize(classSectionId) { 
-      axios.get('/api/ClassesSections/' + classSectionId)
-          .then(res=>{             
+      axios.get('/api/ClassesSectionsById/' + classSectionId)
+          .then(res=>{        
+            console.log(res.data);
             const initData = {
                 "classSectionId": classSectionId,
-                "shiftId": res.data.shiftId,
-                "classId": res.data.classId,
-                "sectionId": res.data.sectionId
+                "shiftId": ""+ res.data.ShiftID,
+                "classId": ""+ res.data.ClassID,
+                "sectionId": ""+ res.data.SectionID
             } 
             this.props.initialize(initData);             
           })

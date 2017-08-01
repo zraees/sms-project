@@ -13,9 +13,11 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       console.log(values);
       return axios.get('/api/ClassesSections/' + values.shiftId + '/' + values.classId + '/' + values.sectionId + '/')
         .then(res=>{             
+      
+            console.log(res.data);
 
-            if(res.data.ClassID>0){
-                      
+            if(res.data.ClassID>=0){
+              console.log('asss');                      
               if(values.classSectionId>0){
                 update(values); 
               }
@@ -27,7 +29,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             else{
               throw new SubmissionError({   
                 shiftId: 'Class and section is already exists',
-                _error: 'You cannot proceed further!'
+                _error: 'You cannot proceed further!', 
               })
             }
         })   
@@ -51,9 +53,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             LoaderVisibility(false);     
                   //throw new SubmissionError({ _error: "That's weird. "});   
                   //reject('error error error');
-            // return Promise.resolve(true).then(() => {
-            //   throw new SubmissionError({ email: 'User does not exist', _error: 'Login failed!' });
-            // }); 
+                  console.log('submission error')
+            throw new SubmissionError({   
+                shiftId: 'Class and section is already exists',
+                _error: 'You cannot proceed further!', 
+              });
+               
           } else if (error.request) { 
             console.log(error.request);
           } else {
@@ -123,7 +128,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             //   }); 
 
             $.ajax({
-                url : '/api/RemoveClassesSections/' + id,
+                url : '/api/RemoveClassSection/' + id,
                 type: "POST",
                 //data : formData,
                 success: function(data, textStatus, jqXHR)

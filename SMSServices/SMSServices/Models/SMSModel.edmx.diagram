@@ -4,23 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1" ZoomLevel="96">
-        <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="2.75" PointY="1.125" IsExpanded="true" />
+      <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="2.25" PointX="5" PointY="4.625" />
-        <EntityTypeShape EntityType="SMSModel.TeacherQualifications" Width="1.5" PointX="5" PointY="0.75" />
+        <EntityTypeShape EntityType="SMSModel.TeacherQualifications" Width="1.5" PointX="6.375" PointY="0.5" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes" />
-        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
         <EntityTypeShape EntityType="SMSModel.Cities" Width="1.5" PointX="5.25" PointY="9" />
         <EntityTypeShape EntityType="SMSModel.Countries" Width="1.5" PointX="0.75" PointY="8.875" />
         <EntityTypeShape EntityType="SMSModel.States" Width="1.5" PointX="3" PointY="8.875" />
-        <EntityTypeShape EntityType="SMSModel.TeacherExperiences" Width="1.5" PointX="8.5" PointY="5" />
+        <EntityTypeShape EntityType="SMSModel.TeacherExperiences" Width="1.5" PointX="7.75" PointY="6" />
         <AssociationConnector Association="SMSModel.FK_Cities_States" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Cities" />
         <AssociationConnector Association="SMSModel.FK_States_Countries" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Countries" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_States" />
-        <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
-        <AssociationConnector Association="SMSModel.FK_Teachers_Countries" />
         <EntityTypeShape EntityType="SMSModel.Errors" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="SMSModel.Admissions" Width="1.5" PointX="10.25" PointY="13.375" />
         <EntityTypeShape EntityType="SMSModel.Languages" Width="1.5" PointX="10.375" PointY="0.875" />
@@ -32,6 +28,24 @@
         <AssociationConnector Association="SMSModel.FK_Students_Languages" />
         <AssociationConnector Association="SMSModel.FK_Students_Languages1" />
         <AssociationConnector Association="SMSModel.FK_Students_Religions" />
+        <EntityTypeShape EntityType="SMSModel.Classes" Width="1.5" PointX="12.375" PointY="18.875" />
+        <EntityTypeShape EntityType="SMSModel.ClassesSections" Width="1.5" PointX="14.625" PointY="18.75" />
+        <EntityTypeShape EntityType="SMSModel.Sections" Width="1.5" PointX="12.375" PointY="25.25" />
+        <EntityTypeShape EntityType="SMSModel.Shifts" Width="1.5" PointX="12.375" PointY="22.5" />
+        <EntityTypeShape EntityType="SMSModel.Subjects" Width="1.5" PointX="2.75" PointY="16" />
+        <EntityTypeShape EntityType="SMSModel.TeachersSubjects" Width="1.5" PointX="3.125" PointY="1.125" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Classes" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Sections" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Shifts" />
+        <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Subjects" />
+        <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="3" PointY="18.875" />
+        <EntityTypeShape EntityType="SMSModel.TeachersClasses" Width="1.5" PointX="14.625" PointY="22.25" />
+        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Classes" />
+        <AssociationConnector Association="SMSModel.FK_Teachers_Countries" />
+        <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
+        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
+        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Teachers" />
+        <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Teachers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

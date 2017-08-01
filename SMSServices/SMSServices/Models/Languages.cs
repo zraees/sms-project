@@ -23,6 +23,7 @@ namespace SMSServices.Models
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string NameAr { get; set; }
     
         public virtual ICollection<Students> Students { get; set; }
         public virtual ICollection<Students> Students1 { get; set; }

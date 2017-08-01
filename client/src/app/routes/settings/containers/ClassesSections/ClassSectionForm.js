@@ -116,6 +116,7 @@ class ClassSectionForm extends React.Component {
 }
        
 const afterSubmit = function(result, dispatch) { 
+    console.log('result = ', result);
     dispatch(reset('ClassSectionForm'));
 }
 

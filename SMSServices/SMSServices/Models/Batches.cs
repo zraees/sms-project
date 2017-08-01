@@ -19,5 +19,6 @@ namespace SMSServices.Models
         public string Name { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public string NameAr { get; set; }
     }
 }

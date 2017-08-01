@@ -15,6 +15,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="StartDate" Type="date" Nullable="false" />
     <Property Name="EndDate" Type="date" Nullable="false" />
   </EntityType>
@@ -25,6 +26,24 @@
     <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Classes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClassesSections">
+    <Key>
+      <PropertyRef Name="ClassSectionID" />
+    </Key>
+    <Property Name="ClassSectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClassID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="SectionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Countries">
     <Key>
@@ -59,6 +78,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -74,6 +94,25 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sections">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shifts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -122,6 +161,15 @@
     <Property Name="SkippedGrades" Type="nvarchar" MaxLength="50" />
     <Property Name="HasStudentRepeatGrade" Type="bit" />
     <Property Name="RepeatGrades" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Subjects">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="TeacherExperiences">
     <Key>
@@ -174,6 +222,22 @@
     <Property Name="CityId" Type="int" />
     <Property Name="NationalityId" Type="int" />
   </EntityType>
+  <EntityType Name="TeachersClasses">
+    <Key>
+      <PropertyRef Name="TeacherClassId" />
+    </Key>
+    <Property Name="TeacherClassId" Type="int" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+    <Property Name="ClassId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeachersSubjects">
+    <Key>
+      <PropertyRef Name="TeacherSubjectID" />
+    </Key>
+    <Property Name="TeacherSubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeacherID" Type="int" Nullable="false" />
+    <Property Name="SubjectID" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="FK_Admissions_Students">
     <End Role="Students" Type="Self.Students" Multiplicity="1" />
     <End Role="Admissions" Type="Self.Admissions" Multiplicity="*" />
@@ -195,6 +259,42 @@
       </Principal>
       <Dependent Role="Cities">
         <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Classes">
+    <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+    <End Role="ClassesSections" Type="Self.ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Sections">
+    <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+    <End Role="ClassesSections" Type="Self.ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Shifts">
+    <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+    <End Role="ClassesSections" Type="Self.ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="ShiftID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -342,20 +442,75 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TeachersClasses_Classes">
+    <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+    <End Role="TeachersClasses" Type="Self.TeachersClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TeachersClasses">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachersClasses_Teachers">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="TeachersClasses" Type="Self.TeachersClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TeachersClasses">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachersSubjects_Subjects">
+    <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+    <End Role="TeachersSubjects" Type="Self.TeachersSubjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TeachersSubjects">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachersSubjects_Teachers">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="TeachersSubjects" Type="Self.TeachersSubjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TeachersSubjects">
+        <PropertyRef Name="TeacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClassesSections" EntityType="Self.ClassesSections" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Religions" EntityType="Self.Religions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeachersClasses" EntityType="Self.TeachersClasses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeachersSubjects" EntityType="Self.TeachersSubjects" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Admissions_Students" Association="Self.FK_Admissions_Students">
       <End Role="Students" EntitySet="Students" />
       <End Role="Admissions" EntitySet="Admissions" />
@@ -363,6 +518,18 @@
     <AssociationSet Name="FK_Cities_States" Association="Self.FK_Cities_States">
       <End Role="States" EntitySet="States" />
       <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Classes" Association="Self.FK_ClassesSections_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Sections" Association="Self.FK_ClassesSections_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Shifts" Association="Self.FK_ClassesSections_Shifts">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
     </AssociationSet>
     <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">
       <End Role="Countries" EntitySet="Countries" />
@@ -411,6 +578,22 @@
     <AssociationSet Name="FK_Teachers_Countries" Association="Self.FK_Teachers_Countries">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="Teachers" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachersClasses_Classes" Association="Self.FK_TeachersClasses_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachersClasses_Teachers" Association="Self.FK_TeachersClasses_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachersSubjects_Subjects" Association="Self.FK_TeachersSubjects_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachersSubjects_Teachers" Association="Self.FK_TeachersSubjects_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

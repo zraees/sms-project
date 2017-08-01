@@ -16,8 +16,10 @@ namespace SMSServices.Models
     {
         public Teachers()
         {
-            this.TeacherQualifications = new HashSet<TeacherQualifications>();
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
+            this.TeacherQualifications = new HashSet<TeacherQualifications>();
+            this.TeachersClasses = new HashSet<TeachersClasses>();
+            this.TeachersSubjects = new HashSet<TeachersSubjects>();
         }
     
         public int TeacherId { get; set; }
@@ -35,8 +37,10 @@ namespace SMSServices.Models
         public Nullable<int> CityId { get; set; }
         public Nullable<int> NationalityId { get; set; }
     
-        public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
-        public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual Countries Countries { get; set; }
+        public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
+        public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
+        public virtual ICollection<TeachersClasses> TeachersClasses { get; set; }
+        public virtual ICollection<TeachersSubjects> TeachersSubjects { get; set; }
     }
 }

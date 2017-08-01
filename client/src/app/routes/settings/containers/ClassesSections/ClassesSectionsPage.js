@@ -122,7 +122,7 @@ class ClassesSectionsPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="ClassSectionGrid"  
                       options={{
-                        ajax: {"url":'/api/ClassesSections', "dataSrc": ""},                         
+                        ajax: {"url":'/api/ClassesSections/All', "dataSrc": ""},                         
                         columnDefs: [                             
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the
@@ -133,7 +133,7 @@ class ClassesSectionsPage extends React.Component {
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 6
+                                "targets": 4
                             }
                             ,{ 
                                 "render": function ( data, type, row ) { 
@@ -141,16 +141,14 @@ class ClassesSectionsPage extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 7
+                                "targets": 5
                             }
                         ],
                         columns: [ 
-                          {data: "Shift.Code"},
-                          {data: "Shift.Name"},
-                          {data: "Class.Code"},
-                          {data: "Class.Name"},
-                          {data: "Section.Code"},
-                          {data: "Section.Name"},                          
+                          {data: "ClassSectionID"},
+                          {data: "ShiftName"},
+                          {data: "ClassName"},
+                          {data: "SectionName"},                          
                           {data: "ClassSectionID"},
                           {data: "ClassSectionID"}
                         ],
@@ -163,11 +161,9 @@ class ClassesSectionsPage extends React.Component {
                       width="100%">
                       <thead>
                       <tr>
-                        <th data-hide="mobile-p"><Msg phrase="CodeText"/></th>
+                        <th data-hide="mobile-p"><Msg phrase="IDText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="ShiftText"/></th>
-                        <th data-class="expand"><Msg phrase="CodeText"/></th>
                         <th data-class="expand"><Msg phrase="ClassText"/></th>
-                        <th data-hide="mobile-p"><Msg phrase="CodeText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="SectionText"/></th> 
                         <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
@@ -212,13 +208,13 @@ class ClassesSectionsPage extends React.Component {
               </div>
               <div className="modal-body"> 
                 { this.state.classSectionId > 0 ?                     
-                  <ClassSectionForm 
+                  <EditGeneralInfo 
                     classSectionId={this.state.classSectionId}  
                     onSubmit={submit} />
-                  : <EditGeneralInfo 
+                  : <ClassSectionForm 
                       classSectionId={this.state.classSectionId}  
                       onSubmit={submit} />
-                }  
+                }
               </div>
             </div>
             {/* /.modal-content */}
