@@ -87,23 +87,23 @@
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
     </AssociationSet>
-    <EntitySet Name="TeachersClasses" EntityType="SMSModel.TeachersClasses" />
     <EntitySet Name="TeachersSubjects" EntityType="SMSModel.TeachersSubjects" />
-    <AssociationSet Name="FK_TeachersClasses_Classes" Association="SMSModel.FK_TeachersClasses_Classes">
-      <End Role="Classes" EntitySet="Classes" />
-      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
-    </AssociationSet>
     <AssociationSet Name="FK_TeachersSubjects_Subjects" Association="SMSModel.FK_TeachersSubjects_Subjects">
       <End Role="Subjects" EntitySet="Subjects" />
       <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeachersClasses_Teachers" Association="SMSModel.FK_TeachersClasses_Teachers">
-      <End Role="Teachers" EntitySet="Teachers" />
-      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
-    </AssociationSet>
     <AssociationSet Name="FK_TeachersSubjects_Teachers" Association="SMSModel.FK_TeachersSubjects_Teachers">
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
+    </AssociationSet>
+    <EntitySet Name="TeachersClasses" EntityType="SMSModel.TeachersClasses" />
+    <AssociationSet Name="FK_TeachersClasses_Classes" Association="SMSModel.FK_TeachersClasses_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeachersClasses_Teachers" Association="SMSModel.FK_TeachersClasses_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeachersClasses" EntitySet="TeachersClasses" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="QualificationTypes">
@@ -531,8 +531,8 @@
     <NavigationProperty Name="Countries" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Teachers" ToRole="Countries" />
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
     <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
-    <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="Teachers" ToRole="TeachersClasses" />
     <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="Teachers" ToRole="TeachersSubjects" />
+    <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="Teachers" ToRole="TeachersClasses" />
   </EntityType>
   <Association Name="FK_Teachers_Countries">
     <End Type="SMSModel.Countries" Role="Countries" Multiplicity="0..1" />
@@ -570,16 +570,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="TeachersClasses">
-    <Key>
-      <PropertyRef Name="TeacherClassId" />
-    </Key>
-    <Property Name="TeacherClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TeacherId" Type="Int32" Nullable="false" />
-    <Property Name="ClassId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="TeachersClasses" ToRole="Classes" />
-    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="TeachersClasses" ToRole="Teachers" />
-  </EntityType>
   <EntityType Name="TeachersSubjects">
     <Key>
       <PropertyRef Name="TeacherSubjectID" />
@@ -590,18 +580,6 @@
     <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="TeachersSubjects" ToRole="Subjects" />
     <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="TeachersSubjects" ToRole="Teachers" />
   </EntityType>
-  <Association Name="FK_TeachersClasses_Classes">
-    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-    <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Classes">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TeachersClasses">
-        <PropertyRef Name="ClassId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TeachersSubjects_Subjects">
     <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="1" />
     <End Type="SMSModel.TeachersSubjects" Role="TeachersSubjects" Multiplicity="*" />
@@ -614,18 +592,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeachersClasses_Teachers">
-    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
-    <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Teachers">
-        <PropertyRef Name="TeacherId" />
-      </Principal>
-      <Dependent Role="TeachersClasses">
-        <PropertyRef Name="TeacherId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TeachersSubjects_Teachers">
     <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
     <End Type="SMSModel.TeachersSubjects" Role="TeachersSubjects" Multiplicity="*" />
@@ -634,6 +600,40 @@
         <PropertyRef Name="TeacherId" />
       </Principal>
       <Dependent Role="TeachersSubjects">
+        <PropertyRef Name="TeacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TeachersClasses">
+    <Key>
+      <PropertyRef Name="TeacherClassID" />
+    </Key>
+    <Property Name="TeacherClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TeacherID" Type="Int32" Nullable="false" />
+    <Property Name="ClassID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="TeachersClasses" ToRole="Classes" />
+    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="TeachersClasses" ToRole="Teachers" />
+  </EntityType>
+  <Association Name="FK_TeachersClasses_Classes">
+    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+    <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TeachersClasses">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeachersClasses_Teachers">
+    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
+    <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TeachersClasses">
         <PropertyRef Name="TeacherID" />
       </Dependent>
     </ReferentialConstraint>

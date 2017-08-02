@@ -14,9 +14,9 @@ namespace SMSServices.Models
     
     public partial class TeachersClasses
     {
-        public int TeacherClassId { get; set; }
-        public int TeacherId { get; set; }
-        public int ClassId { get; set; }
+        public int TeacherClassID { get; set; }
+        public int TeacherID { get; set; }
+        public int ClassID { get; set; }
     
         public virtual Classes Classes { get; set; }
         public virtual Teachers Teachers { get; set; }

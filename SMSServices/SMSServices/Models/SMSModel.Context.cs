@@ -43,7 +43,7 @@ namespace SMSServices.Models
         public virtual DbSet<Shifts> Shifts { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Teachers> Teachers { get; set; }
-        public virtual DbSet<TeachersClasses> TeachersClasses { get; set; }
         public virtual DbSet<TeachersSubjects> TeachersSubjects { get; set; }
+        public virtual DbSet<TeachersClasses> TeachersClasses { get; set; }
     }
 }

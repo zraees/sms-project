@@ -225,12 +225,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       });
   }
 
-  export function submitTeacherClass(values, teacherId){
-    values = Object.assign({}, values, {teacherId});    
+  export function submitTeacherClass(values1, teacherId){
+    let values = Object.assign({}, {teacherId}, {classId: values1.classId.join()});    
     LoaderVisibility(true);
     console.log('teacher class submit ', values);
 
-    axios.post('/api/TeacherClasses', values)      
+    axios.post('/api/TeachersClasses/'+teacherId+'/'+values.classId)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -241,7 +241,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);  
         LoaderVisibility(false);
         throw new SubmissionError({   
             _error: 'Something went wrong, please contact system administrator!'

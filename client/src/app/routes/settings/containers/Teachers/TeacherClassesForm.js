@@ -10,7 +10,7 @@ import { RFReactSelect } from '../../../../components/ui'
 
 import { required }  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import {submitTeacherClasses, removeTeacherClasses} from './submit'
+import {submitTeacherClass, removeTeacherClass} from './submit'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
 
@@ -72,9 +72,9 @@ class TeacherClassesForm extends React.Component  {
                         <fieldset>
 
                         <div className="row">
-                            <section className="col col-4">
+                            <section className="col col-8">
                                 <Field
-                                    multi={false}
+                                    multi={true}
                                     name="classId"
                                     label="ClassText"
                                     validate={required}
@@ -103,34 +103,22 @@ class TeacherClassesForm extends React.Component  {
                     
                     <Datatable id="TeacherClassesGrid"  
                       options={{
-                        ajax: {"url":'/api/TeacherClasses/' + teacherId, "dataSrc": ""},
+                        ajax: {"url":'/api/TeachersClasses/All/' + teacherId, "dataSrc": ""},
                         columnDefs: [
                             { 
-                                "render": function ( data, type, row ) {
-                                  //return (<a onClick={onOrderRestaurant.bind(self, this)} 
-                                  //                className="btn btn-primary btn-sm">Order this restaurant
-                                  //                </a>);
+                                "render": function ( data, type, row ) { 
                                   return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
-                                    //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
-                                    //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
-                                    //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
-                                    //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
+                                    
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 6
+                                "targets": 2
                             }
                         ],
-                        columns: [
-                          //{
-                          //    "className":      'details-control',
-                          //    "orderable":      false,
-                          //    "data":           null,
-                          //    "defaultContent": ''
-                          //},
-                          {data: "Classes.Code"},
-                          {data: "Classes.Name"},
-                          {data: "TeacherClassId"}
+                        columns: [ 
+                          {data: "ClassCode"},
+                          {data: "ClassName"},
+                          {data: "TeacherClassID"}
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'

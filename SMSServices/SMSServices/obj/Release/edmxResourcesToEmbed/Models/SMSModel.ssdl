@@ -224,11 +224,11 @@
   </EntityType>
   <EntityType Name="TeachersClasses">
     <Key>
-      <PropertyRef Name="TeacherClassId" />
+      <PropertyRef Name="TeacherClassID" />
     </Key>
-    <Property Name="TeacherClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TeacherId" Type="int" Nullable="false" />
-    <Property Name="ClassId" Type="int" Nullable="false" />
+    <Property Name="TeacherClassID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeacherID" Type="int" Nullable="false" />
+    <Property Name="ClassID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TeachersSubjects">
     <Key>
@@ -450,7 +450,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TeachersClasses">
-        <PropertyRef Name="ClassId" />
+        <PropertyRef Name="ClassID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -462,7 +462,7 @@
         <PropertyRef Name="TeacherId" />
       </Principal>
       <Dependent Role="TeachersClasses">
-        <PropertyRef Name="TeacherId" />
+        <PropertyRef Name="TeacherID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

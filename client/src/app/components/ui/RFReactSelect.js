@@ -9,18 +9,19 @@ RFReactSelect.defaultProps = {
   className: ""
 };
 
-RFReactSelect.propTypes = {
-  input: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    onBlur: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onFocus: PropTypes.func.isRequired,
-  }).isRequired,
-  options: PropTypes.array.isRequired,
-  multi: PropTypes.bool,
-  className: PropTypes.string
-};
+// RFReactSelect.propTypes = {
+//   input: PropTypes.shape({
+//     name: PropTypes.string.isRequired,
+//     value: PropTypes.string.isRequired,
+//     onBlur: PropTypes.func.isRequired,
+//     onChange: PropTypes.func.isRequired,
+//     onFocus: PropTypes.func.isRequired,
+//   }).isRequired,
+//   options: PropTypes.array.isRequired,
+//   multi: PropTypes.bool,
+//   className: PropTypes.string
+// };
+
 //https://github.com/erikras/redux-form/issues/1185
 export default function RFReactSelect({ input , options, multi, className, label, meta: {asyncValidating, touched, error, warning} }) {
   const { name, value, onBlur, onChange, onFocus } = input;
@@ -60,8 +61,9 @@ function singleChangeHandler(func) {
  * onBlur from Redux Form Field has to be called explicity.
  */
 function multiChangeHandler(func) {
+ 
   return function handleMultiHandler(values) {
-    func(values.map(value => value.value));
+    func(values.map(value => ''+value.value));
   };
 }
 
@@ -73,13 +75,15 @@ function multiChangeHandler(func) {
  * wants the array of values in the form [{ value: "grape", label: "Grape" }]
  */
 function transformValue(value, options, multi) {
+   
   if (multi && typeof value === 'string') return [];
-  
+   //console.log('transformValue(value, options, multi) ', value, options, multi)
   const filteredOptions = options.filter(option => {
     return multi 
       ? value.indexOf(option.value) !== -1
       : option.value === value;
   }); 
-  //console.log(filteredOptions[0]);
+  //console.log('  multi) ', multi)
+  //console.log(filteredOptions);
   return multi ? filteredOptions : filteredOptions[0];
 }

@@ -40,12 +40,12 @@
         <AssociationConnector Association="SMSModel.FK_Teachers_Countries" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
-        <EntityTypeShape EntityType="SMSModel.TeachersClasses" Width="1.5" PointX="14.625" PointY="22.25" />
         <EntityTypeShape EntityType="SMSModel.TeachersSubjects" Width="1.5" PointX="5.25" PointY="18.75" />
-        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Classes" />
         <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Subjects" />
-        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Teachers" />
+        <EntityTypeShape EntityType="SMSModel.TeachersClasses" Width="1.5" PointX="14.625" PointY="22.25" />
+        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Classes" />
+        <AssociationConnector Association="SMSModel.FK_TeachersClasses_Teachers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
