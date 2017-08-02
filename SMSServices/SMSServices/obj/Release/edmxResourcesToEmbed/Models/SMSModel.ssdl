@@ -226,7 +226,7 @@
     <Key>
       <PropertyRef Name="TeacherClassId" />
     </Key>
-    <Property Name="TeacherClassId" Type="int" Nullable="false" />
+    <Property Name="TeacherClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TeacherId" Type="int" Nullable="false" />
     <Property Name="ClassId" Type="int" Nullable="false" />
   </EntityType>

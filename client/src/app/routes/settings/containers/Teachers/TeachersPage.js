@@ -113,9 +113,9 @@ class TeachersPage extends React.Component {
  
     axios.get('assets/api/common/gender.json')
         .then(res=>{
-            console.log('gender.json');            
+            //console.log('gender.json');            
             const genderOptions = mapForRadioList(res.data);
-            console.log(genderOptions);
+            //console.log(genderOptions);
             this.setState({genderOptions});
         });
 

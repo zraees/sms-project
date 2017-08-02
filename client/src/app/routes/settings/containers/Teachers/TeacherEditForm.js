@@ -43,12 +43,12 @@ class TeacherEditForm extends React.Component {
         this.setState({nowRender:true}) 
         LoaderVisibility(false);
         
-      }.bind(this), 500);
+      }.bind(this), 300);
 
     }
 
   render() {
-    const { teacherId, onSubmit, nationalities, countries, onSubmitQualification, onSubmitExperience, onSubmitTeacherSubject, onSubmitTeacherClass } = this.props;
+    const { teacherId, onSubmit, nationalities, countries, genderOptions, onSubmitQualification, onSubmitExperience, onSubmitTeacherSubject, onSubmitTeacherClass } = this.props;
     //const {nationalities, countries} = this.state;
 
     return (
@@ -79,7 +79,7 @@ class TeacherEditForm extends React.Component {
                 </a>
             </li>
             <li>
-                <a href="#s5" data-toggle="tab"><i className="fa fa-fw fa-lg fa-suitcase"/>
+                <a href="#s5" data-toggle="tab"><i className="fa fa-fw fa-lg fa-institution"/>
                 <Msg phrase="Classes" />
                 </a>
             </li>
@@ -90,6 +90,7 @@ class TeacherEditForm extends React.Component {
                 { this.state.nowRender ? 
                 <EditGeneralInfo teacherId={teacherId} 
                     nationalities={nationalities} 
+                    genderOptions={genderOptions}
                     countries={countries}
                     onSubmit={onSubmit} />
                 : <div></div>

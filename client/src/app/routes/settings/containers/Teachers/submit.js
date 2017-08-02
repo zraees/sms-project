@@ -9,6 +9,8 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
+//http://thecodebarbarian.com/unhandled-promise-rejections-in-node.js.html
+
   function submit(values){
     //console.log(values);
     return axios.get('/api/teachers/' + values.teacherId + '/' + values.email + '/')
@@ -199,7 +201,9 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitTeacherSubject(values, teacherId){
     values = Object.assign({}, values, {teacherId});    
     LoaderVisibility(true);
-    axios.post('/api/TeacherSubjects', values)      
+    console.log('teacher class submit ', values);
+
+    axios.post('/api/TeachersSubjects', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -209,18 +213,23 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
       })
       .catch(function (error) {
-        console.log(error);
-        alert('f', '');
+        console.log(error); 
+        alert('f', error.response.data.StatusMessage);  
         LoaderVisibility(false);
-        throw new SubmissionError({   
-            _error: 'Something went wrong, please contact system administrator!'
-          });
+        // return Promise.resolve(true).then(() => {
+        //   throw new SubmissionError({ subjectId: 'error error error', _error: 'Something went wrong, please contact system administrator!' });
+        // });
+        new Promise((_, reject) => reject(new Error('woops'))).
+        // Prints "caught woops"
+        then(null, error => { console.log('caught', error.message); });
       });
   }
 
   export function submitTeacherClass(values, teacherId){
     values = Object.assign({}, values, {teacherId});    
     LoaderVisibility(true);
+    console.log('teacher class submit ', values);
+
     axios.post('/api/TeacherClasses', values)      
       .then(function (response) {
         
@@ -344,6 +353,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     if (isYesClicked(ButtonPressed)) {
       LoaderVisibility(true);      
+      console.log('RemoveTeacherSubject ', id);
       axios.post('/api/RemoveTeacherSubject/' + id)      
         .then(function (response) {          
           alert('s','data has been deleted successfully');          
@@ -352,12 +362,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             .row( delCell.parents('tr') )
             .remove()
             .draw();
-            
-            console.log(Date());
+
             LoaderVisibility(false);
         })
         .catch(function (error) {
             alert('f','');
+            console.log(error);
             LoaderVisibility(false);
         });       
     }

@@ -103,7 +103,7 @@ class TeacherSubjectForm extends React.Component  {
                     
                     <Datatable id="teacherSubjectsGrid"  
                       options={{
-                        ajax: {"url":'/api/TeacherSubjects/' + teacherId, "dataSrc": ""},
+                        ajax: {"url":'/api/TeachersSubjects/All/' + teacherId, "dataSrc": ""},
                         columnDefs: [
                             { 
                                 "render": function ( data, type, row ) {
@@ -118,7 +118,7 @@ class TeacherSubjectForm extends React.Component  {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 6
+                                "targets": 2
                             }
                         ],
                         columns: [
@@ -128,16 +128,15 @@ class TeacherSubjectForm extends React.Component  {
                           //    "data":           null,
                           //    "defaultContent": ''
                           //},
-                          {data: "Subject.Code"},
-                          {data: "Subject.Name"},
-                          {data: "TeacherSubjectId"}
+                          {data: "SubjectCode"},
+                          {data: "SubjectName"},
+                          {data: "TeacherSubjectID"}
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'
                         ]
                       }}
                       paginationLength={true} 
-                      //refresh={this.state.refresh}
                       className="table table-striped table-bordered table-hover"
                       width="100%">
                       <thead>

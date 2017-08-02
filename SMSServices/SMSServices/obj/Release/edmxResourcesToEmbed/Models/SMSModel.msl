@@ -221,15 +221,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TeachersSubjects">
-      <EntityTypeMapping TypeName="SMSModel.TeachersSubjects">
-        <MappingFragment StoreEntitySet="TeachersSubjects">
-          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-          <ScalarProperty Name="TeacherSubjectID" ColumnName="TeacherSubjectID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Teachers">
       <EntityTypeMapping TypeName="SMSModel.Teachers">
         <MappingFragment StoreEntitySet="Teachers">
@@ -256,6 +247,15 @@
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />
           <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
           <ScalarProperty Name="TeacherClassId" ColumnName="TeacherClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeachersSubjects">
+      <EntityTypeMapping TypeName="SMSModel.TeachersSubjects">
+        <MappingFragment StoreEntitySet="TeachersSubjects">
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+          <ScalarProperty Name="TeacherSubjectID" ColumnName="TeacherSubjectID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
