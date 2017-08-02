@@ -23,7 +23,7 @@ class Loader extends React.Component{
 // }    
 
     render(){
-        console.log(this.props.isLoading);  
+        //console.log(this.props.isLoading);  
         return(
             
             this.props.isLoading == 1 ?

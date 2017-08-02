@@ -7,8 +7,8 @@ import Footer from './Footer'
 import Shortcut from '../navigation/components/Shortcut'
 
 import LayoutSwitcher from '../layout/components/LayoutSwitcher'
-
-
+import LanguageActions from '../i18n/LanguageActions'
+import { getLang } from '../utils/functions'
 // require('../../smartadmin/components/less/components.less');
 
 export default class Layout extends React.Component {

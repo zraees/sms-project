@@ -7,14 +7,14 @@ export default class LoaderActions {
     
     // static functions to be mapped with dispatch in component
     static visible(){
-        console.log('action visible');
+        //console.log('action visible');
         return { 
             type: 'VISIBLE'
         }
     }
 
     static hide(){
-        console.log('action hide');
+        //console.log('action hide');
         return { 
             type: 'HIDE' 
         }

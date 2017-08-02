@@ -1,12 +1,12 @@
 import Reflux from 'reflux'
 
 import LanguageActions from './LanguageActions'
-import {getLang} from '../../components/utils/functions'
+import {getLang, getPhrases} from '../../components/utils/functions'
 
 const data = {
     language: getLang(),
     languages: [],
-    phrases: {}
+    phrases: getPhrases() 
 };
 
 const LanguageStore = Reflux.createStore({
@@ -24,10 +24,12 @@ const LanguageStore = Reflux.createStore({
         this.trigger(data)
     },
     onSelectCompleted: function (_data) {
-        console.log('onSelectCompleted need to fix this issue');
-        //console.log(data.language);
-        //console.log(_data);
-        data.phrases = _data;
+        //now we are getting phrases from functions.js/getPhrases()
+        //directly(sync) reading json file
+        
+        //data.phrases = _data;
+        //this.trigger(data)
+        data.phrases = getPhrases();
         this.trigger(data)
     },
     setLanguage: function(_lang){

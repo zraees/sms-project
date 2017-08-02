@@ -3,16 +3,16 @@ import LanguageStore from '../i18n/LanguageStore'
 //import LoaderActions from '../Loader/LoaderActions'
 
 import moment from 'moment'
+import axios from 'axios'
+import _ from 'lodash';
 
-// export function getDate(){
-//     moment.locale('en'); // default the locale to English
-//     var localLocale = moment();
+import * as phrases_us from '../../../assets/api/langs/us.json';
+import * as phrases_ar from '../../../assets/api/langs/ar.json';
+import * as phrases_ur from '../../../assets/api/langs/ur.json';
 
-//     localLocale.locale('fr'); // set this instance to use French
-//     return localLocale.format('LLLL'); // dimanche 15 juillet 2012 11:01
-//     //moment().format('LLLL'); // Sunday, July 15 2012 11:01 AM
-
-// }
+let phrasesUs = {}
+let phrasesUr = {}
+let phrasesAr = {} 
 
 function mapForCombo(keyValues){
     return keyValues.map(function(item, index){
@@ -24,17 +24,7 @@ export function mapForRadioList(keyValues){
     return keyValues.map(function(item, index){
                 return {title: item.Name, value: item.Id + ""};
             });                       
-}
-// export function LoaderVisibity(visible){
-    
-//     if(visible){
-//         store.dispatch(LoaderActions.visible());
-//     }
-//     else{
-//         store.dispatch(LoaderActions.hide());
-//     }
-
-// } 
+} 
 
 export function isYesClicked(ButtonPressed){
     let yesText = LanguageStore.getData().phrases["yesText"] || "Yes!";
@@ -52,6 +42,36 @@ export function getLangKey(){
 
 export function getLang(){
     return JSON.parse(localStorage.getItem('sm-lang')) //|| "us"
+}
+
+export function getPhrases(){
+    let languageKey = getLangKey();
+    let phrases = {}
+    //console.log('export function getPhrases(){ languageKey = ',languageKey)
+    
+    if(languageKey=='us'){
+        if(_.isEmpty(phrasesUs)){
+            //console.log('phrases_us is empty')
+            phrasesUs = phrases_us;            
+        }
+        phrases = phrasesUs
+    }
+    else if(languageKey=='ar'){
+        if(_.isEmpty(phrasesAr)){
+            //console.log('phrasesAr is empty')
+            phrasesAr = phrases_ar;            
+        }
+        phrases = phrasesAr
+    }
+    else if(languageKey=='ur'){
+        if(_.isEmpty(phrasesUr)){
+            //console.log('phrasesUr is empty')
+            phrasesUr = phrases_ur;            
+        }
+        phrases = phrasesUr
+    }
+
+    return phrases;
 }
 
 /*  Date formatting functions   */
