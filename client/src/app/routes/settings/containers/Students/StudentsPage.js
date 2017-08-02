@@ -20,7 +20,7 @@ import Moment from '../../../../components/utils/Moment'
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
 
-import submit, {remove} from './submit'
+import submit, {remove, submitPreviousSchool, submitSiblingDetail} from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
@@ -28,7 +28,7 @@ class StudentsPage extends React.Component {
   constructor(props){
    super(props);
    this.state = {
-     StudentId: 0,
+     studentId: 0,
      nationalities: [],
      countries: []
    }
@@ -44,27 +44,9 @@ class StudentsPage extends React.Component {
     //var self =this;
     $('#StudentsGrid').on('click', 'td', function(event) {
       
-      if ($(this).find('#dele').length > 0) {
-        
-        //alert(  $(this).find('#dele').data('tid'));
-        //LoaderVisibility(true);//
+      if ($(this).find('#dele').length > 0) { 
         var id = $(this).find('#dele').data('tid');
         remove(id, $(this));
-
-        // console.log('outside');
-        // console.log(success);
-        
-        // if(success){
-        //   var table = $('#StudentsGrid').DataTable();                
-        //   table
-        //     .row( $(this).parents('tr') )
-        //     .remove()
-        //     .draw();
-        // }
-        
-        
-        //self._smartModEg1();
-
       }
     });
     
@@ -72,18 +54,20 @@ class StudentsPage extends React.Component {
     $('#StudentPopup').on('show.bs.modal', function (e) {      
 
       //LoaderVisibility(true);
-      var button = $(e.relatedTarget);        // Button that triggered the modal
+      var button = $(e.relatedTarget);                // Button that triggered the modal
    
-      var StudentId = button.data('id');             // Extract info from data-* attributes
-      this.setState({StudentId});    
+      var studentId = button.data('id');             // Extract info from data-* attributes
+      this.setState({studentId});    
+      // just for checking ????      
+      this.setState({studentId:5}); 
     }.bind(this));
 
     // call on modal close
     $('#StudentPopup').on('hidden.bs.modal', function (e) {            
-      this.setState({StudentId : 0});     
-          var table = $('#StudentsGrid').DataTable();                
-          table.clear();
-          table.ajax.reload( null, false ); // user paging is not reset on reload
+      this.setState({studentId : 0});     
+      var table = $('#StudentsGrid').DataTable();                
+      table.clear();
+      table.ajax.reload( null, false ); // user paging is not reset on reload
 
     }.bind(this));
     
@@ -204,7 +188,7 @@ class StudentsPage extends React.Component {
                           {data: "FullName"},
                           {data: "FullNameAr"},
                           {data: "Email"},    
-                          {data: "StudentIDNo"},  
+                          {data: "StudentIdNo"},  
                           {data: "Gender"},  
                           {data: "DOB"},   
                           {data: "StudentId"},
@@ -265,19 +249,21 @@ class StudentsPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="StudentPopupLabel">
-                  { this.state.StudentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/> }
+                  { this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/> }
                 </h4>
               </div>
               <div className="modal-body">
-                  
-                  { this.state.StudentId > 0 ?                     
+                  { console.log('this.state.studentId = ', this.state.studentId ) }
+                  { this.state.studentId > 0 ?                     
                     <StudentEditForm
-                      StudentId={this.state.StudentId} 
+                      studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
-                      onSubmit={submit}  />
+                      onSubmit={submit} 
+                      onSubmitPreviousSchool={submitPreviousSchool}
+                      onSubmitSiblingDetail={submitSiblingDetail}  />
                   : <StudentForm 
-                      StudentId={this.state.StudentId} 
+                      studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
                       onSubmit={submit} />

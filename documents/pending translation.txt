@@ -1,0 +1,14 @@
+SchoolNameText
+LanguageofInstructionText
+LastSchoolLocationText
+OtherDetailsAboutLastSchoolText
+LastSchoolTitleText
+TotalFamilyMembersWithParentsText
+FirstNameText
+SurNameText
+CurrentlyEnrolledInOurSchoolText
+SiblingsDetailsTitleText
+
+Please enter school name
+Please enter last school location
+Please enter other details about last school

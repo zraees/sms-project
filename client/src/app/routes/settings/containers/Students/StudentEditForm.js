@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
 // import EditGeneralInfo from './EditGeneralInfo'
-// import QualificationForm from './QualificationForm'
-// import ExperienceForm from './ExperienceForm'
+import PreviousSchoolsForm from './PreviousSchoolsForm'
+import SiblingDetailsForm from './SiblingDetailsForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -18,9 +18,7 @@ class TeacherEditForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        editDataLoaded: false, 
-        nationalities: [],
-        countries: [],
+        editDataLoaded: false,  
         nowRender: false
     }
   }
@@ -45,7 +43,7 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { teacherId, onSubmit, nationalities, countries} = this.props;
+    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail } = this.props;
     //, onSubmitQualification, onSubmitExperience 
 
     return (
@@ -57,27 +55,27 @@ class TeacherEditForm extends React.Component {
         <ul id="myTab1" className="nav nav-tabs bordered">
             <li className="active">
                 <a href="#s1" data-toggle="tab"><i className="fa fa-fw fa-lg fa-user"/>
-                <Msg phrase="General" />
+                    <Msg phrase="General" />
                 </a>
             </li>
             <li>
                 <a href="#s2" data-toggle="tab"><i className="fa fa-fw fa-lg fa-graduation-cap"/>
-                <Msg phrase="Qualification" />
+                    <Msg phrase="LastSchoolTitleText" />
                 </a>
             </li>
             <li>
                 <a href="#s3" data-toggle="tab"><i className="fa fa-fw fa-lg fa-trophy"/>
-                <Msg phrase="Experience" />
+                    <Msg phrase="SiblingsDetailsTitleText" />
                 </a>
             </li>
             <li>
                 <a href="#s4" data-toggle="tab"><i className="fa fa-fw fa-lg fa-book"/>
-                <Msg phrase="SubjectsText" />
+                    <Msg phrase="SubjectsText" />
                 </a>
             </li>
             <li>
                 <a href="#s5" data-toggle="tab"><i className="fa fa-fw fa-lg fa-suitcase"/>
-                <Msg phrase="Classes" />
+                    <Msg phrase="Classes" />
                 </a>
             </li>
         </ul>
@@ -92,13 +90,15 @@ class TeacherEditForm extends React.Component {
             </div>
             <div className="tab-pane fade" id="s2">
                 { this.state.nowRender ? 
-                    <div>QualificationForm from teacher</div>
+                    <PreviousSchoolsForm studentId={studentId} 
+                        onSubmit={onSubmitPreviousSchool}/>
                 : <div></div>
                 }
             </div>
             <div className="tab-pane fade" id="s3">
                 { this.state.nowRender ? 
-                    <div>ExperienceForm from teacher</div> 
+                    <SiblingDetailsForm studentId={studentId} 
+                        onSubmit={onSubmitSiblingDetail}/>
                 : <div></div>
                 }
             </div>

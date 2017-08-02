@@ -406,8 +406,7 @@ class StudentForm extends React.Component {
                     <Field component={RFRadioButtonList} name="studentStayWith" required={true} 
                       label="StudentStayWithText"
                       onChange={this.handleStudentStayWithChange}
-                      options={studentStayWithOptions}
-                      />
+                      options={studentStayWithOptions} />
                   </section>
 
                   <section className="col col-3">

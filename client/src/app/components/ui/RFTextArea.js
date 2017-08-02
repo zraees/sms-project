@@ -1,15 +1,17 @@
 import React from 'react'
 import classNames from 'classnames'
 import Msg from '../i18n/Msg'
+import LanguageStore from '../i18n/LanguageStore' 
 
 const RFTextArea = ({textarea, label, type, labelClassName, labelIconClassName, placeholder, meta: {asyncValidating, touched, error, warning}}) => (
       <div>        
-        <label>{placeholder}</label>
+        <label><Msg phrase={label}/></label>
         <label className={classNames('textarea textarea-expandable', {'state-error':(touched && error!==undefined)||asyncValidating })}>    
           <i className={labelIconClassName} aria-hidden="true"/>
-          <textarea {...textarea} rows="3" placeholder={placeholder} className="custom-scroll" />            
+          <textarea {...textarea} rows="3" placeholder={LanguageStore.getData().phrases[placeholder]} 
+            className="custom-scroll" />            
         </label>
-        {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}          
+        {touched && ((error && <span><em className="invalid"><Msg phrase={error}/></em></span>) || (warning && <span><Msg phrase={warning}/></span>))}
       </div>
     );
 
