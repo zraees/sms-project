@@ -36,6 +36,10 @@ export function isNoClicked(ButtonPressed){
     return ButtonPressed===noText ? true : false;
 }
 
+export function isOtherOptionSelected(value){
+    return lower(value) == 'other' || lower(value) == 'others' ? true : false ;
+}
+
 export function getLangKey(){
     return JSON.parse(localStorage.getItem('sm-lang')).key || "us"
 }

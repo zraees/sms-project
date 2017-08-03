@@ -8,6 +8,15 @@ FirstNameText
 SurNameText
 CurrentlyEnrolledInOurSchoolText
 SiblingsDetailsTitleText
+RelativeStudentNameText
+RelationText
+OtherRelationText
+StudentRelativeTitleText
+LastSchoolAndSiblingDetailsTitleText
+ParentGuardianInformationTitleText
+EmergencyContactDetailsTitleText
+EducationalServicesHistoryTitleText
+MedicalInformationTitleText
 
 Please enter school name
 Please enter last school location

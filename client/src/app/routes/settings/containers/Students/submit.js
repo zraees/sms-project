@@ -83,7 +83,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);
         LoaderVisibility(false);
       });      
   }
@@ -102,7 +102,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);
         LoaderVisibility(false);
         throw new SubmissionError({   
             _error: 'Something went wrong, please contact system administrator!'
@@ -124,7 +124,29 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);
+        LoaderVisibility(false);
+        throw new SubmissionError({   
+            _error: 'Something went wrong, please contact system administrator!'
+          });
+      });
+  }
+
+  export function submitStudentRelative(values, studentId){
+    values = Object.assign({}, values, {studentId});    
+    LoaderVisibility(true);
+    axios.post('/api/StudentsRelatives', values)      
+      .then(function (response) {
+        
+        alert('s', 'data has been saved successfully');
+        $('#relativesGrid').DataTable().ajax.reload();  
+        $('#tabListRelative').trigger('click');
+        LoaderVisibility(false);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('f', error.response.data.StatusMessage);
         LoaderVisibility(false);
         throw new SubmissionError({   
             _error: 'Something went wrong, please contact system administrator!'
@@ -262,4 +284,44 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     }
   }
 
+  export function removeStudentRelative(id, delCell){
+  
+    let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                              || 'Are you sure, you want to delete this record?';
+    
+    confirmation(messageText, function(ButtonPressed){
+        deleteSiblingRecord(ButtonPressed, id, delCell); 
+    });
+  }
+
+  function deleteStudentRelativeRecord(ButtonPressed, id, delCell) {
+
+    if (isYesClicked(ButtonPressed)) {         
+        LoaderVisibility(true);
+
+        axios.post('/api/RemoveStudentRelative/' + id)      
+          .then(function (response) {
+            
+            alert('s','data has been deleted successfully');
+            
+            var table = $('#relativesGrid').DataTable();                
+            table
+              .row( delCell.parents('tr') )
+              .remove()
+              .draw();
+              
+              console.log(Date());
+              LoaderVisibility(false);
+          })
+          .catch(function (error) {
+              alert('f','');
+              LoaderVisibility(false);
+          }); 
+
+      
+    }
+    else if (isNoClicked(ButtonPressed)) {
+      // do nothing
+    }
+  }
 export default submit

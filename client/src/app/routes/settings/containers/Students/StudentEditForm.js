@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 // import EditGeneralInfo from './EditGeneralInfo'
 import PreviousSchoolsForm from './PreviousSchoolsForm'
 import SiblingDetailsForm from './SiblingDetailsForm'
+import RelativesForm from './RelativesForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -43,7 +44,7 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail } = this.props;
+    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative } = this.props;
     //, onSubmitQualification, onSubmitExperience 
 
     return (
@@ -60,22 +61,27 @@ class TeacherEditForm extends React.Component {
             </li>
             <li>
                 <a href="#s2" data-toggle="tab"><i className="fa fa-fw fa-lg fa-graduation-cap"/>
-                    <Msg phrase="LastSchoolTitleText" />
+                    <Msg phrase="LastSchoolAndSiblingDetailsTitleText" />
                 </a>
             </li>
             <li>
                 <a href="#s3" data-toggle="tab"><i className="fa fa-fw fa-lg fa-trophy"/>
-                    <Msg phrase="SiblingsDetailsTitleText" />
+                    <Msg phrase="ParentGuardianInformationTitleText" />
                 </a>
             </li>
             <li>
                 <a href="#s4" data-toggle="tab"><i className="fa fa-fw fa-lg fa-book"/>
-                    <Msg phrase="SubjectsText" />
+                    <Msg phrase="EmergencyContactDetailsTitleText" />
                 </a>
             </li>
             <li>
                 <a href="#s5" data-toggle="tab"><i className="fa fa-fw fa-lg fa-suitcase"/>
-                    <Msg phrase="Classes" />
+                    <Msg phrase="EducationalServicesHistoryTitleText" />
+                </a>
+            </li>
+            <li>
+                <a href="#s6" data-toggle="tab"><i className="fa fa-fw fa-lg fa-suitcase"/>
+                    <Msg phrase="MedicalInformationTitleText" />
                 </a>
             </li>
         </ul>
@@ -90,19 +96,71 @@ class TeacherEditForm extends React.Component {
             </div>
             <div className="tab-pane fade" id="s2">
                 { this.state.nowRender ? 
-                    <PreviousSchoolsForm studentId={studentId} 
-                        onSubmit={onSubmitPreviousSchool}/>
+                    <div className="panel-group smart-accordion-default" id="accordion-2">
+                      <div className="panel panel-default">
+                        <div className="panel-heading">
+                          <h4 className="panel-title"><a data-toggle="collapse"
+                                                         data-parent="#accordion-2"
+                                                         href="#collapseOne-1"> <i
+                            className="fa fa-fw fa-plus-circle "/> <i
+                            className="fa fa-fw fa-minus-circle "/> <Msg phrase="LastSchoolTitleText" /> </a></h4>
+                        </div>
+                        <div id="collapseOne-1" className="panel-collapse collapse in">
+                          <div className="panel-body">
+                            <PreviousSchoolsForm studentId={studentId} 
+                                onSubmit={onSubmitPreviousSchool}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="panel panel-default">
+                        <div className="panel-heading">
+                          <h4 className="panel-title"><a data-toggle="collapse"
+                                                         data-parent="#accordion-2"
+                                                         href="#collapseTwo-1"
+                                                         className="collapsed"> <i
+                            className="fa fa-fw fa-plus-circle txt-color-green"/> <i
+                            className="fa fa-fw fa-minus-circle txt-color-red"/> <Msg phrase="SiblingsDetailsTitleText" /> </a></h4>
+                        </div>
+                        <div id="collapseTwo-1" className="panel-collapse collapse">
+                          <div className="panel-body">
+                            <SiblingDetailsForm studentId={studentId} 
+                                onSubmit={onSubmitSiblingDetail}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="panel panel-default">
+                        <div className="panel-heading">
+                          <h4 className="panel-title"><a data-toggle="collapse"
+                                                         data-parent="#accordion-2"
+                                                         href="#collapseThree-1"
+                                                         className="collapsed"> <i
+                            className="fa fa-fw fa-plus-circle txt-color-green"/> <i
+                            className="fa fa-fw fa-minus-circle txt-color-red"/> <Msg phrase="StudentRelativeTitleText" /> </a></h4>
+                        </div>
+                        <div id="collapseThree-1" className="panel-collapse collapse">
+                          <div className="panel-body">
+                            <RelativesForm studentId={studentId} 
+                                onSubmit={onSubmitStudentRelative}/>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
                 : <div></div>
                 }
             </div>
             <div className="tab-pane fade" id="s3">
                 { this.state.nowRender ? 
-                    <SiblingDetailsForm studentId={studentId} 
-                        onSubmit={onSubmitSiblingDetail}/>
+                    <div>aaa</div>
                 : <div></div>
                 }
             </div>
             <div className="tab-pane fade" id="s4">
+                { this.state.nowRender ? 
+                     <div>sss</div>
+                : <div></div>
+                }
+            </div>
+            <div className="tab-pane fade" id="s5">
                 <p>
                 Food truck fixie locavore, accusamus mcsweeney's marfa nulla
                 single-origin coffee squid. Exercitation +1 labore velit, blog
@@ -110,7 +168,7 @@ class TeacherEditForm extends React.Component {
                 farm-to-table craft beer twee.
                 </p>
             </div>
-            <div className="tab-pane fade" id="s5">
+            <div className="tab-pane fade" id="s6">
                 <p>
                 Food truck fixie locavore, accusamus mcsweeney's marfa nulla
                 single-origin coffee squid. Exercitation +1 labore velit, blog

@@ -10,7 +10,7 @@ import Datatable from '../../../../components/tables/Datatable'
  
 import {RFField, RFDatePicker, RFReactSelect, RFTextArea} from '../../../../components/ui'
 
-import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
+import {required} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitPreviousSchool, removePreviousSchool} from './submit'
 import mapForCombo from '../../../../components/utils/functions' 
@@ -81,7 +81,8 @@ componentDidMount(){
                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
                                 <Field name="schoolName" labelClassName="input"
                                     labelIconClassName="icon-append fa fa-graduation-cap"
-                                    validate={required} component={RFField} 
+                                    validate={required} 
+                                    component={RFField} 
                                     maxLength="150" type="text" 
                                     label="SchoolNameText"
                                     placeholder="Please enter school name"/>

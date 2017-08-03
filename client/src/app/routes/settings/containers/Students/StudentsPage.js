@@ -20,7 +20,7 @@ import Moment from '../../../../components/utils/Moment'
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
 
-import submit, {remove, submitPreviousSchool, submitSiblingDetail} from './submit'
+import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative} from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
@@ -261,7 +261,8 @@ class StudentsPage extends React.Component {
                       countries={this.state.countries} 
                       onSubmit={submit} 
                       onSubmitPreviousSchool={submitPreviousSchool}
-                      onSubmitSiblingDetail={submitSiblingDetail}  />
+                      onSubmitSiblingDetail={submitSiblingDetail}  
+                      onSubmitStudentRelative={submitStudentRelative} />
                   : <StudentForm 
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 

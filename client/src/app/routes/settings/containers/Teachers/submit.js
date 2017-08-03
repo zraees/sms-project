@@ -97,7 +97,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
         })
         .catch(function (error) {
           console.log(error);
-          alert('f', '');
+          alert('f', error.response.data.StatusMessage);
           LoaderVisibility(false);
         });      
   }
@@ -167,7 +167,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);
         LoaderVisibility(false);
         throw new SubmissionError({   
             _error: 'Something went wrong, please contact system administrator!'
@@ -190,7 +190,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         console.log(error);
-        alert('f', '');
+        alert('f', error.response.data.StatusMessage);
         LoaderVisibility(false);
         throw new SubmissionError({   
             _error: 'Something went wrong, please contact system administrator!'
