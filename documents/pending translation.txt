@@ -17,6 +17,9 @@ ParentGuardianInformationTitleText
 EmergencyContactDetailsTitleText
 EducationalServicesHistoryTitleText
 MedicalInformationTitleText
+RelationWithGuardianText
+ParentNameText
+PassportNumberText
 
 Please enter school name
 Please enter last school location
