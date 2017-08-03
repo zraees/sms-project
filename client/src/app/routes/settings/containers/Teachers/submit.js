@@ -198,12 +198,13 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       });
   }
 
-  export function submitTeacherSubject(values, teacherId){
-    values = Object.assign({}, values, {teacherId});    
+  export function submitTeacherSubject(values1, teacherId){
+    let values = Object.assign({}, {teacherId}, {subjectId: values1.subjectId.join()});    
     LoaderVisibility(true);
     console.log('teacher class submit ', values);
 
-    axios.post('/api/TeachersSubjects', values)      
+    //axios.post('/api/TeachersSubjects', values)      
+    axios.post('/api/TeachersSubjects/'+teacherId+'/'+values.subjectId) 
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -228,7 +229,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitTeacherClass(values1, teacherId){
     let values = Object.assign({}, {teacherId}, {classId: values1.classId.join()});    
     LoaderVisibility(true);
-    console.log('teacher class submit ', values);
+    //console.log('teacher class submit ', values);
 
     axios.post('/api/TeachersClasses/'+teacherId+'/'+values.classId)      
       .then(function (response) {

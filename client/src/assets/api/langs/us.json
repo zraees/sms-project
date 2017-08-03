@@ -101,7 +101,9 @@
     "ResetText": "Reset",
     "AddText": "Add",
     "ListText": "List",
-    "ManageText": "",
+    "ManageText": "Manage",
+    "EditText": "Edit",
+    "DeleteText": "Delete",
 
     "RequiredFieldText": "This field is required",
     "InvalidEmailAddressText": "Invalid email address",

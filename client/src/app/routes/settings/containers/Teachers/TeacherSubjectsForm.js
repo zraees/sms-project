@@ -72,9 +72,9 @@ class TeacherSubjectForm extends React.Component  {
                         <fieldset>
 
                         <div className="row">
-                            <section className="col col-4">
+                            <section className="col col-8">
                                 <Field
-                                    multi={false}
+                                    multi={true}
                                     name="subjectId"
                                     label="SubjectText"
                                     validate={required}

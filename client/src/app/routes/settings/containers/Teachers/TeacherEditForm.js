@@ -29,21 +29,21 @@ class TeacherEditForm extends React.Component {
   }
 
   componentWillMount() {
-    console.log('componentWillMount --> TeacherEditForm');
+    //console.log('componentWillMount --> TeacherEditForm');
 
     LoaderVisibility(true);
   }
 
   componentDidMount(){ 
     //LoaderVisibility(true);
-    console.log('componentDidMount --> TeacherEditForm');
+    //console.log('componentDidMount --> TeacherEditForm');
         
      setTimeout(function(){ 
         
         this.setState({nowRender:true}) 
         LoaderVisibility(false);
         
-      }.bind(this), 300);
+      }.bind(this), 100);
 
     }
 
@@ -58,12 +58,12 @@ class TeacherEditForm extends React.Component {
         {/*<Loader isLoading={this.props.isLoading} />*/}
 
         <ul id="myTab1" className="nav nav-tabs bordered">
-            <li className="active">
+            {/* <li className="active">
                 <a href="#s1" data-toggle="tab"><i className="fa fa-fw fa-lg fa-user"/>
                 <Msg phrase="General" />
                 </a>
-            </li>
-            <li>
+            </li> */}
+            <li className="active">
                 <a href="#s2" data-toggle="tab"><i className="fa fa-fw fa-lg fa-graduation-cap"/>
                 <Msg phrase="Qualification" />
                 </a>
@@ -86,7 +86,7 @@ class TeacherEditForm extends React.Component {
         </ul>
 
         <div id="myTabContent1" className="tab-content padding-10">
-            <div className="tab-pane fade in active" id="s1">
+            {/* <div className="tab-pane fade in active" id="s1">
                 { this.state.nowRender ? 
                 <EditGeneralInfo teacherId={teacherId} 
                     nationalities={nationalities} 
@@ -95,8 +95,8 @@ class TeacherEditForm extends React.Component {
                     onSubmit={onSubmit} />
                 : <div></div>
                 }
-            </div>
-            <div className="tab-pane fade" id="s2">
+            </div> */}
+            <div className="tab-pane fade in active" id="s2">
                 { this.state.nowRender ? 
                     <QualificationForm teacherId={teacherId} 
                         onSubmit={onSubmitQualification}/>

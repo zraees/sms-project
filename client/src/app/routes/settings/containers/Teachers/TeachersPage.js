@@ -21,6 +21,7 @@ import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
+import EditGeneralInfo from './EditGeneralInfo'
 //import Test from './Test'
 import submit, {remove, submitQualification, submitExperience, submitTeacherSubject, submitTeacherClass} from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
@@ -33,6 +34,7 @@ class TeachersPage extends React.Component {
    super(props);
    this.state = {
      teacherId: 0,
+     singleEditMode: 0,
      nationalities: [],
      countries: [],
      genderOptions: []
@@ -45,7 +47,7 @@ class TeachersPage extends React.Component {
   
   componentDidMount(){ 
 
-    console.log('componentDidMount --> TeacherPage');
+    //console.log('componentDidMount --> TeacherPage');
     //var self =this;
     $('#teachersGrid').on('click', 'td', function(event) {
       
@@ -84,6 +86,8 @@ class TeachersPage extends React.Component {
 
       //console.log(button);
       var teacherId = button.data('id');             // Extract info from data-* attributes
+      //console.log(button.data('single-edit'));
+      this.setState({singleEditMode: button.data('single-edit')}); 
       this.setState({teacherId});    
     }.bind(this));
 
@@ -211,18 +215,35 @@ class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.teacherId);
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-single-edit="1" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
                                 "targets": 7
+                            },
+                            {
+                                // The `data` parameter refers to the data for the cell (defined by the
+                                // `data` option, which defaults to the column being worked with, in
+                                // this case `data: 0`.
+                                "render": function ( data, type, row ) {
+                                  //console.log(data);
+                                  //console.log(type);
+                                  //console.log(row);
+                                    //return data +' ('+ row[0]+')';
+                                    //id = data;
+                                    //console.log(this.state.teacherId);
+                                    return '<a data-toggle="modal" data-single-edit="0" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
+                                },
+                                "className": "dt-center",
+                                "sorting": false,
+                                "targets": 8
                             }
                             ,{ 
                                 "render": function ( data, type, row ) {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
                                   //                </a>);
-                                  return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  return '<a id="dele" data-tid="' + data + '" title={`<Msg phrase="EmailAddressText"/>`}><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                                     //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                     //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                     //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
@@ -230,7 +251,7 @@ class TeachersPage extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 8
+                                "targets": 9
                             }
                         ],
                         columns: [
@@ -247,6 +268,7 @@ class TeachersPage extends React.Component {
                           {data: "Gender"},  
                           {data: "DOB"},  
                           {data: "Rating"},  
+                          {data: "TeacherId"},
                           {data: "TeacherId"},
                           {data: "TeacherId"}
                         ],
@@ -267,6 +289,7 @@ class TeachersPage extends React.Component {
                         <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="DOBText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="RatingText"/></th>
+                        <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
                       </tr>
@@ -305,28 +328,36 @@ class TeachersPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="teacherPopupLabel">
-                  { this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/> }
+                  { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/>)}
                 </h4>
               </div>
-              <div className="modal-body">                  
-                { this.state.teacherId > 0 ? 
-                  //Test
-                  <TeacherEditForm
-                    teacherId={this.state.teacherId} 
+              <div className="modal-body">  
+                                
+                { this.state.singleEditMode == 1 ?
+                  <EditGeneralInfo teacherId={this.state.teacherId} 
                     nationalities={this.state.nationalities} 
-                    countries={this.state.countries} 
                     genderOptions={this.state.genderOptions}
-                    onSubmit={submit} 
-                    onSubmitQualification={submitQualification} 
-                    onSubmitExperience={submitExperience} 
-                    onSubmitTeacherSubject={submitTeacherSubject} 
-                    onSubmitTeacherClass={submitTeacherClass} />
-                : <TeacherForm 
-                    teacherId={this.state.teacherId} 
-                    nationalities={this.state.nationalities} 
-                    countries={this.state.countries} 
-                    genderOptions={this.state.genderOptions}
+                    countries={this.state.countries}
                     onSubmit={submit} />
+                  :
+                  (this.state.teacherId > 0 ? 
+                    <TeacherEditForm
+                      teacherId={this.state.teacherId} 
+                      nationalities={this.state.nationalities} 
+                      countries={this.state.countries} 
+                      genderOptions={this.state.genderOptions}
+                      onSubmit={submit} 
+                      onSubmitQualification={submitQualification} 
+                      onSubmitExperience={submitExperience} 
+                      onSubmitTeacherSubject={submitTeacherSubject} 
+                      onSubmitTeacherClass={submitTeacherClass} />
+                  : 
+                    <TeacherForm 
+                      teacherId={this.state.teacherId} 
+                      nationalities={this.state.nationalities} 
+                      countries={this.state.countries} 
+                      genderOptions={this.state.genderOptions}
+                      onSubmit={submit} />)
                 }      
               </div>
               {/*  

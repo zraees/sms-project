@@ -105,7 +105,9 @@
     "ResetText": "ری سیٹ",
     "AddText": "جديد",
     "ListText": "ریکارڈ",
-    "ManageText": "ترمیم",
+    "ManageText": "ترمیم", 
+    "EditText": "Edit",
+    "DeleteText": "Delete",
 
     "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
     "InvalidEmailAddressText": "غلط ای میل ایڈریس",

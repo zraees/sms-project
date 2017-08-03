@@ -102,7 +102,9 @@
     "ResetText": "إعادة تعيين",
     "AddText": "جديد",
     "ListText": "تسجيل",
-    "ManageText": "تصحيح",
+    "ManageText": "تصحيح", 
+    "EditText": "Edit",
+    "DeleteText": "Delete",
 
     "RequiredFieldText": "هذا مجال مطلوب",
     "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
