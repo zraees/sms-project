@@ -43,40 +43,20 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
-        //// GET api/<controller>/5/1/2
-        //[Route("api/TeachersSubjects/{ShiftId}/{ClassId}/{SectionId}")]
-        //public TeachersSubjects Get(int ShiftId, int ClassId, int SectionId)
-        //{
-        //    entities.Configuration.ProxyCreationEnabled = false;
-         
-        //    TeachersSubjects TeacherSubject = entities.TeachersSubjects
-        //        .Where(t => t.ShiftID == ShiftId && t.ClassID == ClassId && t.SectionID == SectionId).FirstOrDefault();
-
-        //    if (TeacherSubject == null)
-        //    {
-        //        TeacherSubject = new TeachersSubjects() { ClassID = 0 };
-        //    }
-
-        //    return TeacherSubject;
-        //}
-
-        //[Route("api/TeachersSubjectsById/{id}")]
-        //public TeachersSubjects Get(int id)
-        //{
-        //    entities.Configuration.ProxyCreationEnabled = false;
-        //    return entities.TeachersSubjects.Where(t => t.TeacherSubjectID == id).FirstOrDefault();
-        //}
-
         // POST api/<controller>
-        public HttpResponseMessage Post(TeachersSubjects teacher)
+        [Route("api/TeachersSubjects/{TeacherID}/{SubjectIDs}")]
+        public HttpResponseMessage Post(int TeacherID, string SubjectIDs)
         {
             try
             {
-                entities.TeachersSubjects.Add(new TeachersSubjects()
+                foreach (string ID in SubjectIDs.Split(','))
                 {
-                    TeacherID = teacher.TeacherID,
-                    SubjectID = teacher.SubjectID
-                });
+                    entities.TeachersSubjects.Add(new TeachersSubjects()
+                    {
+                        TeacherID = TeacherID,
+                        SubjectID = Convert.ToInt32(ID)
+                    });
+                }
                 entities.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
             }
@@ -109,6 +89,74 @@ namespace SMSServices.Controllers
             //    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             //}
         }
+
+        //// GET api/<controller>/5/1/2
+        //[Route("api/TeachersSubjects/{ShiftId}/{ClassId}/{SectionId}")]
+        //public TeachersSubjects Get(int ShiftId, int ClassId, int SectionId)
+        //{
+        //    entities.Configuration.ProxyCreationEnabled = false;
+         
+        //    TeachersSubjects TeacherSubject = entities.TeachersSubjects
+        //        .Where(t => t.ShiftID == ShiftId && t.ClassID == ClassId && t.SectionID == SectionId).FirstOrDefault();
+
+        //    if (TeacherSubject == null)
+        //    {
+        //        TeacherSubject = new TeachersSubjects() { ClassID = 0 };
+        //    }
+
+        //    return TeacherSubject;
+        //}
+
+        //[Route("api/TeachersSubjectsById/{id}")]
+        //public TeachersSubjects Get(int id)
+        //{
+        //    entities.Configuration.ProxyCreationEnabled = false;
+        //    return entities.TeachersSubjects.Where(t => t.TeacherSubjectID == id).FirstOrDefault();
+        //}
+
+        // POST api/<controller>
+        //public HttpResponseMessage Post(TeachersSubjects teacher)
+        //{
+        //    try
+        //    {
+        //        entities.TeachersSubjects.Add(new TeachersSubjects()
+        //        {
+        //            TeacherID = teacher.TeacherID,
+        //            SubjectID = teacher.SubjectID
+        //        });
+        //        entities.SaveChanges();
+        //        return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
+        //    }
+        //    //catch (Exception e)
+        //    //{
+        //    //    return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
+
+        //    //}
+        //    catch (DbUpdateException dbEx)
+        //    {
+        //        throw dbEx;
+        //        //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have more issue ...");
+        //        //StringBuilder sb = new StringBuilder();
+        //        //foreach (var item in dbEx.EntityValidationErrors)
+        //        //{
+        //        //    sb.Append(item + " errors: ");
+        //        //    foreach (var i in item.ValidationErrors)
+        //        //    {
+        //        //        sb.Append(i.PropertyName + " : " + i.ErrorMessage);
+        //        //    }
+        //        //    sb.Append(Environment.NewLine);
+        //        //}
+        //        ////throw new ApiDataException(GetErrorCode(dbEx), sb.ToString(), HttpStatusCode.BadRequest);
+        //        //throw new ApiDataException(1021, "too many errors ...", HttpStatusCode.BadRequest);
+        //        //return Request.CreateResponse(HttpStatusCode.OK, sb.ToString());
+        //    }
+        //    //catch (DbUpdateException ex)
+        //    //{
+        //    //    throw ex;
+        //    //    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+        //    //}
+        //}
+
         private int GetErrorCode(DbEntityValidationException dbEx)
         {
             int ErrorCode = (int)HttpStatusCode.BadRequest;

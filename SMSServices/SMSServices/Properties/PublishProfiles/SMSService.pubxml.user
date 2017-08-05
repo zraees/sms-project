@@ -22,7 +22,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/19/2017 02:47:34</publishTime>
     </File>
     <File Include="bin/SMSServices.dll">
-      <publishTime>08/02/2017 23:31:46</publishTime>
+      <publishTime>08/04/2017 00:48:22</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>05/26/2017 01:46:32</publishTime>
@@ -37,7 +37,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/25/2017 19:54:41</publishTime>
     </File>
     <File Include="Models/SMSModel.edmx.diagram">
-      <publishTime>02/08/2017 21:51:23</publishTime>
+      <publishTime>08/02/2017 21:51:23</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>06/19/2017 02:47:36</publishTime>
