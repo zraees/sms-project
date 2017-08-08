@@ -24,7 +24,10 @@ namespace SMSServices.Controllers
         [Route("api/States/{countryId}")]
         public IEnumerable<KeyValue> Get(int countryId)
         {
-            return entities.States.Where(n => n.CountryId == countryId).Select(a => new KeyValue() { Id = a.StateId, Name = a.Name });
+            return entities.States
+                    .Where(c => c.CountryId == countryId
+                            && c.IsActive.Value == true)
+                    .Select(a => new KeyValue() { Id = a.ID , Name = a.Name });
         }
 
         // POST api/<controller>

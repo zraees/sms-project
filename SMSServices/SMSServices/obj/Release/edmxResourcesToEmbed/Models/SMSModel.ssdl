@@ -21,11 +21,14 @@
   </EntityType>
   <EntityType Name="Cities">
     <Key>
-      <PropertyRef Name="CityId" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nchar" MaxLength="10" />
     <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="Classes">
     <Key>
@@ -47,13 +50,15 @@
   </EntityType>
   <EntityType Name="Countries">
     <Key>
-      <PropertyRef Name="CountryId" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Symbol" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="PhoneCode" Type="int" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" />
+    <Property Name="PhoneCode" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="Nationality" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="Errors">
     <Key>
@@ -116,11 +121,14 @@
   </EntityType>
   <EntityType Name="States">
     <Key>
-      <PropertyRef Name="StateId" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" />
     <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="Students">
     <Key>
@@ -152,8 +160,12 @@
     <Property Name="ReligionId" Type="int" />
     <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
     <Property Name="MobileNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="CityId" Type="int" />
     <Property Name="Address" Type="nvarchar" MaxLength="500" />
-    <Property Name="StudentStayWith" Type="nvarchar" MaxLength="50" />
+    <Property Name="StudentStayWith" Type="nvarchar" MaxLength="10" />
+    <Property Name="StudentStayWithOther" Type="nvarchar" MaxLength="50" />
     <Property Name="HasSameSchoolAttendedBefore" Type="bit" />
     <Property Name="SchoolAttendedStartDate" Type="datetime" />
     <Property Name="SchoolAttendedEndDate" Type="datetime" />
@@ -255,7 +267,7 @@
     <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="States">
-        <PropertyRef Name="StateId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Cities">
         <PropertyRef Name="StateId" />
@@ -303,10 +315,22 @@
     <End Role="States" Type="Self.States" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Countries">
-        <PropertyRef Name="CountryId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="States">
         <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="CityId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -315,10 +339,22 @@
     <End Role="Students" Type="Self.Students" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Countries">
-        <PropertyRef Name="CountryId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Students">
         <PropertyRef Name="NationalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_Countries1">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="CountryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -358,12 +394,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Students_States">
+    <End Role="States" Type="Self.States" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TeacherExperiences_Cities">
     <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
     <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Cities">
-        <PropertyRef Name="CityId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TeacherExperiences">
         <PropertyRef Name="CityId" />
@@ -375,7 +423,7 @@
     <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Countries">
-        <PropertyRef Name="CountryId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TeacherExperiences">
         <PropertyRef Name="CountryId" />
@@ -387,7 +435,7 @@
     <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="States">
-        <PropertyRef Name="StateId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TeacherExperiences">
         <PropertyRef Name="StateId" />
@@ -435,7 +483,7 @@
     <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Countries">
-        <PropertyRef Name="CountryId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Teachers">
         <PropertyRef Name="NationalityId" />
@@ -535,7 +583,15 @@
       <End Role="Countries" EntitySet="Countries" />
       <End Role="States" EntitySet="States" />
     </AssociationSet>
+    <AssociationSet Name="FK_Students_Cities" Association="Self.FK_Students_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
     <AssociationSet Name="FK_Students_Countries" Association="Self.FK_Students_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_Countries1" Association="Self.FK_Students_Countries1">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
@@ -549,6 +605,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Students_Religions" Association="Self.FK_Students_Religions">
       <End Role="Religions" EntitySet="Religions" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_States" Association="Self.FK_Students_States">
+      <End Role="States" EntitySet="States" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
     <AssociationSet Name="FK_TeacherExperiences_Cities" Association="Self.FK_TeacherExperiences_Cities">

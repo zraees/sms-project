@@ -62,6 +62,50 @@ namespace SMSServices.Controllers
             return ClassSection;
         }
 
+        // GET api/<controller>/5
+        [Route("api/GetClassesByShiftId/{ShiftId}")]
+        [HttpGet]
+        public HttpResponseMessage GetClassesByShiftId(int ShiftId)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            ClassesSections ClassSection = entities.ClassesSections
+                .FirstOrDefault();
+
+            var query = entities.ClassesSections
+                .Where(t => t.ShiftID == ShiftId)
+                .Select(e => new
+                {   
+                    Id = e.ClassID,
+                    Name = e.Classes.Name,
+                    NameAr = e.Classes.NameAr
+                });
+             
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList().Distinct());
+        }
+
+        // GET api/<controller>/5
+        [Route("api/GetClassesByShiftIdClassId/{ShiftId}/{ClassId}")]
+        [HttpGet]
+        public HttpResponseMessage GetClassesByShiftIdClassId(int ShiftId, int ClassId)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            ClassesSections ClassSection = entities.ClassesSections
+                .FirstOrDefault();
+
+            var query = entities.ClassesSections
+                .Where(t => t.ShiftID == ShiftId && t.ClassID == ClassId)
+                .Select(e => new
+                {
+                    Id = e.SectionID,
+                    Name = e.Sections.Name,
+                    NameAr = e.Sections.NameAr
+                });
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
+        }
+
         [Route("api/ClassesSectionsById/{id}")]
         public ClassesSections Get(int id)
         {

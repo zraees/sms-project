@@ -58,8 +58,7 @@ class StudentsPage extends React.Component {
    
       var studentId = button.data('id');             // Extract info from data-* attributes
       this.setState({studentId});    
-      // just for checking ????      
-      this.setState({studentId:5}); 
+      // just for checking ????      this.setState({studentId:5}); 
     }.bind(this));
 
     // call on modal close
@@ -188,7 +187,7 @@ class StudentsPage extends React.Component {
                           {data: "FullName"},
                           {data: "FullNameAr"},
                           {data: "Email"},    
-                          {data: "StudentIdNo"},  
+                          {data: "StudentIDNo"},  
                           {data: "Gender"},  
                           {data: "DOB"},   
                           {data: "StudentId"},

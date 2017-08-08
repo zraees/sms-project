@@ -27,9 +27,6 @@ namespace SMSServices.Models
     
         public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
         public virtual DbSet<TeacherQualifications> TeacherQualifications { get; set; }
-        public virtual DbSet<Cities> Cities { get; set; }
-        public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<States> States { get; set; }
         public virtual DbSet<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual DbSet<Errors> Errors { get; set; }
         public virtual DbSet<Admissions> Admissions { get; set; }
@@ -45,5 +42,8 @@ namespace SMSServices.Models
         public virtual DbSet<Teachers> Teachers { get; set; }
         public virtual DbSet<TeachersSubjects> TeachersSubjects { get; set; }
         public virtual DbSet<TeachersClasses> TeachersClasses { get; set; }
+        public virtual DbSet<Cities> Cities { get; set; }
+        public virtual DbSet<Countries> Countries { get; set; }
+        public virtual DbSet<States> States { get; set; }
     }
 }

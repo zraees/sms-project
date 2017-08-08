@@ -215,7 +215,7 @@ class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.teacherId);
-                                    return '<a data-toggle="modal" data-single-edit="1" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-single-edit="1"  title="Edit" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
@@ -232,7 +232,7 @@ class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.teacherId);
-                                    return '<a data-toggle="modal" data-single-edit="0" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-single-edit="0"  title="Manage" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
@@ -243,7 +243,7 @@ class TeachersPage extends React.Component {
                                   //return (<a onClick={onOrderRestaurant.bind(self, this)} 
                                   //                className="btn btn-primary btn-sm">Order this restaurant
                                   //                </a>);
-                                  return '<a id="dele" data-tid="' + data + '" title={`<Msg phrase="EmailAddressText"/>`}><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  return '<a id="dele" data-tid="' + data + '" title="Delete"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                                     //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                     //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                     //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';

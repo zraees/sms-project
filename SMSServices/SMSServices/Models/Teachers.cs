@@ -37,10 +37,10 @@ namespace SMSServices.Models
         public Nullable<int> CityId { get; set; }
         public Nullable<int> NationalityId { get; set; }
     
-        public virtual Countries Countries { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
         public virtual ICollection<TeachersSubjects> TeachersSubjects { get; set; }
         public virtual ICollection<TeachersClasses> TeachersClasses { get; set; }
+        public virtual Countries Countries { get; set; }
     }
 }

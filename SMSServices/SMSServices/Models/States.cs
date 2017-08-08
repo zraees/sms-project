@@ -17,15 +17,20 @@ namespace SMSServices.Models
         public States()
         {
             this.Cities = new HashSet<Cities>();
+            this.Students = new HashSet<Students>();
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
         }
     
-        public int StateId { get; set; }
+        public int ID { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
+        public string NameAr { get; set; }
         public int CountryId { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual ICollection<Cities> Cities { get; set; }
         public virtual Countries Countries { get; set; }
+        public virtual ICollection<Students> Students { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
     }
 }

@@ -34,6 +34,16 @@ namespace SMSServices.Controllers
                 .FirstOrDefault();
         }
 
+        [Route("api/Lookup/{TblName}/{ForeignKeyName}/{ForeignKeyId}")]
+        public HttpResponseMessage Get(string TblName, string ForeignKeyName, int ForeignKeyId)
+        {
+            var query = entities.Database.
+                SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name FROM {0} WHERE {1} = {2}",
+                                                    TblName, ForeignKeyName, ForeignKeyId));
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

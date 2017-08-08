@@ -54,11 +54,18 @@ namespace SMSServices.Models
         public string SkippedGrades { get; set; }
         public Nullable<bool> HasStudentRepeatGrade { get; set; }
         public string RepeatGrades { get; set; }
+        public Nullable<int> CountryId { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public Nullable<int> CityId { get; set; }
+        public string StudentStayWithOther { get; set; }
     
         public virtual ICollection<Admissions> Admissions { get; set; }
-        public virtual Countries Countries { get; set; }
         public virtual Languages Languages { get; set; }
         public virtual Languages Languages1 { get; set; }
         public virtual Religions Religions { get; set; }
+        public virtual Cities Cities { get; set; }
+        public virtual Countries Countries { get; set; }
+        public virtual Countries Countries1 { get; set; }
+        public virtual States States { get; set; }
     }
 }

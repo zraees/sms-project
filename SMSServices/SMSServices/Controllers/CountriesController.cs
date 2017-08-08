@@ -18,13 +18,15 @@ namespace SMSServices.Controllers
         {
             //int[] country = { 101, 166 };c => country.Contains(c.CountryId)
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
+            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)
+                                        && c.IsActive.Value == true)
+                                    .Select(a => new KeyValue() { Id = a.ID, Name = a.Name });
         }
 
         // GET api/<controller>/5
         public Countries Get(int id)
         {
-            return entities.Countries.Where(n => n.CountryId == id).FirstOrDefault();
+            return entities.Countries.Where(n => n.ID == id).FirstOrDefault();
         }
 
         // POST api/<controller>

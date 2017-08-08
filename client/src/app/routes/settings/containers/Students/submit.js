@@ -41,7 +41,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
         
         LoaderVisibility(false);
         alert('s', 'student details have been saved.');
-        $('#studentPopup').modal('hide');  
+        $('#StudentPopup').modal('hide');  
 
       })
       .catch(function (error) {
@@ -77,7 +77,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       .then(function (response) {
         
         alert('s','student details have been updated.');
-        $('#studentPopup').modal('hide');  
+        $('#StudentPopup').modal('hide');  
         LoaderVisibility(false);
 
       })

@@ -17,7 +17,8 @@ namespace SMSServices.Controllers
         public IEnumerable<KeyValue> Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Nationality });
+            return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality))
+                .Select(a => new KeyValue() { Id = a.ID, Name = a.Nationality });
         }
 
         protected override void Dispose(bool disposing)

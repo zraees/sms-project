@@ -22,6 +22,7 @@ class StudentForm extends React.Component {
     super(props);
     this.state = {
       editDataLoaded: false,
+      countryOptions: [],
       states: [],
       cities: [],
       genderOptions: [],
@@ -36,11 +37,11 @@ class StudentForm extends React.Component {
     }
     this.handleCountryBlur = this.handleCountryBlur.bind(this);
     this.handleStateBlur = this.handleStateBlur.bind(this);
-    this.handleCityBlur = this.handleCityBlur.bind(this);
+    //this.handleCityBlur = this.handleCityBlur.bind(this);
     this.handleStudentStayWithChange = this.handleStudentStayWithChange.bind(this);
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
-    this.handleSectionBlur = this.handleSectionBlur.bind(this);
+    //this.handleSectionBlur = this.handleSectionBlur.bind(this);
     this.handleNameBlur = this.handleNameBlur.bind(this);
     this.handleNameArBlur = this.handleNameArBlur.bind(this);
   }
@@ -82,17 +83,23 @@ class StudentForm extends React.Component {
             this.setState({shiftOptions});
         });
 
-      axios.get('/api/lookup/classes/')
+      axios.get('/api/lookup/countries/')
         .then(res=>{            
-            const classOptions = mapForCombo(res.data);
-            this.setState({classOptions});
-        });
+            const countryOptions = mapForCombo(res.data);
+            this.setState({countryOptions});
+        }); 
 
-      axios.get('/api/lookup/sections/')
-        .then(res=>{            
-            const sectionOptions = mapForCombo(res.data);
-            this.setState({sectionOptions});
-        });
+      // axios.get('/api/lookup/classes/')
+      //   .then(res=>{            
+      //       const classOptions = mapForCombo(res.data);
+      //       this.setState({classOptions});
+      //   });
+
+      // axios.get('/api/lookup/sections/')
+      //   .then(res=>{            
+      //       const sectionOptions = mapForCombo(res.data);
+      //       this.setState({sectionOptions});
+      //   });
 
       axios.get('/api/lookup/batches/')
         .then(res=>{            
@@ -105,15 +112,37 @@ class StudentForm extends React.Component {
   }
 
   handleCountryBlur(obj, value){
-    axios.get('/api/states/' + value)
-        .then(res=>{
-            const states = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
-            this.setState({states});
-        });
+    axios.get('/api/Lookup/states/countryid/' + value)
+      .then(res=>{
+          const states = mapForCombo(res.data);//res.data.map(function(item, index){
+              //return {value: item.Id + "", label: item.Name};
+          //});                       
+          this.setState({states});
+      });
  
   }
+
+  handleStateBlur(obj, value){
+    // axios.get('/api/cities/' + value)
+    //     .then(res=>{
+    //         const cities = mapForCombo(res.data); //res.data.map(function(item, index){
+    //             //return {value: item.Id + "", label: item.Name};
+    //         //});                       
+    //         this.setState({cities});
+    //     });
+    axios.get('/api/Lookup/cities/stateid/' + value)
+      .then(res=>{
+          const cities = mapForCombo(res.data); // res.data.map(function(item, index){
+          //     return {value: item.Id + "", label: item.Name};
+          // });                       
+          this.setState({cities});
+      });
+  }
+
+  // handleCityBlur(obj, value){
+  //   console.log(obj);
+  //   console.log(value);
+  // }
 
   handleStudentStayWithChange(obj, value){ 
     if(value=="Other"){
@@ -123,66 +152,50 @@ class StudentForm extends React.Component {
       this.setState({disabledStudentStayWithOther:true});
     }
   }
-
-  handleStateBlur(obj, value){
-    axios.get('/api/cities/' + value)
-        .then(res=>{
-            const cities = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
-            this.setState({cities});
-        });
  
-  }
-
-  handleCityBlur(obj, value){
-    console.log(obj);
-    console.log(value);
-  }
-
   handleShiftBlur(obj, value){
-    axios.get('/api/states/' + value)
+    axios.get('/api/GetClassesByShiftId/' + value)
         .then(res=>{
-            const states = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
-            this.setState({states});
+            const classOptions = mapForCombo(res.data); // res.data.map(function(item, index){
+            //     return {value: item.Id + "", label: item.Name};
+            // });                       
+            this.setState({classOptions});
         });
  
   }
 
-  handleClassBlur(obj, value){
-    axios.get('/api/cities/' + value)
+  handleClassBlur(obj, value){ 
+    //console.log('this.props.shiftId = ' ,this.props.shiftId);
+    axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
         .then(res=>{
-            const cities = res.data.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
-            });                       
-            this.setState({cities});
+            const sectionOptions = mapForCombo(res.data); // res.data.map(function(item, index){
+            //     return {value: item.Id + "", label: item.Name};
+            // });                       
+            this.setState({sectionOptions});
         });
  
   }
 
-  handleSectionBlur(obj, value){
-    console.log(obj);
-    console.log(value);
-  }
+  // handleSectionBlur(obj, value){
+  //   console.log(obj);
+  //   console.log(value);
+  // }
   
   handleNameBlur(obj, value){
-    this.props.change("nameAsPerPassport", this.props.fullName)
+    this.props.change("fullNamePassport", this.props.fullName)
     this.props.change("fullName", this.props.fullName)
   } 
 
   handleNameArBlur(obj, value){
-    this.props.change("nameArAsPerPassport", this.props.fullNameAr)
+    this.props.change("fullNameArPassport", this.props.fullNameAr)
     this.props.change("fullNameAr", this.props.fullNameAr)
   }
 
   render() {
     const { studentId, handleSubmit, nationalities, countries, pristine, reset, submitting, touched, error, warning } = this.props
     const { states, cities, studentStayWithOptions, disabledStudentStayWithOther, genderOptions, languageOptions, religionOptions } = this.state;
-    const { shiftOptions, classOptions, sectionOptions, batchOptions } = this.state;    
+    const { shiftOptions, classOptions, sectionOptions, batchOptions, countryOptions } = this.state;    
  
-  
     return (
             <form id="form-Student" className="smart-form" 
                 onSubmit={handleSubmit}>
@@ -191,14 +204,14 @@ class StudentForm extends React.Component {
 
                 <div className="row">
                   <section className="col col-2">
-                    <Field name="studentCode" labelClassName="input" 
+                    <Field name="code" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
                       placeholder="Please enter student code" maxLength="20"
                       label="CodeText"/>
                   </section>
                   <section className="col col-5">
-                    <Field name="idNo" labelClassName="input" 
+                    <Field name="studentIDNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
                       placeholder="Please enter Identity card number" maxLength="20"
@@ -283,7 +296,7 @@ class StudentForm extends React.Component {
                   <section className="col col-9">
                     <div className="row"> 
                       <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
-                        <Field name="nameAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
+                        <Field name="fullNamePassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                           validate={required} component={RFField} normalize={upper} 
                           type="text" maxLength="250" 
                           label="Name1AsPerPassportText"
@@ -295,7 +308,7 @@ class StudentForm extends React.Component {
                     
                     <div className="row"> 
                       <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
-                        <Field name="nameArAsPerPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
+                        <Field name="fullNameArPassport" labelClassName="input" labelIconClassName="icon-append fa fa-graduation-cap"
                           validate={required} component={RFField} normalize={upper} type="text" 
                           label="Name2AsPerPassportText" maxLength="250"
                           placeholder="Please enter full nameAr as per passport"/>
@@ -340,8 +353,7 @@ class StudentForm extends React.Component {
                         multi={false}
                         name="sectionId"
                         label="SectionText"
-                        options={sectionOptions}
-                        onBlur={this.handleSectionBlur}
+                        options={sectionOptions} 
                         component={RFReactSelect} />
                   </section>
                   
@@ -422,7 +434,7 @@ class StudentForm extends React.Component {
 
                 <div className="row">
                   <section className="col col-3">
-                    <Field name="birthPlace" labelClassName="input" 
+                    <Field name="placeOfBirth" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} 
                       maxLength="50" type="text" 
@@ -475,7 +487,7 @@ class StudentForm extends React.Component {
                         multi={false}
                         name="countryId"
                         label="CountryText"
-                        options={countries}
+                        options={countryOptions}
                         onBlur={this.handleCountryBlur}
                         component={RFReactSelect} />
                   </section>
@@ -496,7 +508,6 @@ class StudentForm extends React.Component {
                         name="cityId"
                         label="CityText"
                         options={cities}
-                        onBlur={this.handleCityBlur}
                         component={RFReactSelect} />
                   </section>
                 </div>
@@ -536,10 +547,25 @@ const selector = formValueSelector('StudentForm') // <-- same as form name
 StudentForm = connect(
   state => { 
     const { name1, name2, name3, name4 } = selector(state, 'name1', 'name2', 'name3', 'name4')
-    const { nameAr1, nameAr2, nameAr3, nameAr4 } = selector(state, 'nameAr1', 'nameAr2', 'nameAr3', 'nameAr4')
+    const { nameAr1, nameAr2, nameAr3, nameAr4, shiftId } = selector(state, 'nameAr1', 'nameAr2', 'nameAr3', 'nameAr4', 'shiftId')
+    //const { countryId, stateId, cityId } = selector(state, 'countryId', 'stateId', 'cityId')
+    //const { _shiftId, _classId, _sectionId } = selector(state, 'shiftId', 'classId', 'sectionId')
+    //const {  } = selector(state)
+
+    //console.log('countryId, stateId, cityId ==> ',countryId, stateId, cityId)
+    //console.log('shiftId, classId, sectionId ==> ', _shiftId, _classId, _sectionId)
+    //console.log('shiftId  ==> ', shiftId)
+
     return {
       fullName: `${name1 || ''}${name2?' '+name2:''}${name3?' '+name3:''}${name4?' '+name4:''}`,
-      fullNameAr: `${nameAr1 || ''}${nameAr2?' '+nameAr2:''}${nameAr3?' '+nameAr3:''}${nameAr4?' '+nameAr4:''}`
+      fullNameAr: `${nameAr1 || ''}${nameAr2?' '+nameAr2:''}${nameAr3?' '+nameAr3:''}${nameAr4?' '+nameAr4:''}`,
+      shiftId: shiftId
+      // countryId: countryId, 
+      // stateId: stateId, 
+      // cityId: cityId,
+      //shiftId2: shiftId2//,
+      // classId: _classId,
+      // sectionId: _sectionId 
     }
   }
 )(StudentForm)
