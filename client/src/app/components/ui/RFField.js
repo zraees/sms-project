@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Msg from '../i18n/Msg'
 import LanguageStore from '../i18n/LanguageStore' 
 
-const RFField = ({input, label, type, disabled, labelClassName, labelIconClassName, placeholder, onBlur, maxLength, meta: {asyncValidating, touched, error, warning}}) => (
+const RFField = ({input, label, type, disabled, readOnly, labelClassName, labelIconClassName, placeholder, onBlur, maxLength, meta: {asyncValidating, touched, error, warning}}) => (
     
       <div>     
         <label><Msg phrase={label}/></label>
@@ -12,6 +12,7 @@ const RFField = ({input, label, type, disabled, labelClassName, labelIconClassNa
           <input {...input} 
             type={type} 
             disabled={disabled}
+            readOnly={readOnly}
             value={disabled?"":input.value}
             maxLength={maxLength}
             onBlur={() => input.onBlur(input.value)}

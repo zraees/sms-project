@@ -15,8 +15,9 @@ let phrasesUr = {}
 let phrasesAr = {} 
 
 function mapForCombo(keyValues){
+    let key = getLangKey();
     return keyValues.map(function(item, index){
-                return {value: item.Id + "", label: item.Name};
+                return {value: item.Id + "", label: key=='ar'? item.NameAr : item.Name};
             });                       
 }
 

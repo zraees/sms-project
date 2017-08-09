@@ -94,6 +94,7 @@
     <Compile Include="ActionFilters\LoggingFilterAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\CodingFormatsController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
     <Compile Include="Controllers\TeachersSubjectsController.cs" />
     <Compile Include="Controllers\LookupController.cs" />
@@ -132,6 +133,9 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClassesSections.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodingFormats.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Countries.cs">
@@ -196,6 +200,7 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\AutoCodeGeneration.cs" />
     <Compile Include="Utilities\DateUtilities.cs" />
   </ItemGroup>
   <ItemGroup>

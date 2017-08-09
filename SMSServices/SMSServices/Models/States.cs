@@ -17,8 +17,8 @@ namespace SMSServices.Models
         public States()
         {
             this.Cities = new HashSet<Cities>();
-            this.Students = new HashSet<Students>();
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
+            this.Students = new HashSet<Students>();
         }
     
         public int ID { get; set; }
@@ -30,7 +30,7 @@ namespace SMSServices.Models
     
         public virtual ICollection<Cities> Cities { get; set; }
         public virtual Countries Countries { get; set; }
-        public virtual ICollection<Students> Students { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
+        public virtual ICollection<Students> Students { get; set; }
     }
 }

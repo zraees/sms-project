@@ -19,20 +19,30 @@ namespace SMSServices.Controllers
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
-            return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name FROM {0}", TblName)).ToList();
+            return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name, NameAr FROM {0}", TblName)).ToList();
             //return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
         }
 
-        // GET api/<controller>/5
-        [Route("api/Lookup/{TblName}/{id}")]
-        public KeyValue Get(string TblName, int id)
+        // GET api/<controller>
+        [Route("api/Lookup/{TblName}/{LangCode}")]
+        public IEnumerable<KeyValue> Get(string TblName, string LangCode)
         {
-            //return entities.Countries.Where(n => n.CountryId == id)
-            return entities.Database.
-                SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name FROM {0}", TblName))
-                .Where(n => n.Id == id)
-                .FirstOrDefault();
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name{0} as Name FROM {1}", LangCode, TblName)).ToList();
+            //return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
         }
+
+        //// GET api/<controller>/5
+        //[Route("api/Lookup/{TblName}/{id}")]
+        //public KeyValue Get(string TblName, int id)
+        //{
+        //    //return entities.Countries.Where(n => n.CountryId == id)
+        //    return entities.Database.
+        //        SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name FROM {0}", TblName))
+        //        .Where(n => n.Id == id)
+        //        .FirstOrDefault();
+        //}
 
         [Route("api/Lookup/{TblName}/{ForeignKeyName}/{ForeignKeyId}")]
         public HttpResponseMessage Get(string TblName, string ForeignKeyName, int ForeignKeyId)

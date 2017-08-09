@@ -47,47 +47,43 @@ class StudentForm extends React.Component {
   }
   
   componentDidMount(){ 
-      
-    const initData = {
-        "studentId": 0
-      }        
-      
-      axios.get('assets/api/students/student-stay-with.json')
-        .then(res=>{
-            //console.log('student-stay-with');            
-            const studentStayWithOptions = mapForRadioList(res.data);
-            this.setState({studentStayWithOptions});
-        });
 
-      axios.get('assets/api/common/gender.json')
-        .then(res=>{           
-            const genderOptions = mapForRadioList(res.data); 
-            this.setState({genderOptions});
-        });
+    axios.get('assets/api/students/student-stay-with.json')
+      .then(res=>{
+          //console.log('student-stay-with');            
+          const studentStayWithOptions = mapForRadioList(res.data);
+          this.setState({studentStayWithOptions});
+      });
 
-      axios.get('/api/lookup/languages/')
-        .then(res=>{            
-            const languageOptions = mapForCombo(res.data);
-            this.setState({languageOptions});
-        });
+    axios.get('assets/api/common/gender.json')
+      .then(res=>{           
+          const genderOptions = mapForRadioList(res.data); 
+          this.setState({genderOptions});
+      });
 
-      axios.get('/api/lookup/religions/')
-        .then(res=>{            
-            const religionOptions = mapForCombo(res.data);
-            this.setState({religionOptions});
-        });
+    axios.get('/api/lookup/languages/')
+      .then(res=>{            
+          const languageOptions = mapForCombo(res.data);
+          this.setState({languageOptions});
+      });
 
-      axios.get('/api/lookup/shifts/')
-        .then(res=>{            
-            const shiftOptions = mapForCombo(res.data);
-            this.setState({shiftOptions});
-        });
+    axios.get('/api/lookup/religions/')
+      .then(res=>{            
+          const religionOptions = mapForCombo(res.data);
+          this.setState({religionOptions});
+      });
 
-      axios.get('/api/lookup/countries/')
-        .then(res=>{            
-            const countryOptions = mapForCombo(res.data);
-            this.setState({countryOptions});
-        }); 
+    axios.get('/api/lookup/shifts/')
+      .then(res=>{            
+          const shiftOptions = mapForCombo(res.data);
+          this.setState({shiftOptions});
+      });
+
+    axios.get('/api/lookup/countries/')
+      .then(res=>{            
+          const countryOptions = mapForCombo(res.data);
+          this.setState({countryOptions});
+      }); 
 
       // axios.get('/api/lookup/classes/')
       //   .then(res=>{            
@@ -101,13 +97,24 @@ class StudentForm extends React.Component {
       //       this.setState({sectionOptions});
       //   });
 
-      axios.get('/api/lookup/batches/')
-        .then(res=>{            
-            const batchOptions = mapForCombo(res.data);
-            this.setState({batchOptions});
-        });
+    axios.get('/api/lookup/batches/')
+      .then(res=>{            
+          const batchOptions = mapForCombo(res.data);
+          this.setState({batchOptions});
+      });
+    
+    axios.get('/api/GetStudentGeneratedCode')
+      .then(res=>{      
+        console.log(res);       
+        const initData = {
+            "studentId": 0,
+            "code": res.data
+        }
 
-    this.props.initialize(initData);
+        this.props.initialize(initData);
+        
+      });
+
     console.log('componentDidMount --> StudentForm');
   }
 
@@ -203,14 +210,14 @@ class StudentForm extends React.Component {
               <fieldset>
 
                 <div className="row">
-                  <section className="col col-2">
+                  <section className="col col-3">
                     <Field name="code" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 
-                      placeholder="Please enter student code" maxLength="20"
+                      placeholder="Please enter student code" maxLength="20" readOnly="readOnly"
                       label="CodeText"/>
                   </section>
-                  <section className="col col-5">
+                  <section className="col col-4">
                     <Field name="studentIDNo" labelClassName="input" 
                       labelIconClassName="icon-append fa fa-credit-card-alt"
                       component={RFField} normalize={upper} validate={required} type="text" 

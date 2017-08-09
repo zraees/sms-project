@@ -1,4 +1,5 @@
 ﻿using SMSServices.Models;
+using SMSServices.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,6 +18,13 @@ namespace SMSServices.Controllers
     public class StudentsController : ApiController
     {
         private SMSEntities entities = new SMSEntities();
+
+        [HttpGet]
+        [Route("api/GetStudentGeneratedCode/")]
+        public string GetStudentGeneratedCode()
+        {
+            return new AutoCodeGeneration().GenerateCode("Students", "Code");
+        }
 
         // GET api/<controller>
         public IEnumerable<Students> Get()
@@ -52,7 +60,7 @@ namespace SMSServices.Controllers
                 entities.Students.Add(new Students()
                 {
                     //StudentId
-                    Code = "" + Student.Code,
+                    Code = new AutoCodeGeneration().GenerateCode("Students", "Code"),   //"" + Student.Code,
                     Name1 = "" + Student.Name1,
                     Name2 = "" + Student.Name2,
                     Name3 = "" + Student.Name3,

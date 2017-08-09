@@ -101,51 +101,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Students">
-      <EntityTypeMapping TypeName="SMSModel.Students">
-        <MappingFragment StoreEntitySet="Students">
-          <ScalarProperty Name="StudentStayWithOther" ColumnName="StudentStayWithOther" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
-          <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />
-          <ScalarProperty Name="SkippedGrades" ColumnName="SkippedGrades" />
-          <ScalarProperty Name="HasStudentEverSkippedGrade" ColumnName="HasStudentEverSkippedGrade" />
-          <ScalarProperty Name="SchoolAttendedEndDate" ColumnName="SchoolAttendedEndDate" />
-          <ScalarProperty Name="SchoolAttendedStartDate" ColumnName="SchoolAttendedStartDate" />
-          <ScalarProperty Name="HasSameSchoolAttendedBefore" ColumnName="HasSameSchoolAttendedBefore" />
-          <ScalarProperty Name="StudentStayWith" ColumnName="StudentStayWith" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-          <ScalarProperty Name="ReligionId" ColumnName="ReligionId" />
-          <ScalarProperty Name="Lang2Id" ColumnName="Lang2Id" />
-          <ScalarProperty Name="Lang1ID" ColumnName="Lang1ID" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
-          <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
-          <ScalarProperty Name="StudentIDNo" ColumnName="StudentIDNo" />
-          <ScalarProperty Name="FatherIDNo" ColumnName="FatherIDNo" />
-          <ScalarProperty Name="FullNameArPassport" ColumnName="FullNameArPassport" />
-          <ScalarProperty Name="FullNamePassport" ColumnName="FullNamePassport" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
-          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
-          <ScalarProperty Name="NameAr4" ColumnName="NameAr4" />
-          <ScalarProperty Name="NameAr3" ColumnName="NameAr3" />
-          <ScalarProperty Name="NameAr2" ColumnName="NameAr2" />
-          <ScalarProperty Name="NameAr1" ColumnName="NameAr1" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
-          <ScalarProperty Name="Name4" ColumnName="Name4" />
-          <ScalarProperty Name="Name3" ColumnName="Name3" />
-          <ScalarProperty Name="Name2" ColumnName="Name2" />
-          <ScalarProperty Name="Name1" ColumnName="Name1" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Classes">
       <EntityTypeMapping TypeName="SMSModel.Classes">
         <MappingFragment StoreEntitySet="Classes">
@@ -193,26 +148,6 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Teachers">
-      <EntityTypeMapping TypeName="SMSModel.Teachers">
-        <MappingFragment StoreEntitySet="Teachers">
-          <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="IDNo" ColumnName="IDNo" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -267,6 +202,82 @@
           <ScalarProperty Name="NameAr" ColumnName="NameAr" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="SMSModel.Students">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
+          <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />
+          <ScalarProperty Name="SkippedGrades" ColumnName="SkippedGrades" />
+          <ScalarProperty Name="HasStudentEverSkippedGrade" ColumnName="HasStudentEverSkippedGrade" />
+          <ScalarProperty Name="SchoolAttendedEndDate" ColumnName="SchoolAttendedEndDate" />
+          <ScalarProperty Name="SchoolAttendedStartDate" ColumnName="SchoolAttendedStartDate" />
+          <ScalarProperty Name="HasSameSchoolAttendedBefore" ColumnName="HasSameSchoolAttendedBefore" />
+          <ScalarProperty Name="StudentStayWithOther" ColumnName="StudentStayWithOther" />
+          <ScalarProperty Name="StudentStayWith" ColumnName="StudentStayWith" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="ReligionId" ColumnName="ReligionId" />
+          <ScalarProperty Name="Lang2Id" ColumnName="Lang2Id" />
+          <ScalarProperty Name="Lang1ID" ColumnName="Lang1ID" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
+          <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
+          <ScalarProperty Name="StudentIDNo" ColumnName="StudentIDNo" />
+          <ScalarProperty Name="FatherIDNo" ColumnName="FatherIDNo" />
+          <ScalarProperty Name="FullNameArPassport" ColumnName="FullNameArPassport" />
+          <ScalarProperty Name="FullNamePassport" ColumnName="FullNamePassport" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
+          <ScalarProperty Name="NameAr4" ColumnName="NameAr4" />
+          <ScalarProperty Name="NameAr3" ColumnName="NameAr3" />
+          <ScalarProperty Name="NameAr2" ColumnName="NameAr2" />
+          <ScalarProperty Name="NameAr1" ColumnName="NameAr1" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Name4" ColumnName="Name4" />
+          <ScalarProperty Name="Name3" ColumnName="Name3" />
+          <ScalarProperty Name="Name2" ColumnName="Name2" />
+          <ScalarProperty Name="Name1" ColumnName="Name1" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="SMSModel.Teachers">
+        <MappingFragment StoreEntitySet="Teachers">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CodingFormats">
+      <EntityTypeMapping TypeName="SMSModel.CodingFormats">
+        <MappingFragment StoreEntitySet="CodingFormats">
+          <ScalarProperty Name="Format" ColumnName="Format" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

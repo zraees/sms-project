@@ -48,6 +48,14 @@
     <Property Name="ShiftID" Type="int" Nullable="false" />
     <Property Name="SectionID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="CodingFormats">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TableName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Format" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
   <EntityType Name="Countries">
     <Key>
       <PropertyRef Name="ID" />
@@ -173,6 +181,7 @@
     <Property Name="SkippedGrades" Type="nvarchar" MaxLength="50" />
     <Property Name="HasStudentRepeatGrade" Type="bit" />
     <Property Name="RepeatGrades" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="Subjects">
     <Key>
@@ -233,6 +242,7 @@
     <Property Name="StateId" Type="int" />
     <Property Name="CityId" Type="int" />
     <Property Name="NationalityId" Type="int" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="TeachersClasses">
     <Key>
@@ -544,6 +554,7 @@
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ClassesSections" EntityType="Self.ClassesSections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CodingFormats" EntityType="Self.CodingFormats" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />

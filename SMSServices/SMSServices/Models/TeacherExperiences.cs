@@ -26,9 +26,9 @@ namespace SMSServices.Models
         public string LeavingReason { get; set; }
         public string CompanyName { get; set; }
     
-        public virtual Teachers Teachers { get; set; }
         public virtual Cities Cities { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual States States { get; set; }
+        public virtual Teachers Teachers { get; set; }
     }
 }

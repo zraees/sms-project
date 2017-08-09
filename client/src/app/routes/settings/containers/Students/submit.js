@@ -179,7 +179,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
               console.log('success...');
               alert('s','student details have been deleted.');
               
-              var table = $('#studentsGrid').DataTable();                
+              var table = $('#StudentsGrid').DataTable();                
               table
                 .row( delCell.parents('tr') )
                 .remove()

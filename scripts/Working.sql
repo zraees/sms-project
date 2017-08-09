@@ -38,3 +38,6 @@ SELect * from Cities where StateId in (select StateId from States where CountryI
 --SELECT * INTO Countries_BK FROM Countries
 --SELECT * INTO States_BK FROM States
 --SELECT * INTO Cities_BK FROM Cities
+
+SELECT MAX(RIGHT(Code, 5)) as Code FROM Students 
+	WHERE YEAR(CreatedOn) = 2017 AND  MONTH(CreatedOn) = 8 AND  Day(CreatedOn) = 9
