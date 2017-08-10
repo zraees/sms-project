@@ -14,7 +14,7 @@ import {required, email, number} from '../../../../components/forms/validation/C
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitStudentParent, removeStudentParent} from './submit'
 import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
-import { upper } from '../../../../components/utils/normalize'
+import {upper, lower} from '../../../../components/utils/normalize'
 import Msg from '../../../../components/i18n/Msg'
 
 class ParentsForm extends React.Component {
@@ -25,6 +25,7 @@ class ParentsForm extends React.Component {
             nationalityOptions: [],
             languageOptions: [], 
             parentOptions: [],
+            yesNoOptions: [],
             activeTab: "add",
             disabledGuardianRelation: true        
         }
@@ -37,6 +38,12 @@ class ParentsForm extends React.Component {
             .then(res=>{         
                 const parentOptions = mapForRadioList(res.data);
                 this.setState({parentOptions});
+            });
+
+        axios.get('assets/api/common/YesNo.json')
+            .then(res=>{         
+                const yesNoOptions = mapForRadioList(res.data);
+                this.setState({yesNoOptions});
             });
 
         axios.get('/api/lookup/nationality/')
@@ -76,7 +83,7 @@ class ParentsForm extends React.Component {
   //
   render() {
     const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, nationalityOptions, languageOptions, disabledGuardianRelation, parentOptions } = this.state;
+    const { activeTab, nationalityOptions, languageOptions, disabledGuardianRelation, parentOptions, yesNoOptions } = this.state;
 
     return (
 
@@ -100,7 +107,7 @@ class ParentsForm extends React.Component {
                         onSubmit={handleSubmit((values)=>{submitStudentParent(values, studentId)})}>
                         <fieldset>
 
-                        <div className="row">            
+                        <div className="row">
                             <section className="remove-col-padding col-sm-6 col-md-6 col-lg-6">
                                 <Field component={RFRadioButtonList} name="parentType" 
                                     required={true} 
@@ -144,18 +151,54 @@ class ParentsForm extends React.Component {
                                     label="PassportNumberText" />
                             </section>
                         </div>
+                        
+                        <div className="row">
+                            <section className="remove-col-padding col-sm-6 col-md-6 col-lg-6">
+                                <Field name="tertiaryEducation" labelClassName="input" 
+                                    labelIconClassName="icon-append fa fa-user"
+                                    component={RFField}
+                                    maxLength="100"
+                                    type="text" placeholder="" 
+                                    label="TertiaryEducationText" />
+                            </section> 
+                            <section className="remove-col-padding col-sm-6 col-md-6 col-lg-6">
+                                <Field name="university" labelClassName="input" 
+                                    labelIconClassName="icon-append fa fa-user"
+                                    component={RFField} 
+                                    maxLength="100"
+                                    type="text" placeholder="" 
+                                    label="UniversityText" />
+                            </section> 
+                        </div>
 
                         <div className="row">
-                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
+                                <Field name="occupationTitle" labelClassName="input" 
+                                    labelIconClassName="icon-append fa fa-user"
+                                    component={RFField} normalize={upper}  
+                                    maxLength="20"
+                                    type="text" placeholder="" 
+                                    label="OccupationText" />
+                            </section>
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                                <Field name="email" labelClassName="input" labelIconClassName="icon-append fa fa-envelope-o"
+                                    validate={[required,email]} component={RFField} normalize={lower} 
+                                    maxLength="150" type="text" placeholder="Please enter email address" 
+                                    label="EmailAddressText"/>
+                            </section>
+                        </div>
+
+                        <div className="row">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="nationalityId"
                                     validate={required} 
-                                    label="ClassText"
+                                    label="NationalityText"
                                     options={nationalityOptions}
                                     component={RFReactSelect} />                                
                             </section>
-                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="lang1Id"
@@ -164,7 +207,7 @@ class ParentsForm extends React.Component {
                                     component={RFReactSelect} />
                             </section>
                             
-                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3"> 
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field
                                     multi={false}
                                     name="lang2Id"
@@ -173,6 +216,210 @@ class ParentsForm extends React.Component {
                                     component={RFReactSelect} />
                             </section>
                         </div>
+
+                        <div className="panel-group smart-accordion-default" id="accordion-parent">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                <h4 className="panel-title"><a data-toggle="collapse"
+                                                                data-parent="#accordion-parent"
+                                                                href="#collapseCompanyDetails"> <i
+                                    className="fa fa-fw fa-plus-circle "/> <i
+                                    className="fa fa-fw fa-minus-circle "/> <Msg phrase="ParentJobDetailsTitleText" /> </a></h4>
+                                </div>
+                                <div id="collapseCompanyDetails" className="panel-collapse collapse in">
+                                    <div className="panel-body">
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                                                <Field name="companyName" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="CompanyNameText"
+                                                    placeholder=""/>
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                                                <Field name="companyAddress" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="AddressText"
+                                                    placeholder=""/>
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="companyPOBox" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField}
+                                                    maxLength="100"
+                                                    type="text" placeholder="" 
+                                                    label="POBoxText" />
+                                            </section> 
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="companyTownCity" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} 
+                                                    maxLength="100"
+                                                    type="text" placeholder="" 
+                                                    label="TownCityText" />
+                                            </section>
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="companyDistrict" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} normalize={upper}  
+                                                    maxLength="20"
+                                                    type="text" placeholder="" 
+                                                    label="DistrictText" />
+                                            </section>
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="companyPostalCode" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} normalize={upper}  
+                                                    maxLength="20"
+                                                    type="text" placeholder="" 
+                                                    label="PostalCodeZipCodeText" />
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                <h4 className="panel-title"><a data-toggle="collapse"
+                                                                data-parent="#accordion-parent"
+                                                                href="#collapseHomeAddressDetails"
+                                                                className="collapsed"> <i
+                                    className="fa fa-fw fa-plus-circle"/> <i
+                                    className="fa fa-fw fa-minus-circle"/> <Msg phrase="ParentHomeAddressTitleText" /> </a></h4>
+                                </div>
+                                <div id="collapseHomeAddressDetails" className="panel-collapse collapse">
+                                    <div className="panel-body">
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                                                <Field name="houseApartment" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="HouseApartmentText"
+                                                    placeholder=""/>
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                                                <Field name="homeAddress" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="AddressText"
+                                                    placeholder=""/>
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="homePOBox" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField}
+                                                    maxLength="100"
+                                                    type="text" placeholder="" 
+                                                    label="POBoxText" />
+                                            </section> 
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="homeTownCity" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} 
+                                                    maxLength="100"
+                                                    type="text" placeholder="" 
+                                                    label="TownCityText" />
+                                            </section>
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="homeDistrict" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} normalize={upper}  
+                                                    maxLength="20"
+                                                    type="text" placeholder="" 
+                                                    label="DistrictText" />
+                                            </section>
+                                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                                                <Field name="homePostalCode" labelClassName="input" 
+                                                    labelIconClassName="icon-append fa fa-user"
+                                                    component={RFField} normalize={upper}  
+                                                    maxLength="20"
+                                                    type="text" placeholder="" 
+                                                    label="PostalCodeZipCodeText" />
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                <h4 className="panel-title"><a data-toggle="collapse"
+                                                                data-parent="#accordion-parent"
+                                                                href="#collapseContactDetails"
+                                                                className="collapsed"> <i
+                                    className="fa fa-fw fa-plus-circle"/> <i
+                                    className="fa fa-fw fa-minus-circle"/> <Msg phrase="ParentContactDetailsTitleText" /> </a></h4>
+                                </div>
+                                <div id="collapseContactDetails" className="panel-collapse collapse">
+                                <div className="panel-body">
+                                    <div className="panel-body">
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
+                                                <label><Msg phrase="TelephoneNumbersText" /></label>
+                                            </section>
+                                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                                                <label><Msg phrase="DaytimeEmergencyNumberText" /></label>
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
+                                                <Field name="workPhoneNo" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="WorkPhoneNoText"
+                                                    placeholder=""/>
+                                            </section>
+                                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                                                <Field name="workPhoneNoEmergency" 
+                                                    component={RFRadioButtonList}                                                     
+                                                    label="" 
+                                                    options={yesNoOptions} />
+                                            </section>
+                                        </div>
+ 
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
+                                                <Field name="homePhoneNo" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="HomePhoneNoText"
+                                                    placeholder=""/>
+                                            </section>
+                                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                                                <Field name="homePhoneNoEmergency" 
+                                                    component={RFRadioButtonList}                                                     
+                                                    label="" 
+                                                    options={yesNoOptions} />
+                                            </section>
+                                        </div>
+
+                                        <div className="padding5px row">
+                                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
+                                                <Field name="mobileNo" labelClassName="input" labelIconClassName="icon-append fa fa-book"
+                                                    component={RFField} type="text" 
+                                                    label="MobileNoText"
+                                                    placeholder=""/>
+                                            </section>
+                                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                                                <Field name="mobileNoEmergency" 
+                                                    component={RFRadioButtonList}                                                     
+                                                    label="" 
+                                                    options={yesNoOptions} />
+                                            </section>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
 
                         {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
 

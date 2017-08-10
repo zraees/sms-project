@@ -8,6 +8,7 @@ import isEmpty from 'lodash/isEmpty';
 import PreviousSchoolsForm from './PreviousSchoolsForm'
 import SiblingDetailsForm from './SiblingDetailsForm'
 import RelativesForm from './RelativesForm'
+import ParentsForm from './ParentsForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -44,7 +45,7 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative } = this.props;
+    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative, onSubmitStudentParent } = this.props;
     //, onSubmitQualification, onSubmitExperience 
 
     return (
@@ -118,8 +119,8 @@ class TeacherEditForm extends React.Component {
                                                          data-parent="#accordion-2"
                                                          href="#collapseTwo-1"
                                                          className="collapsed"> <i
-                            className="fa fa-fw fa-plus-circle txt-color-green"/> <i
-                            className="fa fa-fw fa-minus-circle txt-color-red"/> <Msg phrase="SiblingsDetailsTitleText" /> </a></h4>
+                            className="fa fa-fw fa-plus-circle"/> <i
+                            className="fa fa-fw fa-minus-circle"/> <Msg phrase="SiblingsDetailsTitleText" /> </a></h4>
                         </div>
                         <div id="collapseTwo-1" className="panel-collapse collapse">
                           <div className="panel-body">
@@ -134,8 +135,8 @@ class TeacherEditForm extends React.Component {
                                                          data-parent="#accordion-2"
                                                          href="#collapseThree-1"
                                                          className="collapsed"> <i
-                            className="fa fa-fw fa-plus-circle txt-color-green"/> <i
-                            className="fa fa-fw fa-minus-circle txt-color-red"/> <Msg phrase="StudentRelativeTitleText" /> </a></h4>
+                            className="fa fa-fw fa-plus-circle"/> <i
+                            className="fa fa-fw fa-minus-circle"/> <Msg phrase="StudentRelativeTitleText" /> </a></h4>
                         </div>
                         <div id="collapseThree-1" className="panel-collapse collapse">
                           <div className="panel-body">
@@ -150,7 +151,8 @@ class TeacherEditForm extends React.Component {
             </div>
             <div className="tab-pane fade" id="s3">
                 { this.state.nowRender ? 
-                    <div>aaa</div>
+                    <ParentsForm studentId={studentId} 
+                                onSubmit={onSubmitStudentParent}/>
                 : <div></div>
                 }
             </div>

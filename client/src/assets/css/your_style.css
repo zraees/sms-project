@@ -130,6 +130,14 @@ fieldset {
     padding: 2px;
 }
 
+.padding4px{
+    padding: 4px;
+}
+
+.padding5px{
+    padding: 5px;
+}
+
 .studentImgAdd{
     width: 80px;
     height: 80px;

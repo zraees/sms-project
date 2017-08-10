@@ -154,6 +154,28 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       });
   }
 
+  export function submitStudentParent(values, studentId){
+    values = Object.assign({}, values, {studentId});    
+    LoaderVisibility(true);
+    axios.post('/api/StudentsParents', values)      
+      .then(function (response) {
+        
+        alert('s', 'data has been saved successfully');
+        $('#parentsGrid').DataTable().ajax.reload();  
+        $('#tabListParent').trigger('click');
+        LoaderVisibility(false);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('f', error.response.data.StatusMessage);
+        LoaderVisibility(false);
+        throw new SubmissionError({   
+            _error: 'Something went wrong, please contact system administrator!'
+          });
+      });
+  }
+
   export function remove(id, delCell){
     
       let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
@@ -324,4 +346,46 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       // do nothing
     }
   }
+
+  export function removeStudentParent(id, delCell){
+  
+    let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                              || 'Are you sure, you want to delete this record?';
+    
+    confirmation(messageText, function(ButtonPressed){
+        deleteStudentParent(ButtonPressed, id, delCell); 
+    });
+  }
+
+  function deleteStudentParent(ButtonPressed, id, delCell) {
+
+    if (isYesClicked(ButtonPressed)) {         
+        LoaderVisibility(true);
+
+        axios.post('/api/RemoveStudentParent/' + id)      
+          .then(function (response) {
+            
+            alert('s','data has been deleted successfully');
+            
+            var table = $('#parentsGrid').DataTable();                
+            table
+              .row( delCell.parents('tr') )
+              .remove()
+              .draw();
+              
+              console.log(Date());
+              LoaderVisibility(false);
+          })
+          .catch(function (error) {
+              alert('f','');
+              LoaderVisibility(false);
+          }); 
+
+      
+    }
+    else if (isNoClicked(ButtonPressed)) {
+      // do nothing
+    }
+  }
+
 export default submit

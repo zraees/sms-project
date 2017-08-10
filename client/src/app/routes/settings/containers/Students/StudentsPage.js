@@ -20,7 +20,7 @@ import Moment from '../../../../components/utils/Moment'
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
 
-import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative} from './submit'
+import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent} from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
@@ -58,7 +58,8 @@ class StudentsPage extends React.Component {
    
       var studentId = button.data('id');             // Extract info from data-* attributes
       this.setState({studentId});    
-      // just for checking ????      this.setState({studentId:5}); 
+      // just for checking ????      
+      this.setState({studentId:5}); 
     }.bind(this));
 
     // call on modal close
@@ -261,7 +262,8 @@ class StudentsPage extends React.Component {
                       onSubmit={submit} 
                       onSubmitPreviousSchool={submitPreviousSchool}
                       onSubmitSiblingDetail={submitSiblingDetail}  
-                      onSubmitStudentRelative={submitStudentRelative} />
+                      onSubmitStudentRelative={submitStudentRelative}
+                      onSubmitStudentParent={submitStudentParent} />
                   : <StudentForm 
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 

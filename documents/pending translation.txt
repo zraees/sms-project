@@ -20,6 +20,25 @@ MedicalInformationTitleText
 RelationWithGuardianText
 ParentNameText
 PassportNumberText
+TertiaryEducationText
+UniversityText
+OccupationText
+ParentJobDetailsTitleText
+ParentHomeAddressTitleText
+ParentContactDetailsTitleText
+CompanyNameText
+POBoxText
+TownCityText
+DistrictText
+PostalCodeZipCodeText
+TelephoneNumbersText
+DaytimeEmergencyNumberText
+HouseApartmentText
+WorkPhoneNoText
+HomePhoneNoText
+MobileNoText
+
+
 
 Please enter school name
 Please enter last school location
