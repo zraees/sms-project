@@ -226,7 +226,7 @@ class ParentsForm extends React.Component {
                                     className="fa fa-fw fa-plus-circle "/> <i
                                     className="fa fa-fw fa-minus-circle "/> <Msg phrase="ParentJobDetailsTitleText" /> </a></h4>
                                 </div>
-                                <div id="collapseCompanyDetails" className="panel-collapse collapse in">
+                                <div id="collapseCompanyDetails" className="panel-collapse collapse">
                                     <div className="panel-body">
                                         <div className="padding5px row">
                                             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">

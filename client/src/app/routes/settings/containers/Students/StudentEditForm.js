@@ -9,6 +9,8 @@ import PreviousSchoolsForm from './PreviousSchoolsForm'
 import SiblingDetailsForm from './SiblingDetailsForm'
 import RelativesForm from './RelativesForm'
 import ParentsForm from './ParentsForm'
+import EmergencyContactsForm from './EmergencyContactsForm'
+import SpecialServicesForm from './SpecialServicesForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -45,9 +47,8 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative, onSubmitStudentParent } = this.props;
-    //, onSubmitQualification, onSubmitExperience 
-
+    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative, onSubmitStudentParent, onSubmitStudentEmergencyContactDetail, onSubmitStudentSpecialSevices } = this.props;
+    
     return (
 
         <div>
@@ -158,17 +159,17 @@ class TeacherEditForm extends React.Component {
             </div>
             <div className="tab-pane fade" id="s4">
                 { this.state.nowRender ? 
-                     <div>sss</div>
+                    <EmergencyContactsForm studentId={studentId} 
+                                onSubmit={onSubmitStudentEmergencyContactDetail}/>                     
                 : <div></div>
                 }
             </div>
             <div className="tab-pane fade" id="s5">
-                <p>
-                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                single-origin coffee squid. Exercitation +1 labore velit, blog
-                sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee.
-                </p>
+                { this.state.nowRender ? 
+                    <SpecialServicesForm studentId={studentId} 
+                                onSubmit={onSubmitStudentSpecialSevices}/>                     
+                : <div></div>
+                }
             </div>
             <div className="tab-pane fade" id="s6">
                 <p>

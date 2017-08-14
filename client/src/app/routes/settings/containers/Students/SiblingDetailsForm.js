@@ -17,7 +17,7 @@ import mapForCombo, {mapForRadioList} from '../../../../components/utils/functio
 import { upper } from '../../../../components/utils/normalize'
 import Msg from '../../../../components/i18n/Msg'
 
-class PreviousSchoolsForm extends React.Component {
+class SiblingDetailsForm extends React.Component {
   
     constructor(props){
         super(props);
@@ -32,7 +32,7 @@ class PreviousSchoolsForm extends React.Component {
     }
     
     componentDidMount(){ 
-        console.log('componentDidMount --> PreviousSchoolsForm');
+        console.log('componentDidMount --> SiblingDetailsForm');
      
         axios.get('assets/api/common/YesNo.json')
             .then(res=>{         
@@ -104,14 +104,14 @@ class PreviousSchoolsForm extends React.Component {
                         <fieldset>
 
                         <div className="row">  
-                            <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                                 <Field name="totalFamilMembers" labelClassName="input" 
                                     labelIconClassName="icon-append fa fa-list"
                                     validate={[required,number]} component={RFField} type="text" 
                                     label="TotalFamilyMembersWithParentsText"
                                     placeholder=""/>
                             </section> 
-                            <section className="remove-col-padding col-sm-9 col-md-9 col-lg-9">
+                            <section className="remove-col-padding col-sm-8 col-md-8 col-lg-8">
                                  
                             </section>
                         </div>
@@ -249,11 +249,11 @@ class PreviousSchoolsForm extends React.Component {
        
        
 const afterSubmit = function(result, dispatch) {
-    dispatch(reset('PreviousSchoolsForm')); 
+    dispatch(reset('SiblingDetailsForm')); 
 } 
 
 export default reduxForm({
-  form: 'PreviousSchoolsForm',  // a unique identifier for this form
+  form: 'SiblingDetailsForm',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false 
-})(PreviousSchoolsForm)
+})(SiblingDetailsForm)

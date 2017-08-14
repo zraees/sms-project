@@ -176,6 +176,50 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       });
   }
 
+  export function submitStudentEmergencyContactDetail(values, studentId){
+    values = Object.assign({}, values, {studentId});    
+    LoaderVisibility(true);
+    axios.post('/api/StudentsEmergencyContactDetails', values)      
+      .then(function (response) {
+        
+        alert('s', 'data has been saved successfully');
+        $('#emergencyContactDetailsGrid').DataTable().ajax.reload();  
+        $('#tabListEmergencyContactDetail').trigger('click');
+        LoaderVisibility(false);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('f', error.response.data.StatusMessage);
+        LoaderVisibility(false);
+        throw new SubmissionError({   
+            _error: 'Something went wrong, please contact system administrator!'
+          });
+      });
+  }
+  
+  export function submitStudentSpecialSevices(values, studentId){
+    values = Object.assign({}, values, {studentId});    
+    LoaderVisibility(true);
+    axios.post('/api/StudentsSpecialSevices', values)      
+      .then(function (response) {
+        
+        alert('s', 'data has been saved successfully');
+        $('#specialServicesGrid').DataTable().ajax.reload();  
+        $('#tabListSpecialService').trigger('click');
+        LoaderVisibility(false);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('f', error.response.data.StatusMessage);
+        LoaderVisibility(false);
+        throw new SubmissionError({   
+            _error: 'Something went wrong, please contact system administrator!'
+          });
+      });
+  }  
+
   export function remove(id, delCell){
     
       let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
@@ -387,5 +431,87 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       // do nothing
     }
   }
+
+  export function removeStudentEmergencyContactDetail(id, delCell){
+  
+    let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                              || 'Are you sure, you want to delete this record?';
+    
+    confirmation(messageText, function(ButtonPressed){
+        deleteStudentEmergencyContactDetail(ButtonPressed, id, delCell); 
+    });
+  }
+
+  function deleteStudentEmergencyContactDetail(ButtonPressed, id, delCell) {
+
+    if (isYesClicked(ButtonPressed)) {         
+        LoaderVisibility(true);
+
+        axios.post('/api/RemoveStudentEmergencyContactDetail/' + id)      
+          .then(function (response) {
+            
+            alert('s','data has been deleted successfully');
+            
+            var table = $('#emergencyContactDetailsGrid').DataTable();                
+            table
+              .row( delCell.parents('tr') )
+              .remove()
+              .draw();
+              
+              console.log(Date());
+              LoaderVisibility(false);
+          })
+          .catch(function (error) {
+              alert('f','');
+              LoaderVisibility(false);
+          }); 
+
+      
+    }
+    else if (isNoClicked(ButtonPressed)) {
+      // do nothing
+    }
+  }
+
+  export function removeStudentSpecialSevices(id, delCell){
+  
+    let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                              || 'Are you sure, you want to delete this record?';
+    
+    confirmation(messageText, function(ButtonPressed){
+        deleteStudentSpecialSevices(ButtonPressed, id, delCell); 
+    });
+  }
+
+  function deleteStudentSpecialSevices(ButtonPressed, id, delCell) {
+
+    if (isYesClicked(ButtonPressed)) {         
+        LoaderVisibility(true);
+
+        axios.post('/api/RemoveStudentSpecialSevice/' + id)      
+          .then(function (response) {
+            
+            alert('s','data has been deleted successfully');
+            
+            var table = $('#specialServicesGrid').DataTable();                
+            table
+              .row( delCell.parents('tr') )
+              .remove()
+              .draw();
+              
+              console.log(Date());
+              LoaderVisibility(false);
+          })
+          .catch(function (error) {
+              alert('f','');
+              LoaderVisibility(false);
+          }); 
+
+      
+    }
+    else if (isNoClicked(ButtonPressed)) {
+      // do nothing
+    }
+  } 
 
 export default submit

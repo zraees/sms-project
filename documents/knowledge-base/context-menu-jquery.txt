@@ -1,0 +1,26 @@
+https://datatables.net/forums/discussion/24221/example-of-right-click-contextmenu-and-datatables
+
+--- option 1
+https://stackoverflow.com/questions/1206203/how-to-distinguish-between-left-and-right-mouse-click-with-jquery/2725963#2725963
+
+
+$('#element').mousedown(function(event) {
+    switch (event.which) {
+        case 1:
+            alert('Left Mouse button pressed.');
+            break;
+        case 2:
+            alert('Middle Mouse button pressed.');
+            break;
+        case 3:
+            alert('Right Mouse button pressed.');
+            break;
+        default:
+            alert('You have a strange Mouse!');
+    }
+});
+
+
+--- option 2: 
+https://stackoverflow.com/questions/23711013/how-to-add-context-menu-to-datatables-1-10
+http://live.datatables.net/caderego/1/edit

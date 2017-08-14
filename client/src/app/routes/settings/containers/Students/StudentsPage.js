@@ -20,7 +20,7 @@ import Moment from '../../../../components/utils/Moment'
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
 
-import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent} from './submit'
+import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices } from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
@@ -252,8 +252,7 @@ class StudentsPage extends React.Component {
                   { this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/> }
                 </h4>
               </div>
-              <div className="modal-body">
-                  { console.log('this.state.studentId = ', this.state.studentId ) }
+              <div className="modal-body">                  
                   { this.state.studentId > 0 ?                     
                     <StudentEditForm
                       studentId={this.state.studentId} 
@@ -263,7 +262,9 @@ class StudentsPage extends React.Component {
                       onSubmitPreviousSchool={submitPreviousSchool}
                       onSubmitSiblingDetail={submitSiblingDetail}  
                       onSubmitStudentRelative={submitStudentRelative}
-                      onSubmitStudentParent={submitStudentParent} />
+                      onSubmitStudentParent={submitStudentParent}
+                      onSubmitStudentEmergencyContactDetail={submitStudentEmergencyContactDetail} 
+                      onSubmitStudentSpecialSevices={submitStudentSpecialSevices} />
                   : <StudentForm 
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 
