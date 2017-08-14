@@ -1,0 +1,7 @@
+
+- Separate edit and manage button on studentPage.js
+
+low priority:
+=============
+- change textbox icons on all pages
+- update translation
