@@ -16,7 +16,7 @@ export default {
     {
       path: 'subjects',
       getComponent(nextState, cb){
-        System.import('./containers/Subjects').then((m)=> {
+        System.import('./containers/Subjects/SubjectsPage').then((m)=> {
           cb(null, m.default)
         })
       }
