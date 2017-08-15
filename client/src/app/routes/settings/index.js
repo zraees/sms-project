@@ -1,3 +1,5 @@
+import {Visibility as LoaderVisibility} from '../../components/Loader/Loader'
+
 export default {
   path: 'settings',
   component: require('../../components/common/Layout').default,
@@ -9,6 +11,7 @@ export default {
       path: 'students',
       getComponent(nextState, cb){
         System.import('./containers/Students/StudentsPage').then((m)=> {
+          //LoaderVisibility(true);
           cb(null, m.default)
         })
       }
@@ -33,6 +36,22 @@ export default {
       path: 'classesSections',
       getComponent(nextState, cb){
         System.import('./containers/ClassesSections/ClassesSectionsPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
+    {
+      path: 'timetable',
+      getComponent(nextState, cb){
+        System.import('./containers/Timetables/TimetablesPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
+    {
+      path: 'classes',
+      getComponent(nextState, cb){
+        System.import('./containers/Classes').then((m)=> {
           cb(null, m.default)
         })
       }

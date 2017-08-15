@@ -25,7 +25,7 @@ import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
   
-  constructor(props){
+  constructor(props){ 
    super(props);
    this.state = {
      studentId: 0,
