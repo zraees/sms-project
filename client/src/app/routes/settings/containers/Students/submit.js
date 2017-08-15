@@ -220,6 +220,28 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       });
   }  
 
+  export function submitStudentMedicalDetails(values, studentId){
+    values = Object.assign({}, values, {studentId});    
+    // LoaderVisibility(true);
+    // axios.post('/api/StudentsSpecialSevices', values)      
+    //   .then(function (response) {
+        
+    //     alert('s', 'data has been saved successfully');
+    //     $('#specialServicesGrid').DataTable().ajax.reload();  
+    //     $('#tabListSpecialService').trigger('click');
+    //     LoaderVisibility(false);
+
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     alert('f', error.response.data.StatusMessage);
+    //     LoaderVisibility(false);
+    //     throw new SubmissionError({   
+    //         _error: 'Something went wrong, please contact system administrator!'
+    //       });
+    //   });
+  }  
+  
   export function remove(id, delCell){
     
       let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 

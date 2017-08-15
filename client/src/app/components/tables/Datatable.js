@@ -64,9 +64,9 @@ export default class Datatable extends React.Component {
       });
     }
 
-    if (!toolbar) {
-      element.parent().find(".dt-toolbar").append('<div class="text-right"><img src="assets/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-    }
+    // if (!toolbar) {
+    //   element.parent().find(".dt-toolbar").append('<div class="text-right"><img src="assets/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+    // }
 
     if (this.props.detailsFormat) {
       const format = this.props.detailsFormat;

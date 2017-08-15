@@ -20,7 +20,7 @@ import Moment from '../../../../components/utils/Moment'
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
 
-import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices } from './submit'
+import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices, submitStudentMedicalDetails } from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 class StudentsPage extends React.Component {
@@ -136,8 +136,6 @@ class StudentsPage extends React.Component {
                         </div>
                     </div>
                     
-                    {/*<Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />*/}
-                    
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="StudentsGrid"  
                       options={{
@@ -217,7 +215,6 @@ class StudentsPage extends React.Component {
                       </thead>
                     </Datatable>
 
-
                   </div>
                   {/* end widget content */}
 
@@ -264,7 +261,8 @@ class StudentsPage extends React.Component {
                       onSubmitStudentRelative={submitStudentRelative}
                       onSubmitStudentParent={submitStudentParent}
                       onSubmitStudentEmergencyContactDetail={submitStudentEmergencyContactDetail} 
-                      onSubmitStudentSpecialSevices={submitStudentSpecialSevices} />
+                      onSubmitStudentSpecialSevices={submitStudentSpecialSevices}
+                      onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
                   : <StudentForm 
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 

@@ -11,6 +11,7 @@ import RelativesForm from './RelativesForm'
 import ParentsForm from './ParentsForm'
 import EmergencyContactsForm from './EmergencyContactsForm'
 import SpecialServicesForm from './SpecialServicesForm'
+import MedicalDetailsForm from './MedicalDetailsForm'
 import alert from '../../../../components/utils/alerts'
 import mapForCombo from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
@@ -47,7 +48,7 @@ class TeacherEditForm extends React.Component {
     }
 
   render() {
-    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative, onSubmitStudentParent, onSubmitStudentEmergencyContactDetail, onSubmitStudentSpecialSevices } = this.props;
+    const { studentId, onSubmit, nationalities, countries, onSubmitPreviousSchool, onSubmitSiblingDetail, onSubmitStudentRelative, onSubmitStudentParent, onSubmitStudentEmergencyContactDetail, onSubmitStudentSpecialSevices, onSubmitStudentMedicalDetails } = this.props;
     
     return (
 
@@ -172,12 +173,11 @@ class TeacherEditForm extends React.Component {
                 }
             </div>
             <div className="tab-pane fade" id="s6">
-                <p>
-                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                single-origin coffee squid. Exercitation +1 labore velit, blog
-                sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee.
-                </p>
+                { this.state.nowRender ? 
+                    <MedicalDetailsForm studentId={studentId} 
+                                onSubmit={onSubmitStudentMedicalDetails}/>                     
+                : <div></div>
+                }
             </div>
         </div>
         
