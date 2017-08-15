@@ -282,5 +282,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StudentsClasses">
+      <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
+        <MappingFragment StoreEntitySet="StudentsClasses">
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

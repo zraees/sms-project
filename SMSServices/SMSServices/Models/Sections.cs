@@ -17,6 +17,7 @@ namespace SMSServices.Models
         public Sections()
         {
             this.ClassesSections = new HashSet<ClassesSections>();
+            this.StudentsClasses = new HashSet<StudentsClasses>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,6 @@ namespace SMSServices.Models
         public string NameAr { get; set; }
     
         public virtual ICollection<ClassesSections> ClassesSections { get; set; }
+        public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
     }
 }

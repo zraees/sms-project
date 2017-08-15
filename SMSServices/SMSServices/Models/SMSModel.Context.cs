@@ -46,5 +46,6 @@ namespace SMSServices.Models
         public virtual DbSet<Students> Students { get; set; }
         public virtual DbSet<Teachers> Teachers { get; set; }
         public virtual DbSet<CodingFormats> CodingFormats { get; set; }
+        public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
     }
 }

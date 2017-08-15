@@ -183,6 +183,17 @@
     <Property Name="RepeatGrades" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
+  <EntityType Name="StudentsClasses">
+    <Key>
+      <PropertyRef Name="StudentClassId" />
+    </Key>
+    <Property Name="StudentClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="ShiftId" Type="int" Nullable="false" />
+    <Property Name="ClassId" Type="int" Nullable="false" />
+    <Property Name="SectionId" Type="int" Nullable="false" />
+    <Property Name="BatchID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Subjects">
     <Key>
       <PropertyRef Name="ID" />
@@ -416,6 +427,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StudentsClasses_Batches">
+    <End Role="Batches" Type="Self.Batches" Multiplicity="1" />
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batches">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Classes">
+    <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Sections">
+    <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Shifts">
+    <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="ShiftId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Students">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TeacherExperiences_Cities">
     <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
     <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
@@ -564,6 +635,7 @@
     <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentsClasses" EntityType="Self.StudentsClasses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
@@ -621,6 +693,26 @@
     <AssociationSet Name="FK_Students_States" Association="Self.FK_Students_States">
       <End Role="States" EntitySet="States" />
       <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Batches" Association="Self.FK_StudentsClasses_Batches">
+      <End Role="Batches" EntitySet="Batches" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Classes" Association="Self.FK_StudentsClasses_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Sections" Association="Self.FK_StudentsClasses_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Shifts" Association="Self.FK_StudentsClasses_Shifts">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Students" Association="Self.FK_StudentsClasses_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
     </AssociationSet>
     <AssociationSet Name="FK_TeacherExperiences_Cities" Association="Self.FK_TeacherExperiences_Cities">
       <End Role="Cities" EntitySet="Cities" />

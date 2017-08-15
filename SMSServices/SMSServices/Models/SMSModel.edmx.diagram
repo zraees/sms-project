@@ -50,6 +50,12 @@
         <AssociationConnector Association="SMSModel.FK_TeachersClasses_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Teachers" />
         <EntityTypeShape EntityType="SMSModel.CodingFormats" Width="1.5" PointX="3.125" PointY="0.5" />
+        <EntityTypeShape EntityType="SMSModel.StudentsClasses" Width="1.5" PointX="15.25" PointY="14.875" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Batches" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Classes" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Sections" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Shifts" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Students" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

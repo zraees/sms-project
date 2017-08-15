@@ -147,6 +147,7 @@
     <Compile Include="Models\Languages.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -179,6 +180,9 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Students.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentsClasses.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Subjects.cs">

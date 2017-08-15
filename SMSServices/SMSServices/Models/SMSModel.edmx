@@ -188,6 +188,17 @@
           <Property Name="RepeatGrades" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="smalldatetime" />
         </EntityType>
+        <EntityType Name="StudentsClasses">
+          <Key>
+            <PropertyRef Name="StudentClassId" />
+          </Key>
+          <Property Name="StudentClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ShiftId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="BatchID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Subjects">
           <Key>
             <PropertyRef Name="ID" />
@@ -421,6 +432,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentsClasses_Batches">
+          <End Role="Batches" Type="Self.Batches" Multiplicity="1" />
+          <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="BatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Sections">
+          <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+          <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Shifts">
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+          <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeacherExperiences_Cities">
           <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
           <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
@@ -569,6 +640,7 @@
           <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsClasses" EntityType="Self.StudentsClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
@@ -626,6 +698,26 @@
           <AssociationSet Name="FK_Students_States" Association="Self.FK_Students_States">
             <End Role="States" EntitySet="States" />
             <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Batches" Association="Self.FK_StudentsClasses_Batches">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Classes" Association="Self.FK_StudentsClasses_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Sections" Association="Self.FK_StudentsClasses_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Shifts" Association="Self.FK_StudentsClasses_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Students" Association="Self.FK_StudentsClasses_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
           </AssociationSet>
           <AssociationSet Name="FK_TeacherExperiences_Cities" Association="Self.FK_TeacherExperiences_Cities">
             <End Role="Cities" EntitySet="Cities" />
@@ -794,6 +886,27 @@
             <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
           </AssociationSet>
           <EntitySet Name="CodingFormats" EntityType="SMSModel.CodingFormats" />
+          <EntitySet Name="StudentsClasses" EntityType="SMSModel.StudentsClasses" />
+          <AssociationSet Name="FK_StudentsClasses_Batches" Association="SMSModel.FK_StudentsClasses_Batches">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Classes" Association="SMSModel.FK_StudentsClasses_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Sections" Association="SMSModel.FK_StudentsClasses_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Shifts" Association="SMSModel.FK_StudentsClasses_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Students" Association="SMSModel.FK_StudentsClasses_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="QualificationTypes">
           <Key>
@@ -909,6 +1022,7 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="Batches" ToRole="StudentsClasses" />
         </EntityType>
         <EntityType Name="Classes">
           <Key>
@@ -920,6 +1034,7 @@
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="Classes" ToRole="ClassesSections" />
           <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="Classes" ToRole="TeachersClasses" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="Classes" ToRole="StudentsClasses" />
         </EntityType>
         <EntityType Name="ClassesSections">
           <Key>
@@ -942,6 +1057,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="Sections" ToRole="ClassesSections" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="Sections" ToRole="StudentsClasses" />
         </EntityType>
         <EntityType Name="Shifts">
           <Key>
@@ -952,6 +1068,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="Shifts" ToRole="ClassesSections" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="Shifts" ToRole="StudentsClasses" />
         </EntityType>
         <EntityType Name="Subjects">
           <Key>
@@ -1201,6 +1318,7 @@
           <NavigationProperty Name="Languages1" Relationship="SMSModel.FK_Students_Languages1" FromRole="Students" ToRole="Languages" />
           <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
           <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
         </EntityType>
         <EntityType Name="Teachers">
           <Key>
@@ -1391,6 +1509,82 @@
           <Property Name="TableName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Format" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="StudentsClasses">
+          <Key>
+            <PropertyRef Name="StudentClassId" />
+          </Key>
+          <Property Name="StudentClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ShiftId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Batches" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="StudentsClasses" ToRole="Batches" />
+          <NavigationProperty Name="Classes" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="StudentsClasses" ToRole="Classes" />
+          <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
+          <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+        </EntityType>
+        <Association Name="FK_StudentsClasses_Batches">
+          <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="BatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Classes">
+          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Sections">
+          <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Shifts">
+          <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Students">
+          <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1675,6 +1869,18 @@
                 <ScalarProperty Name="Format" ColumnName="Format" />
                 <ScalarProperty Name="TableName" ColumnName="TableName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsClasses">
+            <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
+              <MappingFragment StoreEntitySet="StudentsClasses">
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

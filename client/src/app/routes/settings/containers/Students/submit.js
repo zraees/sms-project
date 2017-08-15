@@ -35,7 +35,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
   function insert(values){
     LoaderVisibility(true);
-    //console.log(values);
+    console.log(values);
     axios.post('/api/students', values)      
       .then(function (response) {
         

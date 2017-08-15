@@ -36,12 +36,14 @@ namespace SMSServices.Utilities
 
             if (GeneratedCode.FirstOrDefault().Code != null)
                 int.TryParse(GeneratedCode.FirstOrDefault().Code,out Seq);
-            
-                //format = "STD/YYYY/MM/DD/#####";
-                Code = format.Replace("YYYY", DateTime.Now.Year.ToString().PadLeft(4,'0'))
-                            .Replace("MM", DateTime.Now.Month.ToString().PadLeft(2,'0'))
-                            .Replace("DD", DateTime.Now.Day.ToString().PadLeft(2, '0'))
-                            .Replace("#####", Seq.ToString().PadLeft(5, '0'));
+
+            Seq = Seq + 1;
+
+            //format = "STD/YYYY/MM/DD/#####";
+            Code = format.Replace("YYYY", DateTime.Now.Year.ToString().PadLeft(4,'0'))
+                        .Replace("MM", DateTime.Now.Month.ToString().PadLeft(2,'0'))
+                        .Replace("DD", DateTime.Now.Day.ToString().PadLeft(2, '0'))
+                        .Replace("#####", Seq.ToString().PadLeft(5, '0'));
 
             return Code;
         }

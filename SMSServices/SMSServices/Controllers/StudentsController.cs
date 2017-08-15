@@ -57,6 +57,14 @@ namespace SMSServices.Controllers
         {
             try
             {
+                List<StudentsClasses> classes = new List<StudentsClasses>();
+                classes.Add(new StudentsClasses()
+                    {
+                        ShiftId = Student.ShiftId,
+                        ClassId = Student.ClassId,
+                        SectionId = Student.SectionId,
+                        BatchID = Student.BatchId
+                    });
                 entities.Students.Add(new Students()
                 {
                     //StudentId
@@ -71,6 +79,7 @@ namespace SMSServices.Controllers
                     NameAr3 = "" + Student.NameAr3,
                     NameAr4 = "" + Student.NameAr4,
                     FullNameAr = "" + Student.FullNameAr,
+                    StudentsClasses = classes,
                     DOB = Student.DOB,
                     FullNamePassport = "" + Student.FullNamePassport,
                     FullNameArPassport = "" + Student.FullNameArPassport,
@@ -97,7 +106,8 @@ namespace SMSServices.Controllers
                     //RepeatGrades = Student.RepeatGrades
                     CountryId = Student.CountryId,
                     StateId = Student.StateId,
-                    CityId = Student.CityId
+                    CityId = Student.CityId,
+                    CreatedOn = DateTime.Now
                 });
                 entities.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
