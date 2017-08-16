@@ -1,0 +1,2 @@
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.xml
+D:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\bin\Newtonsoft.Json.xml

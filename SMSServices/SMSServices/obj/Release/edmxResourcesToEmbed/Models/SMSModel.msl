@@ -285,6 +285,7 @@
     <EntitySetMapping Name="StudentsClasses">
       <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
         <MappingFragment StoreEntitySet="StudentsClasses">
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
           <ScalarProperty Name="BatchID" ColumnName="BatchID" />
           <ScalarProperty Name="SectionId" ColumnName="SectionId" />
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />

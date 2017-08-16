@@ -10,7 +10,7 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
   function submit(values){
-    console.log(values);
+    //console.log(values);
     return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
       .then(res=>{            
           //throw {email: 'That email is already taken'}
@@ -35,10 +35,34 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
   function insert(values){
     LoaderVisibility(true);
-    console.log(values);
+    //console.log(values);
     axios.post('/api/students', values)      
       .then(function (response) {
-        
+        //multipart/form-data; boundary=${formData._boundary}
+        console.log('values.files ==> ', values.files[0]);
+
+        let formData = new FormData(); 
+        formData.append('file', values.files[0]);
+        const config = {
+            headers: { 'content-type': 'x-www-form-urlencoded' }
+        }
+        const url = '/api/PostImage/';
+        console.log('formData ==> ', formData);
+
+        axios.post(url, formData, config)
+            .then(function(response) {
+                console.log('image upload success, ', response);
+            })
+            .catch(function(error) {
+              if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+                }
+                console.log('image upload error, ', error);
+            });
+
+
         LoaderVisibility(false);
         alert('s', 'student details have been saved.');
         $('#StudentPopup').modal('hide');  

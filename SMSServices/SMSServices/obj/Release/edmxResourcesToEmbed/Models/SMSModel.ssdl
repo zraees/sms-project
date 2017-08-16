@@ -189,6 +189,7 @@
     </Key>
     <Property Name="StudentClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="RollNo" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="ShiftId" Type="int" Nullable="false" />
     <Property Name="ClassId" Type="int" Nullable="false" />
     <Property Name="SectionId" Type="int" Nullable="false" />

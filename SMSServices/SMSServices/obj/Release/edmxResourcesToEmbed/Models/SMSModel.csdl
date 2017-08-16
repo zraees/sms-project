@@ -756,6 +756,7 @@
     <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
     <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
     <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+    <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_StudentsClasses_Batches">
     <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />

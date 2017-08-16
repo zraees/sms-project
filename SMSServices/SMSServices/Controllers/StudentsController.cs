@@ -26,6 +26,18 @@ namespace SMSServices.Controllers
             return new AutoCodeGeneration().GenerateCode("Students", "Code");
         }
 
+        [HttpPost]
+        [Route("api/GetStudentRollNo/")]
+        public string GetStudentRollNo(Students Student)
+        {
+            Dictionary<object, object> conditions = new Dictionary<object, object>();
+            conditions.Add("ShiftId", Student.ShiftId);
+            conditions.Add("ClassId", Student.ClassId);
+            conditions.Add("SectionId", Student.SectionId);
+            conditions.Add("BatchID", Student.BatchId);
+            return new AutoCodeGeneration().GenerateCode("StudentsClasses", "RollNo", conditions);
+        }
+
         // GET api/<controller>
         public IEnumerable<Students> Get()
         {
@@ -63,7 +75,8 @@ namespace SMSServices.Controllers
                         ShiftId = Student.ShiftId,
                         ClassId = Student.ClassId,
                         SectionId = Student.SectionId,
-                        BatchID = Student.BatchId
+                        BatchID = Student.BatchId,
+                        RollNo = GetStudentRollNo(Student)
                     });
                 entities.Students.Add(new Students()
                 {

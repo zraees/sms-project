@@ -1,6 +1,7 @@
 use sms
 
 select * from students
+select * from StudentsClasses
 select * from NLog
 
 select * from ClassesSections
@@ -41,3 +42,4 @@ SELect * from Cities where StateId in (select StateId from States where CountryI
 
 SELECT MAX(RIGHT(Code, 5)) as Code FROM Students 
 	WHERE YEAR(CreatedOn) = 2017 AND  MONTH(CreatedOn) = 8 AND  Day(CreatedOn) = 9
+	

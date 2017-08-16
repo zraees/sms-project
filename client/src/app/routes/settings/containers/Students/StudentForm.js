@@ -105,7 +105,7 @@ class StudentForm extends React.Component {
     
     axios.get('/api/GetStudentGeneratedCode')
       .then(res=>{      
-        console.log(res);       
+        //console.log(res);       
         const initData = {
             "studentId": 0,
             "code": res.data

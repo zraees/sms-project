@@ -194,6 +194,7 @@
           </Key>
           <Property Name="StudentClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="RollNo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ShiftId" Type="int" Nullable="false" />
           <Property Name="ClassId" Type="int" Nullable="false" />
           <Property Name="SectionId" Type="int" Nullable="false" />
@@ -1524,6 +1525,7 @@
           <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
           <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+          <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_StudentsClasses_Batches">
           <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
@@ -1875,6 +1877,7 @@
           <EntitySetMapping Name="StudentsClasses">
             <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
               <MappingFragment StoreEntitySet="StudentsClasses">
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
