@@ -10,7 +10,7 @@ import moment from 'moment'
  
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
-import { Field, reduxForm } from 'redux-form'
+import { Field, FieldArray, reduxForm } from 'redux-form'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
@@ -47,10 +47,10 @@ class TimetablesPage extends React.Component {
   }
   
   componentDidMount(){ 
-
+     
     //console.log('componentDidMount --> TeacherPage');
     //var self =this;
-    $('#teachersGrid').on('click', 'td', function(event) {
+    $('#timetablesGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) {
         
@@ -63,7 +63,7 @@ class TimetablesPage extends React.Component {
         // console.log(success);
         
         // if(success){
-        //   var table = $('#teachersGrid').DataTable();                
+        //   var table = $('#timetablesGrid').DataTable();                
         //   table
         //     .row( $(this).parents('tr') )
         //     .remove()
@@ -96,8 +96,8 @@ class TimetablesPage extends React.Component {
     $('#teacherPopup').on('hidden.bs.modal', function (e) {            
       this.setState({timetableId : 0});
       //console.log('close popup');
-      //$('#teachersGrid').DataTable().ajax.reload();      
-          var table = $('#teachersGrid').DataTable();                
+      //$('#timetablesGrid').DataTable().ajax.reload();      
+          var table = $('#timetablesGrid').DataTable();                
           table.clear();
           table.ajax.reload( null, false ); // user paging is not reset on reload
 
@@ -109,20 +109,48 @@ class TimetablesPage extends React.Component {
           this.setState({shiftOptions});
       });
     
-    axios.get('/api/GetTimetableGeneratedCode')
-      .then(res=>{      
-        console.log(res);       
-        const initData = {
+    // axios.get('/api/GetTimetableGeneratedCode')
+    //   .then(res=>{      
+    //     console.log(res);       
+    //     const initData = {
+    //         "timetableId": 0,
+    //         "code": res.data,
+    //         "days": [
+    //           {
+    //             "firstName": "abc",
+    //             "lastName": "123 tg"
+    //           },
+    //           {
+    //             "firstName": "ttt",
+    //             "lastName": "ddd"
+    //           }
+    //         ]
+    //     }
+
+    //     this.props.initialize(initData);
+        
+    //   });
+    
+      let days = [];
+      days.push({"firstName": "abc 1", "lastName": "123 x"});
+      days.push({"firstName": "abc 2", "lastName": "123 xx"});
+      days.push({"firstName": "abc 3", "lastName": "123 Xxx"});
+      days.push({"firstName": "abc 4", "lastName": "123 Xxx"});
+      days.push({"firstName": "abc 5", "lastName": "123 Xxx"});
+      days.push({"firstName": "abc 6", "lastName": "123 Xxx"});
+      days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
+
+      const initData = {
             "timetableId": 0,
-            "code": res.data
+            "code": '123',
+            "days": days
         }
 
         this.props.initialize(initData);
-        
-      });
 
       LoaderVisibility(false);
   }
+ 
 
   handleShiftBlur(obj, value){
     axios.get('/api/GetClassesByShiftId/' + value)
@@ -145,6 +173,44 @@ class TimetablesPage extends React.Component {
     const { handleSubmit, pristine, reset, submitting } = this.props
     const { shiftOptions, classOptions, sectionOptions, timetableId } = this.state;    
     var self = this;
+
+const renderdays = ({ fields }) => (
+  <ul className="smart-timeline-list">
+    {/* <li>
+      <button type="button" onClick={() => fields.push({})}>Add day</button>
+    </li> */}
+    {fields.map((day, index) =>
+      <li key={index}>
+        <div className="smart-timeline-icon">
+          {index + 1}
+        </div>
+        <div className="smart-timeline-time">
+          <small><Msg phrase={"Day"+`${index + 1}`+"Text"}/></small>
+        </div>
+        <div className="smart-timeline-content">
+          <button
+            type="button"
+            title="Remove day"
+            onClick={() => fields.remove(index)}/>
+          <h4>day #{index + 1}</h4>
+          <Field
+            name={`${day}.firstName`}
+            type="text"
+            component={RFField}
+            placeholder="First Name"/>
+          <Field
+            name={`${day}.lastName`}
+            type="text"
+            component={RFField}
+            placeholder="Last Name"/> 
+        </div>
+      </li> 
+    )}
+  </ul>
+)
+
+//http://redux-form.com/6.0.0-rc.1/examples/fieldArrays/
+//http://sarj-shockwave.rhcloud.com/#/forms/plugins
 
     return (
       
@@ -268,6 +334,16 @@ class TimetablesPage extends React.Component {
                           </section>
                       </div>
 
+                      <div className="row">
+                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                          {/* <div className="well well-sm">  */}
+                            <div className="smart-timeline">
+                              <FieldArray name="days" component={renderdays}/>                               
+                            </div> 
+                          {/* </div> */}
+                        </div>
+                      </div>                       
+
                     </fieldset>
 
                     <footer>
@@ -282,18 +358,10 @@ class TimetablesPage extends React.Component {
                   </form>
 
                   <Loader isLoading={this.props.isLoading} />
-                  <Datatable id="teachersGrid"  
+                      {/* ajax: {"url":'/api/timetables', "dataSrc": ""},  */}
+                  {/* <Datatable id="timetablesGrid"  
                     options={{
-                      ajax: {"url":'/api/teachers', "dataSrc": ""}, 
-                      columnDefs: [
-                          { 
-                              "type": "date",
-                              "render": function ( data, type, row ) {
-                                  //return moment(data).format('Do MMM YYYY' || 'llll')
-                                  return renderDate(data);
-                              },
-                              "targets": 5 
-                          },
+                      columnDefs: [ 
                           {
                               // The `data` parameter refers to the data for the cell (defined by the
                               // `data` option, which defaults to the column being worked with, in
@@ -309,7 +377,7 @@ class TimetablesPage extends React.Component {
                               },
                               "className": "dt-center",
                               "sorting": false,
-                              "targets": 7
+                              "targets": 3
                           },
                           {
                               // The `data` parameter refers to the data for the cell (defined by the
@@ -326,7 +394,7 @@ class TimetablesPage extends React.Component {
                               },
                               "className": "dt-center",
                               "sorting": false,
-                              "targets": 8
+                              "targets": 4
                           }
                           ,{ 
                               "render": function ( data, type, row ) {
@@ -341,23 +409,17 @@ class TimetablesPage extends React.Component {
                               }.bind(self),
                               "className": "dt-center",
                               "sorting": false,
-                              "targets": 9
+                              "targets": 5
                           }
                       ],
-                      columns: [
-                        //{
-                        //    "className":      'details-control',
-                        //    "orderable":      false,
-                        //    "data":           null,
-                        //    "defaultContent": ''
-                        //},
+                      columns: [  
+                        {data: "PeriodNo"},
+                        {data: "PeriodStartTime"},    
+                        {data: "PeriodEndTime"},  
+                        {data: "timetableId"},  
+                        {data: "timetableId"},  
                         {data: "timetableId"},
-                        {data: "Name"},
-                        {data: "Email"},    
-                        {data: "IDNo"},  
-                        {data: "Gender"},  
-                        {data: "DOB"},  
-                        {data: "Rating"},  
+                        {data: "timetableId"},
                         {data: "timetableId"},
                         {data: "timetableId"},
                         {data: "timetableId"}
@@ -371,20 +433,34 @@ class TimetablesPage extends React.Component {
                     className="table table-striped table-bordered table-hover"
                     width="100%">
                     <thead>
-                    <tr>
-                      <th data-hide="mobile-p"><Msg phrase="IDText"/></th>
-                      <th data-class="expand"><Msg phrase="NameText"/></th>
-                      <th data-hide="mobile-p"><Msg phrase="EmailAddressText"/></th>
-                      <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>
-                      <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>
-                      <th data-hide="mobile-p"><Msg phrase="DOBText"/></th>
-                      <th data-hide="mobile-p"><Msg phrase="RatingText"/></th>
-                      <th data-hide="mobile-p"></th>
-                      <th data-hide="mobile-p"></th>
-                      <th data-hide="mobile-p"></th>
+                    <tr> 
+                      <th data-class="expand"><Msg phrase="PeriodNoText"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="PeriodStartTimeText"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="PeriodEndTimeText"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day1Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day2Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day3Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day4Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day5Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day6Text"/></th>
+                      <th data-hide="mobile-p"><Msg phrase="Day7Text"/></th>
                     </tr>
                     </thead>
-                  </Datatable>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>08:00 AM</td>
+                        <td>08:30 AM</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </Datatable> */}
 
                 </div>
                 {/* end widget div */}

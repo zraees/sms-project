@@ -32,7 +32,19 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
           }
       })   
   }
+  //https://stackoverflow.com/questions/27045598/how-to-upload-files-from-reactjs-to-express-endpoint
+  //https://medium.com/ecmastack/uploading-files-with-react-js-and-node-js-e7e6b707f4ef
+  //https://github.com/mzabriskie/axios/blob/master/examples/upload/index.html
+  //https://github.com/mzabriskie/axios/issues/318
 
+  //react dropzone:
+  //https://www.npmjs.com/package/react-dropzone-js 
+  //https://github.com/okonet/react-dropzone
+  
+  // dropzone.js
+  //http://www.dropzonejs.com/#
+  //https://howtonode.org/really-simple-file-uploads
+  
   function insert(values){
     LoaderVisibility(true);
     //console.log(values);
