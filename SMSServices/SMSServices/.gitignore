@@ -39,7 +39,12 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-packages/
+obj/
+
+# static contents directories
+Content/
+APILog/
+fonts/
 
 # Typescript v1 declaration files
 typings/

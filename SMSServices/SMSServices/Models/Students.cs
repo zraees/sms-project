@@ -60,6 +60,7 @@ namespace SMSServices.Models
         public Nullable<bool> HasStudentRepeatGrade { get; set; }
         public string RepeatGrades { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public string StudentPic { get; set; }
     
         public virtual ICollection<Admissions> Admissions { get; set; }
         public virtual Cities Cities { get; set; }

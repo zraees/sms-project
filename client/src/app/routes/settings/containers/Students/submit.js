@@ -1,36 +1,43 @@
 import {SubmissionError} from 'redux-form'
-import axios from 'axios' 
+import axios from 'axios'  
 
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, removeAllSpecialChar} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
   function submit(values){
-    //console.log(values);
-    return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
-      .then(res=>{            
-          //throw {email: 'That email is already taken'}
-          if(res.data.Email===''){
+    console.log(values);
+    if(values.studentId>0){
+      update(values); 
+    }
+    else{
+      insert(values);
+    }   
+    
+    // return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
+    //   .then(res=>{            
+    //       //throw {email: 'That email is already taken'}
+    //       if(res.data.Email===''){
                     
-            if(values.studentId>0){
-              update(values); 
-            }
-            else{
-              insert(values);
-            }      
+    //         if(values.studentId>0){
+    //           update(values); 
+    //         }
+    //         else{
+    //           insert(values);
+    //         }      
 
-          }
-          else{
-            throw new SubmissionError({   
-              email: 'email is already taken',
-              _error: 'You cannot proceed further!'
-            })
-          }
-      })   
+    //       }
+    //       else{
+    //         throw new SubmissionError({   
+    //           email: 'email is already taken',
+    //           _error: 'You cannot proceed further!'
+    //         })
+    //       }
+    //   })   
   }
   //https://stackoverflow.com/questions/27045598/how-to-upload-files-from-reactjs-to-express-endpoint
   //https://medium.com/ecmastack/uploading-files-with-react-js-and-node-js-e7e6b707f4ef
@@ -47,33 +54,16 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   
   function insert(values){
     LoaderVisibility(true);
-    //console.log(values);
+
     axios.post('/api/students', values)      
       .then(function (response) {
         //multipart/form-data; boundary=${formData._boundary}
-        console.log('values.files ==> ', values.files[0]);
+        console.log('response ==> ', response);
+        console.log('values.files ==> ', values.files);
 
-        let formData = new FormData(); 
-        formData.append('file', values.files[0]);
-        const config = {
-            headers: { 'content-type': 'x-www-form-urlencoded' }
+        if((values.files||{})!={}){
+          uploadPic(values, response.data);
         }
-        const url = '/api/PostImage/';
-        console.log('formData ==> ', formData);
-
-        axios.post(url, formData, config)
-            .then(function(response) {
-                console.log('image upload success, ', response);
-            })
-            .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-                }
-                console.log('image upload error, ', error);
-            });
-
 
         LoaderVisibility(false);
         alert('s', 'student details have been saved.');
@@ -82,6 +72,9 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       })
       .catch(function (error) {
         if (error.response) { 
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
           alert('f', error.response.data.StatusMessage);   
           LoaderVisibility(false);     
                 //throw new SubmissionError({ _error: "That's weird. "});   
@@ -104,6 +97,62 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
         LoaderVisibility(false);      
       });      
   }
+
+  function uploadPic(values, studentId){
+    
+    let data = new FormData();
+    let fileName = studentId  + '_' +  removeAllSpecialChar(values.fullName);
+
+    data.append('file', values.files[0]);
+    data.append('folderName', 'StudentPics');
+    data.append('fileName', fileName);
+    data.append('dbOperation', 'update');
+    data.append('tableName', 'students');
+    data.append('fieldName', 'studentPic');
+    data.append('whereFieldName', 'studentId');
+    data.append('whereFieldValue', studentId);
+    data.append('allowedFileExt', '.jpg,.png,.gif');
+    data.append('sizeInMBs', 1);
+
+    //data.append('document', {'folderName':'StudentPics', 'fileName': fileName});    
+
+    //axios.post('/api/PostImage/StudentPics/' +fileName, data)
+    axios.post('/api/PostImage', data)
+      .then(function (response) {
+        console.log('image upload sucess, ', response);
+        //updatePicPath({'studentId': studentId, 'studentPic': fileName});
+      })
+      .catch(function(error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            alert('f', error.response.data.error);   
+          }
+          console.log('image upload error, ', error);
+      });
+
+  } 
+
+  // function updatePicPath(values){
+    
+  //   console.log('in updatePicPath');
+  //   axios.put('/api/AddStudentPicPath/' + values.studentId + '/' + values.studentPic)
+  //     .then(function (response) {
+  //       console.log('updatePicPath sucess, ', response);
+        
+  //     })
+  //     .catch(function(error) {
+  //       if (error.response) {
+  //           console.log(error.response.data);
+  //           console.log(error.response.status);
+  //           console.log(error.response.headers);
+  //           alert('f', error.response.data.StatusMessage);   
+  //         }
+  //         console.log('updatePicPath error, ', error);
+  //     });
+
+  // } 
 
   function update(values){
     //console.log('in update');

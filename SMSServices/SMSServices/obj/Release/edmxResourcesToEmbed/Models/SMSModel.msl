@@ -209,6 +209,7 @@
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="SMSModel.Students">
         <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="StudentPic" ColumnName="StudentPic" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
           <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />

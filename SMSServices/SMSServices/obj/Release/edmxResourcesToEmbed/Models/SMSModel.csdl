@@ -551,6 +551,7 @@
     <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
     <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
     <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
+    <Property Name="StudentPic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Teachers">
     <Key>

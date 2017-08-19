@@ -78,7 +78,7 @@ namespace SMSServices.Controllers
                         BatchID = Student.BatchId,
                         RollNo = GetStudentRollNo(Student)
                     });
-                entities.Students.Add(new Students()
+                Students std = new Students()
                 {
                     //StudentId
                     Code = new AutoCodeGeneration().GenerateCode("Students", "Code"),   //"" + Student.Code,
@@ -121,9 +121,26 @@ namespace SMSServices.Controllers
                     StateId = Student.StateId,
                     CityId = Student.CityId,
                     CreatedOn = DateTime.Now
-                });
+                };
+                entities.Students.Add(std);
                 entities.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
+
+                //var entity = entities.Students.Find(std.StudentId);
+                //if (entity != null)
+                //{
+                //    entities.Entry(entity).CurrentValues.SetValues(new Students() { StudentIDNo = "111 222 333" });
+                //    entities.SaveChanges();
+                //}
+
+                //using (var newContext = new SMSEntities())
+                //{
+                //    std.StudentPic = std.StudentId .ToString() + "11 22 33 44 55";
+                //    newContext.Students.Attach(std);
+                //    newContext.Entry(std).Property(X => X.StudentIDNo).IsModified = true;
+                //    newContext.SaveChanges();
+                //}
+
+                return Request.CreateResponse(HttpStatusCode.OK, std.StudentId);
                 //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
             }
             catch (Exception ex)
@@ -155,6 +172,7 @@ namespace SMSServices.Controllers
             ////    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             ////}
         }
+        
         private int GetErrorCode(DbEntityValidationException dbEx)
         {
             int ErrorCode = (int)HttpStatusCode.BadRequest;
@@ -200,6 +218,31 @@ namespace SMSServices.Controllers
             catch //(DbUpdateException)
             {
                 throw;
+            }
+        }
+
+        // PUT api/<controller>/5
+
+        [Route("api/AddStudentPicPath/{StudentId}/{StudentPic}")]
+        public HttpResponseMessage Put(int StudentId, string StudentPic)
+        {
+            try
+            {
+                using (var newContext = new SMSEntities())
+                {
+                    Students Student = new Students();
+                    Student.StudentId = Student.StudentId;
+                    Student.StudentPic = Student.StudentPic;
+                    newContext.Students.Attach(Student);
+                    newContext.Entry(Student).Property(X => X.StudentPic).IsModified = true;
+                    newContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Done"); 
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ..." + ex.Message);
             }
         }
 

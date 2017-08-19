@@ -1,8 +1,8 @@
 use sms
 
-select * from students
+select * from students order by studentid desc
 select * from StudentsClasses
-select * from NLog
+select * from NLog order by id desc
 
 select * from ClassesSections
 select * from teachersSubjects
@@ -14,11 +14,11 @@ select * from Batches
 select * from Languages
 select * from Religions
 
-delete dbo.TeacherExperiences
-delete dbo.TeacherQualifications
-delete dbo.TeachersClasses
-delete dbo.TeachersSubjects
-delete Teachers
+--delete dbo.TeacherExperiences
+--delete dbo.TeacherQualifications
+--delete dbo.TeachersClasses
+--delete dbo.TeachersSubjects
+--delete Teachers
 --delete ClassesSections
 --select * from shifts
 --select * from sections

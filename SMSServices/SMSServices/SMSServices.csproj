@@ -203,6 +203,7 @@
     <Compile Include="Models\Languages.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentToUpload.cs" />
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>

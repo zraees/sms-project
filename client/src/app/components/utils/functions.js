@@ -94,4 +94,8 @@ export function renderDate( data ){
 	return moment(data).format(getLang().frontend || 'Do MMM YYYY')
 }
 
+export function removeAllSpecialChar(data){ 
+    return data.replace(/[^a-zA-Z0-9]/g, "");
+}
+
 export default mapForCombo

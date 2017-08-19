@@ -164,6 +164,7 @@
           <Property Name="FullNameArPassport" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="FatherIDNo" Type="nvarchar" MaxLength="20" />
           <Property Name="StudentIDNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="StudentPic" Type="nvarchar" MaxLength="255" />
           <Property Name="PlaceOfBirth" Type="nvarchar" MaxLength="50" />
           <Property Name="NationalityId" Type="int" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
@@ -1320,6 +1321,7 @@
           <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
           <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
           <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
+          <Property Name="StudentPic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Teachers">
           <Key>
@@ -1801,6 +1803,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="SMSModel.Students">
               <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="StudentPic" ColumnName="StudentPic" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
                 <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />
