@@ -23,7 +23,7 @@ import submit from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
-import {RFField, RFReactSelect} from '../../../../components/ui'
+import {RFField, RFReactSelect, RFLabel} from '../../../../components/ui'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -36,10 +36,14 @@ class TimetablesPage extends React.Component {
       singleEditMode: 0,
       shiftOptions: [],
       classOptions: [],
-      sectionOptions: []
+      sectionOptions: [],
+      teacherOptions: [],      
+      subjectOptions: []
    }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
+    this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
+    this.handleSubjectBlur = this.handleSubjectBlur.bind(this);
   }
   
   componentWillMount() {
@@ -132,13 +136,30 @@ class TimetablesPage extends React.Component {
     //   });
     
       let days = [];
-      days.push({"firstName": "abc 1", "lastName": "123 x"});
-      days.push({"firstName": "abc 2", "lastName": "123 xx"});
-      days.push({"firstName": "abc 3", "lastName": "123 Xxx"});
-      days.push({"firstName": "abc 4", "lastName": "123 Xxx"});
-      days.push({"firstName": "abc 5", "lastName": "123 Xxx"});
-      days.push({"firstName": "abc 6", "lastName": "123 Xxx"});
-      days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
+      let periods = [];
+      periods = [{"periodStart":"08:00 AM", "periodEnd":"08:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1", "lastName": "123 x"}, 
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"09:01 AM", "periodEnd":"09:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"}];
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods}); 
+      // days.push({"firstName": "abc 2", "lastName": "123 xx"});
+      // days.push({"firstName": "abc 3", "lastName": "123 Xxx"});
+      // days.push({"firstName": "abc 4", "lastName": "123 Xxx"});
+      // days.push({"firstName": "abc 5", "lastName": "123 Xxx"});
+      // days.push({"firstName": "abc 6", "lastName": "123 Xxx"});
+      // days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
 
       const initData = {
             "timetableId": 0,
@@ -150,7 +171,27 @@ class TimetablesPage extends React.Component {
 
       LoaderVisibility(false);
   }
+
+  handleTeacherBlur(obj, value){
+    // axios.get('/api/Lookup/subjectOptions/countryid/' + value)
+    //   .then(res=>{
+    //       const subjectOptions = mapForCombo(res.data);//res.data.map(function(item, index){
+    //           //return {value: item.Id + "", label: item.Name};
+    //       //});                       
+    //       this.setState({subjectOptions});
+    //   });
  
+  }
+
+  handleSubjectBlur(obj, value){ 
+    // axios.get('/api/Lookup/cities/subjectId/' + value)
+    //   .then(res=>{
+    //       const cities = mapForCombo(res.data); // res.data.map(function(item, index){
+    //       //     return {value: item.Id + "", label: item.Name};
+    //       // });                       
+    //       this.setState({cities});
+    //   });
+  }
 
   handleShiftBlur(obj, value){
     axios.get('/api/GetClassesByShiftId/' + value)
@@ -188,25 +229,78 @@ const renderdays = ({ fields }) => (
           <small><Msg phrase={"Day"+`${index + 1}`+"Text"}/></small>
         </div>
         <div className="smart-timeline-content">
-          <button
-            type="button"
-            title="Remove day"
-            onClick={() => fields.remove(index)}/>
-          <h4>day #{index + 1}</h4>
-          <Field
-            name={`${day}.firstName`}
-            type="text"
-            component={RFField}
-            placeholder="First Name"/>
-          <Field
-            name={`${day}.lastName`}
-            type="text"
-            component={RFField}
-            placeholder="Last Name"/> 
+          <div className="table-responsive">
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            <FieldArray name={`${day}.periods`} component={renderPeriods}/>
+          </table>
+          </div> 
         </div>
       </li> 
     )}
   </ul>
+)
+
+
+const renderPeriods = ({ fields }) => (
+  <tr>
+    {/* <li>
+      <button type="button" onClick={() => fields.push()}>Add Hobby</button>
+    </li> */}
+    {fields.map((period, index) =>
+      <td key={index}>
+        {/* <div className="well well-sm well-light"> */}
+          {/* <button
+            type="button"
+            title="Remove Hobby"
+            onClick={() => fields.remove(index)}/>
+          <Field
+            name={hobby}
+            type="text"
+            component={RFField}
+            placeholder={`Hobby #${index + 1}`}/> */}
+            <div class="smart-timeline-icon">{`${index + 1}`}</div>
+            {/* {`Period Start ${period}.periodStart`}
+            {`Period End ${period}.periodEnd`} */} 
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <Field name={`${period}.periodStart`}                  
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+                <Field name={`${period}.periodEnd`}                  
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+              </section>
+            </div> 
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <Field
+                  multi={false}
+                  name={`${period}.teacherId`}
+                  label="TeacherText"
+                  options={this.state.teacherOptions}
+                  onBlur={this.handleTeacherBlur}
+                  component={RFReactSelect} />
+              </section>
+            </div>
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <Field
+                  multi={false}
+                  name={`${period}.subjectId`}
+                  label="SubectText"
+                  options={this.state.subjectOptions}
+                  onBlur={this.handleSubjectBlur}
+                  component={RFReactSelect} />
+              </section>
+            </div>
+            
+          {/* </div> */}
+      </td>
+    )}
+    {/* {fields.error && <li className="error">{fields.error}</li>} */}
+  </tr>
 )
 
 //http://redux-form.com/6.0.0-rc.1/examples/fieldArrays/
@@ -519,3 +613,64 @@ export default reduxForm({
   keepDirtyOnReinitialize: false 
 })(TimetablesPage)
  
+// const renderPeriods = ({ fields }) => (
+//   <ul id="horizontal-list">
+//     {/* <li>
+//       <button type="button" onClick={() => fields.push()}>Add Hobby</button>
+//     </li> */}
+//     {fields.map((period, index) =>
+//       <li key={index}>
+//         {/* <div className="well well-sm well-light"> */}
+//           {/* <button
+//             type="button"
+//             title="Remove Hobby"
+//             onClick={() => fields.remove(index)}/>
+//           <Field
+//             name={hobby}
+//             type="text"
+//             component={RFField}
+//             placeholder={`Hobby #${index + 1}`}/> */}
+//             <div class="smart-timeline-icon">{`${index + 1}`}</div>
+//             {/* {`Period Start ${period}.periodStart`}
+//             {`Period End ${period}.periodEnd`} */} 
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field name={`${period}.periodStart`}                  
+//                   component={RFLabel} 
+//                   disabled={true}
+//                   type="text"/>
+//                 <Field name={`${period}.periodEnd`}                  
+//                   component={RFLabel} 
+//                   disabled={true}
+//                   type="text"/>
+//               </section>
+//             </div> 
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field
+//                   multi={false}
+//                   name={`${period}.teacherId`}
+//                   label="TeacherText"
+//                   options={this.state.teacherOptions}
+//                   onBlur={this.handleTeacherBlur}
+//                   component={RFReactSelect} />
+//               </section>
+//             </div>
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field
+//                   multi={false}
+//                   name={`${period}.subjectId`}
+//                   label="SubectText"
+//                   options={this.state.subjectOptions}
+//                   onBlur={this.handleSubjectBlur}
+//                   component={RFReactSelect} />
+//               </section>
+//             </div>
+            
+//           {/* </div> */}
+//       </li>
+//     )}
+//     {/* {fields.error && <li className="error">{fields.error}</li>} */}
+//   </ul>
+// )

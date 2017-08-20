@@ -8,6 +8,7 @@ import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
@@ -19,9 +20,14 @@ import Moment from '../../../../components/utils/Moment'
 
 import StudentForm from './StudentForm'
 import StudentEditForm from './StudentEditForm'
+import EditGeneralInfo from './EditGeneralInfo'
 
 import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices, submitStudentMedicalDetails } from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
+
+//http://live.datatables.net/caderego/1/edit
+//https://www.npmjs.com/package/ui-contextmenu
+//https://github.com/swisnl/jQuery-contextMenu
 
 class StudentsPage extends React.Component {
   
@@ -29,9 +35,12 @@ class StudentsPage extends React.Component {
    super(props);
    this.state = {
      studentId: 0,
+     singleEditMode: 0,
      nationalities: [],
      countries: []
    }
+    
+    this.handleClick = this.handleClick.bind(this);
   }
   
   componentWillMount() {
@@ -57,6 +66,9 @@ class StudentsPage extends React.Component {
       var button = $(e.relatedTarget);                // Button that triggered the modal
    
       var studentId = button.data('id');             // Extract info from data-* attributes
+      console.log('button.data(single-edit)', button.data('single-edit'));
+
+      this.setState({singleEditMode: button.data('single-edit')}); 
       this.setState({studentId});    
       // just for checking ????      
       //this.setState({studentId:5}); 
@@ -85,6 +97,10 @@ class StudentsPage extends React.Component {
         });
  
       LoaderVisibility(false);
+  }
+
+  handleClick(e, data) {
+    console.log(data);
   }
 
   render() {
@@ -136,10 +152,24 @@ class StudentsPage extends React.Component {
                         </div>
                     </div>
                     
+                    <ContextMenu id="some_unique_identifier">
+                      <MenuItem data={"some_data"} onClick={this.handleClick}>
+                        ContextMenu Item 1
+                      </MenuItem>
+                      <MenuItem data={"some_data"} onClick={this.handleClick}>
+                        ContextMenu Item 2
+                      </MenuItem>
+                      <MenuItem divider />
+                      <MenuItem data={"some_data"} onClick={this.handleClick}>
+                        ContextMenu Item 3
+                      </MenuItem>
+                    </ContextMenu>
+
                     <Loader isLoading={this.props.isLoading} />
+                    {/* ajax: {"url":'/api/Students', "dataSrc": ""}, */}
                     <Datatable id="StudentsGrid"  
                       options={{
-                        ajax: {"url":'/api/Students', "dataSrc": ""},
+                        
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -160,11 +190,29 @@ class StudentsPage extends React.Component {
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  //console.log(data);
+                                  //console.log(type);
+                                  //console.log(row);
+                                    //return data +' ('+ row[0]+')';
+                                    //id = data;
+                                    //console.log(this.state.teacherId);
+                                    return '<a data-toggle="modal" data-single-edit="1" title="Edit" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
                                 "targets": 7
+                            },
+                            {
+                                // The `data` parameter refers to the data for the cell (defined by the
+                                // `data` option, which defaults to the column being worked with, in
+                                // this case `data: 0`.
+                                "render": function ( data, type, row ) {
+                                    //return '<ContextMenuTrigger id={MENU_TYPE} holdToDisplay={1000}><div className="well">manage</div></ContextMenuTrigger>'
+                                    return '<a data-toggle="modal" data-single-edit="0" title="Manage" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
+                                },
+                                "className": "dt-center",
+                                "sorting": false,
+                                "targets": 8
                             }
                             ,{ 
                                 "render": function ( data, type, row ) { 
@@ -172,7 +220,7 @@ class StudentsPage extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 8
+                                "targets": 9
                             }
                         ],
                         columns: [
@@ -189,6 +237,7 @@ class StudentsPage extends React.Component {
                           {data: "StudentIDNo"},  
                           {data: "Gender"},  
                           {data: "DOB"},   
+                          {data: "StudentId"},
                           {data: "StudentId"},
                           {data: "StudentId"}
                         ],
@@ -211,8 +260,23 @@ class StudentsPage extends React.Component {
                         <th data-hide="mobile-p"><Msg phrase="DOBText"/></th> 
                         <th data-hide="mobile-p"></th>
                         <th data-hide="mobile-p"></th>
+                        <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>
+                      <tbody>
+                      <tr class="react-contextmenu-wrapper">
+                        <td >a</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>  
+                      </tbody>
                     </Datatable>
 
                   </div>
@@ -245,12 +309,19 @@ class StudentsPage extends React.Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="StudentPopupLabel">
-                  { this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/> }
+                <h4 className="modal-title" id="StudentPopupLabel"> 
+                  { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/>)}
                 </h4>
               </div>
               <div className="modal-body">                  
-                  { this.state.studentId > 0 ?                     
+                  { this.state.singleEditMode == 1 ?
+                  <EditGeneralInfo teacherId={this.state.teacherId} 
+                    nationalities={this.state.nationalities} 
+                    genderOptions={this.state.genderOptions}
+                    countries={this.state.countries}
+                    onSubmit={submit} />
+                  :
+                  ( this.state.studentId > 0 ?                     
                     <StudentEditForm
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 
@@ -267,7 +338,7 @@ class StudentsPage extends React.Component {
                       studentId={this.state.studentId} 
                       nationalities={this.state.nationalities} 
                       countries={this.state.countries} 
-                      onSubmit={submit} />
+                      onSubmit={submit} />)
                   }      
               </div>
             </div>

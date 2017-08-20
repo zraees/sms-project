@@ -232,7 +232,7 @@ class TeachersPage extends React.Component {
                                     //return data +' ('+ row[0]+')';
                                     //id = data;
                                     //console.log(this.state.teacherId);
-                                    return '<a data-toggle="modal" data-single-edit="0"  title="Manage" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-single-edit="0" title="Manage" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
