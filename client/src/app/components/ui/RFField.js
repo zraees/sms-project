@@ -6,7 +6,7 @@ import LanguageStore from '../i18n/LanguageStore'
 const RFField = ({input, label, type, disabled, readOnly, labelClassName, labelIconClassName, placeholder, onBlur, maxLength, meta: {asyncValidating, touched, error, warning}}) => (
     
       <div>     
-        <label><Msg phrase={label}/></label>
+        {label==""?"":<label><Msg phrase={label}/></label>}
         <label className={classNames(labelClassName, {'state-error':(touched && error!==undefined)||asyncValidating })}>    
           <i className={labelIconClassName} aria-hidden="true"/>
           <input {...input} 

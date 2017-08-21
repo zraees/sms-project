@@ -8,7 +8,9 @@ import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 import moment from 'moment'
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import contextmenu from 'ui-contextmenu'
+ 
+
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
 import WidgetGrid from '../../../../components/widgets/WidgetGrid'
@@ -19,15 +21,21 @@ import Msg from '../../../../components/i18n/Msg'
 import Moment from '../../../../components/utils/Moment'
 
 import StudentForm from './StudentForm'
-import StudentEditForm from './StudentEditForm'
+import StudentDocumentsForm from './StudentDocumentsForm'
 import EditGeneralInfo from './EditGeneralInfo'
+import PreviousSchoolsForm from './PreviousSchoolsForm'
+import SiblingDetailsForm from './SiblingDetailsForm'
+import RelativesForm from './RelativesForm'
+import ParentsForm from './ParentsForm'
+import EmergencyContactsForm from './EmergencyContactsForm'
+import SpecialServicesForm from './SpecialServicesForm'
+import MedicalDetailsForm from './MedicalDetailsForm'
 
 import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices, submitStudentMedicalDetails } from './submit'
 import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 
 //http://live.datatables.net/caderego/1/edit
-//https://www.npmjs.com/package/ui-contextmenu
-//https://github.com/swisnl/jQuery-contextMenu
+//https://github.com/mar10/jquery-ui-contextmenu
 
 class StudentsPage extends React.Component {
   
@@ -37,20 +45,142 @@ class StudentsPage extends React.Component {
      studentId: 0,
      singleEditMode: 0,
      nationalities: [],
-     countries: []
+     countries: [],
+     popupPageName: '',
+     refreshGrid: false
    }
     
     this.handleClick = this.handleClick.bind(this);
+    this.renderModalBody = this.renderModalBody.bind(this);
+    
   }
   
   componentWillMount() {
     LoaderVisibility(true);
   }
   
+  renderModalBody(){
+    console.log('this.state.popupPageName ==> ', this.state.popupPageName);
+      
+   // this.setState({refreshGrid:false});       
+    if(this.state.popupPageName == "EditGeneralInfo"){ 
+      //this.setState({refreshGrid:true});
+      return <EditGeneralInfo teacherId={this.state.teacherId} 
+          nationalities={this.state.nationalities} 
+          genderOptions={this.state.genderOptions}
+          countries={this.state.countries}
+          onSubmit={submit} />
+    }
+    else if(this.state.popupPageName == "StudentDocumentsForm"){
+      return <StudentDocumentsForm
+          studentId={this.state.studentId}   
+          //onSubmitPreviousSchool={submitPreviousSchool} 
+          />
+    }
+    else if(this.state.popupPageName == "PreviousSchoolsForm"){
+      return <PreviousSchoolsForm
+          studentId={this.state.studentId}   
+          onSubmitPreviousSchool={submitPreviousSchool} />
+    }
+    else if(this.state.popupPageName == "SiblingDetailsForm"){
+      return <SiblingDetailsForm
+          studentId={this.state.studentId}   
+          onSubmitSiblingDetail={submitSiblingDetail} />
+    }
+    else if(this.state.popupPageName == "RelativesForm"){
+      return <RelativesForm
+          studentId={this.state.studentId}   
+          onSubmitStudentRelative={submitStudentRelative} />
+    }
+    else if(this.state.popupPageName == "ParentsForm"){
+      return <ParentsForm
+          studentId={this.state.studentId}   
+          onSubmitStudentParent={submitStudentParent} />
+    }
+    else if(this.state.popupPageName == "EmergencyContactsForm"){
+      return <EmergencyContactsForm
+          studentId={this.state.studentId}   
+          onSubmitStudentEmergencyContactDetail={submitStudentEmergencyContactDetail} />
+    }
+    else if(this.state.popupPageName == "SpecialServicesForm"){
+      return <SpecialServicesForm
+          studentId={this.state.studentId}   
+          onSubmitStudentSpecialSevices={submitStudentSpecialSevices} />
+    }
+    else if(this.state.popupPageName == "MedicalDetailsForm"){
+      return <MedicalDetailsForm
+          studentId={this.state.studentId}   
+          onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
+    }
+    
+  }
+
   componentDidMount(){ 
 
     console.log('componentDidMount --> StudentPage');
-    //var self =this;
+
+    $(document).contextmenu({
+      delegate: ".dataTable td",
+      autoFocus: true,
+      preventContextMenuForPopup: true,
+      preventSelect: true,
+      taphold: true,
+      menu: [
+      {title: "Edit", cmd: "EditGeneralInfo", uiIcon: "ui-icon-scissors"},
+      {title: "Documents", cmd: "StudentDocumentsForm", uiIcon: "ui-icon-scissors"},
+      {title: "Parents Details", cmd: "ParentsForm", uiIcon: "ui-icon-copy"},
+      {title: "Emergency Contacts", cmd: "EmergencyContactsForm", uiIcon: "ui-icon-copy"},
+      {title: "----"},
+      {title: "Previous School Details", cmd: "PreviousSchoolsForm", uiIcon: "ui-icon-copy"},
+      {title: "Sibling Details", cmd: "SiblingDetailsForm", uiIcon: "ui-icon-clipboard"},   //, disabled: true
+      {title: "Relatives Details", cmd: "RelativesForm", uiIcon: "ui-icon-copy"},
+      {title: "Special Services", cmd: "SpecialServicesForm", uiIcon: "ui-icon-copy"},
+      {title: "Medical Details", cmd: "MedicalDetailsForm", uiIcon: "ui-icon-copy"},        
+      // {title: "More", children: [
+      //   {title: "Use an 'action' callback", action: function(event, ui) {
+      //     alert("action callback sub1");
+      //     } },
+      //   {title: "Tooltip (static)", cmd: "sub2", tooltip: "Static tooltip"},
+      //   {title: "Tooltip (dynamic)", tooltip: function(event, ui){ return "" + Date(); }},
+      //   {title: "Custom icon", cmd: "browser", uiIcon: "ui-icon custom-icon-firefox"},
+      //   {title: "Disabled (dynamic)", disabled: function(event, ui){
+      //     return false;
+      //     }}
+      //   ]}
+      ],
+      select: function(event, ui) {
+        var coltext = ui.target.text();
+        var colvindex = ui.target.parent().children().index(ui.target);
+        var rowindex = ui.target.parent().index(); 
+        var colindex = $('table thead tr th:eq('+colvindex+')').data('column-index');
+        var id = $('table tbody tr:eq('+rowindex+') td:last-child a').data('tid');
+        //alert(colvindex);
+        //alert(rowindex);
+        //alert(id);
+        id = 55;
+        //console.log(ui.cmd);
+
+        this.setState({popupPageName:ui.cmd, studentId:id});
+        $('#StudentPopup').modal('show'); 
+        // switch(ui.cmd){
+        //   case "EditGeneralInfo":
+        //     this.setState({popupPageName:'', studentId:id})
+        //     //alert('^' + coltext + '$ ' + colindex);
+        //     break;
+        //   case "PreviousSchoolsForm":
+        //     alert('PreviousSchoolsForm');
+        //     break;
+        // }
+      }.bind(this),
+      beforeOpen: function(event, ui) {
+        var $menu = ui.menu,
+          $target = ui.target,
+          extraData = ui.extraData;
+          //ui.menu.zIndex( $(event.target).zIndex() + 1);
+        //ui.menu.zIndex(9999);
+        }
+    });
+
     $('#StudentsGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) { 
@@ -66,7 +196,7 @@ class StudentsPage extends React.Component {
       var button = $(e.relatedTarget);                // Button that triggered the modal
    
       var studentId = button.data('id');             // Extract info from data-* attributes
-      console.log('button.data(single-edit)', button.data('single-edit'));
+      // console.log('button.data(single-edit)', button.data('single-edit'));
 
       this.setState({singleEditMode: button.data('single-edit')}); 
       this.setState({studentId});    
@@ -77,26 +207,27 @@ class StudentsPage extends React.Component {
     // call on modal close
     $('#StudentPopup').on('hidden.bs.modal', function (e) {            
       this.setState({studentId : 0});     
-      var table = $('#StudentsGrid').DataTable();                
-      table.clear();
-      table.ajax.reload( null, false ); // user paging is not reset on reload
-
+      //if(this.state.refreshGrid){
+        var table = $('#StudentsGrid').DataTable();                
+        table.clear();
+        table.ajax.reload( null, false ); // user paging is not reset on reload
+      //}
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
     axios.get('/api/nationalities/')
-        .then(res=>{
-            const nationalities = mapForCombo(res.data);      
-            this.setState({nationalities});
-        });
+      .then(res=>{
+          const nationalities = mapForCombo(res.data);      
+          this.setState({nationalities});
+      });
  
     axios.get('/api/countries/')
-        .then(res=>{
-            const countries = mapForCombo(res.data);
-            this.setState({countries});
-        });
- 
-      LoaderVisibility(false);
+      .then(res=>{
+          const countries = mapForCombo(res.data);
+          this.setState({countries});
+      });
+
+    LoaderVisibility(false);
   }
 
   handleClick(e, data) {
@@ -150,20 +281,7 @@ class StudentsPage extends React.Component {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <ContextMenu id="some_unique_identifier">
-                      <MenuItem data={"some_data"} onClick={this.handleClick}>
-                        ContextMenu Item 1
-                      </MenuItem>
-                      <MenuItem data={"some_data"} onClick={this.handleClick}>
-                        ContextMenu Item 2
-                      </MenuItem>
-                      <MenuItem divider />
-                      <MenuItem data={"some_data"} onClick={this.handleClick}>
-                        ContextMenu Item 3
-                      </MenuItem>
-                    </ContextMenu>
+                    </div> 
 
                     <Loader isLoading={this.props.isLoading} />
                     {/* ajax: {"url":'/api/Students', "dataSrc": ""}, */}
@@ -207,7 +325,6 @@ class StudentsPage extends React.Component {
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                    //return '<ContextMenuTrigger id={MENU_TYPE} holdToDisplay={1000}><div className="well">manage</div></ContextMenuTrigger>'
                                     return '<a data-toggle="modal" data-single-edit="0" title="Manage" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
@@ -264,8 +381,20 @@ class StudentsPage extends React.Component {
                       </tr>
                       </thead>
                       <tbody>
-                      <tr class="react-contextmenu-wrapper">
+                      <tr>
                         <td >a</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>  
+                      <tr>
+                        <td >a12</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -313,33 +442,12 @@ class StudentsPage extends React.Component {
                   { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/>)}
                 </h4>
               </div>
-              <div className="modal-body">                  
-                  { this.state.singleEditMode == 1 ?
-                  <EditGeneralInfo teacherId={this.state.teacherId} 
-                    nationalities={this.state.nationalities} 
-                    genderOptions={this.state.genderOptions}
-                    countries={this.state.countries}
-                    onSubmit={submit} />
-                  :
-                  ( this.state.studentId > 0 ?                     
-                    <StudentEditForm
-                      studentId={this.state.studentId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      onSubmit={submit} 
-                      onSubmitPreviousSchool={submitPreviousSchool}
-                      onSubmitSiblingDetail={submitSiblingDetail}  
-                      onSubmitStudentRelative={submitStudentRelative}
-                      onSubmitStudentParent={submitStudentParent}
-                      onSubmitStudentEmergencyContactDetail={submitStudentEmergencyContactDetail} 
-                      onSubmitStudentSpecialSevices={submitStudentSpecialSevices}
-                      onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
-                  : <StudentForm 
-                      studentId={this.state.studentId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      onSubmit={submit} />)
-                  }      
+              <div className="modal-body"> 
+                       
+                {
+                  this.renderModalBody()
+                }       
+                   
               </div>
             </div>
             {/* /.modal-content */}
@@ -354,4 +462,4 @@ class StudentsPage extends React.Component {
 
 }
 
-export default StudentsPage;
+export default StudentsPage; 
