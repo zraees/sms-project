@@ -217,6 +217,15 @@
     "HomePhoneNoText": "Home Phone No.",
     "MobileNoText": "Mobile No.",
 
+    "DocumentsText": "Documents",
+    "ParentsDetailsText": "Parents Details",
+    "EmergencyContactsText": "Emergency Contacts",
+    "PreviousSchoolDetailsText": "Previous Schools Details",
+    "SiblingDetailsText": "Sibling Details",
+    "RelativesDetailsText": "Relatives Details",
+    "SpecialServicesText": "Special Services",
+    "MedicalDetailsText": "MEdical Details",
+    
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",
     "Please enter Identity card number": "شناختی کارڈ نمبر درج کریں",

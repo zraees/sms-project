@@ -39,6 +39,14 @@ Day7Text
 
 DocumentTitleName
 AddDocumentText
+DocumentsText
+ParentsDetailsText
+EmergencyContactsText
+PreviousSchoolDetailsText
+SiblingDetailsText
+RelativesDetailsText
+SpecialServicesText
+MedicalDetailsText
 
 Please enter other details about contact person
 Please enter special service that your child ever evaluated. e.g: Speech/Language therapy, counseling, wears hearing aids or others

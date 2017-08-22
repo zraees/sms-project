@@ -7,9 +7,7 @@ import axios from 'axios'
 import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 import moment from 'moment'
-
-import contextmenu from 'ui-contextmenu'
- 
+import contextmenu from 'ui-contextmenu' 
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
@@ -17,6 +15,7 @@ import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
 import Msg from '../../../../components/i18n/Msg'
+import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Moment from '../../../../components/utils/Moment'
 
@@ -59,65 +58,67 @@ class StudentsPage extends React.Component {
     LoaderVisibility(true);
   }
   
-  renderModalBody(){
-    console.log('this.state.popupPageName ==> ', this.state.popupPageName);
-      
+  renderModalBody(popupPageName, studentId){
+    //console.log('this.state.popupPageName ==> ', this.state.popupPageName);
+    var modalBody;     
    // this.setState({refreshGrid:false});       
-    if(this.state.popupPageName == "EditGeneralInfo"){ 
+    if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
-      return <EditGeneralInfo teacherId={this.state.teacherId} 
-          nationalities={this.state.nationalities} 
-          genderOptions={this.state.genderOptions}
-          countries={this.state.countries}
+      modalBody = <EditGeneralInfo studentId={studentId} 
+          //nationalities={this.state.nationalities} 
+          //genderOptions={this.state.genderOptions}
+          //countries={this.state.countries}
           onSubmit={submit} />
     }
-    else if(this.state.popupPageName == "StudentDocumentsForm"){
-      return <StudentDocumentsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "DocumentsText"){
+      modalBody = <StudentDocumentsForm
+          studentId={studentId}   
           //onSubmitPreviousSchool={submitPreviousSchool} 
           />
     }
-    else if(this.state.popupPageName == "PreviousSchoolsForm"){
-      return <PreviousSchoolsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "PreviousSchoolDetailsText"){
+      modalBody = <PreviousSchoolsForm
+          studentId={studentId}   
           onSubmitPreviousSchool={submitPreviousSchool} />
     }
-    else if(this.state.popupPageName == "SiblingDetailsForm"){
-      return <SiblingDetailsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "SiblingDetailsText"){
+      modalBody = <SiblingDetailsForm
+          studentId={studentId}   
           onSubmitSiblingDetail={submitSiblingDetail} />
     }
-    else if(this.state.popupPageName == "RelativesForm"){
-      return <RelativesForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "RelativesDetailsText"){
+      modalBody = <RelativesForm
+          studentId={studentId}   
           onSubmitStudentRelative={submitStudentRelative} />
     }
-    else if(this.state.popupPageName == "ParentsForm"){
-      return <ParentsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "ParentsDetailsText"){
+      modalBody = <ParentsForm
+          studentId={studentId}   
           onSubmitStudentParent={submitStudentParent} />
     }
-    else if(this.state.popupPageName == "EmergencyContactsForm"){
-      return <EmergencyContactsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "EmergencyContactsText"){
+      modalBody = <EmergencyContactsForm
+          studentId={studentId}   
           onSubmitStudentEmergencyContactDetail={submitStudentEmergencyContactDetail} />
     }
-    else if(this.state.popupPageName == "SpecialServicesForm"){
-      return <SpecialServicesForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "SpecialServicesText"){
+      modalBody = <SpecialServicesForm
+          studentId={studentId}   
           onSubmitStudentSpecialSevices={submitStudentSpecialSevices} />
     }
-    else if(this.state.popupPageName == "MedicalDetailsForm"){
-      return <MedicalDetailsForm
-          studentId={this.state.studentId}   
+    else if(popupPageName == "MedicalDetailsText"){
+      modalBody = <MedicalDetailsForm
+          studentId={studentId}   
           onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
     }
     
+    return modalBody;
   }
 
   componentDidMount(){ 
 
     console.log('componentDidMount --> StudentPage');
+    //let messageText = LanguageStore.getData().phrases["AddNewText"]  
 
     $(document).contextmenu({
       delegate: ".dataTable td",
@@ -126,16 +127,16 @@ class StudentsPage extends React.Component {
       preventSelect: true,
       taphold: true,
       menu: [
-      {title: "Edit", cmd: "EditGeneralInfo", uiIcon: "ui-icon-scissors"},
-      {title: "Documents", cmd: "StudentDocumentsForm", uiIcon: "ui-icon-scissors"},
-      {title: "Parents Details", cmd: "ParentsForm", uiIcon: "ui-icon-copy"},
-      {title: "Emergency Contacts", cmd: "EmergencyContactsForm", uiIcon: "ui-icon-copy"},
+      {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
+      {title: LanguageStore.getData().phrases["DocumentsText"], cmd: "DocumentsText", uiIcon: "ui-icon-document"},
+      {title: LanguageStore.getData().phrases["ParentsDetailsText"], cmd: "ParentsDetailsText", uiIcon: "ui-icon-person"},
+      {title: LanguageStore.getData().phrases["EmergencyContactsText"], cmd: "EmergencyContactsText", uiIcon: "ui-icon-contact"},
       {title: "----"},
-      {title: "Previous School Details", cmd: "PreviousSchoolsForm", uiIcon: "ui-icon-copy"},
-      {title: "Sibling Details", cmd: "SiblingDetailsForm", uiIcon: "ui-icon-clipboard"},   //, disabled: true
-      {title: "Relatives Details", cmd: "RelativesForm", uiIcon: "ui-icon-copy"},
-      {title: "Special Services", cmd: "SpecialServicesForm", uiIcon: "ui-icon-copy"},
-      {title: "Medical Details", cmd: "MedicalDetailsForm", uiIcon: "ui-icon-copy"},        
+      {title: LanguageStore.getData().phrases["PreviousSchoolDetailsText"], cmd: "PreviousSchoolDetailsText", uiIcon: "ui-icon-disk"},
+      {title: LanguageStore.getData().phrases["SiblingDetailsText"], cmd: "SiblingDetailsText", uiIcon: "	ui-icon-home"},   //, disabled: true
+      {title: LanguageStore.getData().phrases["RelativesDetailsText"], cmd: "RelativesDetailsText", uiIcon: "ui-icon-folder-collapsed"},
+      {title: LanguageStore.getData().phrases["SpecialServicesText"], cmd: "SpecialServicesText", uiIcon: "ui-icon-star"},
+      {title: LanguageStore.getData().phrases["MedicalDetailsText"], cmd: "MedicalDetailsText", uiIcon: "ui-icon-tag"},        
       // {title: "More", children: [
       //   {title: "Use an 'action' callback", action: function(event, ui) {
       //     alert("action callback sub1");
@@ -160,7 +161,7 @@ class StudentsPage extends React.Component {
         id = 55;
         //console.log(ui.cmd);
 
-        this.setState({popupPageName:ui.cmd, studentId:id});
+        this.setState({popupPageName:ui.cmd, studentId:id, refreshGrid:(ui.cmd=='EditText'?true:false)});
         $('#StudentPopup').modal('show'); 
         // switch(ui.cmd){
         //   case "EditGeneralInfo":
@@ -207,11 +208,11 @@ class StudentsPage extends React.Component {
     // call on modal close
     $('#StudentPopup').on('hidden.bs.modal', function (e) {            
       this.setState({studentId : 0});     
-      //if(this.state.refreshGrid){
+      if(this.state.refreshGrid){
         var table = $('#StudentsGrid').DataTable();                
         table.clear();
         table.ajax.reload( null, false ); // user paging is not reset on reload
-      //}
+      }
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
@@ -235,7 +236,8 @@ class StudentsPage extends React.Component {
   }
 
   render() {
-  
+    const { studentId, popupPageName } = this.state;
+    const { isLoading } = this.props;
     var self = this;
     return (
       
@@ -283,7 +285,7 @@ class StudentsPage extends React.Component {
                         </div>
                     </div> 
 
-                    <Loader isLoading={this.props.isLoading} />
+                    <Loader isLoading={isLoading} />
                     {/* ajax: {"url":'/api/Students', "dataSrc": ""}, */}
                     <Datatable id="StudentsGrid"  
                       options={{
@@ -439,13 +441,14 @@ class StudentsPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="StudentPopupLabel"> 
-                  { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/>)}
+                  {/* { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/>)} */}
+                  {<Msg phrase={popupPageName} />}
                 </h4>
               </div>
               <div className="modal-body"> 
                        
                 {
-                  this.renderModalBody()
+                  this.renderModalBody(popupPageName, studentId)
                 }       
                    
               </div>

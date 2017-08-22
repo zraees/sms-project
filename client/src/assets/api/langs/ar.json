@@ -214,6 +214,15 @@
     "HomePhoneNoText": "Home Phone No.",
     "MobileNoText": "Mobile No.",
     
+    "DocumentsText": "Documents",
+    "ParentsDetailsText": "Parents Details",
+    "EmergencyContactsText": "Emergency Contacts",
+    "PreviousSchoolDetailsText": "Previous Schools Details",
+    "SiblingDetailsText": "Sibling Details",
+    "RelativesDetailsText": "Relatives Details",
+    "SpecialServicesText": "Special Services",
+    "MedicalDetailsText": "MEdical Details",
+    
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
     "Please enter Identity card number": "الرجاء إدخال رقم بطاقة الهوية",

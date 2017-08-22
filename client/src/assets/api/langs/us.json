@@ -213,6 +213,15 @@
     "HomePhoneNoText": "Home Phone No.",
     "MobileNoText": "Mobile No.",
 
+    "DocumentsText": "Documents",
+    "ParentsDetailsText": "Parents Details",
+    "EmergencyContactsText": "Emergency Contacts",
+    "PreviousSchoolDetailsText": "Previous Schools Details",
+    "SiblingDetailsText": "Sibling Details",
+    "RelativesDetailsText": "Relatives Details",
+    "SpecialServicesText": "Special Services",
+    "MedicalDetailsText": "Medical Details",
+
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",
     "Please enter Identity card number": "Please Identity card number",
