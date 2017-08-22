@@ -19,16 +19,15 @@ import Msg from '../../../../components/i18n/Msg'
 
 import Moment from '../../../../components/utils/Moment'
  
-import TimetableDay from './TimetableDay'
 import submit from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
-import {RFField, RFReactSelect, RFLabel, RFRadioButtonList} from '../../../../components/ui'
+import {RFField, RFReactSelect, RFLabel} from '../../../../components/ui'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
-class TimetablesPage extends React.Component {
+class TimetablesPageOld extends React.Component {
   
   constructor(props){
    super(props);
@@ -39,13 +38,12 @@ class TimetablesPage extends React.Component {
       classOptions: [],
       sectionOptions: [],
       teacherOptions: [],      
-      subjectOptions: [] 
+      subjectOptions: []
    }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
     this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
     this.handleSubjectBlur = this.handleSubjectBlur.bind(this);
-    this.handleDayChange = this.handleDayChange.bind(this);
   }
   
   componentWillMount() {
@@ -83,7 +81,7 @@ class TimetablesPage extends React.Component {
     });
     
     // call before modal open
-    $('#timetableDayPopup').on('show.bs.modal', function (e) {      
+    $('#teacherPopup').on('show.bs.modal', function (e) {      
 
       //console.log('modal before call edit page');
 
@@ -99,7 +97,7 @@ class TimetablesPage extends React.Component {
     }.bind(this));
 
     // call on modal close
-    $('#timetableDayPopup').on('hidden.bs.modal', function (e) {            
+    $('#teacherPopup').on('hidden.bs.modal', function (e) {            
       this.setState({timetableId : 0});
       //console.log('close popup');
       //$('#timetablesGrid').DataTable().ajax.reload();      
@@ -113,8 +111,8 @@ class TimetablesPage extends React.Component {
       .then(res=>{            
           const shiftOptions = mapForCombo(res.data);
           this.setState({shiftOptions});
-      }); 
-
+      });
+    
     // axios.get('/api/GetTimetableGeneratedCode')
     //   .then(res=>{      
     //     console.log(res);       
@@ -141,21 +139,21 @@ class TimetablesPage extends React.Component {
       let periods = [];
       periods = [{"periodStart":"08:00 AM", "periodEnd":"08:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1", "lastName": "123 x"}, 
                   {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
                   {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
                   {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
                   {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
                   {"periodStart":"09:01 AM", "periodEnd":"09:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"}];
       days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods}); 
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods});
+      days.push({"periods":periods}); 
       // days.push({"firstName": "abc 2", "lastName": "123 xx"});
       // days.push({"firstName": "abc 3", "lastName": "123 Xxx"});
       // days.push({"firstName": "abc 4", "lastName": "123 Xxx"});
@@ -164,12 +162,12 @@ class TimetablesPage extends React.Component {
       // days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
 
       const initData = {
-          "timetableId": 0,
-          "code": '123',
-          "days": days
-      }
+            "timetableId": 0,
+            "code": '123',
+            "days": days
+        }
 
-      this.props.initialize(initData);
+        this.props.initialize(initData);
 
       LoaderVisibility(false);
   }
@@ -212,17 +210,110 @@ class TimetablesPage extends React.Component {
       }); 
   }
 
-  handleDayChange(obj, value){
-    //console.log('obj ==> ', obj); 
-    $('#timetableDayPopup').modal('show'); 
-
-  }
-
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props
     const { shiftOptions, classOptions, sectionOptions, timetableId } = this.state;    
     var self = this;
- 
+
+const renderdays = ({ fields }) => (
+  <ul className="smart-timeline-list">
+    {/* <li>
+      <button type="button" onClick={() => fields.push({})}>Add day</button>
+    </li> */}
+    {fields.map((day, index) =>
+      <li key={index}>
+        <div className="smart-timeline-icon">
+          {index + 1}
+        </div>
+        <div className="smart-timeline-time">
+          <small><Msg phrase={"Day"+`${index + 1}`+"Text"}/></small>
+        </div>
+        <div className="smart-timeline-content">
+          <div className="table-responsive">
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            <FieldArray name={`${day}.periods`} component={renderPeriods}/>
+          </table>
+          </div> 
+        </div>
+      </li> 
+    )}
+  </ul>
+)
+
+
+const renderPeriods = ({ fields }) => (
+  <tr>
+    {/* <li>
+      <button type="button" onClick={() => fields.push()}>Add Hobby</button>
+    </li> */}
+    {fields.map((period, index) =>
+      <td key={index}>
+        {/* <div className="well well-sm well-light"> */}
+          {/* <button
+            type="button"
+            title="Remove Hobby"
+            onClick={() => fields.remove(index)}/>
+          <Field
+            name={hobby}
+            type="text"
+            component={RFField}
+            placeholder={`Hobby #${index + 1}`}/> */}
+            <div class="smart-timeline-icon">{`${index + 1}`}</div>
+            {/* {`Period Start ${period}.periodStart`}
+            {`Period End ${period}.periodEnd`} */} 
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <Field name={`${period}.periodStart`}                  
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+                <Field name={`${period}.periodEnd`}                  
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+              </section>
+            </div> 
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                {/* <Field
+                  multi={false}
+                  name={`${period}.teacherId`}
+                  label="TeacherText"
+                  options={this.state.teacherOptions}
+                  onBlur={this.handleTeacherBlur}
+                  component={RFReactSelect} /> */}
+                  <Field name={`${period}.teacherId`}
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+              </section>
+            </div>
+            <div className="row">
+              <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                <Field name={`${period}.subjectId`}
+                  component={RFLabel} 
+                  disabled={true}
+                  type="text"/>
+                {/* <Field
+                  multi={false}
+                  name={`${period}.subjectId`}
+                  label="SubectText"
+                  options={this.state.subjectOptions}
+                  onBlur={this.handleSubjectBlur}
+                  component={RFReactSelect} /> */}
+              </section>
+            </div>
+            
+          {/* </div> */}
+      </td>
+    )}
+    {/* {fields.error && <li className="error">{fields.error}</li>} */}
+  </tr>
+)
+
+//http://redux-form.com/6.0.0-rc.1/examples/fieldArrays/
+//http://sarj-shockwave.rhcloud.com/#/forms/plugins
+
     return (
       
       <div id="content">
@@ -345,58 +436,15 @@ class TimetablesPage extends React.Component {
                           </section>
                       </div>
 
-                      {timetableId <= 0 ? <div></div> :
-                        <div className="row">                        
-                          <section className="remove-col-padding col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <p className="font-md"><Msg phrase="ManageTimetablePeriodsText"/></p>
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('1')} }><Msg phrase="Day1Text"/></a></span> 
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('2')} }><Msg phrase="Day2Text"/></a></span> 
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('3')} }><Msg phrase="Day3Text"/></a></span> 
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('4')} }><Msg phrase="Day4Text"/></a></span> 
-                          </section>    
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('5')} }><Msg phrase="Day5Text"/></a></span> 
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('6')} }><Msg phrase="Day6Text"/></a></span> 
-                          </section>  
-                          <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                            <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('7')} }><Msg phrase="Day7Text"/></a></span> 
-                          </section>                        
-                          {/* <section className="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                          </section>   */}
-                            {/* <div className="smart-timeline"> */}
-                              {/* <ul id="horizontal-list">
-                                <li ><div><span className="badge bg-color-blueLight"><h1>1</h1></span></div></li>
-                                <li ><span className="badge bg-color-blueLight">2</span></li>
-                                <li ><span className="badge bg-color-blueLight">3</span></li>
-                                <li ><span className="badge bg-color-blueLight">4</span></li>
-                                <li ><span className="badge bg-color-blueLight">5</span></li>
-                                <li ><span className="badge bg-color-blueLight">6</span></li>
-                                <li ><span className="badge bg-color-blueLight">7</span></li>
-                              </ul> */}
-                            {/* </div>  */}
-                              
-                        </div> 
-                      }
-                      
-                      {/* <div className="row">
+                      <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                           
+                          {/* <div className="well well-sm">  */}
                             <div className="smart-timeline">
                               <FieldArray name="days" component={renderdays}/>                               
-                            </div>  
-
+                            </div> 
+                          {/* </div> */}
                         </div>
-                      </div>*/}
+                      </div>                       
 
                     </fieldset>
 
@@ -427,7 +475,7 @@ class TimetablesPage extends React.Component {
                                   //return data +' ('+ row[0]+')';
                                   //id = data;
                                   //console.log(this.state.timetableId);
-                                  return '<a data-toggle="modal" data-single-edit="1"  title="Edit" data-id="' + data + '" data-target="#timetableDayPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  return '<a data-toggle="modal" data-single-edit="1"  title="Edit" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                               },
                               "className": "dt-center",
                               "sorting": false,
@@ -444,7 +492,7 @@ class TimetablesPage extends React.Component {
                                   //return data +' ('+ row[0]+')';
                                   //id = data;
                                   //console.log(this.state.timetableId);
-                                  return '<a data-toggle="modal" data-single-edit="0"  title="Manage" data-id="' + data + '" data-target="#timetableDayPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  return '<a data-toggle="modal" data-single-edit="0"  title="Manage" data-id="' + data + '" data-target="#teacherPopup"><i id="edi" class=\"glyphicon glyphicon-list-alt\"></i><span class=\"sr-only\">Edit</span></a>';
                               },
                               "className": "dt-center",
                               "sorting": false,
@@ -459,7 +507,7 @@ class TimetablesPage extends React.Component {
                                   //return ('<a onClick={self.handleClick.bind(self, 1)}>del</a>');
                                   //return '<a onClick={self.handleClick} className="btn btn-success">click</a>';
                                   //return '<a onClick="javascript:deleteConfirm()" className="btn btn-success"> Callback ()</a>';
-                                  //return '<a data-toggle="modal" data-id="' + data + '" data-target="#timetableDayPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
+                                  //return '<a data-toggle="modal" data-id="' + data + '" data-target="#teacherPopup"><i class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Delete</span></a>';
                               }.bind(self),
                               "className": "dt-center",
                               "sorting": false,
@@ -534,26 +582,21 @@ class TimetablesPage extends React.Component {
 
         {/* end widget grid */}
   
-        <div className="modal fade" id="timetableDayPopup" tabIndex="-1" role="dialog" 
+        <div className="modal fade" id="teacherPopup" tabIndex="-1" role="dialog" 
             data-backdrop="static" data-keyboard="false"
-            aria-labelledby="timetableDayPopupLabel" aria-hidden="true">
+            aria-labelledby="teacherPopupLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="timetableDayPopupLabel">
-                  {<Msg phrase="EditText" />}
+                <h4 className="modal-title" id="teacherPopupLabel">
+                  { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.timetableId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/>)}
                 </h4>
               </div>
               <div className="modal-body">  
-              <TimetableDay timetableId={timetableId} 
-                //nationalities={this.state.nationalities} 
-                //genderOptions={this.state.genderOptions}
-                //countries={this.state.countries}
-                //onSubmit={submit} 
-              />              
+                                
                  
               </div>
             </div>
@@ -569,12 +612,73 @@ class TimetablesPage extends React.Component {
 
 } 
 const afterSubmit = function(result, dispatch) { 
-    dispatch(reset('TimetablesPage'));
+    dispatch(reset('TimetablesPageOld'));
 }
 
 export default reduxForm({
-  form: 'TimetablesPage',  // a unique identifier for this form
+  form: 'TimetablesPageOld',  // a unique identifier for this form
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false 
-})(TimetablesPage)
+})(TimetablesPageOld)
  
+// const renderPeriods = ({ fields }) => (
+//   <ul id="horizontal-list">
+//     {/* <li>
+//       <button type="button" onClick={() => fields.push()}>Add Hobby</button>
+//     </li> */}
+//     {fields.map((period, index) =>
+//       <li key={index}>
+//         {/* <div className="well well-sm well-light"> */}
+//           {/* <button
+//             type="button"
+//             title="Remove Hobby"
+//             onClick={() => fields.remove(index)}/>
+//           <Field
+//             name={hobby}
+//             type="text"
+//             component={RFField}
+//             placeholder={`Hobby #${index + 1}`}/> */}
+//             <div class="smart-timeline-icon">{`${index + 1}`}</div>
+//             {/* {`Period Start ${period}.periodStart`}
+//             {`Period End ${period}.periodEnd`} */} 
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field name={`${period}.periodStart`}                  
+//                   component={RFLabel} 
+//                   disabled={true}
+//                   type="text"/>
+//                 <Field name={`${period}.periodEnd`}                  
+//                   component={RFLabel} 
+//                   disabled={true}
+//                   type="text"/>
+//               </section>
+//             </div> 
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field
+//                   multi={false}
+//                   name={`${period}.teacherId`}
+//                   label="TeacherText"
+//                   options={this.state.teacherOptions}
+//                   onBlur={this.handleTeacherBlur}
+//                   component={RFReactSelect} />
+//               </section>
+//             </div>
+//             <div className="row">
+//               <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+//                 <Field
+//                   multi={false}
+//                   name={`${period}.subjectId`}
+//                   label="SubectText"
+//                   options={this.state.subjectOptions}
+//                   onBlur={this.handleSubjectBlur}
+//                   component={RFReactSelect} />
+//               </section>
+//             </div>
+            
+//           {/* </div> */}
+//       </li>
+//     )}
+//     {/* {fields.error && <li className="error">{fields.error}</li>} */}
+//   </ul>
+// )
