@@ -58,7 +58,7 @@
     "nouislider": "^9.0.0",
     "raphael": "^2.2.1",
     "react": "^15.3.2",
-    "react-bootstrap": "^0.30.5", 
+    "react-bootstrap": "^0.30.5",
     "react-datepicker": "^0.46.0",
     "react-dom": "^15.3.2",
     "react-dropzone": "^3.5.3",
@@ -81,7 +81,8 @@
     "smartadmin-plugins": "^1.0.15",
     "summernote": "^0.8.1",
     "then-request": "^2.2.0",
-    "to-markdown": "^3.0.1"
+    "to-markdown": "^3.0.1",
+    "ui-contextmenu": "^1.17.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
