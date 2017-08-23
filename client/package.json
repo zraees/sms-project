@@ -79,7 +79,7 @@
     "scriptjs": "^2.5.8",
     "select2": "^4.0.3",
     "smartadmin-plugins": "^1.0.15",
-    "summernote": "^0.8.1",
+    "summernote": "^0.8.1", 
     "then-request": "^2.2.0",
     "to-markdown": "^3.0.1",
     "ui-contextmenu": "^1.17.0"
