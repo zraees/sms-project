@@ -1,11 +1,11 @@
 git config --global user.email ""
-git config --global user.email ""
-
+git config --global user.name ""
 
 
 git init
 
 git add .
-
 git commit -m ""
+
+
 
