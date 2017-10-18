@@ -8,4 +8,10 @@ git add .
 git commit -m ""
 
 
+git remote add origin repoName
+
+
+git push origin master
+git pull origin master
+
 
