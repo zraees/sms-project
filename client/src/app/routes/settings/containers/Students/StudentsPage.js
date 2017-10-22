@@ -60,7 +60,8 @@ class StudentsPage extends React.Component {
   
   renderModalBody(popupPageName, studentId){
     //console.log('this.state.popupPageName ==> ', this.state.popupPageName);
-    var modalBody;     
+    var modalBody;    
+    LoaderVisibility(true); 
    // this.setState({refreshGrid:false});       
     if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
@@ -112,6 +113,7 @@ class StudentsPage extends React.Component {
           onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
     }
     
+    LoaderVisibility(false);
     return modalBody;
   }
 

@@ -1,5 +1,24 @@
-
+Student Pages:
+==============
+- search page; rename third last and 2nd last link button is for Edit and Documents
+- search page; Add new open edit link, should open add new
 - Separate edit and manage button on studentPage.js
+- document page; needs to complete
+
+
+Teacher Pages:
+==============
+- search page; rename third last and 2nd last link button is for Edit and Documents
+- search page; finalize remaining changes of context menu
+- document page; needs to complete once student document page completed then copy paste here :)
+
+
+Time table pages:
+=================
+- just 20% completed... finalize the design
+
+
+
 
 low priority:
 =============
