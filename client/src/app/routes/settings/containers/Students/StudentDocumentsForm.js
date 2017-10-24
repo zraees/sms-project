@@ -132,10 +132,10 @@ class StudentDocumentsForm extends React.Component {
                             label="RelativeStudentNameText" />
                     </section> 
                     <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                            
+                            test
                     </section>
                     <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                        
+                        testtt
                     </section>
                 </div>
 

@@ -61,8 +61,9 @@ class StudentsPage extends React.Component {
   renderModalBody(popupPageName, studentId){
     //console.log('this.state.popupPageName ==> ', this.state.popupPageName);
     var modalBody;    
-    LoaderVisibility(true); 
-   // this.setState({refreshGrid:false});       
+    //LoaderVisibility(true); 
+   // this.setState({refreshGrid:false});   
+    
     if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
       modalBody = <EditGeneralInfo studentId={studentId} 
@@ -76,6 +77,7 @@ class StudentsPage extends React.Component {
           studentId={studentId}   
           //onSubmitPreviousSchool={submitPreviousSchool} 
           />
+      
     }
     else if(popupPageName == "PreviousSchoolDetailsText"){
       modalBody = <PreviousSchoolsForm
@@ -113,7 +115,9 @@ class StudentsPage extends React.Component {
           onSubmitStudentMedicalDetails={submitStudentMedicalDetails} />
     }
     
-    LoaderVisibility(false);
+    // console.log('hellloooooooooooooooooooooooooooo ', studentId);
+    //LoaderVisibility(false);
+    //this.setState({popupPageName:''});
     return modalBody;
   }
 
@@ -160,7 +164,7 @@ class StudentsPage extends React.Component {
         //alert(colvindex);
         //alert(rowindex);
         //alert(id);
-        id = 55;
+        //id = 55;
         //console.log(ui.cmd);
 
         this.setState({popupPageName:ui.cmd, studentId:id, refreshGrid:(ui.cmd=='EditText'?true:false)});
@@ -209,7 +213,7 @@ class StudentsPage extends React.Component {
 
     // call on modal close
     $('#StudentPopup').on('hidden.bs.modal', function (e) {            
-      this.setState({studentId : 0});     
+      this.setState({studentId : 0, popupPageName:''});     
       if(this.state.refreshGrid){
         var table = $('#StudentsGrid').DataTable();                
         table.clear();
@@ -288,10 +292,10 @@ class StudentsPage extends React.Component {
                     </div> 
 
                     <Loader isLoading={isLoading} />
-                    {/* ajax: {"url":'/api/Students', "dataSrc": ""}, */}
+                    {/*  */}
                     <Datatable id="StudentsGrid"  
                       options={{
-                        
+                        ajax: {"url":'/api/Students', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -306,18 +310,12 @@ class StudentsPage extends React.Component {
                                     return renderDate(data);
                                 },
                                 "targets": 6
-                            },
+                            }/*,
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                  //console.log(data);
-                                  //console.log(type);
-                                  //console.log(row);
-                                    //return data +' ('+ row[0]+')';
-                                    //id = data;
-                                    //console.log(this.state.teacherId);
                                     return '<a data-toggle="modal" data-single-edit="1" title="Edit" data-id="' + data + '" data-target="#StudentPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
@@ -334,14 +332,14 @@ class StudentsPage extends React.Component {
                                 "className": "dt-center",
                                 "sorting": false,
                                 "targets": 8
-                            }
+                            }*/
                             ,{ 
                                 "render": function ( data, type, row ) { 
                                   return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 9
+                                "targets": 7
                             }
                         ],
                         columns: [
@@ -358,8 +356,8 @@ class StudentsPage extends React.Component {
                           {data: "StudentIDNo"},  
                           {data: "Gender"},  
                           {data: "DOB"},   
-                          {data: "StudentId"},
-                          {data: "StudentId"},
+                          /*{data: "StudentId"},
+                          {data: "StudentId"},*/
                           {data: "StudentId"}
                         ],
                         buttons: [
@@ -379,12 +377,12 @@ class StudentsPage extends React.Component {
                         <th data-hide="mobile-p"><Msg phrase="IdentityCardNumberText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="GenderText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="DOBText"/></th> 
-                        <th data-hide="mobile-p"></th>
-                        <th data-hide="mobile-p"></th>
+                        {/* <th data-hide="mobile-p"></th>
+                        <th data-hide="mobile-p"></th> */}
                         <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>
-                      <tbody>
+                      {/* <tbody>
                       <tr>
                         <td >a</td>
                         <td></td>
@@ -409,7 +407,7 @@ class StudentsPage extends React.Component {
                         <td></td>
                         <td></td>
                       </tr>  
-                      </tbody>
+                      </tbody> */}
                     </Datatable>
 
                   </div>
@@ -443,15 +441,21 @@ class StudentsPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="StudentPopupLabel"> 
-                  {/* { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.studentId > 0 ? <Msg phrase="Manage Student" /> : <Msg phrase="Add New Student"/>)} */}
-                  {<Msg phrase={popupPageName} />}
+                  { popupPageName != '' ? <Msg phrase={popupPageName} /> : <Msg phrase="Add New Student"/> }                  
                 </h4>
               </div>
               <div className="modal-body"> 
                        
                 {
-                  this.renderModalBody(popupPageName, studentId)
+                  popupPageName != '' ? 
+                    this.renderModalBody(popupPageName, studentId) 
+                    : 
+                    <StudentForm studentId={0} 
+                         nationalities={this.state.nationalities}  
+                         countries={this.state.countries}
+                         onSubmit={submit} />
                 }       
+                 
                    
               </div>
             </div>

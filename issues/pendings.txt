@@ -1,9 +1,11 @@
 Student Pages:
 ==============
 - search page; rename third last and 2nd last link button is for Edit and Documents
-- search page; Add new open edit link, should open add new
+- search page; Add new open edit link, should open add new, refresh after first add.
 - Separate edit and manage button on studentPage.js
 - document page; needs to complete
+- student page: auto generated code refresh after save
+- show student picture 
 
 
 Teacher Pages:
