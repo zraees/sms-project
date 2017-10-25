@@ -7,6 +7,8 @@ import axios from 'axios'
 import {SubmissionError} from 'redux-form'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import contextmenu from 'ui-contextmenu' 
+
 
 //import moment from 'moment'
 
@@ -16,12 +18,17 @@ import WidgetGrid from '../../../../components/widgets/WidgetGrid'
 import JarvisWidget from '../../../../components/widgets/JarvisWidget'
 import Datatable from '../../../../components/tables/Datatable'
 import Msg from '../../../../components/i18n/Msg'
+import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Moment from '../../../../components/utils/Moment'
 
 import TeacherForm from './TeacherForm'
 import TeacherEditForm from './TeacherEditForm'
 import EditGeneralInfo from './EditGeneralInfo'
+import QualificationForm from './QualificationForm'
+import ExperienceForm from './ExperienceForm'
+import TeacherSubjectsForm from './TeacherSubjectsForm'
+import TeacherClassesForm from './TeacherClassesForm'
 //import Test from './Test'
 import submit, {remove, submitQualification, submitExperience, submitTeacherSubject, submitTeacherClass} from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
@@ -37,18 +44,105 @@ class TeachersPage extends React.Component {
      singleEditMode: 0,
      nationalities: [],
      countries: [],
-     genderOptions: []
+     genderOptions: [],
+     popupPageName: '',
+     refreshGrid: false
    }
+   
+   this.renderModalBody = this.renderModalBody.bind(this);
   }
   
   componentWillMount() {
     LoaderVisibility(true);
   }
   
+  
+  renderModalBody(popupPageName, teacherId){
+    //console.log('this.state.popupPageName ==> ', this.state.popupPageName);
+    var modalBody;    
+    //LoaderVisibility(true); 
+   // this.setState({refreshGrid:false});   
+    console.log('gg aa ee =>', popupPageName, teacherId, this.state.teacherId);
+    
+    if(popupPageName == "EditText"){ 
+      //this.setState({refreshGrid:true});
+      modalBody = <EditGeneralInfo teacherId={teacherId} 
+          nationalities={this.state.nationalities} 
+          genderOptions={this.state.genderOptions}
+          countries={this.state.countries}
+          onSubmit={submit} />
+    }
+    else if(popupPageName == "Qualification"){
+      modalBody = <QualificationForm
+          teacherId={teacherId}   
+          onSubmit={submitQualification} 
+          />      
+    }
+    else if(popupPageName == "Experience"){
+      modalBody = <ExperienceForm
+          teacherId={teacherId}  
+          countries={this.state.countries} 
+          onSubmit={submitExperience} />
+    }
+    else if(popupPageName == "SubjectsText"){
+      modalBody = <TeacherSubjectsForm
+          teacherId={teacherId}   
+          onSubmit={submitTeacherSubject} />
+    }
+    else if(popupPageName == "Classes"){
+      modalBody = <TeacherClassesForm
+          teacherId={teacherId}   
+          onSubmit={submitTeacherClass} />
+    }
+    return modalBody;
+  }
+
   componentDidMount(){ 
 
-    //console.log('componentDidMount --> TeacherPage');
-    //var self =this;
+    
+    $(document).contextmenu({
+      delegate: "#teachersGrid td",
+      autoFocus: true,
+      preventContextMenuForPopup: true,
+      preventSelect: true,
+      taphold: true,
+      menu: [
+      {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
+      {title: LanguageStore.getData().phrases["Experience"], cmd: "Experience", uiIcon: "ui-icon-document"},
+      {title: LanguageStore.getData().phrases["SubjectsText"], cmd: "SubjectsText", uiIcon: "ui-icon-person"},
+      {title: LanguageStore.getData().phrases["Classes"], cmd: "Classes", uiIcon: "ui-icon-contact"},
+            
+      // {title: "More", children: [
+      //   {title: "Use an 'action' callback", action: function(event, ui) {
+      //     alert("action callback sub1");
+      //     } },
+      //   {title: "Tooltip (static)", cmd: "sub2", tooltip: "Static tooltip"},
+      //   {title: "Tooltip (dynamic)", tooltip: function(event, ui){ return "" + Date(); }},
+      //   {title: "Custom icon", cmd: "browser", uiIcon: "ui-icon custom-icon-firefox"},
+      //   {title: "Disabled (dynamic)", disabled: function(event, ui){
+      //     return false;
+      //     }}
+      //   ]}
+      ],
+      select: function(event, ui) {
+        var coltext = ui.target.text();
+        var colvindex = ui.target.parent().children().index(ui.target);
+        var rowindex = ui.target.parent().index(); 
+        var colindex = $('table thead tr th:eq('+colvindex+')').data('column-index');
+        var id = $('table tbody tr:eq('+rowindex+') td:last-child a').data('tid');
+        console.log('id ', id);
+        this.setState({popupPageName:ui.cmd, teacherId:id, refreshGrid:(ui.cmd=='EditText'?true:false)});
+        
+        $('#teacherPopup').modal('show'); 
+      }.bind(this),
+      beforeOpen: function(event, ui) {
+        var $menu = ui.menu,
+          $target = ui.target,
+          extraData = ui.extraData;
+          
+        }
+    });
+
     $('#teachersGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) {
@@ -76,7 +170,7 @@ class TeachersPage extends React.Component {
     });
     
     // call before modal open
-    $('#teacherPopup').on('show.bs.modal', function (e) {      
+    $('#teacherPopup').on('shown.bs.modal', function (e) {      
 
       //console.log('modal before call edit page');
 
@@ -89,11 +183,14 @@ class TeachersPage extends React.Component {
       //console.log(button.data('single-edit'));
       this.setState({singleEditMode: button.data('single-edit')}); 
       this.setState({teacherId});    
+
+      console.log('show.bs.modal ', teacherId, this.state.teacherId)
+
     }.bind(this));
 
     // call on modal close
     $('#teacherPopup').on('hidden.bs.modal', function (e) {            
-      this.setState({teacherId : 0});
+      this.setState({teacherId : 0, popupPageName:''});
       //console.log('close popup');
       //$('#teachersGrid').DataTable().ajax.reload();      
           var table = $('#teachersGrid').DataTable();                
@@ -135,7 +232,8 @@ class TeachersPage extends React.Component {
   }
 
   render() {
-  
+    const { teacherId, popupPageName } = this.state;
+    const { isLoading } = this.props;
     var self = this;
     return (
       
@@ -332,33 +430,49 @@ class TeachersPage extends React.Component {
                 </h4>
               </div>
               <div className="modal-body">  
-                                
-                { this.state.singleEditMode == 1 ?
-                  <EditGeneralInfo teacherId={this.state.teacherId} 
-                    nationalities={this.state.nationalities} 
-                    genderOptions={this.state.genderOptions}
-                    countries={this.state.countries}
-                    onSubmit={submit} />
-                  :
-                  (this.state.teacherId > 0 ? 
-                    <TeacherEditForm
-                      teacherId={this.state.teacherId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      genderOptions={this.state.genderOptions}
-                      onSubmit={submit} 
-                      onSubmitQualification={submitQualification} 
-                      onSubmitExperience={submitExperience} 
-                      onSubmitTeacherSubject={submitTeacherSubject} 
-                      onSubmitTeacherClass={submitTeacherClass} />
-                  : 
-                    <TeacherForm 
-                      teacherId={this.state.teacherId} 
-                      nationalities={this.state.nationalities} 
-                      countries={this.state.countries} 
-                      genderOptions={this.state.genderOptions}
-                      onSubmit={submit} />)
+                
+                {  
+                    popupPageName != '' ? 
+                      this.renderModalBody(popupPageName, teacherId) 
+                      : 
+                      <TeacherForm 
+                       teacherId={this.state.teacherId} 
+                       nationalities={this.state.nationalities} 
+                       countries={this.state.countries} 
+                       genderOptions={this.state.genderOptions}
+                       onSubmit={submit} />
+
+                 
                 }      
+                {
+                  /*
+                   // this.state.singleEditMode == 1 ?
+                  // <EditGeneralInfo teacherId={this.state.teacherId} 
+                  //   nationalities={this.state.nationalities} 
+                  //   genderOptions={this.state.genderOptions}
+                  //   countries={this.state.countries}
+                  //   onSubmit={submit} />
+                  // :
+                  // (this.state.teacherId > 0 ? 
+                  //   <TeacherEditForm
+                  //     teacherId={this.state.teacherId} 
+                  //     nationalities={this.state.nationalities} 
+                  //     countries={this.state.countries} 
+                  //     genderOptions={this.state.genderOptions}
+                  //     onSubmit={submit} 
+                  //     onSubmitQualification={submitQualification} 
+                  //     onSubmitExperience={submitExperience} 
+                  //     onSubmitTeacherSubject={submitTeacherSubject} 
+                  //     onSubmitTeacherClass={submitTeacherClass} />
+                  // : 
+                  //   <TeacherForm 
+                  //     teacherId={this.state.teacherId} 
+                  //     nationalities={this.state.nationalities} 
+                  //     countries={this.state.countries} 
+                  //     genderOptions={this.state.genderOptions}
+                  //     onSubmit={submit} />)
+                  */
+                }
               </div>
               {/*  
                     <div className="modal-footer">

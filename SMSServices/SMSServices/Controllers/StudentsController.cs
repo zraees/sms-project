@@ -277,6 +277,15 @@ namespace SMSServices.Controllers
                 var Student = new Students { StudentId = id };
                 if (Student != null)
                 {
+                    //var parent = entities.Students.Include(p => p.StudentsClasses)
+                    //                .SingleOrDefault(p => p.StudentId == id);
+
+                    //foreach (var child in parent.StudentsClasses.ToList())
+                    //{
+                    //    entities.Entry(child).State = EntityState.Deleted;
+                    //    entities.StudentsClasses.Remove(child);
+                    //}
+
                     entities.Entry(Student).State = EntityState.Deleted;
                     entities.Students.Remove(Student);
                     entities.SaveChanges();

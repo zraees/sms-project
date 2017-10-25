@@ -32,9 +32,10 @@ namespace SMSServices.Models
                 //    sb.Append(Environment.NewLine);
                 //}
                 int ErrorCode = GetErrorCode(dbEx);
-                throw new ApiDataException(ErrorCode, GetCustomMessage(ErrorCode, dbEx) , HttpStatusCode.BadRequest);
+                //throw new ApiDataException(ErrorCode, GetCustomMessage(ErrorCode, dbEx) , HttpStatusCode.BadRequest);
             
                 //Logger.ErrorFormat("Validation errors: {0}", sb.ToString());
+                throw dbEx;
             }
             //catch (DbEntityValidationException ex)
             //{
