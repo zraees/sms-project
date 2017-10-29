@@ -56,6 +56,8 @@
         <AssociationConnector Association="SMSModel.FK_StudentsClasses_Sections" />
         <AssociationConnector Association="SMSModel.FK_StudentsClasses_Shifts" />
         <AssociationConnector Association="SMSModel.FK_StudentsClasses_Students" />
+        <EntityTypeShape EntityType="SMSModel.StudentsEmergencyContactDetails" Width="1.5" PointX="15.25" PointY="10.375" />
+        <AssociationConnector Association="SMSModel.FK_StudentsEmergencyContactDetails_Students" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

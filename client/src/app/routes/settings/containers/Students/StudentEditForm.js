@@ -23,6 +23,7 @@ class TeacherEditForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+        studentId: 0,
         editDataLoaded: false,  
         nowRender: false
     }

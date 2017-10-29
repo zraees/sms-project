@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CodingFormatsController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
+    <Compile Include="Controllers\StudentsEmergencyContactDetailsController.cs" />
     <Compile Include="Controllers\TeachersSubjectsController.cs" />
     <Compile Include="Controllers\LookupController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
@@ -242,6 +243,9 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentsClasses.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentsEmergencyContactDetails.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Subjects.cs">

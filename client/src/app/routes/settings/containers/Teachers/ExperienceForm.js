@@ -20,6 +20,7 @@ class ExperienceForm extends React.Component  {
     super(props);
      this.state = {
       states: [],
+      teacherId: 0,
       cities: []
     }
     this.handleCountryBlur = this.handleCountryBlur.bind(this);
@@ -31,6 +32,7 @@ class ExperienceForm extends React.Component  {
 componentDidMount(){ 
     console.log('componentDidMount --> ExperienceForm');
 
+    this.setState({teacherId: this.props.teacherId});
     this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
     $('#teacherExperiencesGrid').on('click', 'td', function(event) {
@@ -71,8 +73,8 @@ componentDidMount(){
   }
 
   render() {
-    const { teacherId, handleSubmit, countries, pristine, reset, submitting, touched, error, warning } = this.props
-    const { states, cities } = this.state;
+    const { handleSubmit, countries, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, states, cities } = this.state;
 
     return (
 

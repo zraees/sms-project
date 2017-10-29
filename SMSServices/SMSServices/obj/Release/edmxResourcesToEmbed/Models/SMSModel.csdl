@@ -139,6 +139,11 @@
       <End Role="Students" EntitySet="Students" />
       <End Role="StudentsClasses" EntitySet="StudentsClasses" />
     </AssociationSet>
+    <EntitySet Name="StudentsEmergencyContactDetails" EntityType="SMSModel.StudentsEmergencyContactDetails" />
+    <AssociationSet Name="FK_StudentsEmergencyContactDetails_Students" Association="SMSModel.FK_StudentsEmergencyContactDetails_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentsEmergencyContactDetails" EntitySet="StudentsEmergencyContactDetails" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -552,6 +557,7 @@
     <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
     <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
     <Property Name="StudentPic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="StudentsEmergencyContactDetails" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="Students" ToRole="StudentsEmergencyContactDetails" />
   </EntityType>
   <EntityType Name="Teachers">
     <Key>
@@ -815,6 +821,33 @@
         <PropertyRef Name="StudentId" />
       </Principal>
       <Dependent Role="StudentsClasses">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StudentsEmergencyContactDetails">
+    <Key>
+      <PropertyRef Name="StudentEmergencyContactDetailId" />
+    </Key>
+    <Property Name="StudentEmergencyContactDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="ContactPersonName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ContactPersonRelation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="WorkPhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HomePhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OtherDetails" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="StudentsEmergencyContactDetails" ToRole="Students" />
+  </EntityType>
+  <Association Name="FK_StudentsEmergencyContactDetails_Students">
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+    <End Type="SMSModel.StudentsEmergencyContactDetails" Role="StudentsEmergencyContactDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentsEmergencyContactDetails">
         <PropertyRef Name="StudentId" />
       </Dependent>
     </ReferentialConstraint>

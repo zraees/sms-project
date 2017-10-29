@@ -22,6 +22,7 @@ class ParentsForm extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            studentId: 0,
             nationalityOptions: [],
             languageOptions: [], 
             parentOptions: [],
@@ -58,6 +59,7 @@ class ParentsForm extends React.Component {
                 this.setState({languageOptions});
             });
 
+        this.setState({studentId: this.props.studentId});
         this.props.change('studentId', this.props.studentId); // function provided by redux-form
 
         $('#parentsGrid').on('click', 'td', function(event) {
@@ -82,8 +84,8 @@ class ParentsForm extends React.Component {
 
   //
   render() {
-    const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, nationalityOptions, languageOptions, disabledGuardianRelation, parentOptions, yesNoOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { studentId, activeTab, nationalityOptions, languageOptions, disabledGuardianRelation, parentOptions, yesNoOptions } = this.state;
 
     return (
 

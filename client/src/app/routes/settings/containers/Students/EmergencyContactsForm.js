@@ -22,6 +22,7 @@ class EmergencyContactsForm extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            studentId: 0,
             classOptions: [],
             relationOptions: [],  
             activeTab: "add",
@@ -44,6 +45,7 @@ class EmergencyContactsForm extends React.Component {
                 this.setState({relationOptions});
             });
 
+        this.setState({studentId:this.props.studentId});
         this.props.change('studentId', this.props.studentId); // function provided by redux-form
 
         $('#emergencyContactDetailsGrid').on('click', 'td', function(event) {
@@ -70,8 +72,8 @@ class EmergencyContactsForm extends React.Component {
 
   //
   render() {
-    const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, classOptions, relationOptions, disabledOtherRelation } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { studentId, activeTab, classOptions, relationOptions, disabledOtherRelation } = this.state;
 
     return (
 
@@ -138,7 +140,7 @@ class EmergencyContactsForm extends React.Component {
                                     label="HomePhoneNoText" />
                             </section>
                             <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
-                                <Field name="MobileNo" labelClassName="input" 
+                                <Field name="mobileNo" labelClassName="input" 
                                     labelIconClassName="icon-append fa fa-user"
                                     validate={required} component={RFField} normalize={upper}  
                                     maxLength="20"
@@ -186,13 +188,13 @@ class EmergencyContactsForm extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,   
-                                "targets": 3
+                                "targets": 6
                             }
                         ],
                         columns: [ 
                           {data: "ContactPersonName"},
                           {data: "ContactPersonRelation"},  
-                          {data: "email"},
+                          {data: "Email"},
                           {data: "WorkPhoneNo"},
                           {data: "HomePhoneNo"},
                           {data: "MobileNo"},

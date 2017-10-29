@@ -126,8 +126,8 @@ class StudentsPage extends React.Component {
     console.log('componentDidMount --> StudentPage');
     //let messageText = LanguageStore.getData().phrases["AddNewText"]  
 
-    $(document).contextmenu({
-      delegate: "#StudentsGrid td",
+    $('#StudentsGrid').contextmenu({
+      delegate: "td",
       autoFocus: true,
       preventContextMenuForPopup: true,
       preventSelect: true,
@@ -135,7 +135,7 @@ class StudentsPage extends React.Component {
       menu: [
       {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
       {title: LanguageStore.getData().phrases["DocumentsText"], cmd: "DocumentsText", uiIcon: "ui-icon-document"},
-      {title: LanguageStore.getData().phrases["ParentsDetailsText"] + ' hellow', cmd: "ParentsDetailsText", uiIcon: "ui-icon-person"},
+      {title: LanguageStore.getData().phrases["ParentsDetailsText"], cmd: "ParentsDetailsText", uiIcon: "ui-icon-person"},
       {title: LanguageStore.getData().phrases["EmergencyContactsText"], cmd: "EmergencyContactsText", uiIcon: "ui-icon-contact"},
       {title: "----"},
       {title: LanguageStore.getData().phrases["PreviousSchoolDetailsText"], cmd: "PreviousSchoolDetailsText", uiIcon: "ui-icon-disk"},

@@ -22,6 +22,7 @@ class StudentDocumentsForm extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            studentId: 0,
             classOptions: [],
             relationOptions: [],  
             activeTab: "add",
@@ -44,6 +45,7 @@ class StudentDocumentsForm extends React.Component {
                 this.setState({relationOptions});
             });
 
+        this.setState({studentId: this.props.studentId});
         this.props.change('studentId', this.props.studentId); // function provided by redux-form
 
         $('#relativesGrid').on('click', 'td', function(event) {
@@ -79,8 +81,8 @@ class StudentDocumentsForm extends React.Component {
     } 
 
   render() {
-    const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, classOptions, relationOptions, disabledOtherRelation } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { studentId, activeTab, classOptions, relationOptions, disabledOtherRelation } = this.state;
 
     const renderDocumentList = ({ fields }) => (
         <ul>

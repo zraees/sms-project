@@ -19,13 +19,15 @@ class TeacherSubjectForm extends React.Component  {
     constructor(props){
         super(props);
         this.state = {
+            teacherId: 0,
             subjectOptions: [] 
         }
     }
 
     componentDidMount(){ 
         console.log('componentDidMount --> TeacherSubjectForm');
-
+        
+        this.setState({teacherId: this.props.teacherId});
         this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
         axios.get('/api/lookup/subjects/')
@@ -48,8 +50,8 @@ class TeacherSubjectForm extends React.Component  {
     }
  
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { subjectOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, subjectOptions } = this.state;
 
     return (
 

@@ -33,6 +33,7 @@ class QualificationForm extends React.Component {
         //     {"label":"Years", "value":"Years"}],
         qualificationTypes: [],
         qualificationScoreTypes: [],
+        teacherId: 0,
             // {"label":"CGPA", "value":"CGPA"},
             // {"label":"Percentage", "value":"Percentage"}],
         activeTab: "add"
@@ -45,6 +46,7 @@ componentDidMount(){
     console.log('componentDidMount --> QualificationForm');
 //    LoaderVisibility(true);
 
+    this.setState({teacherId: this.props.teacherId});   
     this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
     $('#teacherQualificationsGrid').on('click', 'td', function(event) {
@@ -81,8 +83,8 @@ componentDidMount(){
 } 
   //
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { qualificationScoreTypes, qualificationTypes, activeTab } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, qualificationScoreTypes, qualificationTypes, activeTab } = this.state;
 
     return (
 

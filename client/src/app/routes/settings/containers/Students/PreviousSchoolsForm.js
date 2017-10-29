@@ -21,6 +21,7 @@ class PreviousSchoolsForm extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
+        studentId: 0,
         classOptions: [],
         languageOptions: [], 
         activeTab: "add"            
@@ -35,7 +36,8 @@ componentDidMount(){
             const classOptions = mapForCombo(res.data);
             this.setState({classOptions});
         });
-
+        
+    this.setState({studentId: this.props.studentId});
     this.props.change('studentId', this.props.studentId); // function provided by redux-form
 
     $('#previousSchoolsGrid').on('click', 'td', function(event) {
@@ -52,8 +54,8 @@ componentDidMount(){
 } 
   //
   render() {
-    const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, classOptions, languageOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { studentId, activeTab, classOptions, languageOptions } = this.state;
 
     return (
 

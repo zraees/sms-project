@@ -19,13 +19,15 @@ class TeacherClassesForm extends React.Component  {
     constructor(props){
         super(props);
         this.state = {
+            teacherId: 0,
             classOptions: [] 
         }
     }
 
     componentDidMount(){ 
-        console.log('componentDidMount --> TeacherClassesForm');
+        //console.log('componentDidMount --> TeacherClassesForm --- ', this.props.teacherId);
 
+        this.setState({teacherId: this.props.teacherId});
         this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
         axios.get('/api/lookup/classes/')
@@ -44,12 +46,12 @@ class TeacherClassesForm extends React.Component  {
 
             }
         });
-
+        //console.log('componentDidMount --> TeacherClassesForm --- completed =-- ', this.props.teacherId);
     }
  
   render() {
-    const { teacherId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { classOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { teacherId, classOptions } = this.state;
 
     return (
 
@@ -82,7 +84,7 @@ class TeacherClassesForm extends React.Component  {
                                     component={RFReactSelect} />
                             </section>
                         </div>
-
+                        
                         {(error!==undefined && <AlertMessage type="w" icon="alert-danger" message={error} />)}
 
                         <Field component="input" type="hidden" name="teacherId"/>

@@ -196,6 +196,20 @@
     <Property Name="SectionId" Type="int" Nullable="false" />
     <Property Name="BatchID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="StudentsEmergencyContactDetails">
+    <Key>
+      <PropertyRef Name="StudentEmergencyContactDetailId" />
+    </Key>
+    <Property Name="StudentEmergencyContactDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="ContactPersonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactPersonRelation" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="WorkPhoneNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="HomePhoneNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="OtherDetails" Type="nvarchar" MaxLength="500" />
+  </EntityType>
   <EntityType Name="Subjects">
     <Key>
       <PropertyRef Name="ID" />
@@ -489,6 +503,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StudentsEmergencyContactDetails_Students">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="StudentsEmergencyContactDetails" Type="Self.StudentsEmergencyContactDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentsEmergencyContactDetails">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TeacherExperiences_Cities">
     <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
     <End Role="TeacherExperiences" Type="Self.TeacherExperiences" Multiplicity="*" />
@@ -638,6 +664,7 @@
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentsClasses" EntityType="Self.StudentsClasses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentsEmergencyContactDetails" EntityType="Self.StudentsEmergencyContactDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
@@ -715,6 +742,10 @@
     <AssociationSet Name="FK_StudentsClasses_Students" Association="Self.FK_StudentsClasses_Students">
       <End Role="Students" EntitySet="Students" />
       <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsEmergencyContactDetails_Students" Association="Self.FK_StudentsEmergencyContactDetails_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentsEmergencyContactDetails" EntitySet="StudentsEmergencyContactDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_TeacherExperiences_Cities" Association="Self.FK_TeacherExperiences_Cities">
       <End Role="Cities" EntitySet="Cities" />

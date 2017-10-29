@@ -62,7 +62,7 @@ class TeachersPage extends React.Component {
     var modalBody;    
     //LoaderVisibility(true); 
    // this.setState({refreshGrid:false});   
-    console.log('gg aa ee =>', popupPageName, teacherId, this.state.teacherId);
+    //console.log('gg aa ee =>', popupPageName, teacherId, this.state.teacherId);
     
     if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
@@ -100,8 +100,8 @@ class TeachersPage extends React.Component {
   componentDidMount(){ 
 
     
-    $(document).contextmenu({
-      delegate: "#teachersGrid td",
+    $('#teachersGrid').contextmenu({
+      delegate: "td",
       autoFocus: true,
       preventContextMenuForPopup: true,
       preventSelect: true,
@@ -130,7 +130,7 @@ class TeachersPage extends React.Component {
         var rowindex = ui.target.parent().index(); 
         var colindex = $('table thead tr th:eq('+colvindex+')').data('column-index');
         var id = $('table tbody tr:eq('+rowindex+') td:last-child a').data('tid');
-        console.log('id ', id);
+        //console.log('id ', id);
         this.setState({popupPageName:ui.cmd, teacherId:id, refreshGrid:(ui.cmd=='EditText'?true:false)});
         
         $('#teacherPopup').modal('show'); 
@@ -170,7 +170,7 @@ class TeachersPage extends React.Component {
     });
     
     // call before modal open
-    $('#teacherPopup').on('shown.bs.modal', function (e) {      
+    $('#teacherPopup').on('show.bs.modal', function (e) {      
 
       //console.log('modal before call edit page');
 
@@ -181,10 +181,10 @@ class TeachersPage extends React.Component {
       //console.log(button);
       var teacherId = button.data('id');             // Extract info from data-* attributes
       //console.log(button.data('single-edit'));
-      this.setState({singleEditMode: button.data('single-edit')}); 
-      this.setState({teacherId});    
+      this.setState({singleEditMode: button.data('single-edit'), teacherId}); 
+      //this.setState({});    
 
-      console.log('show.bs.modal ', teacherId, this.state.teacherId)
+      //console.log('show.bs.modal ', teacherId, this.state.teacherId)
 
     }.bind(this));
 
@@ -426,7 +426,7 @@ class TeachersPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="teacherPopupLabel">
-                  { this.state.singleEditMode == 1 ? <Msg phrase="EditText" /> : (this.state.teacherId > 0 ? <Msg phrase="Manage Teacher" /> : <Msg phrase="Add New Teacher"/>)}
+                  { popupPageName != '' ? <Msg phrase={popupPageName} /> : <Msg phrase="Add New Teacher"/> }    
                 </h4>
               </div>
               <div className="modal-body">  

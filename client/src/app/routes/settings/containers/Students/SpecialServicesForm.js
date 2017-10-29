@@ -22,6 +22,7 @@ class SpecialServicesForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {  
+            studentId: 0,
             yesNoOptions: [],
             activeTab: "add",
             disabledDetails: true        
@@ -37,6 +38,7 @@ class SpecialServicesForm extends React.Component {
                 this.setState({yesNoOptions});
             });
  
+        this.setState({studentId: this.props.studentId});
         this.props.change('studentId', this.props.studentId); // function provided by redux-form
 
         $('#specialServicesGrid').on('click', 'td', function(event) {
@@ -63,8 +65,8 @@ class SpecialServicesForm extends React.Component {
 
   //
   render() {
-    const { studentId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { activeTab, disabledDetails, yesNoOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { studentId, activeTab, disabledDetails, yesNoOptions } = this.state;
 
     return (
 
