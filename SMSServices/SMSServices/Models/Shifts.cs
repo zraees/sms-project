@@ -18,14 +18,20 @@ namespace SMSServices.Models
         {
             this.ClassesSections = new HashSet<ClassesSections>();
             this.StudentsClasses = new HashSet<StudentsClasses>();
+            this.TimeTables = new HashSet<TimeTables>();
         }
     
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string NameAr { get; set; }
+        public System.TimeSpan StartTime { get; set; }
+        public System.TimeSpan EndTime { get; set; }
+        public System.TimeSpan BreakStartTime { get; set; }
+        public System.TimeSpan BreakEndTime { get; set; }
     
         public virtual ICollection<ClassesSections> ClassesSections { get; set; }
         public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
+        public virtual ICollection<TimeTables> TimeTables { get; set; }
     }
 }

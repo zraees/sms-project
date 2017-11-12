@@ -16,11 +16,11 @@ namespace SMSServices.Models
     {
         public int StudentClassId { get; set; }
         public int StudentId { get; set; }
+        public string RollNo { get; set; }
         public int ShiftId { get; set; }
         public int ClassId { get; set; }
         public int SectionId { get; set; }
         public int BatchID { get; set; }
-        public string RollNo { get; set; }
     
         public virtual Batches Batches { get; set; }
         public virtual Classes Classes { get; set; }

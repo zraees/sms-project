@@ -154,6 +154,8 @@
     <Compile Include="Controllers\CodingFormatsController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
     <Compile Include="Controllers\StudentsEmergencyContactDetailsController.cs" />
+    <Compile Include="Controllers\ShiftsController.cs" />
+    <Compile Include="Controllers\TimeTablesController.cs" />
     <Compile Include="Controllers\TeachersSubjectsController.cs" />
     <Compile Include="Controllers\LookupController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
@@ -200,6 +202,9 @@
     <Compile Include="Models\Countries.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Days.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Errors.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -207,6 +212,9 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocumentToUpload.cs" />
+    <Compile Include="Models\Locations.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\QualificationTypes.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
@@ -251,6 +259,9 @@
     <Compile Include="Models\Subjects.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubjectTypes.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TeacherExperiences.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -264,6 +275,12 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TeachersSubjects.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeTableDetails.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeTables.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

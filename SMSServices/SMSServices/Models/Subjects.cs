@@ -16,6 +16,7 @@ namespace SMSServices.Models
     {
         public Subjects()
         {
+            this.TimeTableDetails = new HashSet<TimeTableDetails>();
             this.TeachersSubjects = new HashSet<TeachersSubjects>();
         }
     
@@ -24,6 +25,7 @@ namespace SMSServices.Models
         public string Name { get; set; }
         public string NameAr { get; set; }
     
+        public virtual ICollection<TimeTableDetails> TimeTableDetails { get; set; }
         public virtual ICollection<TeachersSubjects> TeachersSubjects { get; set; }
     }
 }

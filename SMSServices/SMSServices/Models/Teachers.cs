@@ -19,6 +19,7 @@ namespace SMSServices.Models
             this.TeacherExperiences = new HashSet<TeacherExperiences>();
             this.TeacherQualifications = new HashSet<TeacherQualifications>();
             this.TeachersClasses = new HashSet<TeachersClasses>();
+            this.TimeTableDetails = new HashSet<TimeTableDetails>();
             this.TeachersSubjects = new HashSet<TeachersSubjects>();
         }
     
@@ -42,6 +43,7 @@ namespace SMSServices.Models
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
         public virtual ICollection<TeachersClasses> TeachersClasses { get; set; }
+        public virtual ICollection<TimeTableDetails> TimeTableDetails { get; set; }
         public virtual ICollection<TeachersSubjects> TeachersSubjects { get; set; }
     }
 }

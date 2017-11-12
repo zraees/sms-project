@@ -11,26 +11,84 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
   function submit(values, timetableId){
     console.log(values);
+    console.log('timetableId ', timetableId);
     // return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
     //   .then(res=>{            
     //       //throw {email: 'That email is already taken'}
     //       if(res.data.Email===''){
                     
-    //         if(values.studentId>0){
-    //           update(values); 
-    //         }
-    //         else{
-    //           insert(values);
-    //         }      
+            if(timetableId>0){
+              update(values); 
+            }
+            else{
+              insert(values);
+            }      
 
-    //       }
-    //       else{
-    //         throw new SubmissionError({   
-    //           email: 'email is already taken',
-    //           _error: 'You cannot proceed further!'
-    //         })
-    //       }
-    //   })   
+      //     }
+      //     else{
+      //       throw new SubmissionError({   
+      //         email: 'email is already taken',
+      //         _error: 'You cannot proceed further!'
+      //       })
+      //     }
+      // })   
   }
-    
+
+  function insert(values){
+    LoaderVisibility(true);
+
+    axios.post('/api/timetables', values)      
+      .then(function (response) {
+         
+        LoaderVisibility(false);
+        alert('s', 'data has been saved successfully');
+        
+      })
+      .catch(function (error) {
+        if (error.response) { 
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          alert('f', error.response.data.StatusMessage);   
+          LoaderVisibility(false);     
+                //throw new SubmissionError({ _error: "That's weird. "});   
+                //reject('error error error');
+                return Promise.resolve(true).then(() => {
+                throw new SubmissionError({  });
+              }); 
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        //console.log(error.config);
+        
+        //alert('f', '');
+        LoaderVisibility(false);      
+      });      
+  }
+
+  function update(values){
+    //console.log('in update');
+    //console.log(values);
+    // LoaderVisibility(true);
+    // axios.put('/api/students', values)      
+    //   .then(function (response) {
+        
+    //     alert('s','student details have been updated.');
+    //     $('#StudentPopup').modal('hide');  
+    //     LoaderVisibility(false);
+
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     alert('f', error.response.data.StatusMessage);
+    //     LoaderVisibility(false);
+    //   });      
+  }
+
 export default submit

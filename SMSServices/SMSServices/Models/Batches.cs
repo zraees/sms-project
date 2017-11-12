@@ -22,9 +22,9 @@ namespace SMSServices.Models
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string NameAr { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
-        public string NameAr { get; set; }
     
         public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
     }

@@ -73,6 +73,16 @@
           <Property Name="Nationality" Type="nvarchar" MaxLength="150" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="Days">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsWeekend" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Errors">
           <Key>
             <PropertyRef Name="ErrorId" />
@@ -90,6 +100,15 @@
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -131,6 +150,10 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="BreakStartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="BreakEndTime" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="States">
           <Key>
@@ -224,6 +247,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="SubjectTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="TeacherExperiences">
           <Key>
             <PropertyRef Name="TeacherExperienceId" />
@@ -291,6 +322,31 @@
           <Property Name="TeacherSubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherID" Type="int" Nullable="false" />
           <Property Name="SubjectID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTableDetails">
+          <Key>
+            <PropertyRef Name="TimeTableDetailID" />
+          </Key>
+          <Property Name="TimeTableDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeTableID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="DayID" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTables">
+          <Key>
+            <PropertyRef Name="TimeTableID" />
+          </Key>
+          <Property Name="TimeTableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="SectionID" Type="int" Nullable="false" />
+          <Property Name="PeriodDurationMIns" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Admissions_Students">
           <End Role="Students" Type="Self.Students" Multiplicity="1" />
@@ -652,6 +708,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TimeTable_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Sections">
+          <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Shifts">
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Days1">
+          <End Role="Days" Type="Self.Days" Multiplicity="1" />
+          <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Days">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="DayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_TimeTable">
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="1" />
+          <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTables">
+              <PropertyRef Name="TimeTableID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="TimeTableID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SMSModelStoreContainer">
           <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
@@ -660,8 +812,10 @@
           <EntitySet Name="ClassesSections" EntityType="Self.ClassesSections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CodingFormats" EntityType="Self.CodingFormats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Religions" EntityType="Self.Religions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
@@ -671,11 +825,14 @@
           <EntitySet Name="StudentsClasses" EntityType="Self.StudentsClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentsEmergencyContactDetails" EntityType="Self.StudentsEmergencyContactDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectTypes" EntityType="Self.SubjectTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeachersClasses" EntityType="Self.TeachersClasses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeachersSubjects" EntityType="Self.TeachersSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTableDetails" EntityType="Self.TimeTableDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTables" EntityType="Self.TimeTables" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Admissions_Students" Association="Self.FK_Admissions_Students">
             <End Role="Students" EntitySet="Students" />
             <End Role="Admissions" EntitySet="Admissions" />
@@ -796,6 +953,38 @@
             <End Role="Teachers" EntitySet="Teachers" />
             <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
           </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Classes" Association="Self.FK_TimeTable_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Sections" Association="Self.FK_TimeTable_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Shifts" Association="Self.FK_TimeTable_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Days1" Association="Self.FK_TimeTableDetails_Days1">
+            <End Role="Days" EntitySet="Days" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Locations" Association="Self.FK_TimeTableDetails_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Subjects" Association="Self.FK_TimeTableDetails_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Teachers" Association="Self.FK_TimeTableDetails_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_TimeTable" Association="Self.FK_TimeTableDetails_TimeTable">
+            <End Role="TimeTables" EntitySet="TimeTables" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -813,36 +1002,9 @@
           <EntitySet Name="Admissions" EntityType="SMSModel.Admissions" />
           <EntitySet Name="Languages" EntityType="SMSModel.Languages" />
           <EntitySet Name="Religions" EntityType="SMSModel.Religions" />
-          <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
-          <EntitySet Name="Classes" EntityType="SMSModel.Classes" />
           <EntitySet Name="ClassesSections" EntityType="SMSModel.ClassesSections" />
-          <EntitySet Name="Sections" EntityType="SMSModel.Sections" />
-          <EntitySet Name="Shifts" EntityType="SMSModel.Shifts" />
-          <EntitySet Name="Subjects" EntityType="SMSModel.Subjects" />
-          <AssociationSet Name="FK_ClassesSections_Classes" Association="SMSModel.FK_ClassesSections_Classes">
-            <End Role="Classes" EntitySet="Classes" />
-            <End Role="ClassesSections" EntitySet="ClassesSections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassesSections_Sections" Association="SMSModel.FK_ClassesSections_Sections">
-            <End Role="Sections" EntitySet="Sections" />
-            <End Role="ClassesSections" EntitySet="ClassesSections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClassesSections_Shifts" Association="SMSModel.FK_ClassesSections_Shifts">
-            <End Role="Shifts" EntitySet="Shifts" />
-            <End Role="ClassesSections" EntitySet="ClassesSections" />
-          </AssociationSet>
-          <EntitySet Name="TeachersSubjects" EntityType="SMSModel.TeachersSubjects" />
-          <AssociationSet Name="FK_TeachersSubjects_Subjects" Association="SMSModel.FK_TeachersSubjects_Subjects">
-            <End Role="Subjects" EntitySet="Subjects" />
-            <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
-          </AssociationSet>
           <EntitySet Name="TeachersClasses" EntityType="SMSModel.TeachersClasses" />
-          <AssociationSet Name="FK_TeachersClasses_Classes" Association="SMSModel.FK_TeachersClasses_Classes">
-            <End Role="Classes" EntitySet="Classes" />
-            <End Role="TeachersClasses" EntitySet="TeachersClasses" />
-          </AssociationSet>
           <EntitySet Name="Cities" EntityType="SMSModel.Cities" />
-          <EntitySet Name="Countries" EntityType="SMSModel.Countries" />
           <EntitySet Name="States" EntityType="SMSModel.States" />
           <AssociationSet Name="FK_Cities_States" Association="SMSModel.FK_Cities_States">
             <End Role="States" EntitySet="States" />
@@ -852,27 +1014,68 @@
             <End Role="Cities" EntitySet="Cities" />
             <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
           </AssociationSet>
-          <AssociationSet Name="FK_States_Countries" Association="SMSModel.FK_States_Countries">
-            <End Role="Countries" EntitySet="Countries" />
-            <End Role="States" EntitySet="States" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeacherExperiences_Countries" Association="SMSModel.FK_TeacherExperiences_Countries">
-            <End Role="Countries" EntitySet="Countries" />
-            <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
-          </AssociationSet>
           <AssociationSet Name="FK_TeacherExperiences_States" Association="SMSModel.FK_TeacherExperiences_States">
             <End Role="States" EntitySet="States" />
             <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
           </AssociationSet>
+          <EntitySet Name="CodingFormats" EntityType="SMSModel.CodingFormats" />
+          <EntitySet Name="StudentsEmergencyContactDetails" EntityType="SMSModel.StudentsEmergencyContactDetails" />
+          <EntitySet Name="Days" EntityType="SMSModel.Days" />
+          <EntitySet Name="Locations" EntityType="SMSModel.Locations" />
+          <EntitySet Name="TimeTableDetails" EntityType="SMSModel.TimeTableDetails" />
+          <AssociationSet Name="FK_TimeTableDetails_Days1" Association="SMSModel.FK_TimeTableDetails_Days1">
+            <End Role="Days" EntitySet="Days" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Locations" Association="SMSModel.FK_TimeTableDetails_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
+          <EntitySet Name="Classes" EntityType="SMSModel.Classes" />
+          <EntitySet Name="Countries" EntityType="SMSModel.Countries" />
+          <EntitySet Name="Sections" EntityType="SMSModel.Sections" />
+          <EntitySet Name="Shifts" EntityType="SMSModel.Shifts" />
           <EntitySet Name="Students" EntityType="SMSModel.Students" />
+          <EntitySet Name="StudentsClasses" EntityType="SMSModel.StudentsClasses" />
+          <EntitySet Name="Subjects" EntityType="SMSModel.Subjects" />
+          <EntitySet Name="SubjectTypes" EntityType="SMSModel.SubjectTypes" />
           <EntitySet Name="Teachers" EntityType="SMSModel.Teachers" />
           <AssociationSet Name="FK_Admissions_Students" Association="SMSModel.FK_Admissions_Students">
             <End Role="Students" EntitySet="Students" />
             <End Role="Admissions" EntitySet="Admissions" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Batches" Association="SMSModel.FK_StudentsClasses_Batches">
+            <End Role="Batches" EntitySet="Batches" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_Cities" Association="SMSModel.FK_Students_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesSections_Classes" Association="SMSModel.FK_ClassesSections_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="ClassesSections" EntitySet="ClassesSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Classes" Association="SMSModel.FK_StudentsClasses_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeachersClasses_Classes" Association="SMSModel.FK_TeachersClasses_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="TeachersClasses" EntitySet="TeachersClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesSections_Sections" Association="SMSModel.FK_ClassesSections_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="ClassesSections" EntitySet="ClassesSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassesSections_Shifts" Association="SMSModel.FK_ClassesSections_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="ClassesSections" EntitySet="ClassesSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_States_Countries" Association="SMSModel.FK_States_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="States" EntitySet="States" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Countries" Association="SMSModel.FK_Students_Countries">
             <End Role="Countries" EntitySet="Countries" />
@@ -881,6 +1084,10 @@
           <AssociationSet Name="FK_Students_Countries1" Association="SMSModel.FK_Students_Countries1">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherExperiences_Countries" Association="SMSModel.FK_TeacherExperiences_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
           </AssociationSet>
           <AssociationSet Name="FK_Teachers_Countries" Association="SMSModel.FK_Teachers_Countries">
             <End Role="Countries" EntitySet="Countries" />
@@ -898,9 +1105,29 @@
             <End Role="Religions" EntitySet="Religions" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Sections" Association="SMSModel.FK_StudentsClasses_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Shifts" Association="SMSModel.FK_StudentsClasses_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_States" Association="SMSModel.FK_Students_States">
             <End Role="States" EntitySet="States" />
             <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsClasses_Students" Association="SMSModel.FK_StudentsClasses_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsEmergencyContactDetails_Students" Association="SMSModel.FK_StudentsEmergencyContactDetails_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentsEmergencyContactDetails" EntitySet="StudentsEmergencyContactDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Subjects" Association="SMSModel.FK_TimeTableDetails_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_TeacherExperiences_Teachers" Association="SMSModel.FK_TeacherExperiences_Teachers">
             <End Role="Teachers" EntitySet="Teachers" />
@@ -914,36 +1141,35 @@
             <End Role="Teachers" EntitySet="Teachers" />
             <End Role="TeachersClasses" EntitySet="TeachersClasses" />
           </AssociationSet>
+          <AssociationSet Name="FK_TimeTableDetails_Teachers" Association="SMSModel.FK_TimeTableDetails_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+          </AssociationSet>
+          <EntitySet Name="TeachersSubjects" EntityType="SMSModel.TeachersSubjects" />
+          <AssociationSet Name="FK_TeachersSubjects_Subjects" Association="SMSModel.FK_TeachersSubjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
+          </AssociationSet>
           <AssociationSet Name="FK_TeachersSubjects_Teachers" Association="SMSModel.FK_TeachersSubjects_Teachers">
             <End Role="Teachers" EntitySet="Teachers" />
             <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
           </AssociationSet>
-          <EntitySet Name="CodingFormats" EntityType="SMSModel.CodingFormats" />
-          <EntitySet Name="StudentsClasses" EntityType="SMSModel.StudentsClasses" />
-          <AssociationSet Name="FK_StudentsClasses_Batches" Association="SMSModel.FK_StudentsClasses_Batches">
-            <End Role="Batches" EntitySet="Batches" />
-            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentsClasses_Classes" Association="SMSModel.FK_StudentsClasses_Classes">
+          <EntitySet Name="TimeTables" EntityType="SMSModel.TimeTables" />
+          <AssociationSet Name="FK_TimeTable_Classes" Association="SMSModel.FK_TimeTable_Classes">
             <End Role="Classes" EntitySet="Classes" />
-            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentsClasses_Sections" Association="SMSModel.FK_StudentsClasses_Sections">
+          <AssociationSet Name="FK_TimeTable_Sections" Association="SMSModel.FK_TimeTable_Sections">
             <End Role="Sections" EntitySet="Sections" />
-            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentsClasses_Shifts" Association="SMSModel.FK_StudentsClasses_Shifts">
+          <AssociationSet Name="FK_TimeTable_Shifts" Association="SMSModel.FK_TimeTable_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
-            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentsClasses_Students" Association="SMSModel.FK_StudentsClasses_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-          </AssociationSet>
-          <EntitySet Name="StudentsEmergencyContactDetails" EntityType="SMSModel.StudentsEmergencyContactDetails" />
-          <AssociationSet Name="FK_StudentsEmergencyContactDetails_Students" Association="SMSModel.FK_StudentsEmergencyContactDetails_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="StudentsEmergencyContactDetails" EntitySet="StudentsEmergencyContactDetails" />
+          <AssociationSet Name="FK_TimeTableDetails_TimeTable" Association="SMSModel.FK_TimeTableDetails_TimeTable">
+            <End Role="TimeTables" EntitySet="TimeTables" />
+            <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="QualificationTypes">
@@ -1000,8 +1226,8 @@
           <Property Name="LeavingReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cities" Relationship="SMSModel.FK_TeacherExperiences_Cities" FromRole="TeacherExperiences" ToRole="Cities" />
-          <NavigationProperty Name="Countries" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="TeacherExperiences" ToRole="Countries" />
           <NavigationProperty Name="States" Relationship="SMSModel.FK_TeacherExperiences_States" FromRole="TeacherExperiences" ToRole="States" />
+          <NavigationProperty Name="Countries" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="TeacherExperiences" ToRole="Countries" />
           <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="TeacherExperiences" ToRole="Teachers" />
         </EntityType>
         <EntityType Name="Errors">
@@ -1050,30 +1276,6 @@
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Religions" FromRole="Religions" ToRole="Students" />
         </EntityType>
-        <EntityType Name="Batches">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="Batches" ToRole="StudentsClasses" />
-        </EntityType>
-        <EntityType Name="Classes">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="Classes" ToRole="ClassesSections" />
-          <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="Classes" ToRole="TeachersClasses" />
-          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="Classes" ToRole="StudentsClasses" />
-        </EntityType>
         <EntityType Name="ClassesSections">
           <Key>
             <PropertyRef Name="ClassSectionID" />
@@ -1086,96 +1288,6 @@
           <NavigationProperty Name="Sections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="ClassesSections" ToRole="Sections" />
           <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="ClassesSections" ToRole="Shifts" />
         </EntityType>
-        <EntityType Name="Sections">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="Sections" ToRole="ClassesSections" />
-          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="Sections" ToRole="StudentsClasses" />
-        </EntityType>
-        <EntityType Name="Shifts">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="Shifts" ToRole="ClassesSections" />
-          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="Shifts" ToRole="StudentsClasses" />
-        </EntityType>
-        <EntityType Name="Subjects">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="Subjects" ToRole="TeachersSubjects" />
-        </EntityType>
-        <Association Name="FK_ClassesSections_Classes">
-          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classes">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClassesSections">
-              <PropertyRef Name="ClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassesSections_Sections">
-          <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
-          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sections">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClassesSections">
-              <PropertyRef Name="SectionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClassesSections_Shifts">
-          <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
-          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shifts">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClassesSections">
-              <PropertyRef Name="ShiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TeachersSubjects">
-          <Key>
-            <PropertyRef Name="TeacherSubjectID" />
-          </Key>
-          <Property Name="TeacherSubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeacherID" Type="Int32" Nullable="false" />
-          <Property Name="SubjectID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="TeachersSubjects" ToRole="Subjects" />
-          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="TeachersSubjects" ToRole="Teachers" />
-        </EntityType>
-        <Association Name="FK_TeachersSubjects_Subjects">
-          <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="1" />
-          <End Type="SMSModel.TeachersSubjects" Role="TeachersSubjects" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subjects">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TeachersSubjects">
-              <PropertyRef Name="SubjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TeachersClasses">
           <Key>
             <PropertyRef Name="TeacherClassID" />
@@ -1186,18 +1298,6 @@
           <NavigationProperty Name="Classes" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="TeachersClasses" ToRole="Classes" />
           <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="TeachersClasses" ToRole="Teachers" />
         </EntityType>
-        <Association Name="FK_TeachersClasses_Classes">
-          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-          <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classes">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TeachersClasses">
-              <PropertyRef Name="ClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="ID" />
@@ -1212,23 +1312,6 @@
           <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Cities" FromRole="Cities" ToRole="TeacherExperiences" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Cities" FromRole="Cities" ToRole="Students" />
         </EntityType>
-        <EntityType Name="Countries">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="Nationality" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="States" Relationship="SMSModel.FK_States_Countries" FromRole="Countries" ToRole="States" />
-          <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="Countries" ToRole="TeacherExperiences" />
-          <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Countries" FromRole="Countries" ToRole="Students" />
-          <NavigationProperty Name="Students1" Relationship="SMSModel.FK_Students_Countries1" FromRole="Countries" ToRole="Students" />
-          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Countries" ToRole="Teachers" />
-        </EntityType>
         <EntityType Name="States">
           <Key>
             <PropertyRef Name="ID" />
@@ -1240,8 +1323,8 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Cities" Relationship="SMSModel.FK_Cities_States" FromRole="States" ToRole="Cities" />
-          <NavigationProperty Name="Countries" Relationship="SMSModel.FK_States_Countries" FromRole="States" ToRole="Countries" />
           <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_States" FromRole="States" ToRole="TeacherExperiences" />
+          <NavigationProperty Name="Countries" Relationship="SMSModel.FK_States_Countries" FromRole="States" ToRole="Countries" />
           <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_States" FromRole="States" ToRole="Students" />
         </EntityType>
         <Association Name="FK_Cities_States">
@@ -1268,30 +1351,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_States_Countries">
-          <End Type="SMSModel.Countries" Role="Countries" Multiplicity="1" />
-          <End Type="SMSModel.States" Role="States" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Countries">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="States">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TeacherExperiences_Countries">
-          <End Type="SMSModel.Countries" Role="Countries" Multiplicity="0..1" />
-          <End Type="SMSModel.TeacherExperiences" Role="TeacherExperiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Countries">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TeacherExperiences">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TeacherExperiences_States">
           <End Type="SMSModel.States" Role="States" Multiplicity="0..1" />
           <End Type="SMSModel.TeacherExperiences" Role="TeacherExperiences" Multiplicity="*" />
@@ -1304,6 +1363,162 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CodingFormats">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Format" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StudentsEmergencyContactDetails">
+          <Key>
+            <PropertyRef Name="StudentEmergencyContactDetailId" />
+          </Key>
+          <Property Name="StudentEmergencyContactDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ContactPersonName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonRelation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HomePhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OtherDetails" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="StudentsEmergencyContactDetails" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="Days">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsWeekend" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Days1" FromRole="Days" ToRole="TimeTableDetails" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="Locations" ToRole="TimeTableDetails" />
+        </EntityType>
+        <EntityType Name="TimeTableDetails">
+          <Key>
+            <PropertyRef Name="TimeTableDetailID" />
+          </Key>
+          <Property Name="TimeTableDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeTableID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="DayID" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Days" Relationship="SMSModel.FK_TimeTableDetails_Days1" FromRole="TimeTableDetails" ToRole="Days" />
+          <NavigationProperty Name="Locations" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="TimeTableDetails" ToRole="Locations" />
+          <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="TimeTableDetails" ToRole="Subjects" />
+          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="TimeTableDetails" ToRole="Teachers" />
+          <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTableDetails_TimeTable" FromRole="TimeTableDetails" ToRole="TimeTables" />
+        </EntityType>
+        <Association Name="FK_TimeTableDetails_Days1">
+          <End Type="SMSModel.Days" Role="Days" Multiplicity="1" />
+          <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Days">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="DayID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Locations">
+          <End Type="SMSModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Batches">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="Batches" ToRole="StudentsClasses" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="Classes" ToRole="ClassesSections" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="Classes" ToRole="StudentsClasses" />
+          <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="Classes" ToRole="TeachersClasses" />
+          <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Classes" FromRole="Classes" ToRole="TimeTables" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Nationality" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="States" Relationship="SMSModel.FK_States_Countries" FromRole="Countries" ToRole="States" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Countries" FromRole="Countries" ToRole="Students" />
+          <NavigationProperty Name="Students1" Relationship="SMSModel.FK_Students_Countries1" FromRole="Countries" ToRole="Students" />
+          <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Countries" FromRole="Countries" ToRole="TeacherExperiences" />
+          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_Teachers_Countries" FromRole="Countries" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Sections">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="Sections" ToRole="ClassesSections" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="Sections" ToRole="StudentsClasses" />
+          <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Sections" FromRole="Sections" ToRole="TimeTables" />
+        </EntityType>
+        <EntityType Name="Shifts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="BreakStartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="BreakEndTime" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="Shifts" ToRole="ClassesSections" />
+          <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="Shifts" ToRole="StudentsClasses" />
+          <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Shifts" FromRole="Shifts" ToRole="TimeTables" />
+        </EntityType>
         <EntityType Name="Students">
           <Key>
             <PropertyRef Name="StudentId" />
@@ -1325,6 +1540,7 @@
           <Property Name="FullNameArPassport" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="FatherIDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="StudentIDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StudentPic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PlaceOfBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NationalityId" Type="Int32" />
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -1357,8 +1573,43 @@
           <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
           <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
           <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
-          <Property Name="StudentPic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StudentsEmergencyContactDetails" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="Students" ToRole="StudentsEmergencyContactDetails" />
+        </EntityType>
+        <EntityType Name="StudentsClasses">
+          <Key>
+            <PropertyRef Name="StudentClassId" />
+          </Key>
+          <Property Name="StudentClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Batches" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="StudentsClasses" ToRole="Batches" />
+          <NavigationProperty Name="Classes" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="StudentsClasses" ToRole="Classes" />
+          <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
+          <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="Subjects" ToRole="TimeTableDetails" />
+          <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="Subjects" ToRole="TeachersSubjects" />
+        </EntityType>
+        <EntityType Name="SubjectTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Teachers">
           <Key>
@@ -1383,6 +1634,7 @@
           <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
           <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
           <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="Teachers" ToRole="TeachersClasses" />
+          <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="Teachers" ToRole="TimeTableDetails" />
           <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="Teachers" ToRole="TeachersSubjects" />
         </EntityType>
         <Association Name="FK_Admissions_Students">
@@ -1397,6 +1649,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentsClasses_Batches">
+          <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batches">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="BatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_Cities">
           <End Type="SMSModel.Cities" Role="Cities" Multiplicity="0..1" />
           <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
@@ -1406,6 +1670,78 @@
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesSections_Classes">
+          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClassesSections">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Classes">
+          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeachersClasses_Classes">
+          <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeachersClasses">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesSections_Sections">
+          <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
+          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClassesSections">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassesSections_Shifts">
+          <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
+          <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClassesSections">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_States_Countries">
+          <End Type="SMSModel.Countries" Role="Countries" Multiplicity="1" />
+          <End Type="SMSModel.States" Role="States" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="States">
+              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1429,6 +1765,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Students">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherExperiences_Countries">
+          <End Type="SMSModel.Countries" Role="Countries" Multiplicity="0..1" />
+          <End Type="SMSModel.TeacherExperiences" Role="TeacherExperiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeacherExperiences">
               <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1481,6 +1829,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentsClasses_Sections">
+          <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Shifts">
+          <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_States">
           <End Type="SMSModel.States" Role="States" Multiplicity="0..1" />
           <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
@@ -1490,6 +1862,42 @@
             </Principal>
             <Dependent Role="Students">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsClasses_Students">
+          <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentsClasses">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsEmergencyContactDetails_Students">
+          <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+          <End Type="SMSModel.StudentsEmergencyContactDetails" Role="StudentsEmergencyContactDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="StudentsEmergencyContactDetails">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableDetails_Subjects">
+          <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="SubjectID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1529,6 +1937,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TimeTableDetails_Teachers">
+          <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
+          <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeachersSubjects">
+          <Key>
+            <PropertyRef Name="TeacherSubjectID" />
+          </Key>
+          <Property Name="TeacherSubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="TeachersSubjects" ToRole="Subjects" />
+          <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="TeachersSubjects" ToRole="Teachers" />
+        </EntityType>
+        <Association Name="FK_TeachersSubjects_Subjects">
+          <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="SMSModel.TeachersSubjects" Role="TeachersSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeachersSubjects">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeachersSubjects_Teachers">
           <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
           <End Type="SMSModel.TeachersSubjects" Role="TeachersSubjects" Multiplicity="*" />
@@ -1541,115 +1983,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CodingFormats">
+        <EntityType Name="TimeTables">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="TimeTableID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TableName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Format" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TimeTableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="SectionID" Type="Int32" Nullable="false" />
+          <Property Name="PeriodDurationMIns" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="SMSModel.FK_TimeTable_Classes" FromRole="TimeTables" ToRole="Classes" />
+          <NavigationProperty Name="Sections" Relationship="SMSModel.FK_TimeTable_Sections" FromRole="TimeTables" ToRole="Sections" />
+          <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_TimeTable_Shifts" FromRole="TimeTables" ToRole="Shifts" />
+          <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_TimeTable" FromRole="TimeTables" ToRole="TimeTableDetails" />
         </EntityType>
-        <EntityType Name="StudentsClasses">
-          <Key>
-            <PropertyRef Name="StudentClassId" />
-          </Key>
-          <Property Name="StudentClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="ShiftId" Type="Int32" Nullable="false" />
-          <Property Name="ClassId" Type="Int32" Nullable="false" />
-          <Property Name="SectionId" Type="Int32" Nullable="false" />
-          <Property Name="BatchID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Batches" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="StudentsClasses" ToRole="Batches" />
-          <NavigationProperty Name="Classes" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="StudentsClasses" ToRole="Classes" />
-          <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
-          <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
-          <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
-          <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_StudentsClasses_Batches">
-          <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
-          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Batches">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="StudentsClasses">
-              <PropertyRef Name="BatchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentsClasses_Classes">
+        <Association Name="FK_TimeTable_Classes">
           <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <End Type="SMSModel.TimeTables" Role="TimeTables" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Classes">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="StudentsClasses">
-              <PropertyRef Name="ClassId" />
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="ClassID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentsClasses_Sections">
+        <Association Name="FK_TimeTable_Sections">
           <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
-          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <End Type="SMSModel.TimeTables" Role="TimeTables" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sections">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="StudentsClasses">
-              <PropertyRef Name="SectionId" />
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="SectionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentsClasses_Shifts">
+        <Association Name="FK_TimeTable_Shifts">
           <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
-          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+          <End Type="SMSModel.TimeTables" Role="TimeTables" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Shifts">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="StudentsClasses">
-              <PropertyRef Name="ShiftId" />
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="ShiftID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentsClasses_Students">
-          <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
-          <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+        <Association Name="FK_TimeTableDetails_TimeTable">
+          <End Type="SMSModel.TimeTables" Role="TimeTables" Multiplicity="1" />
+          <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Students">
-              <PropertyRef Name="StudentId" />
+            <Principal Role="TimeTables">
+              <PropertyRef Name="TimeTableID" />
             </Principal>
-            <Dependent Role="StudentsClasses">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="StudentsEmergencyContactDetails">
-          <Key>
-            <PropertyRef Name="StudentEmergencyContactDetailId" />
-          </Key>
-          <Property Name="StudentEmergencyContactDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="ContactPersonName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPersonRelation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="WorkPhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="HomePhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="OtherDetails" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="StudentsEmergencyContactDetails" ToRole="Students" />
-        </EntityType>
-        <Association Name="FK_StudentsEmergencyContactDetails_Students">
-          <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
-          <End Type="SMSModel.StudentsEmergencyContactDetails" Role="StudentsEmergencyContactDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Students">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="StudentsEmergencyContactDetails">
-              <PropertyRef Name="StudentId" />
+            <Dependent Role="TimeTableDetails">
+              <PropertyRef Name="TimeTableID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1747,28 +2141,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Batches">
-            <EntityTypeMapping TypeName="SMSModel.Batches">
-              <MappingFragment StoreEntitySet="Batches">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="SMSModel.Classes">
-              <MappingFragment StoreEntitySet="Classes">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ClassesSections">
             <EntityTypeMapping TypeName="SMSModel.ClassesSections">
               <MappingFragment StoreEntitySet="ClassesSections">
@@ -1776,45 +2148,6 @@
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="ClassSectionID" ColumnName="ClassSectionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sections">
-            <EntityTypeMapping TypeName="SMSModel.Sections">
-              <MappingFragment StoreEntitySet="Sections">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Shifts">
-            <EntityTypeMapping TypeName="SMSModel.Shifts">
-              <MappingFragment StoreEntitySet="Shifts">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Subjects">
-            <EntityTypeMapping TypeName="SMSModel.Subjects">
-              <MappingFragment StoreEntitySet="Subjects">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TeachersSubjects">
-            <EntityTypeMapping TypeName="SMSModel.TeachersSubjects">
-              <MappingFragment StoreEntitySet="TeachersSubjects">
-                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="TeacherSubjectID" ColumnName="TeacherSubjectID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1839,6 +2172,99 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="SMSModel.States">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodingFormats">
+            <EntityTypeMapping TypeName="SMSModel.CodingFormats">
+              <MappingFragment StoreEntitySet="CodingFormats">
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsEmergencyContactDetails">
+            <EntityTypeMapping TypeName="SMSModel.StudentsEmergencyContactDetails">
+              <MappingFragment StoreEntitySet="StudentsEmergencyContactDetails">
+                <ScalarProperty Name="OtherDetails" ColumnName="OtherDetails" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="HomePhoneNo" ColumnName="HomePhoneNo" />
+                <ScalarProperty Name="WorkPhoneNo" ColumnName="WorkPhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactPersonRelation" ColumnName="ContactPersonRelation" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentEmergencyContactDetailId" ColumnName="StudentEmergencyContactDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Days">
+            <EntityTypeMapping TypeName="SMSModel.Days">
+              <MappingFragment StoreEntitySet="Days">
+                <ScalarProperty Name="IsWeekend" ColumnName="IsWeekend" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="SMSModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTableDetails">
+            <EntityTypeMapping TypeName="SMSModel.TimeTableDetails">
+              <MappingFragment StoreEntitySet="TimeTableDetails">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayID" ColumnName="DayID" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
+                <ScalarProperty Name="TimeTableDetailID" ColumnName="TimeTableDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="SMSModel.Batches">
+              <MappingFragment StoreEntitySet="Batches">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SMSModel.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="SMSModel.Countries">
               <MappingFragment StoreEntitySet="Countries">
@@ -1852,11 +2278,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="States">
-            <EntityTypeMapping TypeName="SMSModel.States">
-              <MappingFragment StoreEntitySet="States">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="SMSModel.Sections">
+              <MappingFragment StoreEntitySet="Sections">
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shifts">
+            <EntityTypeMapping TypeName="SMSModel.Shifts">
+              <MappingFragment StoreEntitySet="Shifts">
+                <ScalarProperty Name="BreakEndTime" ColumnName="BreakEndTime" />
+                <ScalarProperty Name="BreakStartTime" ColumnName="BreakStartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="NameAr" ColumnName="NameAr" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -1867,7 +2305,6 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="SMSModel.Students">
               <MappingFragment StoreEntitySet="Students">
-                <ScalarProperty Name="StudentPic" ColumnName="StudentPic" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="RepeatGrades" ColumnName="RepeatGrades" />
                 <ScalarProperty Name="HasStudentRepeatGrade" ColumnName="HasStudentRepeatGrade" />
@@ -1891,6 +2328,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="NationalityId" ColumnName="NationalityId" />
                 <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
+                <ScalarProperty Name="StudentPic" ColumnName="StudentPic" />
                 <ScalarProperty Name="StudentIDNo" ColumnName="StudentIDNo" />
                 <ScalarProperty Name="FatherIDNo" ColumnName="FatherIDNo" />
                 <ScalarProperty Name="FullNameArPassport" ColumnName="FullNameArPassport" />
@@ -1908,6 +2346,38 @@
                 <ScalarProperty Name="Name1" ColumnName="Name1" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsClasses">
+            <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
+              <MappingFragment StoreEntitySet="StudentsClasses">
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="SMSModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectTypes">
+            <EntityTypeMapping TypeName="SMSModel.SubjectTypes">
+              <MappingFragment StoreEntitySet="SubjectTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1932,40 +2402,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CodingFormats">
-            <EntityTypeMapping TypeName="SMSModel.CodingFormats">
-              <MappingFragment StoreEntitySet="CodingFormats">
-                <ScalarProperty Name="Format" ColumnName="Format" />
-                <ScalarProperty Name="TableName" ColumnName="TableName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <EntitySetMapping Name="TeachersSubjects">
+            <EntityTypeMapping TypeName="SMSModel.TeachersSubjects">
+              <MappingFragment StoreEntitySet="TeachersSubjects">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="TeacherSubjectID" ColumnName="TeacherSubjectID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StudentsClasses">
-            <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
-              <MappingFragment StoreEntitySet="StudentsClasses">
-                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
-                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentsEmergencyContactDetails">
-            <EntityTypeMapping TypeName="SMSModel.StudentsEmergencyContactDetails">
-              <MappingFragment StoreEntitySet="StudentsEmergencyContactDetails">
-                <ScalarProperty Name="OtherDetails" ColumnName="OtherDetails" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="HomePhoneNo" ColumnName="HomePhoneNo" />
-                <ScalarProperty Name="WorkPhoneNo" ColumnName="WorkPhoneNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ContactPersonRelation" ColumnName="ContactPersonRelation" />
-                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="StudentEmergencyContactDetailId" ColumnName="StudentEmergencyContactDetailId" />
+          <EntitySetMapping Name="TimeTables">
+            <EntityTypeMapping TypeName="SMSModel.TimeTables">
+              <MappingFragment StoreEntitySet="TimeTables">
+                <ScalarProperty Name="PeriodDurationMIns" ColumnName="PeriodDurationMIns" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

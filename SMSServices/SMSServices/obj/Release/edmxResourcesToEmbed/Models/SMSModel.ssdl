@@ -68,6 +68,16 @@
     <Property Name="Nationality" Type="nvarchar" MaxLength="150" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
+  <EntityType Name="Days">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsWeekend" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Errors">
     <Key>
       <PropertyRef Name="ErrorId" />
@@ -85,6 +95,15 @@
     <Property Name="Active" Type="bit" />
   </EntityType>
   <EntityType Name="Languages">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
@@ -126,6 +145,10 @@
     <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="BreakStartTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="BreakEndTime" Type="time" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -219,6 +242,14 @@
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
+  <EntityType Name="SubjectTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="TeacherExperiences">
     <Key>
       <PropertyRef Name="TeacherExperienceId" />
@@ -286,6 +317,31 @@
     <Property Name="TeacherSubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TeacherID" Type="int" Nullable="false" />
     <Property Name="SubjectID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TimeTableDetails">
+    <Key>
+      <PropertyRef Name="TimeTableDetailID" />
+    </Key>
+    <Property Name="TimeTableDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TimeTableID" Type="int" Nullable="false" />
+    <Property Name="LocationID" Type="int" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+    <Property Name="SubjectID" Type="int" Nullable="false" />
+    <Property Name="DayID" Type="int" Nullable="false" />
+    <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TimeTables">
+    <Key>
+      <PropertyRef Name="TimeTableID" />
+    </Key>
+    <Property Name="TimeTableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="ClassID" Type="int" Nullable="false" />
+    <Property Name="SectionID" Type="int" Nullable="false" />
+    <Property Name="PeriodDurationMIns" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Admissions_Students">
     <End Role="Students" Type="Self.Students" Multiplicity="1" />
@@ -647,6 +703,102 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TimeTable_Classes">
+    <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+    <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTables">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTable_Sections">
+    <End Role="Sections" Type="Self.Sections" Multiplicity="1" />
+    <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTables">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTable_Shifts">
+    <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+    <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTables">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Days1">
+    <End Role="Days" Type="Self.Days" Multiplicity="1" />
+    <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Days">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="DayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Locations">
+    <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+    <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Subjects">
+    <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+    <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Teachers">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_TimeTable">
+    <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="1" />
+    <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TimeTables">
+        <PropertyRef Name="TimeTableID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="TimeTableID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
@@ -655,8 +807,10 @@
     <EntitySet Name="ClassesSections" EntityType="Self.ClassesSections" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CodingFormats" EntityType="Self.CodingFormats" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Religions" EntityType="Self.Religions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
@@ -666,11 +820,14 @@
     <EntitySet Name="StudentsClasses" EntityType="Self.StudentsClasses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StudentsEmergencyContactDetails" EntityType="Self.StudentsEmergencyContactDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubjectTypes" EntityType="Self.SubjectTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherExperiences" EntityType="Self.TeacherExperiences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherQualifications" EntityType="Self.TeacherQualifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeachersClasses" EntityType="Self.TeachersClasses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeachersSubjects" EntityType="Self.TeachersSubjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimeTableDetails" EntityType="Self.TimeTableDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimeTables" EntityType="Self.TimeTables" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Admissions_Students" Association="Self.FK_Admissions_Students">
       <End Role="Students" EntitySet="Students" />
       <End Role="Admissions" EntitySet="Admissions" />
@@ -790,6 +947,38 @@
     <AssociationSet Name="FK_TeachersSubjects_Teachers" Association="Self.FK_TeachersSubjects_Teachers">
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeachersSubjects" EntitySet="TeachersSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTable_Classes" Association="Self.FK_TimeTable_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="TimeTables" EntitySet="TimeTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTable_Sections" Association="Self.FK_TimeTable_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="TimeTables" EntitySet="TimeTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTable_Shifts" Association="Self.FK_TimeTable_Shifts">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="TimeTables" EntitySet="TimeTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Days1" Association="Self.FK_TimeTableDetails_Days1">
+      <End Role="Days" EntitySet="Days" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Locations" Association="Self.FK_TimeTableDetails_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Subjects" Association="Self.FK_TimeTableDetails_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Teachers" Association="Self.FK_TimeTableDetails_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_TimeTable" Association="Self.FK_TimeTableDetails_TimeTable">
+      <End Role="TimeTables" EntitySet="TimeTables" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

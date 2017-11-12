@@ -18,6 +18,7 @@ namespace SMSServices.Models
         {
             this.ClassesSections = new HashSet<ClassesSections>();
             this.StudentsClasses = new HashSet<StudentsClasses>();
+            this.TimeTables = new HashSet<TimeTables>();
         }
     
         public int ID { get; set; }
@@ -27,5 +28,6 @@ namespace SMSServices.Models
     
         public virtual ICollection<ClassesSections> ClassesSections { get; set; }
         public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
+        public virtual ICollection<TimeTables> TimeTables { get; set; }
     }
 }

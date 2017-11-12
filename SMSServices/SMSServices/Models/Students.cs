@@ -38,6 +38,7 @@ namespace SMSServices.Models
         public string FullNameArPassport { get; set; }
         public string FatherIDNo { get; set; }
         public string StudentIDNo { get; set; }
+        public string StudentPic { get; set; }
         public string PlaceOfBirth { get; set; }
         public Nullable<int> NationalityId { get; set; }
         public string Email { get; set; }
@@ -61,7 +62,6 @@ namespace SMSServices.Models
         public Nullable<bool> HasStudentRepeatGrade { get; set; }
         public string RepeatGrades { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
-        public string StudentPic { get; set; }
     
         public virtual ICollection<Admissions> Admissions { get; set; }
         public virtual Cities Cities { get; set; }

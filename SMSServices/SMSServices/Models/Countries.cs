@@ -17,9 +17,9 @@ namespace SMSServices.Models
         public Countries()
         {
             this.States = new HashSet<States>();
-            this.TeacherExperiences = new HashSet<TeacherExperiences>();
             this.Students = new HashSet<Students>();
             this.Students1 = new HashSet<Students>();
+            this.TeacherExperiences = new HashSet<TeacherExperiences>();
             this.Teachers = new HashSet<Teachers>();
         }
     
@@ -32,9 +32,9 @@ namespace SMSServices.Models
         public Nullable<bool> IsActive { get; set; }
     
         public virtual ICollection<States> States { get; set; }
-        public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual ICollection<Students> Students { get; set; }
         public virtual ICollection<Students> Students1 { get; set; }
+        public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual ICollection<Teachers> Teachers { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace SMSServices.Models
         public Nullable<bool> IsActive { get; set; }
     
         public virtual ICollection<Cities> Cities { get; set; }
-        public virtual Countries Countries { get; set; }
         public virtual ICollection<TeacherExperiences> TeacherExperiences { get; set; }
+        public virtual Countries Countries { get; set; }
         public virtual ICollection<Students> Students { get; set; }
     }
 }
