@@ -42,7 +42,8 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
          
         LoaderVisibility(false);
         alert('s', 'data has been saved successfully');
-        
+        $('#timeTablePopup').modal('hide');  
+
       })
       .catch(function (error) {
         if (error.response) { 
@@ -90,5 +91,56 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     //     LoaderVisibility(false);
     //   });      
   }
+
+
+  export function remove(id, delCell){
+    
+  let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"] 
+                          || 'Are you sure, you want to delete this record?';
+
+  confirmation(messageText, function(ButtonPressed){
+      deleteRecord(ButtonPressed, id, delCell); 
+  });
+
+}
+  
+function deleteRecord(ButtonPressed, id, delCell) {
+
+  if (isYesClicked(ButtonPressed)) {
+      LoaderVisibility(true);
+      console.log('timetable dele conf yes by func');
+      // console.log(id);
+       
+      $.ajax({
+          url : '/api/RemoveTimeTable/' + id,
+          type: "POST",
+          //data : formData,
+          success: function(data, textStatus, jqXHR)
+          {
+            console.log('success...');
+            alert('s','data has been deleted.');
+            
+            var table = $('#timeTablesGrid').DataTable();                
+            table
+              .row( delCell.parents('tr') )
+              .remove()
+              .draw();
+
+            LoaderVisibility(false);
+
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+            console.log('error = ', jqXHR, textStatus, errorThrown);
+            alert('f','');
+
+            LoaderVisibility(false);
+          }
+      });
+  }
+  else if (isNoClicked(ButtonPressed)) {
+    // do nothing
+  }    
+}
 
 export default submit

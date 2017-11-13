@@ -43,7 +43,7 @@ export default {
     {
       path: 'timetable',
       getComponent(nextState, cb){
-        System.import('./containers/Timetables/TimetableForm').then((m)=> {
+        System.import('./containers/Timetables/TimeTablesPage').then((m)=> {
           cb(null, m.default)
         })
       }

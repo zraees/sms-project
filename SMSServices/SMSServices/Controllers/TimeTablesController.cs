@@ -1,4 +1,5 @@
 ﻿using SMSServices.Models;
+using SMSServices.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,11 +19,39 @@ namespace SMSServices.Controllers
     {
         private SMSEntities entities = new SMSEntities();
 
+        [HttpGet]
+        [Route("api/GetTimeTableGeneratedCode/")]
+        public string GetTimeTableGeneratedCode()
+        {
+            return new AutoCodeGeneration().GenerateCode("TimeTables", "Code");
+        }
+
         // GET api/<controller>
-        public IEnumerable<TimeTables> Get()
+        public HttpResponseMessage Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.TimeTables;
+            //return entities.TimeTables;
+            var query = entities.TimeTables 
+            .Select(e => new
+            {
+                e.TimeTableID,
+                e.Code,
+                Name = e.Name,
+                e.ShiftID,
+                ShiftName = e.Shifts.Name,
+                ShiftNameAr = e.Shifts.NameAr,
+
+                e.ClassID,
+                ClassName = e.Classes.Name,
+                ClassNameAr = e.Classes.NameAr,
+                
+                e.SectionID,
+                SectionName = e.Sections.Name,
+                SectionNameAr = e.Sections.NameAr,
+            });
+
+            //return query.ToList(); //entities.TeachersSubjects.Include("Classes").Include("Shifts").Include("Sections");
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
         // GET api/<controller>/5
@@ -41,7 +70,7 @@ namespace SMSServices.Controllers
             {
                 entities.TimeTables.Add(new TimeTables()
                 {
-                    Code = timeTable.Code,
+                    Code = new AutoCodeGeneration().GenerateCode("TimeTables", "Code"),  //timeTable.Code,
                     Name = timeTable.Name,
                     ShiftID = timeTable.ShiftID,
                     ClassID = timeTable.ClassID,
@@ -152,8 +181,8 @@ namespace SMSServices.Controllers
         */
 
         [HttpPost]
-        [Route("api/RemoveTeacher/{id}")]
-        public HttpResponseMessage RemoveTeacher(int id)
+        [Route("api/RemoveTimeTable/{id}")]
+        public HttpResponseMessage RemoveTimeTable(int id)
         {
             try
             {
