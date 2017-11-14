@@ -177,20 +177,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TimeTableDetails">
-      <EntityTypeMapping TypeName="SMSModel.TimeTableDetails">
-        <MappingFragment StoreEntitySet="TimeTableDetails">
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="DayID" ColumnName="DayID" />
-          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
-          <ScalarProperty Name="TimeTableDetailID" ColumnName="TimeTableDetailID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Batches">
       <EntityTypeMapping TypeName="SMSModel.Batches">
         <MappingFragment StoreEntitySet="Batches">
@@ -369,6 +355,21 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TimeTableDetails">
+      <EntityTypeMapping TypeName="SMSModel.TimeTableDetails">
+        <MappingFragment StoreEntitySet="TimeTableDetails">
+          <ScalarProperty Name="IsBreak" ColumnName="IsBreak" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="DayID" ColumnName="DayID" />
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="TimeTableID" ColumnName="TimeTableID" />
+          <ScalarProperty Name="TimeTableDetailID" ColumnName="TimeTableDetailID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -155,6 +155,7 @@
     <Compile Include="Controllers\TeachersClassesController.cs" />
     <Compile Include="Controllers\StudentsEmergencyContactDetailsController.cs" />
     <Compile Include="Controllers\ShiftsController.cs" />
+    <Compile Include="Controllers\TimeTableDetailsController.cs" />
     <Compile Include="Controllers\TimeTablesController.cs" />
     <Compile Include="Controllers\TeachersSubjectsController.cs" />
     <Compile Include="Controllers\LookupController.cs" />

@@ -143,4 +143,47 @@ function deleteRecord(ButtonPressed, id, delCell) {
   }    
 }
 
+export function createEmptyTimeTableDetail(timeTableId, dayId){
+    LoaderVisibility(true);
+  
+      axios.post('/api/createEmptyTimeTableDetails', {"timeTableId":timeTableId, "dayId":dayId})      
+        .then(function (response) {
+           
+          LoaderVisibility(false);
+          alert('s', 'data has been saved successfully');
+          $('#timeTablePopup').modal('hide');  
+  
+        })
+        .catch(function (error) {
+          if (error.response) { 
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            alert('f', error.response.data.StatusMessage);   
+            LoaderVisibility(false);     
+                  //throw new SubmissionError({ _error: "That's weird. "});   
+                  //reject('error error error');
+                  return Promise.resolve(true).then(() => {
+                  throw new SubmissionError({  });
+                }); 
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          //console.log(error.config);
+          
+          //alert('f', '');
+          LoaderVisibility(false);      
+        });      
+}
+
+export function submitTimetableDay(){
+  console.log('func submitTimetableDay ');
+}
+
 export default submit

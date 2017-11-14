@@ -40,7 +40,6 @@ namespace SMSServices.Models
         public virtual DbSet<StudentsEmergencyContactDetails> StudentsEmergencyContactDetails { get; set; }
         public virtual DbSet<Days> Days { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
-        public virtual DbSet<TimeTableDetails> TimeTableDetails { get; set; }
         public virtual DbSet<Batches> Batches { get; set; }
         public virtual DbSet<Classes> Classes { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
@@ -53,5 +52,6 @@ namespace SMSServices.Models
         public virtual DbSet<Teachers> Teachers { get; set; }
         public virtual DbSet<TeachersSubjects> TeachersSubjects { get; set; }
         public virtual DbSet<TimeTables> TimeTables { get; set; }
+        public virtual DbSet<TimeTableDetails> TimeTableDetails { get; set; }
     }
 }

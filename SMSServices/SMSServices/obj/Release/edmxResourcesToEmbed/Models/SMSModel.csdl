@@ -32,15 +32,6 @@
     <EntitySet Name="StudentsEmergencyContactDetails" EntityType="SMSModel.StudentsEmergencyContactDetails" />
     <EntitySet Name="Days" EntityType="SMSModel.Days" />
     <EntitySet Name="Locations" EntityType="SMSModel.Locations" />
-    <EntitySet Name="TimeTableDetails" EntityType="SMSModel.TimeTableDetails" />
-    <AssociationSet Name="FK_TimeTableDetails_Days1" Association="SMSModel.FK_TimeTableDetails_Days1">
-      <End Role="Days" EntitySet="Days" />
-      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TimeTableDetails_Locations" Association="SMSModel.FK_TimeTableDetails_Locations">
-      <End Role="Locations" EntitySet="Locations" />
-      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
-    </AssociationSet>
     <EntitySet Name="Batches" EntityType="SMSModel.Batches" />
     <EntitySet Name="Classes" EntityType="SMSModel.Classes" />
     <EntitySet Name="Countries" EntityType="SMSModel.Countries" />
@@ -135,10 +126,6 @@
       <End Role="Students" EntitySet="Students" />
       <End Role="StudentsEmergencyContactDetails" EntitySet="StudentsEmergencyContactDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_TimeTableDetails_Subjects" Association="SMSModel.FK_TimeTableDetails_Subjects">
-      <End Role="Subjects" EntitySet="Subjects" />
-      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
-    </AssociationSet>
     <AssociationSet Name="FK_TeacherExperiences_Teachers" Association="SMSModel.FK_TeacherExperiences_Teachers">
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
@@ -150,10 +137,6 @@
     <AssociationSet Name="FK_TeachersClasses_Teachers" Association="SMSModel.FK_TeachersClasses_Teachers">
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeachersClasses" EntitySet="TeachersClasses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TimeTableDetails_Teachers" Association="SMSModel.FK_TimeTableDetails_Teachers">
-      <End Role="Teachers" EntitySet="Teachers" />
-      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
     </AssociationSet>
     <EntitySet Name="TeachersSubjects" EntityType="SMSModel.TeachersSubjects" />
     <AssociationSet Name="FK_TeachersSubjects_Subjects" Association="SMSModel.FK_TeachersSubjects_Subjects">
@@ -176,6 +159,23 @@
     <AssociationSet Name="FK_TimeTable_Shifts" Association="SMSModel.FK_TimeTable_Shifts">
       <End Role="Shifts" EntitySet="Shifts" />
       <End Role="TimeTables" EntitySet="TimeTables" />
+    </AssociationSet>
+    <EntitySet Name="TimeTableDetails" EntityType="SMSModel.TimeTableDetails" />
+    <AssociationSet Name="FK_TimeTableDetails_Days1" Association="SMSModel.FK_TimeTableDetails_Days1">
+      <End Role="Days" EntitySet="Days" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Locations" Association="SMSModel.FK_TimeTableDetails_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Subjects" Association="SMSModel.FK_TimeTableDetails_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTableDetails_Teachers" Association="SMSModel.FK_TimeTableDetails_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_TimeTableDetails_TimeTable" Association="SMSModel.FK_TimeTableDetails_TimeTable">
       <End Role="TimeTables" EntitySet="TimeTables" />
@@ -417,48 +417,6 @@
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="Locations" ToRole="TimeTableDetails" />
   </EntityType>
-  <EntityType Name="TimeTableDetails">
-    <Key>
-      <PropertyRef Name="TimeTableDetailID" />
-    </Key>
-    <Property Name="TimeTableDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TimeTableID" Type="Int32" Nullable="false" />
-    <Property Name="LocationID" Type="Int32" Nullable="false" />
-    <Property Name="TeacherId" Type="Int32" Nullable="false" />
-    <Property Name="SubjectID" Type="Int32" Nullable="false" />
-    <Property Name="DayID" Type="Int32" Nullable="false" />
-    <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
-    <NavigationProperty Name="Days" Relationship="SMSModel.FK_TimeTableDetails_Days1" FromRole="TimeTableDetails" ToRole="Days" />
-    <NavigationProperty Name="Locations" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="TimeTableDetails" ToRole="Locations" />
-    <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="TimeTableDetails" ToRole="Subjects" />
-    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="TimeTableDetails" ToRole="Teachers" />
-    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTableDetails_TimeTable" FromRole="TimeTableDetails" ToRole="TimeTables" />
-  </EntityType>
-  <Association Name="FK_TimeTableDetails_Days1">
-    <End Type="SMSModel.Days" Role="Days" Multiplicity="1" />
-    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Days">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TimeTableDetails">
-        <PropertyRef Name="DayID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TimeTableDetails_Locations">
-    <End Type="SMSModel.Locations" Role="Locations" Multiplicity="1" />
-    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Locations">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TimeTableDetails">
-        <PropertyRef Name="LocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Batches">
     <Key>
       <PropertyRef Name="ID" />
@@ -610,8 +568,8 @@
     <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="Subjects" ToRole="TimeTableDetails" />
     <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Subjects" FromRole="Subjects" ToRole="TeachersSubjects" />
+    <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="Subjects" ToRole="TimeTableDetails" />
   </EntityType>
   <EntityType Name="SubjectTypes">
     <Key>
@@ -644,8 +602,8 @@
     <NavigationProperty Name="TeacherExperiences" Relationship="SMSModel.FK_TeacherExperiences_Teachers" FromRole="Teachers" ToRole="TeacherExperiences" />
     <NavigationProperty Name="TeacherQualifications" Relationship="SMSModel.FK_TeacherQualifications_Teachers" FromRole="Teachers" ToRole="TeacherQualifications" />
     <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Teachers" FromRole="Teachers" ToRole="TeachersClasses" />
-    <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="Teachers" ToRole="TimeTableDetails" />
     <NavigationProperty Name="TeachersSubjects" Relationship="SMSModel.FK_TeachersSubjects_Teachers" FromRole="Teachers" ToRole="TeachersSubjects" />
+    <NavigationProperty Name="TimeTableDetails" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="Teachers" ToRole="TimeTableDetails" />
   </EntityType>
   <Association Name="FK_Admissions_Students">
     <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
@@ -899,18 +857,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TimeTableDetails_Subjects">
-    <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="1" />
-    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Subjects">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TimeTableDetails">
-        <PropertyRef Name="SubjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TeacherExperiences_Teachers">
     <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
     <End Type="SMSModel.TeacherExperiences" Role="TeacherExperiences" Multiplicity="*" />
@@ -944,18 +890,6 @@
       </Principal>
       <Dependent Role="TeachersClasses">
         <PropertyRef Name="TeacherID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TimeTableDetails_Teachers">
-    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="1" />
-    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Teachers">
-        <PropertyRef Name="TeacherId" />
-      </Principal>
-      <Dependent Role="TimeTableDetails">
-        <PropertyRef Name="TeacherId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1042,6 +976,73 @@
       </Principal>
       <Dependent Role="TimeTables">
         <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TimeTableDetails">
+    <Key>
+      <PropertyRef Name="TimeTableDetailID" />
+    </Key>
+    <Property Name="TimeTableDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TimeTableID" Type="Int32" Nullable="false" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="TeacherId" Type="Int32" />
+    <Property Name="SubjectID" Type="Int32" />
+    <Property Name="DayID" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Days" Relationship="SMSModel.FK_TimeTableDetails_Days1" FromRole="TimeTableDetails" ToRole="Days" />
+    <NavigationProperty Name="Locations" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="TimeTableDetails" ToRole="Locations" />
+    <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="TimeTableDetails" ToRole="Subjects" />
+    <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="TimeTableDetails" ToRole="Teachers" />
+    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTableDetails_TimeTable" FromRole="TimeTableDetails" ToRole="TimeTables" />
+    <Property Name="IsBreak" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TimeTableDetails_Days1">
+    <End Type="SMSModel.Days" Role="Days" Multiplicity="1" />
+    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Days">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="DayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Locations">
+    <End Type="SMSModel.Locations" Role="Locations" Multiplicity="0..1" />
+    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Subjects">
+    <End Type="SMSModel.Subjects" Role="Subjects" Multiplicity="0..1" />
+    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTableDetails_Teachers">
+    <End Type="SMSModel.Teachers" Role="Teachers" Multiplicity="0..1" />
+    <End Type="SMSModel.TimeTableDetails" Role="TimeTableDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="TimeTableDetails">
+        <PropertyRef Name="TeacherId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

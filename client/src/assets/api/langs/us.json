@@ -221,6 +221,14 @@
     "RelativesDetailsText": "Relatives Details",
     "SpecialServicesText": "Special Services",
     "MedicalDetailsText": "Medical Details",
+    
+    "Day1Text": "Monday",
+    "Day2Text": "Tuesday",
+    "Day3Text": "Wednesday",
+    "Day4Text": "Thursday",
+    "Day5Text": "Friday",
+    "Day6Text": "Saturday",
+    "Day7Text": "Sunday",
 
     "Please enter full name": "Please enter full name",
     "Please enter email address": "Please enter email address",

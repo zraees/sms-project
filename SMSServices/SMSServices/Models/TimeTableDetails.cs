@@ -16,12 +16,13 @@ namespace SMSServices.Models
     {
         public int TimeTableDetailID { get; set; }
         public int TimeTableID { get; set; }
-        public int LocationID { get; set; }
-        public int TeacherId { get; set; }
-        public int SubjectID { get; set; }
+        public Nullable<int> LocationID { get; set; }
+        public Nullable<int> TeacherId { get; set; }
+        public Nullable<int> SubjectID { get; set; }
         public int DayID { get; set; }
         public System.TimeSpan StartTime { get; set; }
         public System.TimeSpan EndTime { get; set; }
+        public int IsBreak { get; set; }
     
         public virtual Days Days { get; set; }
         public virtual Locations Locations { get; set; }

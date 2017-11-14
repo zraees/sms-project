@@ -324,12 +324,13 @@
     </Key>
     <Property Name="TimeTableDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TimeTableID" Type="int" Nullable="false" />
-    <Property Name="LocationID" Type="int" Nullable="false" />
-    <Property Name="TeacherId" Type="int" Nullable="false" />
-    <Property Name="SubjectID" Type="int" Nullable="false" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="TeacherId" Type="int" />
+    <Property Name="SubjectID" Type="int" />
     <Property Name="DayID" Type="int" Nullable="false" />
     <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
     <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="IsBreak" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TimeTables">
     <Key>
@@ -752,7 +753,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TimeTableDetails_Locations">
-    <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+    <End Role="Locations" Type="Self.Locations" Multiplicity="0..1" />
     <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Locations">
@@ -764,7 +765,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TimeTableDetails_Subjects">
-    <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+    <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
     <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Subjects">
@@ -776,7 +777,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TimeTableDetails_Teachers">
-    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
     <End Role="TimeTableDetails" Type="Self.TimeTableDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Teachers">

@@ -23,14 +23,10 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 import Moment from '../../../../components/utils/Moment'
 
 import TimetableForm from './TimetableForm'
-// import TeacherEditForm from './TeacherEditForm'
-// import EditGeneralInfo from './EditGeneralInfo'
-// import QualificationForm from './QualificationForm'
-// import ExperienceForm from './ExperienceForm'
-// import TimeTablesubjectsForm from './TimeTablesubjectsForm'
-// import TeacherClassesForm from './TeacherClassesForm'
-//import Test from './Test'
-import submit, {remove} from './submit'
+import TimetableEditForm from './TimetableEditForm'
+import TimetableDay from './TimetableDay'
+
+import submit, {remove, submitTimetableDay} from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
@@ -60,21 +56,18 @@ class TimeTablesPage extends React.Component {
   renderModalBody(popupPageName, timeTableId){
     
     var modalBody;    
-    /*
+    
     if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
-      modalBody = <EditGeneralInfo timeTableId={timeTableId} 
-          nationalities={this.state.nationalities} 
-          genderOptions={this.state.genderOptions}
-          countries={this.state.countries}
+      modalBody = <TimetableEditForm timeTableId={timeTableId}  
           onSubmit={submit} />
     }
-    else if(popupPageName == "Qualification"){
-      modalBody = <QualificationForm
+    else if(popupPageName == "Day1Text"){
+      modalBody = <TimetableDay
           timeTableId={timeTableId}   
-          onSubmit={submitQualification} 
+          onSubmit={submitTimetableDay} 
           />      
-    }
+    }/*
     else if(popupPageName == "Experience"){
       modalBody = <ExperienceForm
           timeTableId={timeTableId}  
@@ -106,13 +99,13 @@ class TimeTablesPage extends React.Component {
       taphold: true,
       menu: [
       {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
-      {title: LanguageStore.getData().phrases["Day1Text"], cmd: "Day1", uiIcon: "ui-icon-document"},
-      {title: LanguageStore.getData().phrases["Day2Text"], cmd: "Day2", uiIcon: "ui-icon-person"},
-      {title: LanguageStore.getData().phrases["Day3Text"], cmd: "Day3", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day4Text"], cmd: "Day4", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day5Text"], cmd: "Day5", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day6Text"], cmd: "Day6", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day7Text"], cmd: "Day7", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day1Text"], cmd: "Day1Text", uiIcon: "ui-icon-document"},
+      {title: LanguageStore.getData().phrases["Day2Text"], cmd: "Day2Text", uiIcon: "ui-icon-person"},
+      {title: LanguageStore.getData().phrases["Day3Text"], cmd: "Day3Text", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day4Text"], cmd: "Day4Text", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day5Text"], cmd: "Day5Text", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day6Text"], cmd: "Day6Text", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day7Text"], cmd: "Day7Text", uiIcon: "ui-icon-contact"},
             
       // {title: "More", children: [
       //   {title: "Use an 'action' callback", action: function(event, ui) {
@@ -249,7 +242,7 @@ class TimeTablesPage extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 6
+                                "targets": 11
                             }
                         ],
                         columns: [
@@ -265,7 +258,12 @@ class TimeTablesPage extends React.Component {
                           {data: "ShiftName"},
                           {data: "ClassName"},
                           {data: "SectionName"},     
-                          {data: "TimeTableID"}
+                          {data: "PeriodDurationMIns"},
+                          {data: "StartTime"},
+                          {data: "EndTime"},
+                          {data: "BreakStartTime"},
+                          {data: "BreakEndTime"},
+                          {data: "TimeTableID"},
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'
@@ -283,6 +281,11 @@ class TimeTablesPage extends React.Component {
                         <th data-hide="mobile-p"><Msg phrase="ShiftText"/></th>
                         <th data-class="expand"><Msg phrase="ClassText"/></th>
                         <th data-hide="mobile-p"><Msg phrase="SectionText"/></th> 
+                        <th data-hide="mobile-p"><Msg phrase="PeriodDurationMinsText"/></th> 
+                        <th data-hide="mobile-p"><Msg phrase="ShiftStartTimeText"/></th> 
+                        <th data-hide="mobile-p"><Msg phrase="ShiftEndTimeText"/></th> 
+                        <th data-hide="mobile-p"><Msg phrase="breakStartTimeText"/></th> 
+                        <th data-hide="mobile-p"><Msg phrase="breakEndTimeText"/></th> 
                         <th data-hide="mobile-p"></th>
                       </tr>
                       </thead>
@@ -345,7 +348,7 @@ class TimeTablesPage extends React.Component {
                   //   onSubmit={submit} />
                   // :
                   // (this.state.timeTableId > 0 ? 
-                  //   <TeacherEditForm
+                  //   <TimetableEditForm
                   //     timeTableId={this.state.timeTableId} 
                   //     nationalities={this.state.nationalities} 
                   //     countries={this.state.countries} 

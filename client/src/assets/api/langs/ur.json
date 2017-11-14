@@ -226,6 +226,14 @@
     "SpecialServicesText": "Special Services",
     "MedicalDetailsText": "MEdical Details",
     
+    "Day1Text": "Monday",
+    "Day2Text": "Tuesday",
+    "Day3Text": "Wednesday",
+    "Day4Text": "Thursday",
+    "Day5Text": "Friday",
+    "Day6Text": "Saturday",
+    "Day7Text": "Sunday",
+
     "Please enter full name": "پورا نام درج کریں",
     "Please enter email address": "ای میل ایڈریس درج کریں",
     "Please enter Identity card number": "شناختی کارڈ نمبر درج کریں",

@@ -31,36 +31,63 @@ namespace SMSServices.Controllers
         {
             entities.Configuration.ProxyCreationEnabled = false;
             //return entities.TimeTables;
-            var query = entities.TimeTables 
+            var query = entities.TimeTables
             .Select(e => new
             {
                 e.TimeTableID,
                 e.Code,
                 Name = e.Name,
+                PeriodDurationMIns = e.PeriodDurationMIns,
+
                 e.ShiftID,
                 ShiftName = e.Shifts.Name,
                 ShiftNameAr = e.Shifts.NameAr,
+                StartTime = e.Shifts.StartTime,
+                EndTime = e.Shifts.EndTime,
+                BreakStartTime = e.Shifts.BreakStartTime,
+                BreakEndTime = e.Shifts.BreakEndTime,
 
                 e.ClassID,
                 ClassName = e.Classes.Name,
                 ClassNameAr = e.Classes.NameAr,
-                
+
                 e.SectionID,
                 SectionName = e.Sections.Name,
                 SectionNameAr = e.Sections.NameAr,
             });
-
-            //return query.ToList(); //entities.TeachersSubjects.Include("Classes").Include("Shifts").Include("Sections");
+             
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
         // GET api/<controller>/5
-        public TimeTables Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            entities.Configuration.ProxyCreationEnabled = false;
-            //TimeTables timeTable = entities.TimeTables.Where(t => t.TimeTableID == id).FirstOrDefault();
-            //if (timeTable != null) { timeTable.DOB = timeTable.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; }
-            return entities.TimeTables.Where(t => t.TimeTableID == id).FirstOrDefault();
+            entities.Configuration.ProxyCreationEnabled = false; 
+            var query = entities.TimeTables.Where(t => t.TimeTableID == id)
+            .Select(e => new
+            {
+                e.TimeTableID,
+                e.Code,
+                Name = e.Name,
+                PeriodDurationMIns = e.PeriodDurationMIns,
+
+                e.ShiftID,
+                ShiftName = e.Shifts.Name,
+                ShiftNameAr = e.Shifts.NameAr,
+                StartTime = e.Shifts.StartTime,
+                EndTime = e.Shifts.EndTime,
+                BreakStartTime = e.Shifts.BreakStartTime,
+                BreakEndTime = e.Shifts.BreakEndTime,
+
+                e.ClassID,
+                ClassName = e.Classes.Name,
+                ClassNameAr = e.Classes.NameAr,
+
+                e.SectionID,
+                SectionName = e.Sections.Name,
+                SectionNameAr = e.Sections.NameAr,
+            }).FirstOrDefault(); 
+            return this.Request.CreateResponse(HttpStatusCode.OK, query);
         }
 
         // POST api/<controller>
