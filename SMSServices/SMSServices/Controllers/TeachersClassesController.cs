@@ -32,7 +32,9 @@ namespace SMSServices.Controllers
             {
                 e.TeacherClassID,
                 e.TeacherID,
-                TeacherName = e.Teachers.Name,
+                Id = e.TeacherID,
+                Name = e.Teachers.Name,
+                NameAr = e.Teachers.Name,
                 e.ClassID,
                 ClassCode = e.Classes.Code,
                 ClassName = e.Classes.Name,
@@ -42,6 +44,30 @@ namespace SMSServices.Controllers
             //return query.ToList(); //entities.TeachersClasses.Include("Classes").Include("Shifts").Include("Sections");
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
+
+        [Route("api/TeachersClasses/ByClassID/{ClassID}")]
+        //public IEnumerable<TeachersClasses> Get()
+        public HttpResponseMessage GetByClassID(int ClassID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            var query = entities.TeachersClasses 
+                .Where(t => t.ClassID == ClassID)
+                .Select(e => new
+                {
+                    e.TeacherClassID,
+                    e.TeacherID,
+                    Id = e.TeacherID,
+                    Name = e.Teachers.Name,
+                    NameAr = e.Teachers.Name,
+                    e.ClassID,
+                    ClassCode = e.Classes.Code,
+                    ClassName = e.Classes.Name,
+                    ClassNameAr = e.Classes.NameAr
+                });
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
+        }
+
 
         //// GET api/<controller>/5/1/2
         //[Route("api/TeachersClasses/{ShiftId}/{ClassId}/{SectionId}")]

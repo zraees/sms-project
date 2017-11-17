@@ -23,17 +23,18 @@ RFReactSelect.defaultProps = {
 // };
 
 //https://github.com/erikras/redux-form/issues/1185
-export default function RFReactSelect({ input , options, multi, className, label, meta: {asyncValidating, touched, error, warning} }) {
+export default function RFReactSelect({ input , options, multi, className, label, disabled, meta: {asyncValidating, touched, error, warning} }) {
   const { name, value, onBlur, onChange, onFocus } = input;
   const transformedValue = transformValue(value, options, multi);
   return (
     <div>
-      <label><Msg phrase={label}/></label>      
+      {label==""?"":<label><Msg phrase={label}/></label>} 
       <Select
         valueKey="value"
         name={name}
         value={transformedValue}
         multi={multi}
+        disabled={disabled}
         options={options}
         onChange={multi
           ? multiChangeHandler(onChange)

@@ -42,7 +42,8 @@ class TimeTablesPage extends React.Component {
      countries: [],
      genderOptions: [],
      popupPageName: '',
-     refreshGrid: false
+     refreshGrid: false,
+     classId:0
    }
    
    this.renderModalBody = this.renderModalBody.bind(this);
@@ -63,8 +64,11 @@ class TimeTablesPage extends React.Component {
           onSubmit={submit} />
     }
     else if(popupPageName == "Day1Text"){
+      console.log('this.state.classId  ',this.state.classId);
       modalBody = <TimetableDay
           timeTableId={timeTableId}   
+          dayId={1}
+          classId={this.state.classId}
           onSubmit={submitTimetableDay} 
           />      
     }/*
@@ -125,8 +129,9 @@ class TimeTablesPage extends React.Component {
         var rowindex = ui.target.parent().index(); 
         var colindex = $('table thead tr th:eq('+colvindex+')').data('column-index');
         var id = $('table tbody tr:eq('+rowindex+') td:last-child a').data('tid');
-        //console.log('id ', id);
-        this.setState({popupPageName:ui.cmd, timeTableId:id, refreshGrid:(ui.cmd=='EditText'?true:false)});
+        var classId = $('table tbody tr:eq('+rowindex+') td:last-child a').data('classid');
+        console.log('classid ', classId);
+        this.setState({popupPageName:ui.cmd, timeTableId:id, classId, refreshGrid:(ui.cmd=='EditText'?true:false)});
         
         $('#timeTablePopup').modal('show'); 
       }.bind(this),
@@ -237,7 +242,7 @@ class TimeTablesPage extends React.Component {
                         columnDefs: [
                             { 
                                 "render": function ( data, type, row ) { 
-                                  return '<a id="dele" data-tid="' + data + '" title="Delete"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                                  return '<a id="dele" data-classId="' + row.ClassID + '" data-tid="' + data + '" title="Delete"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                                    
                                 }.bind(self),
                                 "className": "dt-center",

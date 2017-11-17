@@ -59,59 +59,115 @@ namespace SMSServices.Controllers
             var query = entities.TimeTableDetails.Where(t => t.TimeTableDetailID == id)
             .Select(e => new
             {
+                e.TimeTableDetailID,
                 e.TimeTableID,
-                //e.Code,
-                //Name = e.Name,
-                //PeriodDurationMIns = e.PeriodDurationMIns,
+                e.StartTime,
+                e.EndTime,
+                e.IsBreak,
 
-                //e.ShiftID,
-                //ShiftName = e.Shifts.Name,
-                //ShiftNameAr = e.Shifts.NameAr,
-                //StartTime = e.Shifts.StartTime,
-                //EndTime = e.Shifts.EndTime,
-                //BreakStartTime = e.Shifts.BreakStartTime,
-                //BreakEndTime = e.Shifts.BreakEndTime,
+                e.DayID,
+                DayName = e.Days.Name,
+                DayNameAr = e.Days.NameAr,
+                IsWeekend = e.Days.IsWeekend,
 
-                //e.ClassID,
-                //ClassName = e.Classes.Name,
-                //ClassNameAr = e.Classes.NameAr,
+                e.LocationID,
+                LocationName = e.Locations.Name,
+                LocationNameAr = e.Locations.NameAr,
 
-                //e.SectionID,
-                //SectionName = e.Sections.Name,
-                //SectionNameAr = e.Sections.NameAr,
+                e.SubjectID,
+                SubjectName = e.Subjects.Name,
+                SubjectNameAr = e.Subjects.NameAr,
+
+                e.TeacherId,
+                TeacherName = e.Teachers.Name,
+                //TeacherNameAr = e.Teachers.NameAr,
+                 
+                TimeTableCode = e.TimeTables.Code,
+                TimeTableName = e.TimeTables.Name,
+                TimeTablePeriodDurationMIns = e.TimeTables.PeriodDurationMIns,
+
+                e.TimeTables.ShiftID,
+                ShiftName = e.TimeTables.Shifts.Name,
+                ShiftNameAr = e.TimeTables.Shifts.NameAr,
+                ShiftStartTime = e.TimeTables.Shifts.StartTime,
+                ShiftEndTime = e.TimeTables.Shifts.EndTime,
+                ShiftBreakStartTime = e.TimeTables.Shifts.BreakStartTime,
+                ShiftBreakEndTime = e.TimeTables.Shifts.BreakEndTime,
+
+                e.TimeTables.ClassID,
+                ClassName = e.TimeTables.Classes.Name,
+                ClassNameAr = e.TimeTables.Classes.NameAr,
+
+                e.TimeTables.SectionID,
+                SectionName = e.TimeTables.Sections.Name,
+                SectionNameAr = e.TimeTables.Sections.NameAr,
+
             }).FirstOrDefault(); 
             return this.Request.CreateResponse(HttpStatusCode.OK, query);
         }
 
 
-        [Route("api/GetTimeTableDetailByTimeTableID/{id}")]
-        public HttpResponseMessage GetTimeTableDetailByTimeTableID(int id)
+        [Route("api/GetTimeTableDetailByTimeTableIDDayID/{TimeTableID}/{DayID}")]
+        public HttpResponseMessage GetTimeTableDetailByTimeTableIDDayID(int TimeTableID, int DayID)
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            var query = entities.TimeTableDetails.Where(t => t.TimeTableID == id)
+
+            //
+            TimeTableDetails obj = entities.TimeTableDetails.Where(t => t.TimeTableID == TimeTableID).FirstOrDefault();
+            if (obj != null && obj.TimeTableDetailID > 0) 
+            {
+                //
+            }
+            else
+            { CreateEmptyTimeTableDetails(TimeTableID, DayID); }
+
+            var query = entities.TimeTableDetails.Where(t => t.TimeTableID == TimeTableID && t.DayID == DayID)
             .Select(e => new
             {
+                e.TimeTableDetailID,
                 e.TimeTableID,
-                //e.Code,
-                //Name = e.Name,
-                //PeriodDurationMIns = e.PeriodDurationMIns,
+                e.StartTime,
+                e.EndTime,
+                e.IsBreak,
 
-                //e.ShiftID,
-                //ShiftName = e.Shifts.Name,
-                //ShiftNameAr = e.Shifts.NameAr,
-                //StartTime = e.Shifts.StartTime,
-                //EndTime = e.Shifts.EndTime,
-                //BreakStartTime = e.Shifts.BreakStartTime,
-                //BreakEndTime = e.Shifts.BreakEndTime,
+                e.DayID,
+                DayName = e.Days.Name,
+                DayNameAr = e.Days.NameAr,
+                IsWeekend = e.Days.IsWeekend,
 
-                //e.ClassID,
-                //ClassName = e.Classes.Name,
-                //ClassNameAr = e.Classes.NameAr,
+                e.LocationID,
+                LocationName = e.Locations.Name,
+                LocationNameAr = e.Locations.NameAr,
 
-                //e.SectionID,
-                //SectionName = e.Sections.Name,
-                //SectionNameAr = e.Sections.NameAr,
-            }).FirstOrDefault();
+                e.SubjectID,
+                SubjectName = e.Subjects.Name,
+                SubjectNameAr = e.Subjects.NameAr,
+                
+                e.TeacherId,
+                TeacherName = e.Teachers.Name,
+                //TeacherNameAr = e.Teachers.NameAr,
+
+                TimeTableCode = e.TimeTables.Code,
+                TimeTableName = e.TimeTables.Name,
+                TimeTablePeriodDurationMIns = e.TimeTables.PeriodDurationMIns,
+
+                e.TimeTables.ShiftID,
+                ShiftName = e.TimeTables.Shifts.Name,
+                ShiftNameAr = e.TimeTables.Shifts.NameAr,
+                ShiftStartTime = e.TimeTables.Shifts.StartTime,
+                ShiftEndTime = e.TimeTables.Shifts.EndTime,
+                ShiftBreakStartTime = e.TimeTables.Shifts.BreakStartTime,
+                ShiftBreakEndTime = e.TimeTables.Shifts.BreakEndTime,
+
+                e.TimeTables.ClassID,
+                ClassName = e.TimeTables.Classes.Name,
+                ClassNameAr = e.TimeTables.Classes.NameAr,
+
+                e.TimeTables.SectionID,
+                SectionName = e.TimeTables.Sections.Name,
+                SectionNameAr = e.TimeTables.Sections.NameAr,
+
+            }).ToList();
             return this.Request.CreateResponse(HttpStatusCode.OK, query);
         }
 

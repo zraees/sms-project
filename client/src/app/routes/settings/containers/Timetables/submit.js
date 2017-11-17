@@ -182,8 +182,8 @@ export function createEmptyTimeTableDetail(timeTableId, dayId){
         });      
 }
 
-export function submitTimetableDay(){
-  console.log('func submitTimetableDay ');
+export function submitTimetableDay(values, timeTableId, dayId){
+  console.log('func submitTimetableDay ', values, timeTableId, dayId);
 }
 
 export default submit
