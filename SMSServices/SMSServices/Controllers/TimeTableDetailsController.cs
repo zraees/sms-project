@@ -113,7 +113,7 @@ namespace SMSServices.Controllers
             entities.Configuration.ProxyCreationEnabled = false;
 
             //
-            TimeTableDetails obj = entities.TimeTableDetails.Where(t => t.TimeTableID == TimeTableID).FirstOrDefault();
+            TimeTableDetails obj = entities.TimeTableDetails.FirstOrDefault(t => t.TimeTableID == TimeTableID && t.DayID == DayID);
             if (obj != null && obj.TimeTableDetailID > 0) 
             {
                 //
@@ -172,7 +172,7 @@ namespace SMSServices.Controllers
         }
 
         // POST api/<controller>
-        public HttpResponseMessage Post(TimeTableDetails timeTable)
+        public HttpResponseMessage Post(TimeTables timeTable)
         {
             try
             {
@@ -227,10 +227,10 @@ namespace SMSServices.Controllers
             try
             {
                 TimeSpan TimeIn, TimeOut;
-                int IsBreak;
+                bool IsBreak;
                 string strLog = "";
 
-                TimeTables TimeTable = entities.TimeTables.Where(t => t.TimeTableID == TimeTableID).FirstOrDefault();
+                TimeTables TimeTable = entities.TimeTables.Include("Shifts").FirstOrDefault(t => t.TimeTableID == TimeTableID);
                 if (TimeTable!=null && TimeTable.TimeTableID > 0) 
                 {
                     TimeSpan ShiftDifference = TimeTable.Shifts.EndTime - TimeTable.Shifts.StartTime;
@@ -255,7 +255,7 @@ namespace SMSServices.Controllers
                             Math.Abs((TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes),
                              (Math.Abs((TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes) + Math.Abs((TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes)));
 
-                        IsBreak = (Math.Abs( (TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes) + Math.Abs( (TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes)) <= 5 ? 1 : 0;
+                        IsBreak = (Math.Abs( (TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes) + Math.Abs( (TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes)) <= 5 ? true : false;
 
                         entities.TimeTableDetails.Add(new TimeTableDetails()
                         {
@@ -329,16 +329,79 @@ namespace SMSServices.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(TimeTableDetails timeTable)
+        //[HttpPost]
+        //[Route("api/UpdateTimeTableDetails/{timeTableId}/{dayId}/{TimeTableDetails}")]
+        public HttpResponseMessage Put(List<TimeTableDetails> timeTableDetails)
         {
+            string strLog = "";
             try
             {
-                var entity = entities.TimeTableDetails.Find(timeTable.TimeTableID);
-                if (entity != null)
+                int TimeTableID = timeTableDetails.FirstOrDefault().TimeTableID;
+                int DayID = timeTableDetails.FirstOrDefault().DayID;
+                //List<TimeTableDetails> timeTableDetails = timeTable.TimeTableDetails.ToList();
+                //List<TimeTableDetails> timeTableDetails = timeTable.TimeTableDetails.ToList();
+                //var entity = entities.TimeTableDetails.Find(timeTableDetail.TimeTableID);
+                //if (entity != null)
+                //{
+                //    entities.Entry(entity).CurrentValues.SetValues(timeTableDetail);
+                //    entities.SaveChanges();
+                //}
+
+                strLog += " -- " + string.Format("TimetableID={0} & DayID={1}", TimeTableID, DayID);
+
+                List<TimeTableDetails> entityTimeTableDetails = entities.TimeTableDetails.Where(t => t.TimeTableID == TimeTableID && t.DayID == DayID).ToList();
+
+                foreach (TimeTableDetails item in entityTimeTableDetails)
                 {
-                    entities.Entry(entity).CurrentValues.SetValues(timeTable);
+                    strLog += " --- " + string.Format("item.TimeTableDetailID={0}", item.TimeTableDetailID);
+                    var tt = timeTableDetails.FirstOrDefault(t => t.TimeTableDetailID == item.TimeTableDetailID);
+                    if (!(tt != null && tt.TimeTableDetailID > 0))
+                    {
+                        strLog += " ---- " + string.Format(" inside delete tt.TimeTableDetailID={0}", item.TimeTableDetailID);
+                        entities.Entry(item).State = EntityState.Deleted;
+                        entities.TimeTableDetails.Remove(item);
+                    }
+                }
+
+                if (timeTableDetails.Count > 0)
+                {
+                    strLog += " ----- " + string.Format(" inside if timeTableDetails.Count ={0}", timeTableDetails.Count );
+                    foreach (var timeTableDetail in timeTableDetails)
+                    {
+                        if (timeTableDetail.TimeTableDetailID > 0) // Edit
+                        {
+                            var entity = entities.TimeTableDetails.Find(timeTableDetail.TimeTableDetailID);
+                            if (entity != null)
+                            {
+                                strLog += " ------ " + string.Format(" inside update timeTableDetail.TimeTableDetailID={0}", timeTableDetail.TimeTableDetailID);
+                                entities.Entry(entity).CurrentValues.SetValues(timeTableDetail);
+                                //entities.SaveChanges();
+                            }
+                        }
+                        else if(timeTableDetail.TimeTableDetailID == 0) // Add
+                        {
+                            entities.TimeTableDetails.Add(new TimeTableDetails()
+                            {
+                                TimeTableID = TimeTableID,
+                                DayID = DayID,
+                                StartTime = timeTableDetail.StartTime,
+                                EndTime = timeTableDetail.EndTime,
+                                IsBreak = timeTableDetail.IsBreak,
+                                LocationID = timeTableDetail.LocationID,
+                                SubjectID = timeTableDetail.SubjectID,
+                                TeacherId = timeTableDetail.TeacherId,
+                                //ShiftID = timeTable.ShiftID,
+                                //ClassID = timeTable.ClassID,
+                                //SectionID = timeTable.SectionID,
+                                //PeriodDurationMIns = timeTable.PeriodDurationMIns
+                            });
+                        }
+                    }
+
                     entities.SaveChanges();
                 }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "OK hogya ... " + strLog);
                 //var result = entities.TimeTableDetails.SingleOrDefault(t => t.TimeTableID == timeTable.TimeTableID);
                 //if (result != null)
                 //{
@@ -356,9 +419,9 @@ namespace SMSServices.Controllers
                 //    entities.SaveChanges();
                 //}
             }
-            catch //(DbUpdateException)
+            catch (Exception ex)
             {
-                throw;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... "+ strLog + " --> " + ex.Message);
             }
         }
 

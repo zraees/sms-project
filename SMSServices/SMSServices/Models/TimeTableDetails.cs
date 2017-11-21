@@ -22,7 +22,7 @@ namespace SMSServices.Models
         public int DayID { get; set; }
         public System.TimeSpan StartTime { get; set; }
         public System.TimeSpan EndTime { get; set; }
-        public int IsBreak { get; set; }
+        public bool IsBreak { get; set; }
     
         public virtual Days Days { get; set; }
         public virtual Locations Locations { get; set; }

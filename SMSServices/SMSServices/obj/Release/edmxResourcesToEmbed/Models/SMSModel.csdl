@@ -991,12 +991,12 @@
     <Property Name="DayID" Type="Int32" Nullable="false" />
     <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
     <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="IsBreak" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Days" Relationship="SMSModel.FK_TimeTableDetails_Days1" FromRole="TimeTableDetails" ToRole="Days" />
     <NavigationProperty Name="Locations" Relationship="SMSModel.FK_TimeTableDetails_Locations" FromRole="TimeTableDetails" ToRole="Locations" />
     <NavigationProperty Name="Subjects" Relationship="SMSModel.FK_TimeTableDetails_Subjects" FromRole="TimeTableDetails" ToRole="Subjects" />
     <NavigationProperty Name="Teachers" Relationship="SMSModel.FK_TimeTableDetails_Teachers" FromRole="TimeTableDetails" ToRole="Teachers" />
     <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTableDetails_TimeTable" FromRole="TimeTableDetails" ToRole="TimeTables" />
-    <Property Name="IsBreak" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_TimeTableDetails_Days1">
     <End Type="SMSModel.Days" Role="Days" Multiplicity="1" />

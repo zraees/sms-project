@@ -65,7 +65,7 @@
         <AssociationConnector Association="SMSModel.FK_TimeTable_Classes" />
         <AssociationConnector Association="SMSModel.FK_TimeTable_Sections" />
         <AssociationConnector Association="SMSModel.FK_TimeTable_Shifts" />
-        <EntityTypeShape EntityType="SMSModel.TimeTableDetails" Width="1.5" PointX="16.875" PointY="20.875" />
+        <EntityTypeShape EntityType="SMSModel.TimeTableDetails" Width="1.5" PointX="16.875" PointY="20.75" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Days1" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Locations" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Subjects" />

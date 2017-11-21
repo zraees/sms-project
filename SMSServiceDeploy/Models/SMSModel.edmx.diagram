@@ -24,9 +24,6 @@
         <EntityTypeShape EntityType="SMSModel.StudentsEmergencyContactDetails" Width="2.75" PointX="15.25" PointY="10.375" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Days" Width="1.5" PointX="6" PointY="28.75" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Locations" Width="1.5" PointX="6" PointY="31.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="SMSModel.TimeTableDetails" Width="1.5" PointX="9.125" PointY="20.5" IsExpanded="false" />
-        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Days1" />
-        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Locations" />
         <EntityTypeShape EntityType="SMSModel.Batches" Width="1.5" PointX="13" PointY="23.875" />
         <EntityTypeShape EntityType="SMSModel.Classes" Width="1.5" PointX="3.375" PointY="26.75" />
         <EntityTypeShape EntityType="SMSModel.Countries" Width="1.5" PointX="1.125" PointY="14.125" />
@@ -58,11 +55,9 @@
         <AssociationConnector Association="SMSModel.FK_Students_States" />
         <AssociationConnector Association="SMSModel.FK_StudentsClasses_Students" />
         <AssociationConnector Association="SMSModel.FK_StudentsEmergencyContactDetails_Students" />
-        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Subjects" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeachersClasses_Teachers" />
-        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Teachers" />
         <EntityTypeShape EntityType="SMSModel.TeachersSubjects" Width="1.5" PointX="8.625" PointY="14.625" />
         <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Subjects" />
         <AssociationConnector Association="SMSModel.FK_TeachersSubjects_Teachers" />
@@ -70,6 +65,11 @@
         <AssociationConnector Association="SMSModel.FK_TimeTable_Classes" />
         <AssociationConnector Association="SMSModel.FK_TimeTable_Sections" />
         <AssociationConnector Association="SMSModel.FK_TimeTable_Shifts" />
+        <EntityTypeShape EntityType="SMSModel.TimeTableDetails" Width="1.5" PointX="16.875" PointY="20.75" />
+        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Days1" />
+        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Locations" />
+        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Subjects" />
+        <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_TimeTable" />
         </Diagram>
     </edmx:Diagrams>
