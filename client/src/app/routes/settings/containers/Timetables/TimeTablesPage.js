@@ -38,12 +38,12 @@ class TimeTablesPage extends React.Component {
    this.state = {
      timeTableId: 0,
      singleEditMode: 0,
-     nationalities: [],
-     countries: [],
-     genderOptions: [],
      popupPageName: '',
      refreshGrid: false,
-     classId:0
+     classId:0,
+     locationOptions: [],
+     teacherOptions: [],
+     subjectOptions: []
    }
    
    this.renderModalBody = this.renderModalBody.bind(this);
@@ -64,10 +64,13 @@ class TimeTablesPage extends React.Component {
           onSubmit={submit} />
     }
     else if(popupPageName == "Day1Text"){
-      console.log('this.state.classId  ',this.state.classId);
+      //console.log('this.state.classId  ',this.state.classId);
       modalBody = <TimetableDay
           timeTableId={timeTableId}   
           dayId={1}
+          locationOptions={this.state.locationOptions}
+          teacherOptions={this.state.teacherOptions}
+          subjectOptions={this.state.subjectOptions}
           classId={this.state.classId}
           onSubmit={submitTimetableDay} 
           />      
@@ -93,6 +96,24 @@ class TimeTablesPage extends React.Component {
   }
 
   componentDidMount(){ 
+
+    axios.get('/api/lookup/subjects/')
+      .then(res => {
+        const subjectOptions = mapForCombo(res.data);
+        this.setState({ subjectOptions });
+      });
+
+    axios.get('/api/lookup/locations/')
+      .then(res => {
+        const locationOptions = mapForCombo(res.data);
+        this.setState({ locationOptions });
+      });
+
+    axios.get('/api/TeachersClasses/ByClassID/2' )  //+ this.props.classId
+      .then(res => {
+        const teacherOptions = mapForCombo(res.data);
+        this.setState({ teacherOptions });
+      });
 
     
     $('#timeTablesGrid').contextmenu({

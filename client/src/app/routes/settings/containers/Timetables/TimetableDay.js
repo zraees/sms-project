@@ -23,11 +23,11 @@ class TimetableDay extends React.Component {
     this.state = {
       timeTableDetailId: 0,
       editMode: 0,
-      teacherOptions: [],
-      subjectOptions: [],
-      locationOptions: [],
-      teacherOptions: [],
-      subjectOptions: []
+      timeTableId: 0,
+      dayId: 0,
+      // locationOptions: [],
+      // teacherOptions: [],
+      // subjectOptions: []
     } 
     // this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
     // this.handleSubjectBlur = this.handleSubjectBlur.bind(this); 
@@ -39,164 +39,176 @@ class TimetableDay extends React.Component {
 
   componentDidMount() {
  
-    axios.get('/api/lookup/subjects/')
-      .then(res => {
-        const subjectOptions = mapForCombo(res.data);
-        this.setState({ subjectOptions });
-      });
+    
 
-    axios.get('/api/lookup/locations/')
-      .then(res => {
-        const locationOptions = mapForCombo(res.data);
-        this.setState({ locationOptions });
-      });
-
-    axios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
-      .then(res => {
-        const teacherOptions = mapForCombo(res.data);
-        this.setState({ teacherOptions });
-      });
-
+      
+      
+       
     //console.log('modal before call edit page --> ', this.props.timeTableId, this.props.dayId);
-    axios.get('/api/GetTimeTableDetailByTimeTableIDDayID/' + this.props.timeTableId + '/' + this.props.dayId)
-      .then(res => {
-        if (res.data) {
-          //console.log('exists..');
-          let periods = [];
+    
+    //this.props.change("timeTableId", this.props.timeTableId);
+    
 
-          //console.log('res.data', res.data);
+      axios.get('/api/GetTimeTableDetailByTimeTableIDDayID/'+ this.props.timeTableId + '/' + this.props.dayId)
+        .then(res => {
+          if (res.data) {
+            //console.log('exists..');
+            let timeTableDetails = [];
+            let localTimeTableId = 0;
+            let localDayId = 0;
+            //console.log('res.data', res.data);
 
-          res.data.map(function (item, index) {
-            //return {title: item.Name, value: item.Id + ""};
-            periods.push({
-              "startTime": item.StartTime, 
-              "endTime": item.EndTime,
-              "isBreak": item.IsBreak==1?true:false, 
-              "locationId": item.LocationID,
-              "teacherId": item.TeacherId, 
-              "subjectId": item.SubjectID
+            res.data.map(function (item, index) {
+              //return {title: item.Name, value: item.Id + ""};
+              //console.log('teacherId =-= ', item.LocationID, item.TeacherId, item.SubjectID);
+              localTimeTableId = item.TimeTableID;
+              localDayId = item.DayID;
+              timeTableDetails.push({
+                "timeTableDetailId": item.TimeTableDetailID,
+                "dayId": item.DayID,
+                "timeTableId": item.TimeTableID,
+                "startTime": item.StartTime,
+                "endTime": item.EndTime,
+                "isBreak": item.IsBreak == 1 ? true : false,
+                "locationId": item.LocationID,
+                "teacherId": item.TeacherId,
+                "subjectId": item.SubjectID
+              });
+
             });
 
-          });
+            //console.log('this.props.timeTableId== ', ttid);
 
-          //console.log('periods== ', periods);
+            const initData = {
+              "timeTableDetailId": 0,
+              "timeTableId": localTimeTableId,
+              "dayId": localDayId,
+              "timeTableDetails": timeTableDetails
+            }
 
-          const initData = {
-            "timeTableDetailId": 0,
-            "periods": periods
+            // axios.get('/api/lookup/subjects/')
+            //   .then(res => {
+            //     const subjectOptions = mapForCombo(res.data);
+            //     this.setState({ subjectOptions });
+            //   });
+
+            // axios.get('/api/lookup/locations/')
+            //   .then(res => {
+            //     const locationOptions = mapForCombo(res.data);
+            //     this.setState({ locationOptions });
+            //   });
+
+            // axios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
+            //   .then(res => {
+            //     const teacherOptions = mapForCombo(res.data);
+            //     this.setState({ teacherOptions });
+            //   });
+
+              this.props.initialize(initData);
+              
+        // console.log('locationOptions == ',this.state.locationOptions)
+        // console.log('subjectOptions == ',this.state.subjectOptions)
+        // console.log('teacherOptions == ',this.state.teacherOptions)
+
+          }
+          else {
+            // show error message, there is some this went wrong 
           }
 
-          this.props.initialize(initData);
-
-        }
-        else {
-          // show error message, there is some this went wrong 
-        }
-
-      }); 
-
+        });
+ 
+ 
     //   });
-      /*
-    //let days = [];
-    let periods = [];
-    periods = [{ "periodStart": "08:00 AM", "periodEnd": "08:30 AM", "teacherId": "0", "subjectId": "0", "firstName": "abc 1", "lastName": "123 x" },
-    { "periodStart": "08:31 AM", "periodEnd": "09:00 AM", "teacherId": "0", "subjectId": "0", "firstName": "abc 1.1", "lastName": "123 1.x" },
-    // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-    { "periodStart": "09:01 AM", "periodEnd": "09:30 AM", "teacherId": "0", "subjectId": "0", "firstName": "abc 1.1", "lastName": "123 1.x" }];
-    //days.push({"periods":periods});
-    // days.push({"periods":periods});
-    // days.push({"periods":periods}); 
-    // days.push({"firstName": "abc 2", "lastName": "123 xx"});
-    // days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
 
-    // axios.get('/api/GetTimeTableGeneratedCode')
-    //   .then(res => {
-    //     //console.log(res);       
-    //     const initData = {
-    //       "timeTableDetailId": 0,
-    //       "code": res.data,
-    //       "periods": periods
-    //     }
-
-    //     this.props.initialize(initData);
-
-    //   });
-    */
     LoaderVisibility(false);
   }
 
-  handleTeacherBlur(obj, value) {
-    // if (value != '') {
-    //   axios.get('/api/GetClassesByteacherId/' + value)
-    //     .then(res => {
-    //       const subjectOptions = mapForCombo(res.data);
-    //       this.setState({ subjectOptions });
-    //     });
+  // handleTeacherBlur(obj, value) {
+  //   // if (value != '') {
+  //   //   axios.get('/api/GetClassesByteacherId/' + value)
+  //   //     .then(res => {
+  //   //       const subjectOptions = mapForCombo(res.data);
+  //   //       this.setState({ subjectOptions });
+  //   //     });
 
-    //   axios.get('/api/shifts/' + value)
-    //     .then(res => {
-    //       this.props.change('shiftStartTime', res.data.StartTime);
-    //       this.props.change('shiftEndTime', res.data.EndTime);
-    //       this.props.change('breakStartTime', res.data.BreakStartTime);
-    //       this.props.change('breakEndTime', res.data.BreakEndTime);
-    //     });
-    // }
-    // else {
-    //   this.props.change('shiftStartTime', '');
-    //   this.props.change('shiftEndTime', '');
-    //   this.props.change('breakStartTime', '');
-    //   this.props.change('breakEndTime', '');
+  //   //   axios.get('/api/shifts/' + value)
+  //   //     .then(res => {
+  //   //       this.props.change('shiftStartTime', res.data.StartTime);
+  //   //       this.props.change('shiftEndTime', res.data.EndTime);
+  //   //       this.props.change('breakStartTime', res.data.BreakStartTime);
+  //   //       this.props.change('breakEndTime', res.data.BreakEndTime);
+  //   //     });
+  //   // }
+  //   // else {
+  //   //   this.props.change('shiftStartTime', '');
+  //   //   this.props.change('shiftEndTime', '');
+  //   //   this.props.change('breakStartTime', '');
+  //   //   this.props.change('breakEndTime', '');
 
-    //   this.setState({ subjectOptions: [] });
-    //   this.setState({ locationOptions: [] });
-    // }
-  }
+  //   //   this.setState({ subjectOptions: [] });
+  //   //   this.setState({ locationOptions: [] });
+  //   // }
+  // }
 
-  handleSubjectBlur(obj, value) {
-    // console.log('this.props.teacherId', this.props.teacherId);
-    // if (this.props.teacherId && value) {
-    //   axios.get('/api/GetClassesByteacherIdsubjectId/' + this.props.teacherId + '/' + value)
-    //     .then(res => {
-    //       const locationOptions = mapForCombo(res.data);
-    //       this.setState({ locationOptions });
-    //     });
-    // }
-    // else {
-    //   this.setState({ locationOptions: [] });
-    // }
-  }
+  // handleSubjectBlur(obj, value) {
+  //   // console.log('this.props.teacherId', this.props.teacherId);
+  //   // if (this.props.teacherId && value) {
+  //   //   axios.get('/api/GetClassesByteacherIdsubjectId/' + this.props.teacherId + '/' + value)
+  //   //     .then(res => {
+  //   //       const locationOptions = mapForCombo(res.data);
+  //   //       this.setState({ locationOptions });
+  //   //     });
+  //   // }
+  //   // else {
+  //   //   this.setState({ locationOptions: [] });
+  //   // }
+  // }
  
+  addNewPeriod(fields){
+
+  }
+
   render() {
-    const { handleSubmit, pristine, reset, submitting, timetableId, dayId } = this.props
-    const { teacherOptions, subjectOptions, locationOptions } = this.state;
+    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { teacherOptions, subjectOptions, locationOptions } = this.props;
+    const { timeTableId, dayId } = this.state;
     var self = this; 
 
-    const renderPeriods = ({ fields }) => (
+    const renderTimeTableDetails = ({ fields, meta: { touched, error } }) => (
       <div>  
         {/* className="smart-timeline-content" */}
         <div className="table-responsive">
           <table className="table table-striped table-bordered table-hover table-responsive">
             <tbody>
 
-              {/* <li>
-      <button type="button" onClick={() => fields.push()}>Add Hobby</button>
-    </li> */}
+              <li>
+                <button type="button" onClick={() => {console.log('Object.keys(fields)[0].timeTableId == ', fields);
+                 fields.push({
+                  "timeTableDetailId": 0,
+                  "dayId": null,//Object.keys(fields)[0].dayId,
+                  "timeTableId": null,//Object.keys(fields)[0].timeTableId,
+                  "startTime": '00:00',
+                  "endTime": '00:00',
+                  "isBreak": false,
+                  "locationId": null,
+                  "teacherId": null,
+                  "subjectId": null
+                })}}>Add</button>
+              </li> 
+              {console.log('timeTableDetailId =---= ', Object.keys(fields)[0].dayId)}
               {fields.map((period, index) =>
                 <tr key={index}>
                   <td> 
-                    {/* <div className="well well-sm well-light"> */}
-                    {/* <button
+                     
+              
+                    {/* <div className="well well-sm well-light"> .filter(function(field){ return field.timeTableDetailId>=0}) */}
+                      <button
             type="button"
             title="Remove Hobby"
-            onClick={() => fields.remove(index)}/>
-          <Field
-            name={hobby}
-            type="text"
-            component={RFField}
-            placeholder={`Hobby #${index + 1}`}/> */}
+            onClick={() => fields.remove(index)}>Remove</button>
                     {/* <div className="smart-timeline-icon">{`${index + 1}`}</div> */}
                     <div className="row">
-                    <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
+                      <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
                         <Field name={`${index + 1}`}
                           component={RFLabel}
                           disabled={true}
@@ -215,33 +227,32 @@ class TimetableDay extends React.Component {
                           type="text" />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                      
                         <Field
                           multi={false}
                           name={`${period}.teacherId`}
-                          label="" 
-                          options={teacherOptions} 
+                          label=""
+                          options={teacherOptions}
                           component={RFReactSelect} />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field
                           multi={false}
                           name={`${period}.subjectId`}
-                          label="" 
-                          options={subjectOptions} 
+                          label=""
+                          options={subjectOptions}
                           component={RFReactSelect} />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field
                           multi={false}
                           name={`${period}.locationId`}
-                          label="" 
+                          label=""
                           options={locationOptions}
-                          component={RFReactSelect} /> 
+                          component={RFReactSelect} />
                       </section>
                       <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
-                        <Field name={`${period}.isBreak`} 
-                          component="input" type="checkbox" 
+                        <Field name={`${period}.isBreak`}
+                          component="input" type="checkbox"
                           label="" />
                       </section>
                     </div> 
@@ -260,7 +271,7 @@ class TimetableDay extends React.Component {
 
     return (
       <form id="form-timetabledetails" className="smart-form"
-        onSubmit={handleSubmit((values) => { submitTimetableDay(values, timetableId, dayId) })}>
+        onSubmit={handleSubmit((values) => { submitTimetableDay(values) })}>
  
         <fieldset>
 
@@ -335,10 +346,10 @@ class TimetableDay extends React.Component {
                 label="breakEndTimeText" />
             </section>
           </div> */}
-
+ 
           <div className="row">
             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
-              <FieldArray name="periods" component={renderPeriods} />
+              <FieldArray name="timeTableDetails" component={renderTimeTableDetails} />
             </section>
           </div>
 
@@ -346,7 +357,7 @@ class TimetableDay extends React.Component {
 
         <footer>
           <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-            {this.state.timetableId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
+            {this.state.timeTableId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
           </button>
           <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
             <Msg phrase="SaveText" />
@@ -369,7 +380,7 @@ export default reduxForm({
   validate,
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false
-  // ,
+  // ,//
   // asyncValidate,
   // asyncBlurFields: ['email']
 })(TimetableDay)

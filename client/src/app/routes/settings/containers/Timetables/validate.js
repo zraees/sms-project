@@ -1,7 +1,7 @@
 const validate = values => {
     const errors = {}
 
-    console.log('values ==> ',values);
+    //console.log('values ==> ',values);
  
     if (!values.periods || !values.periods.length) {
       errors.periods = { _error: 'At least one period must be entered' }

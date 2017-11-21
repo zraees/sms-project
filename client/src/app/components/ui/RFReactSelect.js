@@ -28,6 +28,7 @@ export default function RFReactSelect({ input , options, multi, className, label
   const transformedValue = transformValue(value, options, multi);
   return (
     <div>
+      
       {label==""?"":<label><Msg phrase={label}/></label>} 
       <Select
         valueKey="value"
@@ -40,7 +41,7 @@ export default function RFReactSelect({ input , options, multi, className, label
           ? multiChangeHandler(onChange)
           : singleChangeHandler(onChange)
         }
-        onBlur={() => onBlur(value)}
+        onBlur={() => input.onBlur(input.value)}
         onFocus={onFocus}
         className={className}
       /> 

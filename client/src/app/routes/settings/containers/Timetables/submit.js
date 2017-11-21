@@ -182,8 +182,87 @@ export function createEmptyTimeTableDetail(timeTableId, dayId){
         });      
 }
 
-export function submitTimetableDay(values, timeTableId, dayId){
-  console.log('func submitTimetableDay ', values, timeTableId, dayId);
+export function submitTimetableDay(values) {
+  console.log('func submitTimetableDay ', 
+    {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails});
+
+  LoaderVisibility(true);
+
+  if(values.timeTableDetails.length >0){
+    console.log(' not empty ..');
+    axios.put('/api/TimeTableDetails', values.timeTableDetails)
+    .then(function (response) {
+
+      alert('s', 'data has been updated.');
+      $('#timeTablePopup').modal('hide');
+      LoaderVisibility(false);
+
+    })
+    .catch(function (error) {
+      console.log('error agya');
+      if (error.response) { 
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        alert('f', error.response.data.StatusMessage);   
+        LoaderVisibility(false);    
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      //console.log(error.config);
+      
+      //alert('f', '');
+      LoaderVisibility(false);      
+    });   
+  }
+else{
+  console.log(' empty .. ',{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId});
+  axios.put('/api/TimeTableDetails', [{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId}])
+  .then(function (response) {
+
+    alert('s', 'data has been updated.');
+    $('#timeTablePopup').modal('hide');
+    LoaderVisibility(false);
+
+  })
+  .catch(function (error) {
+    console.log('error agya');
+    if (error.response) { 
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      alert('f', error.response.data.StatusMessage);   
+      LoaderVisibility(false);    
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    //console.log(error.config);
+    
+    //alert('f', '');
+    LoaderVisibility(false);      
+  });   
+}
+
+
+  //axios.put('/api/TimeTableDetails', {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails})
+    
+    // .catch(function (error) {
+    //   console.log(error);
+    //   alert('f', error.response.data.StatusMessage);
+    //   LoaderVisibility(false);
+    // });
 }
 
 export default submit
