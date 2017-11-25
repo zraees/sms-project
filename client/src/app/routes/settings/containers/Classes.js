@@ -3,6 +3,7 @@
  */
 
 import React from 'react'
+import axios from 'axios' 
 import { connect } from 'react-redux'
 
 import WidgetGrid from '../../../components/widgets/WidgetGrid'
@@ -11,9 +12,28 @@ import RFDatePicker from '../../../components/ui/RFDatePicker'
 import Msg from '../../../components/i18n/Msg'
 
 import { Field, reduxForm, formValueSelector  } from 'redux-form'
+import { RFReactSelectSingle } from '../../../components/ui'
+import mapForCombo, {renderDate, mapForRadioList} from '../../../components/utils/functions'
 
 class Subjects extends React.Component {
-  
+  constructor(props){
+    super(props);
+    this.state = { 
+      subjectOptions: []
+    }
+     
+   }
+   
+  componentDidMount(){ 
+    
+        axios.get('/api/lookup/subjects/')
+          .then(res => {
+            const subjectOptions = mapForCombo(res.data);
+            this.setState({ subjectOptions });
+          });
+     
+      }
+    
   render() {
     
     const lessThan = otherField =>
@@ -51,6 +71,14 @@ class Subjects extends React.Component {
                           <input id="abc" value={JSON.parse(localStorage.getItem('sm-lang')).flag}/>
                         </div>
                         
+                        <div> 
+                            <Field
+                              name="subjectId"
+                              label=""
+                              options={this.state.subjectOptions}
+                              component={RFReactSelectSingle} />
+                        </div>
+
                         <div>
                           <label>First Name</label>
                           <div>

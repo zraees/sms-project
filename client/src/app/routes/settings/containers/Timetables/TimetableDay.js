@@ -6,14 +6,14 @@ import { Field, FieldArray, reduxForm, formValueSelector, getFormValues } from '
 // import StarRating from 'react-rating'
 import moment from 'moment'
 
-import { RFField, RFRadioButtonList, RFReactSelect, RFTextArea, RFLabel, RFCheckbox } from '../../../../components/ui'
-import { createEmptyTimeTableDetail, submitTimetableDay } from './submit' 
+import { RFField, RFRadioButtonList, RFReactSelect, RFReactSelectSingle, RFTextArea, RFLabel, RFCheckbox } from '../../../../components/ui'
+import { createEmptyTimeTableDetail, submitTimetableDay } from './submit'
 
 import { required, number } from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import mapForCombo from '../../../../components/utils/functions'
 
-import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
+import Loader, { Visibility as LoaderVisibility } from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg'
 import validate from './validate'
 
@@ -25,12 +25,14 @@ class TimetableDay extends React.Component {
       editMode: 0,
       timeTableId: 0,
       dayId: 0,
+      timeTableDetails: [],
       // locationOptions: [],
-      // teacherOptions: [],
-      // subjectOptions: []
-    } 
-    // this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
-    // this.handleSubjectBlur = this.handleSubjectBlur.bind(this); 
+      teacherOptions: [],
+      subjectOptions: [],
+      subjectOptions2D: []
+    }
+    this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
+    this.populateSubjects = this.populateSubjects.bind(this); 
   }
 
   componentWillMount() {
@@ -38,182 +40,184 @@ class TimetableDay extends React.Component {
   }
 
   componentDidMount() {
- 
-    
 
-      
-      
-       
-    //console.log('modal before call edit page --> ', this.props.timeTableId, this.props.dayId);
-    
-    //this.props.change("timeTableId", this.props.timeTableId);
-    
+    axios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
+    .then(res => {
+      const teacherOptions = mapForCombo(res.data);
+      this.setState({ teacherOptions });
+    });
 
-      axios.get('/api/GetTimeTableDetailByTimeTableIDDayID/'+ this.props.timeTableId + '/' + this.props.dayId)
-        .then(res => {
-          if (res.data) {
-            //console.log('exists..');
-            let timeTableDetails = [];
-            let localTimeTableId = 0;
-            let localDayId = 0;
-            //console.log('res.data', res.data);
+    let teacherIds = [];
 
-            res.data.map(function (item, index) {
-              //return {title: item.Name, value: item.Id + ""};
-              //console.log('teacherId =-= ', item.LocationID, item.TeacherId, item.SubjectID);
-              localTimeTableId = item.TimeTableID;
-              localDayId = item.DayID;
-              timeTableDetails.push({
-                "timeTableDetailId": item.TimeTableDetailID,
-                "dayId": item.DayID,
-                "timeTableId": item.TimeTableID,
-                "startTime": item.StartTime,
-                "endTime": item.EndTime,
-                "isBreak": item.IsBreak == 1 ? true : false,
-                "locationId": item.LocationID,
-                "teacherId": item.TeacherId,
-                "subjectId": item.SubjectID
-              });
+    axios.get('/api/GetTimeTableDetailByTimeTableIDDayID/' + this.props.timeTableId + '/' + this.props.dayId)
+      .then(res => {
+        if (res.data) {
+          //console.log('exists..');
+          let timeTableDetails = [];
+          let localTimeTableId = 0;
+          let localDayId = 0;
+          //console.log('res.data', res.data);
 
+          res.data.map(function (item, index) {
+            //return {title: item.Name, value: item.Id + ""};
+            //console.log('teacherId =-= ', item.LocationID, item.TeacherId, item.SubjectID);
+            localTimeTableId = item.TimeTableID;
+            localDayId = item.DayID;
+            timeTableDetails.push({
+              "timeTableDetailId": item.TimeTableDetailID,
+              "dayId": item.DayID,
+              "timeTableId": item.TimeTableID,
+              "startTime": item.StartTime,
+              "endTime": item.EndTime,
+              "isBreak": item.IsBreak == 1 ? true : false,
+              "locationId": item.LocationID,
+              "teacherId": item.TeacherId,
+              "subjectId": item.SubjectID
             });
 
-            //console.log('this.props.timeTableId== ', ttid);
-
-            const initData = {
-              "timeTableDetailId": 0,
-              "timeTableId": localTimeTableId,
-              "dayId": localDayId,
-              "timeTableDetails": timeTableDetails
+            if (item.TeacherId) {
+              teacherIds.push({"index":index, "teacherId":item.TeacherId});
             }
 
-            // axios.get('/api/lookup/subjects/')
-            //   .then(res => {
-            //     const subjectOptions = mapForCombo(res.data);
-            //     this.setState({ subjectOptions });
-            //   });
+          });
 
-            // axios.get('/api/lookup/locations/')
-            //   .then(res => {
-            //     const locationOptions = mapForCombo(res.data);
-            //     this.setState({ locationOptions });
-            //   });
+          const initData = {
+            "timeTableDetailId": 0,
+            "timeTableId": localTimeTableId,
+            "dayId": localDayId,
+            "timeTableDetails": timeTableDetails
+          } 
 
-            // axios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
-            //   .then(res => {
-            //     const teacherOptions = mapForCombo(res.data);
-            //     this.setState({ teacherOptions });
-            //   });
-
-              this.props.initialize(initData);
-              
-        // console.log('locationOptions == ',this.state.locationOptions)
-        // console.log('subjectOptions == ',this.state.subjectOptions)
-        // console.log('teacherOptions == ',this.state.teacherOptions)
-
+          this.props.initialize(initData); 
+          
+          for (var i = 0, len = teacherIds.length; i < len; i++) {
+            //console.log('this.props.initialize(initData) ', teacherIds[i]["index"], teacherIds[i]["teacherId"]);
+            this.populateSubjects(teacherIds[i]["index"], teacherIds[i]["teacherId"]);
           }
-          else {
-            // show error message, there is some this went wrong 
-          }
+          
 
+        }
+        else {
+          // show error message, there is some this went wrong 
+        }
+
+      });   
+
+      LoaderVisibility(false);
+  }
+
+  handleTeacherBlur(index, event) {
+
+    //console.log('handleTeacherBlur(obj, value) == ', index, event.target.value);
+    this.populateSubjects(index, event.target.value);
+    
+
+  }
+
+  populateSubjects(index, value){
+    //console.log("index & value ",index, value);
+
+    //console.log("this.state == -- == ", this.state);
+
+    if (value) {
+      axios.get('api/TeachersSubjects/All/' + value)
+        .then(res => {
+
+          //console.log('subjectOptions2D 1 -- ', subjectOptions2D);
+
+          let subjectOptions2D = this.state.subjectOptions2D;
+          const subjectOptions = mapForCombo(res.data);
+          subjectOptions2D[index] = subjectOptions;
+          this.setState({ subjectOptions2D });
+
+          //console.log('subjectOptions2D 2 -- ', subjectOptions2D);
         });
- 
- 
-    //   });
+    }
+    else {
 
-    LoaderVisibility(false);
-  }
-
-  // handleTeacherBlur(obj, value) {
-  //   // if (value != '') {
-  //   //   axios.get('/api/GetClassesByteacherId/' + value)
-  //   //     .then(res => {
-  //   //       const subjectOptions = mapForCombo(res.data);
-  //   //       this.setState({ subjectOptions });
-  //   //     });
-
-  //   //   axios.get('/api/shifts/' + value)
-  //   //     .then(res => {
-  //   //       this.props.change('shiftStartTime', res.data.StartTime);
-  //   //       this.props.change('shiftEndTime', res.data.EndTime);
-  //   //       this.props.change('breakStartTime', res.data.BreakStartTime);
-  //   //       this.props.change('breakEndTime', res.data.BreakEndTime);
-  //   //     });
-  //   // }
-  //   // else {
-  //   //   this.props.change('shiftStartTime', '');
-  //   //   this.props.change('shiftEndTime', '');
-  //   //   this.props.change('breakStartTime', '');
-  //   //   this.props.change('breakEndTime', '');
-
-  //   //   this.setState({ subjectOptions: [] });
-  //   //   this.setState({ locationOptions: [] });
-  //   // }
-  // }
-
-  // handleSubjectBlur(obj, value) {
-  //   // console.log('this.props.teacherId', this.props.teacherId);
-  //   // if (this.props.teacherId && value) {
-  //   //   axios.get('/api/GetClassesByteacherIdsubjectId/' + this.props.teacherId + '/' + value)
-  //   //     .then(res => {
-  //   //       const locationOptions = mapForCombo(res.data);
-  //   //       this.setState({ locationOptions });
-  //   //     });
-  //   // }
-  //   // else {
-  //   //   this.setState({ locationOptions: [] });
-  //   // }
-  // }
- 
-  addNewPeriod(fields){
-
-  }
+      let subjectOptions2D = this.state.subjectOptions2D;
+      subjectOptions2D[index] = [];
+      this.setState({ subjectOptions2D });
+      //this.setState({ subjectOptions2D: [] });
+    }
+    
+  }  
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props
-    const { teacherOptions, subjectOptions, locationOptions } = this.props;
+    const { handleSubmit, pristine, reset, submitting, locationOptions } = this.props
+    const { teacherOptions, subjectOptions, subjectOptions2D } = this.state;
     const { timeTableId, dayId } = this.state;
-    var self = this; 
+    var self = this;
 
     const renderTimeTableDetails = ({ fields, meta: { touched, error } }) => (
-      <div>  
-        {/* className="smart-timeline-content" */}
+      <div > 
+        <a onClick={() => {
+          console.log('Object.keys(fields)[0].timeTableId == ', fields);
+          fields.push({
+            "timeTableDetailId": 0,
+            "dayId": null,//Object.keys(fields)[0].dayId,
+            "timeTableId": null,//Object.keys(fields)[0].timeTableId,
+            "startTime": '00:00',
+            "endTime": '00:00',
+            "isBreak": false,
+            "locationId": null,
+            "teacherId": null,
+            "subjectId": null
+          })
+        }}><i className="glyphicon glyphicon-plus-sign"></i>&nbsp;<Msg phrase="Add New" /></a>
+        {/* <button type="button" className="btn btn-primary" onClick={() => {
+                  console.log('Object.keys(fields)[0].timeTableId == ', fields);
+                  fields.push({
+                    "timeTableDetailId": 0,
+                    "dayId": null,//Object.keys(fields)[0].dayId,
+                    "timeTableId": null,//Object.keys(fields)[0].timeTableId,
+                    "startTime": '00:00',
+                    "endTime": '00:00',
+                    "isBreak": false,
+                    "locationId": null,
+                    "teacherId": null,
+                    "subjectId": null
+                  })
+                }}>
+            <i className="fa fa-plus" />
+            <span className="hidden-mobile"><Msg phrase="Add New" /></span>
+          </button> */}
         <div className="table-responsive">
           <table className="table table-striped table-bordered table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>
+                  <div className="row">
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
+                      <Msg phrase="PeriodStartTimeText" />
+                    </section>
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
+                      <Msg phrase="PeriodEndTimeText" />
+                    </section>
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
+                      <Msg phrase="TeacherText" />
+                    </section>
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
+                      <Msg phrase="SubjectText" />
+                    </section>
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
+                      <Msg phrase="LocationText" />
+                    </section>
+                    <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">   
+                      <Msg phrase="BreakPeriodText" />                    
+                    </section>
+                    <section className="remove-col-padding col-sm-2 col-md-2 col-lg-1">
+                      
+                    </section>
+                  </div>
+                </th> 
+              </tr>
+            </thead>
             <tbody>
-
-              <li>
-                <button type="button" onClick={() => {console.log('Object.keys(fields)[0].timeTableId == ', fields);
-                 fields.push({
-                  "timeTableDetailId": 0,
-                  "dayId": null,//Object.keys(fields)[0].dayId,
-                  "timeTableId": null,//Object.keys(fields)[0].timeTableId,
-                  "startTime": '00:00',
-                  "endTime": '00:00',
-                  "isBreak": false,
-                  "locationId": null,
-                  "teacherId": null,
-                  "subjectId": null
-                })}}>Add</button>
-              </li> 
-              {console.log('timeTableDetailId =---= ', Object.keys(fields)[0].dayId)}
               {fields.map((period, index) =>
-                <tr key={index}>
+                <tr key={period}>
                   <td> 
-                     
-              
-                    {/* <div className="well well-sm well-light"> .filter(function(field){ return field.timeTableDetailId>=0}) */}
-                      <button
-            type="button"
-            title="Remove Hobby"
-            onClick={() => fields.remove(index)}>Remove</button>
-                    {/* <div className="smart-timeline-icon">{`${index + 1}`}</div> */}
                     <div className="row">
-                      <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
-                        <Field name={`${index + 1}`}
-                          component={RFLabel}
-                          disabled={true}
-                          type="text" />
-                      </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field name={`${period}.startTime`}
                           component={RFLabel}
@@ -227,20 +231,19 @@ class TimetableDay extends React.Component {
                           type="text" />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                        <Field
-                          multi={false}
+                        <Field 
                           name={`${period}.teacherId`}
                           label=""
                           options={teacherOptions}
-                          component={RFReactSelect} />
+                          onChange={(e) => this.handleTeacherBlur(index, e)}
+                          component={RFReactSelectSingle} />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                        <Field
-                          multi={false}
+                        <Field 
                           name={`${period}.subjectId`}
                           label=""
-                          options={subjectOptions}
-                          component={RFReactSelect} />
+                          options={subjectOptions2D[index] || []}
+                          component={RFReactSelectSingle} />
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field
@@ -248,14 +251,19 @@ class TimetableDay extends React.Component {
                           name={`${period}.locationId`}
                           label=""
                           options={locationOptions}
-                          component={RFReactSelect} />
+                          component={RFReactSelectSingle} />
                       </section>
                       <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
-                        <Field name={`${period}.isBreak`}
-                          component="input" type="checkbox"
-                          label="" />
+                        <label className="checkbox">
+                          <Field name={`${period}.isBreak`}
+                            component="input" type="checkbox" />
+                          <i></i></label>
                       </section>
-                    </div> 
+                      <section className="remove-col-padding col-sm-1 col-md-1 col-lg-1">
+                        {/* <Field name={`${index}` + 1 } component={RFLabel} disabled={true} type="text" /> */}
+                        <a onClick={() => fields.remove(index)}><i className="glyphicon glyphicon-trash"></i></a>
+                      </section>
+                    </div>
 
                     {/* </div> */}
                   </td>
@@ -272,7 +280,7 @@ class TimetableDay extends React.Component {
     return (
       <form id="form-timetabledetails" className="smart-form"
         onSubmit={handleSubmit((values) => { submitTimetableDay(values) })}>
- 
+
         <fieldset>
 
           {/* <div className="row">
@@ -346,7 +354,25 @@ class TimetableDay extends React.Component {
                 label="breakEndTimeText" />
             </section>
           </div> */}
- 
+
+{/* <div className="row">
+            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+            <div className="widget-body-toolbar">
+                        <div className="row">
+                            <div className="col-xs-9 col-sm-5 col-md-5 col-lg-5">
+
+                            </div>
+                            <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
+                                <button className="btn btn-primary" data-toggle="modal"
+                                  data-target="#timeTablePopup">
+                                    <i className="fa fa-plus"/> 
+                                    <span className="hidden-mobile"><Msg phrase="Add New" /></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+          </section>
+          </div> */}
           <div className="row">
             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
               <FieldArray name="timeTableDetails" component={renderTimeTableDetails} />
@@ -355,7 +381,7 @@ class TimetableDay extends React.Component {
 
         </fieldset>
 
-        <footer>
+        <footer> 
           <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
             {this.state.timeTableId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
           </button>

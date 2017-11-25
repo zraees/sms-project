@@ -36,7 +36,11 @@ namespace SMSServices.Controllers
                 e.SubjectID,
                 SubjectCode = e.Subjects.Code,
                 SubjectName = e.Subjects.Name,
-                SubjectNameAr = e.Subjects.NameAr
+                SubjectNameAr = e.Subjects.NameAr,
+                Id = e.SubjectID,
+                Code = e.Subjects.Code,
+                Name = e.Subjects.Name,
+                NameAr = e.Subjects.NameAr
             });
 
             //return query.ToList(); //entities.TeachersSubjects.Include("Classes").Include("Shifts").Include("Sections");

@@ -231,6 +231,20 @@
     "Day6Text": "Saturday",
     "Day7Text": "Sunday",
     
+    "ShiftStartTimeText": "Start Time",
+    "ShiftEndTimeText": "End Time",
+    "breakStartTimeText": "Break Start",
+    "breakEndTimeText": "Break End",
+    "PeriodDurationMinsText": "Duration in mins",
+    
+    "PeriodText": "Period",
+    "PeriodNoText": "Period #",
+    "PeriodStartTimeText": "Period Start",
+    "PeriodEndTimeText": "Period End",
+    "TeacherText": "Teacher",
+    "BreakPeriodText": "Break",
+
+    
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",
     "Please enter Identity card number": "الرجاء إدخال رقم بطاقة الهوية",

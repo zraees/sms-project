@@ -3,35 +3,36 @@ const validate = values => {
 
     //console.log('values ==> ',values);
  
-    if (!values.periods || !values.periods.length) {
-      errors.periods = { _error: 'At least one period must be entered' }
+    if (!values.timeTableDetails || !values.timeTableDetails.length) {
+      errors.timeTableDetails = { _error: 'At least one period must be entered' }
     } else {
-      const periodsArrayErrors = []
-      values.periods.forEach((period, periodIndex) => {
+      const timeTableDetailsArrayErrors = []
+      values.timeTableDetails.forEach((period, periodIndex) => {
         const periodErrors = {}
         if ((!period || !period.startTime)) {
           periodErrors.startTime = 'Required'
-          periodsArrayErrors[periodIndex] = periodErrors
+          timeTableDetailsArrayErrors[periodIndex] = periodErrors
         }
         if ((!period || !period.endTime)) {
           periodErrors.endTime = 'Required'
-          periodsArrayErrors[periodIndex] = periodErrors
+          timeTableDetailsArrayErrors[periodIndex] = periodErrors
         } 
         if ((!period || !period.teacherId) && !period.isBreak) {
           periodErrors.teacherId = 'Required'
-          periodsArrayErrors[periodIndex] = periodErrors
+          periodErrors.subjectId = 'Required'
+          timeTableDetailsArrayErrors[periodIndex] = periodErrors
         } 
         if ((!period || !period.subjectId) && !period.isBreak) {
           periodErrors.subjectId = 'Required'
-          periodsArrayErrors[periodIndex] = periodErrors
+          timeTableDetailsArrayErrors[periodIndex] = periodErrors
         } 
         if ((!period || !period.locationId) && !period.isBreak) {
           periodErrors.locationId = 'Required'
-          periodsArrayErrors[periodIndex] = periodErrors
+          timeTableDetailsArrayErrors[periodIndex] = periodErrors
         } 
       })
-      if(periodsArrayErrors.length) {
-        errors.periods = periodsArrayErrors
+      if(timeTableDetailsArrayErrors.length) {
+        errors.timeTableDetails = timeTableDetailsArrayErrors
       }
     }
     return errors

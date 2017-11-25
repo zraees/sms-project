@@ -216,3 +216,10 @@ ul#horizontal-list li{
             transform: scale3D(0, 0, 1); 
   }
 }
+
+.align-middle{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+  

@@ -18,18 +18,6 @@ NameArText
 TimetableText
 TimetableTitleText
 
-ShiftStartTimeText
-ShiftEndTimeText
-breakStartTimeText
-breakEndTimeText
-PeriodDurationMinsText
-
-PeriodText
-PeriodNoText
-PeriodStartTimeText
-PeriodEndTimeText
-TeacherText
-
 ManageTimetablePeriodsText
 DocumentTitleName
 AddDocumentText

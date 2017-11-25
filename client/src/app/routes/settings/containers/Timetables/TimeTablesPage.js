@@ -57,23 +57,33 @@ class TimeTablesPage extends React.Component {
   renderModalBody(popupPageName, timeTableId){
     
     var modalBody;    
+    var dayId = 0;
     
     if(popupPageName == "EditText"){ 
       //this.setState({refreshGrid:true});
       modalBody = <TimetableEditForm timeTableId={timeTableId}  
           onSubmit={submit} />
     }
-    else if(popupPageName == "Day1Text"){
-      //console.log('this.state.classId  ',this.state.classId);
-      modalBody = <TimetableDay
-          timeTableId={timeTableId}   
-          dayId={1}
-          locationOptions={this.state.locationOptions}
-          teacherOptions={this.state.teacherOptions}
-          subjectOptions={this.state.subjectOptions}
-          classId={this.state.classId}
-          onSubmit={submitTimetableDay} 
-          />      
+    else if(popupPageName == "Day1Text"){ 
+      dayId = 1;
+    }
+    else if(popupPageName == "Day2Text"){ 
+      dayId = 2;
+    }
+    else if(popupPageName == "Day3Text"){ 
+      dayId = 3;
+    }
+    else if(popupPageName == "Day4Text"){ 
+      dayId = 4;
+    }
+    else if(popupPageName == "Day5Text"){ 
+      dayId = 5;
+    }
+    else if(popupPageName == "Day6Text"){ 
+      dayId = 6;
+    }
+    else if(popupPageName == "Day7Text"){ 
+      dayId = 7;
     }/*
     else if(popupPageName == "Experience"){
       modalBody = <ExperienceForm
@@ -92,16 +102,26 @@ class TimeTablesPage extends React.Component {
           onSubmit={submitTeacherClass} />
     }
     */
+    if (dayId > 0) {
+      modalBody = <TimetableDay
+        timeTableId={timeTableId}
+        dayId={dayId}
+        locationOptions={this.state.locationOptions}
+        classId={this.state.classId}
+        onSubmit={submitTimetableDay}
+      />
+    }
+
     return modalBody;
   }
 
   componentDidMount(){ 
 
-    axios.get('/api/lookup/subjects/')
-      .then(res => {
-        const subjectOptions = mapForCombo(res.data);
-        this.setState({ subjectOptions });
-      });
+    // axios.get('/api/lookup/subjects/')
+    //   .then(res => {
+    //     const subjectOptions = mapForCombo(res.data);
+    //     this.setState({ subjectOptions });
+    //   });
 
     axios.get('/api/lookup/locations/')
       .then(res => {
@@ -109,11 +129,11 @@ class TimeTablesPage extends React.Component {
         this.setState({ locationOptions });
       });
 
-    axios.get('/api/TeachersClasses/ByClassID/2' )  //+ this.props.classId
-      .then(res => {
-        const teacherOptions = mapForCombo(res.data);
-        this.setState({ teacherOptions });
-      });
+    // axios.get('/api/TeachersClasses/ByClassID/2' )  //+ this.props.classId
+    //   .then(res => {
+    //     const teacherOptions = mapForCombo(res.data);
+    //     this.setState({ teacherOptions });
+    //   });
 
     
     $('#timeTablesGrid').contextmenu({
@@ -124,13 +144,13 @@ class TimeTablesPage extends React.Component {
       taphold: true,
       menu: [
       {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
-      {title: LanguageStore.getData().phrases["Day1Text"], cmd: "Day1Text", uiIcon: "ui-icon-document"},
-      {title: LanguageStore.getData().phrases["Day2Text"], cmd: "Day2Text", uiIcon: "ui-icon-person"},
-      {title: LanguageStore.getData().phrases["Day3Text"], cmd: "Day3Text", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day4Text"], cmd: "Day4Text", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day5Text"], cmd: "Day5Text", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day6Text"], cmd: "Day6Text", uiIcon: "ui-icon-contact"},
-      {title: LanguageStore.getData().phrases["Day7Text"], cmd: "Day7Text", uiIcon: "ui-icon-contact"},
+      {title: LanguageStore.getData().phrases["Day1Text"], cmd: "Day1Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day2Text"], cmd: "Day2Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day3Text"], cmd: "Day3Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day4Text"], cmd: "Day4Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day5Text"], cmd: "Day5Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day6Text"], cmd: "Day6Text", uiIcon: "ui-icon-clock"},
+      {title: LanguageStore.getData().phrases["Day7Text"], cmd: "Day7Text", uiIcon: "ui-icon-clock"},
             
       // {title: "More", children: [
       //   {title: "Use an 'action' callback", action: function(event, ui) {
