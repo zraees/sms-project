@@ -6,7 +6,9 @@ import RFTextArea from './RFTextArea'
 import RFFileUpload from './RFFileUpload'
 import RFLabel from './RFLabel'
 import RFCheckbox from './RFCheckbox'
-import RFReactSelectSingle from './RFReactSelectSingle' 
+import RFReactSelectSingle from './RFReactSelectSingle'
+import RFTimePicker from './RFTimePicker' 
+
 
 export {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, 
-    RFTextArea, RFFileUpload, RFLabel, RFCheckbox, RFReactSelectSingle, RFReactSelect3}
+    RFTextArea, RFFileUpload, RFLabel, RFCheckbox, RFReactSelectSingle, RFTimePicker}

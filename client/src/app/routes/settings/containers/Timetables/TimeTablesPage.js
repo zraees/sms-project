@@ -28,6 +28,7 @@ import TimetableDay from './TimetableDay'
 
 import submit, {remove, submitTimetableDay} from './submit'
 import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+ 
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -269,7 +270,7 @@ class TimeTablesPage extends React.Component {
                     </div>
                     
                     {/*<Moment date="2017-05-26T00:00:00" format="YYYY-MM-DD" />*/}
-                    
+                     
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="timeTablesGrid"  
                       options={{

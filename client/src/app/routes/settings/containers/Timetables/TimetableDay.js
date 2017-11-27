@@ -6,8 +6,13 @@ import { Field, FieldArray, reduxForm, formValueSelector, getFormValues } from '
 // import StarRating from 'react-rating'
 import moment from 'moment'
 
-import { RFField, RFRadioButtonList, RFReactSelect, RFReactSelectSingle, RFTextArea, RFLabel, RFCheckbox } from '../../../../components/ui'
+import { RFField, RFTimePicker, RFRadioButtonList, RFReactSelect, RFReactSelectSingle, RFTextArea, RFLabel, RFCheckbox } from '../../../../components/ui'
 import { createEmptyTimeTableDetail, submitTimetableDay } from './submit'
+import {
+  TimePicker,
+} from 'redux-form-material-ui';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { required, number } from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -16,6 +21,7 @@ import mapForCombo from '../../../../components/utils/functions'
 import Loader, { Visibility as LoaderVisibility } from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg'
 import validate from './validate'
+import normalizeTime from './normalizeTime'
 
 class TimetableDay extends React.Component {
   constructor(props) {
@@ -182,7 +188,8 @@ class TimetableDay extends React.Component {
             <i className="fa fa-plus" />
             <span className="hidden-mobile"><Msg phrase="Add New" /></span>
           </button> */}
-        <div className="table-responsive">
+        <div className="table-responsive"> 
+
           <table className="table table-striped table-bordered table-hover table-responsive">
             <thead>
               <tr>
@@ -207,7 +214,7 @@ class TimetableDay extends React.Component {
                       <Msg phrase="BreakPeriodText" />                    
                     </section>
                     <section className="remove-col-padding col-sm-2 col-md-2 col-lg-1">
-                      
+                    
                     </section>
                   </div>
                 </th> 
@@ -219,16 +226,40 @@ class TimetableDay extends React.Component {
                   <td> 
                     <div className="row">
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                        <Field name={`${period}.startTime`}
+                        {/* <Field name={`${period}.startTime`}
                           component={RFLabel}
                           disabled={true}
-                          type="text" />
+                          type="text" /> */}
+                        {/* <Field
+                          name={`${period}.startTime`}
+                          component={TimePicker} 
+                          format={(value, name) => { new Date() || null}} 
+                          props={{format: "24hr"}}
+                          //defaultValue={null} // TimePicker requires an object,
+                          // and redux-form defaults to ''
+                          hintText="At what time?"
+                          validate={required}
+                        />  */}
+                        <Field name={`${period}.startTime`} labelClassName="input"
+                          labelIconClassName="icon-append fa fa-clock-o"
+                          validate={required} component={RFField}
+                          maxLength="10" type="text" placeholder="hh:mm"
+                          maxLength="5"
+                          normalize={normalizeTime}
+                        /> 
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                        <Field name={`${period}.endTime`}
+                        <Field name={`${period}.endTime`} labelClassName="input"
+                          labelIconClassName="icon-append fa fa-clock-o"
+                          validate={required} component={RFField}
+                          maxLength="10" type="text" placeholder="hh:mm"
+                          maxLength="5"
+                          normalize={normalizeTime}
+                        /> 
+                        {/* <Field name={`${period}.endTime`}
                           component={RFLabel}
                           disabled={true}
-                          type="text" />
+                          type="text" /> */}
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field 
@@ -273,6 +304,7 @@ class TimetableDay extends React.Component {
 
             </tbody>
           </table>
+          
         </div>
       </div>
     )
@@ -373,6 +405,12 @@ class TimetableDay extends React.Component {
                     </div>
           </section>
           </div> */}
+          <div className="row">
+            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+              
+            </section>
+          </div>
+
           <div className="row">
             <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
               <FieldArray name="timeTableDetails" component={renderTimeTableDetails} />
