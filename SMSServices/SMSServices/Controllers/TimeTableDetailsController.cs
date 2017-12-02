@@ -347,17 +347,17 @@ namespace SMSServices.Controllers
                 //    entities.SaveChanges();
                 //}
 
-                strLog += " -- " + string.Format("TimetableID={0} & DayID={1}", TimeTableID, DayID);
+                //strLog += " -- " + string.Format("TimetableID={0} & DayID={1}", TimeTableID, DayID);
 
                 List<TimeTableDetails> entityTimeTableDetails = entities.TimeTableDetails.Where(t => t.TimeTableID == TimeTableID && t.DayID == DayID).ToList();
 
                 foreach (TimeTableDetails item in entityTimeTableDetails)
                 {
-                    strLog += " --- " + string.Format("item.TimeTableDetailID={0}", item.TimeTableDetailID);
+                    //strLog += " --- " + string.Format("item.TimeTableDetailID={0}", item.TimeTableDetailID);
                     var tt = timeTableDetails.FirstOrDefault(t => t.TimeTableDetailID == item.TimeTableDetailID);
                     if (!(tt != null && tt.TimeTableDetailID > 0))
                     {
-                        strLog += " ---- " + string.Format(" inside delete tt.TimeTableDetailID={0}", item.TimeTableDetailID);
+                        //strLog += " ---- " + string.Format(" inside delete tt.TimeTableDetailID={0}", item.TimeTableDetailID);
                         entities.Entry(item).State = EntityState.Deleted;
                         entities.TimeTableDetails.Remove(item);
                     }
@@ -365,15 +365,16 @@ namespace SMSServices.Controllers
 
                 if (timeTableDetails.Count > 0)
                 {
-                    strLog += " ----- " + string.Format(" inside if timeTableDetails.Count ={0}", timeTableDetails.Count );
+                    //strLog += " ----- " + string.Format(" inside if timeTableDetails.Count ={0}", timeTableDetails.Count );
                     foreach (var timeTableDetail in timeTableDetails)
                     {
                         if (timeTableDetail.TimeTableDetailID > 0) // Edit
                         {
+                             
                             var entity = entities.TimeTableDetails.Find(timeTableDetail.TimeTableDetailID);
                             if (entity != null)
                             {
-                                strLog += " ------ " + string.Format(" inside update timeTableDetail.TimeTableDetailID={0}", timeTableDetail.TimeTableDetailID);
+                                //strLog += " ------ " + string.Format(" inside update timeTableDetail.TimeTableDetailID={0}", timeTableDetail.TimeTableDetailID);
                                 entities.Entry(entity).CurrentValues.SetValues(timeTableDetail);
                                 //entities.SaveChanges();
                             }
