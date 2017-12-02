@@ -120,6 +120,7 @@
     "SectionText": "Section",
     "BatchText": "Batch",
     "SubjectText": "Subject",
+    "InvalidText": "Invalid",
 
     "Manage Teacher":"Manage Teacher",
     "Add New Teacher": "Add New Teacher",
@@ -274,6 +275,8 @@
     "Please enter school name": "Please enter school name",
     "Please enter last school location": "Please enter last school location",
     "Please enter other details about last school": "Please enter other details about last school",
+
+    "There is time overlapping in periods.": "There is time overlapping in periods.",
 
     "ViolationOfUniquenessErrorText": "One of the properties is marked as Unique index and there is already an entry with that value.",
     "data has been saved successfully": "data has been saved successfully",

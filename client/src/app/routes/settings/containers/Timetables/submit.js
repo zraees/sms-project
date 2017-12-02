@@ -4,7 +4,7 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, overlap} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
@@ -183,46 +183,63 @@ export function createEmptyTimeTableDetail(timeTableId, dayId){
 }
 
 export function submitTimetableDay(values) {
-  console.log('func submitTimetableDay ', 
-    {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails});
+  // console.log('func submitTimetableDay ', 
+  //   {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails});
 
   LoaderVisibility(true);
 
   if(values.timeTableDetails.length >0){
     console.log(' not empty ..');
-    axios.put('/api/TimeTableDetails', values.timeTableDetails)
-    .then(function (response) {
 
-      alert('s', 'data has been updated.');
-      $('#timeTablePopup').modal('hide');
+    var dateRange = values.timeTableDetails.map(function (item, index) {
+      return { start: item.startTime, end: item.endTime };
+    });     
+
+    console.log('dateRange, ', dateRange);
+
+    var validate = overlap(dateRange);
+    if (!validate.overlap) {
+
+      axios.put('/api/TimeTableDetails', values.timeTableDetails)
+        .then(function (response) {
+
+          alert('s', 'data has been updated.');
+          $('#timeTablePopup').modal('hide');
+          LoaderVisibility(false);
+
+        })
+        .catch(function (error) {
+          console.log('error agya');
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            alert('f', error.response.data.StatusMessage);
+            LoaderVisibility(false);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          //console.log(error.config);
+
+          //alert('f', '');
+          LoaderVisibility(false);
+        });
+
+    }
+    else {
       LoaderVisibility(false);
+      alert('f', "There is an overlapping in timetable start & end time.");
+    }
 
-    })
-    .catch(function (error) {
-      console.log('error agya');
-      if (error.response) { 
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-        alert('f', error.response.data.StatusMessage);   
-        LoaderVisibility(false);    
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-      }
-      //console.log(error.config);
-      
-      //alert('f', '');
-      LoaderVisibility(false);      
-    });   
   }
 else{
-  console.log(' empty .. ',{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId});
+  //console.log(' empty .. ',{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId});
   axios.put('/api/TimeTableDetails', [{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId}])
   .then(function (response) {
 

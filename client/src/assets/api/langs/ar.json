@@ -121,6 +121,7 @@
     "SectionText": "",
     "BatchText": "",
     "SubjectText": "",
+    "InvalidText": "Invalid",
     
     "Manage Teacher":"تحديث المعلم",
     "Add New Teacher": "إضافة معلم جديد",
@@ -276,6 +277,8 @@
     "Please enter school name": "Please enter school name",
     "Please enter last school location": "Please enter last school location",
     "Please enter other details about last school": "Please enter other details about last school",
+
+    "There is time overlapping in periods.": "There is time overlapping in periods.",
 
     "ViolationOfUniquenessErrorText": "يتم وضع علامة على إحدى الخصائص على أنها فهرس فريد، وهناك بالفعل إدخال بهذه القيمة",
     "data has been saved successfully": "تم حفظ السجل بنجاح",

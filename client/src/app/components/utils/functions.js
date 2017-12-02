@@ -98,4 +98,86 @@ export function removeAllSpecialChar(data){
     return data.replace(/[^a-zA-Z0-9]/g, "");
 }
 
+export function validateTime(data) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(data);
+    return isValid;
+}
+
+export function dateCompare(time1, time2) {
+    var t1 = new Date();
+    var parts = time1.split(":");
+    t1.setHours(parts[0], parts[1], 0, 0);
+    var t2 = new Date();
+    parts = time2.split(":");
+    t2.setHours(parts[0], parts[1], 0, 0);
+
+    // returns 1 if greater, -1 if less and 0 if the same
+    if (t1.getTime() > t2.getTime()) return 1;
+    if (t1.getTime() < t2.getTime()) return -1;
+    return 0;
+}
+
+export function TimeToDate(time1){
+    var t1 = new Date();
+    var parts = time1.split(":");
+    t1.setHours(parts[0], parts[1], 0, 0);
+    return t1;
+}
+
+
+// this function takes an array of date ranges in this format:
+// [{ start: Date, end: Date}]
+// the array is first sorted, and then checked for any overlap
+export function overlap(dateRanges) {
+    var sortedRanges = dateRanges.sort((previous, current) => {
+
+        // get the start date from previous and current
+        var previousTime = TimeToDate(previous.start).getTime();
+        var currentTime = TimeToDate(current.start).getTime();
+
+        // if the previous is earlier than the current
+        if (previousTime < currentTime) {
+            return -1;
+        }
+
+        // if the previous time is the same as the current time
+        if (previousTime === currentTime) {
+            return 0;
+        }
+
+        // if the previous time is later than the current time
+        return 1;
+    });
+
+    var result = sortedRanges.reduce((result, current, idx, arr) => {
+        // get the previous range
+        if (idx === 0) { return result; }
+        var previous = arr[idx - 1];
+
+        // check for any overlap
+        var previousEnd = TimeToDate(previous.end).getTime();
+        var currentStart = TimeToDate(current.start).getTime();
+        var overlap = (previousEnd >= currentStart);
+
+        // store the result
+        if (overlap) {
+            // yes, there is overlap
+            result.overlap = true;
+            // store the specific ranges that overlap
+            result.ranges.push({
+                previous: previous,
+                current: current
+            })
+        }
+
+        return result;
+
+        // seed the reduce  
+    }, { overlap: false, ranges: [] });
+
+
+    // return the final results  
+    return result;
+}
+
 export default mapForCombo

@@ -124,6 +124,7 @@
     "SectionText": "",
     "BatchText": "",    
     "SubjectText": "",
+    "InvalidText": "Invalid",
 
     "Manage Teacher":"ٹیچر ریکارڈ اپ ڈیٹ کریں",
     "Add New Teacher": "نیا استاد ریکارڈ شامل کریں",
@@ -279,6 +280,8 @@
     "Please enter last school location": "Please enter last school location",
     "Please enter other details about last school": "Please enter other details about last school",
 
+    "There is time overlapping in periods.": "There is time overlapping in periods.",
+    
     "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے",
     "data has been saved successfully": "ریکارڈ کامیابی سے محفوظ ہوگیا",
     "data has been updated successfully": "ریکارڈ کو کامیابی سے اپ ڈیٹ کیا گیا ہے",

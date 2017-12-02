@@ -8,11 +8,11 @@ import moment from 'moment'
 
 import { RFField, RFTimePicker, RFRadioButtonList, RFReactSelect, RFReactSelectSingle, RFTextArea, RFLabel, RFCheckbox } from '../../../../components/ui'
 import { createEmptyTimeTableDetail, submitTimetableDay } from './submit'
-import {
-  TimePicker,
-} from 'redux-form-material-ui';
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+// import {
+//   TimePicker,
+// } from 'redux-form-material-ui';
+// import getMuiTheme from 'material-ui/styles/getMuiTheme'
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { required, number } from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
@@ -73,8 +73,8 @@ class TimetableDay extends React.Component {
               "timeTableDetailId": item.TimeTableDetailID,
               "dayId": item.DayID,
               "timeTableId": item.TimeTableID,
-              "startTime": item.StartTime,
-              "endTime": item.EndTime,
+              "startTime": item.StartTime.substring(0,5),
+              "endTime": item.EndTime.substring(0,5),
               "isBreak": item.IsBreak == 1 ? true : false,
               "locationId": item.LocationID,
               "teacherId": item.TeacherId,
@@ -240,19 +240,19 @@ class TimetableDay extends React.Component {
                           hintText="At what time?"
                           validate={required}
                         />  */}
-                        <Field name={`${period}.startTime`} labelClassName="input"
+                        <Field name={`${period}.startTime`} labelClassName="input remove-col-padding "
                           labelIconClassName="icon-append fa fa-clock-o"
                           validate={required} component={RFField}
-                          maxLength="10" type="text" placeholder="hh:mm"
+                          type="text" placeholder="hh:mm"
                           maxLength="5"
                           normalize={normalizeTime}
                         /> 
                       </section>
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-                        <Field name={`${period}.endTime`} labelClassName="input"
+                        <Field name={`${period}.endTime`} labelClassName="input remove-col-padding "
                           labelIconClassName="icon-append fa fa-clock-o"
                           validate={required} component={RFField}
-                          maxLength="10" type="text" placeholder="hh:mm"
+                          type="text" placeholder="hh:mm"
                           maxLength="5"
                           normalize={normalizeTime}
                         /> 
@@ -264,7 +264,7 @@ class TimetableDay extends React.Component {
                       <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
                         <Field 
                           name={`${period}.teacherId`}
-                          label=""
+                          label="" 
                           options={teacherOptions}
                           onChange={(e) => this.handleTeacherBlur(index, e)}
                           component={RFReactSelectSingle} />

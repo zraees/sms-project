@@ -15,10 +15,10 @@ export default function RFReactSelectSingle({ input , options, className, label,
       {label == "" ? "" : <label><Msg phrase={label} /></label>}
 
       <label className={classNames('select', { 'state-error': (touched && error !== undefined) || asyncValidating })}>
-        <select {...input} className="input"
+        <select {...input} className="input" disabled={disabled}
           onBlur={() => input.onBlur(input.value)}
           onChange={onChange}>
-
+          
           <option key="0" value="">Select</option>
           {options.map(renderSelectOptions)}
         </select>
