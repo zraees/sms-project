@@ -189,13 +189,13 @@ export function submitTimetableDay(values) {
   LoaderVisibility(true);
 
   if(values.timeTableDetails.length >0){
-    console.log(' not empty ..');
+    //console.log(' not empty ..');
 
     var dateRange = values.timeTableDetails.map(function (item, index) {
       return { start: item.startTime, end: item.endTime };
     });     
 
-    console.log('dateRange, ', dateRange);
+    //console.log('dateRange, ', dateRange);
 
     var validate = overlap(dateRange);
     if (!validate.overlap) {

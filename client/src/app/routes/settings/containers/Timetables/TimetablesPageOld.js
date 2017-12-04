@@ -107,7 +107,7 @@ class TimetablesPageOld extends React.Component {
 
     }.bind(this));
     
-    axios.get('/api/lookup/shifts/')
+    axios.get('/shifts/')
       .then(res=>{            
           const shiftOptions = mapForCombo(res.data);
           this.setState({shiftOptions});
@@ -173,7 +173,7 @@ class TimetablesPageOld extends React.Component {
   }
 
   handleTeacherBlur(obj, value){
-    // axios.get('/api/Lookup/subjectOptions/countryid/' + value)
+    // axios.get('/subjectOptions/countryid/' + value)
     //   .then(res=>{
     //       const subjectOptions = mapForCombo(res.data);//res.data.map(function(item, index){
     //           //return {value: item.Id + "", label: item.Name};

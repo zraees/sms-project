@@ -55,7 +55,15 @@ export default {
           cb(null, m.default)
         })
       }
-    }
+    },
+    {
+      path: 'feeTypes',
+      getComponent(nextState, cb){
+        System.import('./containers/FeeTypes/FeeTypesPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
   ]
 
 

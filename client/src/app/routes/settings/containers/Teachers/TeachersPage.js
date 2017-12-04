@@ -108,6 +108,7 @@ class TeachersPage extends React.Component {
       taphold: true,
       menu: [
       {title: LanguageStore.getData().phrases["EditText"], cmd: "EditText", uiIcon: "ui-icon-pencil"},
+      {title: LanguageStore.getData().phrases["Qualification"], cmd: "Qualification", uiIcon: "ui-icon-document-b"},
       {title: LanguageStore.getData().phrases["Experience"], cmd: "Experience", uiIcon: "ui-icon-document"},
       {title: LanguageStore.getData().phrases["SubjectsText"], cmd: "SubjectsText", uiIcon: "ui-icon-person"},
       {title: LanguageStore.getData().phrases["Classes"], cmd: "Classes", uiIcon: "ui-icon-contact"},

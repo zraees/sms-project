@@ -63,6 +63,11 @@
               "icon": "fa fa-share-alt",
               "route": "/settings/classesSections",
               "title": "Classes & Sections"
+            },
+            {
+              "icon": "fa fa-money",
+              "route": "/settings/feeTypes",
+              "title": "Fee Types"
             }
           ]
         }

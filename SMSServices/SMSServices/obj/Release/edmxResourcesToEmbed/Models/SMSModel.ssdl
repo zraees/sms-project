@@ -78,6 +78,15 @@
     <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="IsWeekend" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="DiscountTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="Errors">
     <Key>
       <PropertyRef Name="ErrorId" />
@@ -93,6 +102,64 @@
     <Property Name="FileName" Type="nvarchar" MaxLength="255" />
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="FeeCycles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeDiscountTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeDueOnFrequencies">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FeeCycleID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeDueOnInterval">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FeeDueOnFrequencyID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StartDay" Type="int" Nullable="false" />
+    <Property Name="EndDay" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeTypes">
+    <Key>
+      <PropertyRef Name="FeeTypeID" />
+    </Key>
+    <Property Name="FeeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FeeCycleID" Type="int" Nullable="false" />
+    <Property Name="FeeDueOnFrequencyID" Type="int" Nullable="false" />
+    <Property Name="FeeDueOnIntervalID" Type="int" Nullable="false" />
+    <Property Name="Fee" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="FeeDiscountTypeID" Type="int" />
+    <Property Name="DiscountRate" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="DiscountOption" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="DiscountValue" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="NetFee" Type="decimal" Precision="8" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="Languages">
     <Key>
@@ -401,6 +468,78 @@
       </Principal>
       <Dependent Role="ClassesSections">
         <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeDueOnFrequencies_FeeCycles">
+    <End Role="FeeCycles" Type="Self.FeeCycles" Multiplicity="1" />
+    <End Role="FeeDueOnFrequencies" Type="Self.FeeDueOnFrequencies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCycles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnFrequencies">
+        <PropertyRef Name="FeeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeDueOnInterval_FeeDueOnFrequencies">
+    <End Role="FeeDueOnFrequencies" Type="Self.FeeDueOnFrequencies" Multiplicity="1" />
+    <End Role="FeeDueOnInterval" Type="Self.FeeDueOnInterval" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnFrequencies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnInterval">
+        <PropertyRef Name="FeeDueOnFrequencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeCycles">
+    <End Role="FeeCycles" Type="Self.FeeCycles" Multiplicity="1" />
+    <End Role="FeeTypes" Type="Self.FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCycles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDiscountTypes">
+    <End Role="FeeDiscountTypes" Type="Self.FeeDiscountTypes" Multiplicity="0..1" />
+    <End Role="FeeTypes" Type="Self.FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDiscountTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDueOnFrequencies">
+    <End Role="FeeDueOnFrequencies" Type="Self.FeeDueOnFrequencies" Multiplicity="1" />
+    <End Role="FeeTypes" Type="Self.FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnFrequencies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDueOnFrequencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDueOnInterval">
+    <End Role="FeeDueOnInterval" Type="Self.FeeDueOnInterval" Multiplicity="1" />
+    <End Role="FeeTypes" Type="Self.FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnInterval">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDueOnIntervalID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -809,7 +948,13 @@
     <EntitySet Name="CodingFormats" EntityType="Self.CodingFormats" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DiscountTypes" EntityType="Self.DiscountTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeCycles" EntityType="Self.FeeCycles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeDiscountTypes" EntityType="Self.FeeDiscountTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeDueOnFrequencies" EntityType="Self.FeeDueOnFrequencies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeDueOnInterval" EntityType="Self.FeeDueOnInterval" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeTypes" EntityType="Self.FeeTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
@@ -848,6 +993,30 @@
     <AssociationSet Name="FK_ClassesSections_Shifts" Association="Self.FK_ClassesSections_Shifts">
       <End Role="Shifts" EntitySet="Shifts" />
       <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeDueOnFrequencies_FeeCycles" Association="Self.FK_FeeDueOnFrequencies_FeeCycles">
+      <End Role="FeeCycles" EntitySet="FeeCycles" />
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeDueOnInterval_FeeDueOnFrequencies" Association="Self.FK_FeeDueOnInterval_FeeDueOnFrequencies">
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeCycles" Association="Self.FK_FeeTypes_FeeCycles">
+      <End Role="FeeCycles" EntitySet="FeeCycles" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDiscountTypes" Association="Self.FK_FeeTypes_FeeDiscountTypes">
+      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDueOnFrequencies" Association="Self.FK_FeeTypes_FeeDueOnFrequencies">
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDueOnInterval" Association="Self.FK_FeeTypes_FeeDueOnInterval">
+      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
     </AssociationSet>
     <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">
       <End Role="Countries" EntitySet="Countries" />

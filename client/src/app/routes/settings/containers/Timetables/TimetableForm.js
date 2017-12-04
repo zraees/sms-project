@@ -44,9 +44,9 @@ class TimetableForm extends React.Component {
    }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
-    this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
-    this.handleSubjectBlur = this.handleSubjectBlur.bind(this);
-    this.handleDayChange = this.handleDayChange.bind(this);
+    // this.handleTeacherBlur = this.handleTeacherBlur.bind(this);
+    // this.handleSubjectBlur = this.handleSubjectBlur.bind(this);
+    // this.handleDayChange = this.handleDayChange.bind(this);
   }
   
   componentWillMount() {
@@ -138,39 +138,19 @@ class TimetableForm extends React.Component {
         
     //   });
     
-      let days = [];
-      let periods = [];
-      periods = [{"periodStart":"08:00 AM", "periodEnd":"08:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1", "lastName": "123 x"}, 
-                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
-                  {"periodStart":"09:01 AM", "periodEnd":"09:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"}];
-      days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
-      // days.push({"periods":periods});
+      // let days = [];
+      // let periods = [];
+      // periods = [{"periodStart":"08:00 AM", "periodEnd":"08:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1", "lastName": "123 x"}, 
+      //             {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             // {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             {"periodStart":"08:31 AM", "periodEnd":"09:00 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"},
+      //             {"periodStart":"09:01 AM", "periodEnd":"09:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"}];
       // days.push({"periods":periods}); 
-      // days.push({"firstName": "abc 2", "lastName": "123 xx"});
-      // days.push({"firstName": "abc 3", "lastName": "123 Xxx"});
-      // days.push({"firstName": "abc 4", "lastName": "123 Xxx"});
-      // days.push({"firstName": "abc 5", "lastName": "123 Xxx"});
-      // days.push({"firstName": "abc 6", "lastName": "123 Xxx"});
-      // days.push({"firstName": "abc 7", "lastName": "123 Xxx"});
-
-      // const initData = {
-      //     "timetableId": 0,
-      //     // "code": '',
-      //     // "days": days
-      // }
-
-      // this.props.initialize(initData);
 
       axios.get('/api/GetTimeTableGeneratedCode')
       .then(res=>{      
@@ -187,26 +167,26 @@ class TimetableForm extends React.Component {
       LoaderVisibility(false);
   }
 
-  handleTeacherBlur(obj, value){
-    // axios.get('/api/Lookup/subjectOptions/countryid/' + value)
-    //   .then(res=>{
-    //       const subjectOptions = mapForCombo(res.data);//res.data.map(function(item, index){
-    //           //return {value: item.Id + "", label: item.Name};
-    //       //});                       
-    //       this.setState({subjectOptions});
-    //   });
+  // handleTeacherBlur(obj, value){
+  //   // axios.get('/api/Lookup/subjectOptions/countryid/' + value)
+  //   //   .then(res=>{
+  //   //       const subjectOptions = mapForCombo(res.data);//res.data.map(function(item, index){
+  //   //           //return {value: item.Id + "", label: item.Name};
+  //   //       //});                       
+  //   //       this.setState({subjectOptions});
+  //   //   });
  
-  }
+  // }
 
-  handleSubjectBlur(obj, value){ 
-    // axios.get('/api/Lookup/cities/subjectId/' + value)
-    //   .then(res=>{
-    //       const cities = mapForCombo(res.data); // res.data.map(function(item, index){
-    //       //     return {value: item.Id + "", label: item.Name};
-    //       // });                       
-    //       this.setState({cities});
-    //   });
-  }
+  // handleSubjectBlur(obj, value){ 
+  //   // axios.get('/api/Lookup/cities/subjectId/' + value)
+  //   //   .then(res=>{
+  //   //       const cities = mapForCombo(res.data); // res.data.map(function(item, index){
+  //   //       //     return {value: item.Id + "", label: item.Name};
+  //   //       // });                       
+  //   //       this.setState({cities});
+  //   //   });
+  // }
 
   handleShiftBlur(obj, value){
     if(value!=''){
@@ -249,11 +229,11 @@ class TimetableForm extends React.Component {
     }
   }
 
-  handleDayChange(obj, value){
-    //console.log('obj ==> ', obj); 
-    $('#timetableDayPopup').modal('show'); 
+  // handleDayChange(obj, value){
+  //   //console.log('obj ==> ', obj); 
+  //   $('#timetableDayPopup').modal('show'); 
 
-  }
+  // }
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props
@@ -359,59 +339,36 @@ class TimetableForm extends React.Component {
                 </section>
             </div>
 
-            {timetableId <= 0 ? <div></div> :
-              <div className="row">                        
-                <section className="remove-col-padding col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                  <p className="font-md"><Msg phrase="ManageTimetablePeriodsText"/></p>
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('1')} }><Msg phrase="Day1Text"/></a></span> 
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('2')} }><Msg phrase="Day2Text"/></a></span> 
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('3')} }><Msg phrase="Day3Text"/></a></span> 
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('4')} }><Msg phrase="Day4Text"/></a></span> 
-                </section>    
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('5')} }><Msg phrase="Day5Text"/></a></span> 
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('6')} }><Msg phrase="Day6Text"/></a></span> 
-                </section>  
-                <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                  <span className="badge font-md padding10px"><a onClick={ () => {this.handleDayChange('7')} }><Msg phrase="Day7Text"/></a></span> 
-                </section>                        
-                {/* <section className="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                </section>   */}
-                  {/* <div className="smart-timeline"> */}
-                    {/* <ul id="horizontal-list">
-                      <li ><div><span className="badge bg-color-blueLight"><h1>1</h1></span></div></li>
-                      <li ><span className="badge bg-color-blueLight">2</span></li>
-                      <li ><span className="badge bg-color-blueLight">3</span></li>
-                      <li ><span className="badge bg-color-blueLight">4</span></li>
-                      <li ><span className="badge bg-color-blueLight">5</span></li>
-                      <li ><span className="badge bg-color-blueLight">6</span></li>
-                      <li ><span className="badge bg-color-blueLight">7</span></li>
-                    </ul> */}
-                  {/* </div>  */}
-                    
-              </div> 
-            }
-            
-            {/* <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  
-                  <div className="smart-timeline">
-                    <FieldArray name="days" component={renderdays}/>                               
-                  </div>  
+          {/* {timetableId <= 0 ? <div></div> :
+            <div className="row">
+              <section className="remove-col-padding col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <p className="font-md"><Msg phrase="ManageTimetablePeriodsText" /></p>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('1') }}><Msg phrase="Day1Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('2') }}><Msg phrase="Day2Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('3') }}><Msg phrase="Day3Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('4') }}><Msg phrase="Day4Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('5') }}><Msg phrase="Day5Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('6') }}><Msg phrase="Day6Text" /></a></span>
+              </section>
+              <section className="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <span className="badge font-md padding10px"><a onClick={() => { this.handleDayChange('7') }}><Msg phrase="Day7Text" /></a></span>
+              </section>
 
-              </div>
-            </div>*/}
-
+            </div>
+          } */}
+             
           </fieldset>
 
           <footer>

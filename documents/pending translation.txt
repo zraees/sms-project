@@ -28,3 +28,18 @@ Please enter special service that your child ever evaluated. e.g: Speech/Languag
 Please enter details about the special service
 
 At least one record must be entered
+
+FeeTypes
+NameAr
+FeeCycleText
+FeeDiscountTypeText
+FeeDueOnFrequencyText
+FeeDueOnIntervalText
+
+FeeText
+DiscountRateText
+DiscountValueText
+FeeAmountAfterDiscountText
+DiscountOptionText
+
+FixedText

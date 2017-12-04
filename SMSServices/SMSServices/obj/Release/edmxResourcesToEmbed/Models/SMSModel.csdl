@@ -181,6 +181,36 @@
       <End Role="TimeTables" EntitySet="TimeTables" />
       <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
     </AssociationSet>
+    <EntitySet Name="DiscountTypes" EntityType="SMSModel.DiscountTypes" />
+    <EntitySet Name="FeeCycles" EntityType="SMSModel.FeeCycles" />
+    <EntitySet Name="FeeDiscountTypes" EntityType="SMSModel.FeeDiscountTypes" />
+    <EntitySet Name="FeeDueOnFrequencies" EntityType="SMSModel.FeeDueOnFrequencies" />
+    <AssociationSet Name="FK_FeeDueOnFrequencies_FeeCycles" Association="SMSModel.FK_FeeDueOnFrequencies_FeeCycles">
+      <End Role="FeeCycles" EntitySet="FeeCycles" />
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+    </AssociationSet>
+    <EntitySet Name="FeeTypes" EntityType="SMSModel.FeeTypes" />
+    <AssociationSet Name="FK_FeeTypes_FeeCycles" Association="SMSModel.FK_FeeTypes_FeeCycles">
+      <End Role="FeeCycles" EntitySet="FeeCycles" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDiscountTypes" Association="SMSModel.FK_FeeTypes_FeeDiscountTypes">
+      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDueOnFrequencies" Association="SMSModel.FK_FeeTypes_FeeDueOnFrequencies">
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <EntitySet Name="FeeDueOnInterval" EntityType="SMSModel.FeeDueOnInterval" />
+    <AssociationSet Name="FK_FeeDueOnInterval_FeeDueOnFrequencies" Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies">
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeTypes_FeeDueOnInterval" Association="SMSModel.FK_FeeTypes_FeeDueOnInterval">
+      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
+      <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -1055,6 +1085,157 @@
       </Principal>
       <Dependent Role="TimeTableDetails">
         <PropertyRef Name="TimeTableID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DiscountTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="FeeCycles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FeeDueOnFrequencies" Relationship="SMSModel.FK_FeeDueOnFrequencies_FeeCycles" FromRole="FeeCycles" ToRole="FeeDueOnFrequencies" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeCycles" FromRole="FeeCycles" ToRole="FeeTypes" />
+  </EntityType>
+  <EntityType Name="FeeDiscountTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDiscountTypes" FromRole="FeeDiscountTypes" ToRole="FeeTypes" />
+  </EntityType>
+  <EntityType Name="FeeDueOnFrequencies">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="FeeCycleID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FeeCycles" Relationship="SMSModel.FK_FeeDueOnFrequencies_FeeCycles" FromRole="FeeDueOnFrequencies" ToRole="FeeCycles" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDueOnFrequencies" FromRole="FeeDueOnFrequencies" ToRole="FeeTypes" />
+    <NavigationProperty Name="FeeDueOnInterval" Relationship="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" FromRole="FeeDueOnFrequencies" ToRole="FeeDueOnInterval" />
+  </EntityType>
+  <Association Name="FK_FeeDueOnFrequencies_FeeCycles">
+    <End Type="SMSModel.FeeCycles" Role="FeeCycles" Multiplicity="1" />
+    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCycles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnFrequencies">
+        <PropertyRef Name="FeeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FeeTypes">
+    <Key>
+      <PropertyRef Name="FeeTypeID" />
+    </Key>
+    <Property Name="FeeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FeeCycleID" Type="Int32" Nullable="false" />
+    <Property Name="FeeDueOnFrequencyID" Type="Int32" Nullable="false" />
+    <Property Name="FeeDueOnIntervalID" Type="Int32" Nullable="false" />
+    <Property Name="Fee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="FeeDiscountTypeID" Type="Int32" />
+    <Property Name="DiscountRate" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="DiscountOption" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="DiscountValue" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="NetFee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <NavigationProperty Name="FeeCycles" Relationship="SMSModel.FK_FeeTypes_FeeCycles" FromRole="FeeTypes" ToRole="FeeCycles" />
+    <NavigationProperty Name="FeeDiscountTypes" Relationship="SMSModel.FK_FeeTypes_FeeDiscountTypes" FromRole="FeeTypes" ToRole="FeeDiscountTypes" />
+    <NavigationProperty Name="FeeDueOnFrequencies" Relationship="SMSModel.FK_FeeTypes_FeeDueOnFrequencies" FromRole="FeeTypes" ToRole="FeeDueOnFrequencies" />
+    <NavigationProperty Name="FeeDueOnInterval" Relationship="SMSModel.FK_FeeTypes_FeeDueOnInterval" FromRole="FeeTypes" ToRole="FeeDueOnInterval" />
+  </EntityType>
+  <Association Name="FK_FeeTypes_FeeCycles">
+    <End Type="SMSModel.FeeCycles" Role="FeeCycles" Multiplicity="1" />
+    <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCycles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDiscountTypes">
+    <End Type="SMSModel.FeeDiscountTypes" Role="FeeDiscountTypes" Multiplicity="0..1" />
+    <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDiscountTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDueOnFrequencies">
+    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="1" />
+    <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnFrequencies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDueOnFrequencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FeeDueOnInterval">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="FeeDueOnFrequencyID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StartDay" Type="Int32" Nullable="false" />
+    <Property Name="EndDay" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FeeDueOnFrequencies" Relationship="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" FromRole="FeeDueOnInterval" ToRole="FeeDueOnFrequencies" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDueOnInterval" FromRole="FeeDueOnInterval" ToRole="FeeTypes" />
+  </EntityType>
+  <Association Name="FK_FeeDueOnInterval_FeeDueOnFrequencies">
+    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="1" />
+    <End Type="SMSModel.FeeDueOnInterval" Role="FeeDueOnInterval" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnFrequencies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnInterval">
+        <PropertyRef Name="FeeDueOnFrequencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeTypes_FeeDueOnInterval">
+    <End Type="SMSModel.FeeDueOnInterval" Role="FeeDueOnInterval" Multiplicity="1" />
+    <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnInterval">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeTypes">
+        <PropertyRef Name="FeeDueOnIntervalID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
