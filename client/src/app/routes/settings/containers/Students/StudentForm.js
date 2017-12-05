@@ -151,12 +151,12 @@ class StudentForm extends React.Component {
   //   console.log(value);
   // }
 
-  handleStudentStayWithChange(obj, value){ 
-    if(value=="Other"){
-      this.setState({disabledStudentStayWithOther:false});
+  handleStudentStayWithChange(obj, value) {
+    if (value == "Other") {
+      this.setState({ disabledStudentStayWithOther: false });
     }
-    else{
-      this.setState({disabledStudentStayWithOther:true});
+    else {
+      this.setState({ disabledStudentStayWithOther: true });
     }
   }
  

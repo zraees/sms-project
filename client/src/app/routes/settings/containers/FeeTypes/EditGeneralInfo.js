@@ -87,7 +87,7 @@ class EditGeneralInfo extends React.Component {
                 onSubmit={handleSubmit}>
  
                 <fieldset>
-            
+                    Edit functionality Pending ... 
                     <div className="row">
                         <section className="col col-4">
                             <Field

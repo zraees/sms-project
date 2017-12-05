@@ -64,6 +64,15 @@ export default {
         })
       }
     },
+    {
+      path: 'feeStructures',
+      getComponent(nextState, cb){
+        System.import('./containers/FeeStructures/FeeStructuresPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
+    
   ]
 
 

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import {connect} from 'react-redux'
 
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, formValueSelector, getFormValues} from 'redux-form'
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 
 import {RFField, RFReactSelect, RFRadioButtonList} from '../../../../components/ui'
@@ -28,9 +28,12 @@ class FeeTypeForm extends React.Component {
     }  
     this.handleFeeCycleBlur = this.handleFeeCycleBlur.bind(this);
     this.handleFeeDueOnFrequencyBlur = this.handleFeeDueOnFrequencyBlur.bind(this);
+    this.handleFeeBlur = this.handleFeeBlur.bind(this);
+    this.handleDiscountRateBlur = this.handleDiscountRateBlur.bind(this);
+    this.handleDiscountOptionChange = this.handleDiscountOptionChange.bind(this);
   }
   
-  componentDidMount(){ 
+  componentDidMount(){
        
     axios.get('assets/api/common/discount-options.json')
       .then(res => {        
@@ -57,6 +60,8 @@ class FeeTypeForm extends React.Component {
       const initData = {
           "feeTypeId": 0,
           "discountOption": 'P',
+          "discountRate": 0,
+          "discountValue": 0,
           "code": res.data
       }
 
@@ -65,6 +70,25 @@ class FeeTypeForm extends React.Component {
     });
  
     console.log('componentDidMount --> FeeTypeForm');
+  }
+
+  
+  handleDiscountOptionChange(obj, value) {
+    this.calculateDiscount();
+  }
+
+  handleFeeBlur(obj, value){
+    this.calculateDiscount();
+  } 
+
+  handleDiscountRateBlur(obj, value){
+    //console.log('test ' );   
+    this.calculateDiscount();
+  } 
+
+  calculateDiscount(){
+    this.props.change("discountValue", this.props.discountValue);
+    this.props.change("netFee", this.props.netFee); 
   }
 
   handleFeeCycleBlur(obj, value){
@@ -168,6 +192,7 @@ class FeeTypeForm extends React.Component {
           <section className="col col-4">
               <Field name="fee" labelClassName="input" labelIconClassName="icon-append fa fa-money"
                 validate={[required, number]} component={RFField} type="text" maxLength="10"
+                onBlur={this.handleFeeBlur}
                 label="FeeText" />
             </section>
             <section className="col col-4">
@@ -191,12 +216,14 @@ class FeeTypeForm extends React.Component {
             <section className="col col-4">
               <Field component={RFRadioButtonList} name="discountOption" required={true}
                 label=""
+                onChange={this.handleDiscountOptionChange}
                 options={percentageOptions} />
             </section>
 
             <section className="col col-4">
               <Field name="discountRate" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[required, number]} component={RFField} type="text" maxLength="10"
+                validate={[number]} component={RFField} type="text" maxLength="10"
+                onBlur={this.handleDiscountRateBlur}
                 label="DiscountRateText" />
             </section> 
 
@@ -206,7 +233,7 @@ class FeeTypeForm extends React.Component {
 
             <section className="col col-4">
               <Field name="discountValue" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[required, number]} component={RFField} type="text" maxLength="10" 
+                validate={[number]} component={RFField} type="text" maxLength="10" readOnly={true}
                 label="DiscountValueText" />
             </section>
 
@@ -241,9 +268,10 @@ class FeeTypeForm extends React.Component {
 }
        
 const afterSubmit = function(result, dispatch) { 
-    console.log('result = ', result);
+    //console.log('result = ', result);
     dispatch(reset('FeeTypeForm'));
 }
+
 
 //export default 
 FeeTypeForm = reduxForm({
@@ -251,6 +279,25 @@ FeeTypeForm = reduxForm({
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false 
 })(FeeTypeForm)
- 
+
+const selector = formValueSelector('FeeTypeForm') // <-- same as form name
+FeeTypeForm = connect(
+  state => { 
+    const { fee, discountOption, discountRate, discountValue } = selector(state, 'fee', 'discountOption', 'discountRate', 'discountValue')
+    return {
+      discountValue: discountOption=='P'? fee * (discountRate||0) / 100 : discountRate,
+      netFee: fee - (discountOption=='P'? fee * (discountRate||0) / 100 : discountRate)
+    }
+  }
+)(FeeTypeForm)
+
 export default FeeTypeForm;
+// //export default 
+// FeeTypeForm = reduxForm({
+//   form: 'FeeTypeForm',  // a unique identifier for this form
+//   onSubmitSuccess: afterSubmit,
+//   keepDirtyOnReinitialize: false 
+// })(FeeTypeForm)
+ 
+// export default FeeTypeForm;
  

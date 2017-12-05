@@ -133,7 +133,7 @@ class FeeTypesPage extends React.Component {
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 12
+                                "targets": 9
                             }
                             ,{ 
                                 "render": function ( data, type, row ) { 
@@ -141,7 +141,7 @@ class FeeTypesPage extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 13
+                                "targets": 10
                             }
                         ],
                         columns: [ 
@@ -152,9 +152,9 @@ class FeeTypesPage extends React.Component {
                           {data: "FeeCycleName"},
                           {data: "FeeDueOnFrequencyName"}, 
                           {data: "Fee"},  
-                          {data: "FeeDiscountTypeName"},
-                          {data: "DiscountOption"},  
-                          {data: "DiscountRate"},  
+                          // {data: "FeeDiscountTypeName"},
+                          // {data: "DiscountOption"},  
+                          // {data: "DiscountRate"},  
                           {data: "DiscountValue"},  
                           {data: "NetFee"},                   
                           {data: "FeeTypeID"},
@@ -176,9 +176,9 @@ class FeeTypesPage extends React.Component {
                         <th><Msg phrase="FeeCycleText"/></th>
                         <th><Msg phrase="FeeDueOnFrequencyText"/></th>
                         <th><Msg phrase="FeeText"/></th>
-                        <th><Msg phrase="FeeDiscountTypeText"/></th>
+                        {/* <th><Msg phrase="FeeDiscountTypeText"/></th>
                         <th><Msg phrase="DiscountOptionText"/></th>
-                        <th><Msg phrase="DiscountRateText"/></th>
+                        <th><Msg phrase="DiscountRateText"/></th> */}
                         <th><Msg phrase="DiscountValueText"/></th>
                         <th><Msg phrase="FeeAmountAfterDiscountText"/></th>   
                         <th></th>

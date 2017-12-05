@@ -27,7 +27,7 @@
         }, 
         {
           "icon": "fa fa-money",
-          "route": "/settings/feestructures",
+          "route": "/settings/feeStructures",
           "title": "Fee Structures"
         }, 
         {
