@@ -111,9 +111,9 @@ class TimetableForm extends React.Component {
     }.bind(this));
     
     axios.get('/api/lookup/shifts/')
-      .then(res=>{            
-          const shiftOptions = mapForCombo(res.data);
-          this.setState({shiftOptions});
+      .then(res => {
+        const shiftOptions = mapForCombo(res.data);
+        this.setState({ shiftOptions });
       }); 
 
     // axios.get('/api/GetTimetableGeneratedCode')

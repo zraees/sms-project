@@ -31,6 +31,11 @@
           "title": "Fee Structures"
         }, 
         {
+          "icon": "fa fa-money",
+          "route": "/settings/feeCollections",
+          "title": "Fee Collections"
+        }, 
+        {
           "icon": "fa fa-cog",
           "title": "GeneralSettings",
           "items": [

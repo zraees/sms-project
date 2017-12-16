@@ -72,6 +72,14 @@ export default {
         })
       }
     },
+    {
+      path: 'feeCollections',
+      getComponent(nextState, cb){
+        System.import('./containers/FeeCollections/FeeCollectionsPage').then((m)=> {
+          cb(null, m.default)
+        })
+      }
+    },
     
   ]
 
