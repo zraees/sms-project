@@ -41,7 +41,7 @@ function submit(values) {
                   //reject('error error error');
                   console.log('submission error')
             throw new SubmissionError({   
-                shiftId: 'Class and section is already exists',
+                shiftId: 'record already exists',
                 _error: 'You cannot proceed further!', 
               });
                

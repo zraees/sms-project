@@ -15,43 +15,39 @@ using WebApi.ErrorHelper;
 
 namespace SMSServices.Controllers
 {
-    public class FeeTypesController : ApiController
+    public class FeeStructuresController : ApiController
     {
         private SMSEntities entities = new SMSEntities();
-        
-        [HttpGet]
-        [Route("api/GetFeeTypeGeneratedCode/")]
-        public string GetFeeTypeGeneratedCode()
-        {
-            return new AutoCodeGeneration().GenerateCode("FeeTypes", "Code");
-        }
-
+         
         // GET api/<controller>
-        [Route("api/FeeTypes/All")]
-        //public IEnumerable<FeeTypes> Get()
+        [Route("api/FeeStructures/All")]
+        //public IEnumerable<FeeStructures> Get()
         public HttpResponseMessage Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
-            var query = entities.FeeTypes//.Include("Classes").Include("Shifts");
+            var query = entities.FeeStructures//.Include("Classes").Include("Shifts");
                 //query.Include("Sections")
             .Select(e => new
             {
-                e.FeeTypeID,
-                e.Code,
-                e.Name,
-                e.NameAr,
-                e.FeeCycleID,
-                FeeCycleName= e.FeeCycles.Name,
-                FeeCycleNameAr = e.FeeCycles.NameAr,
-                e.FeeDueOnFrequencyID,
-                FeeDueOnFrequencyName = e.FeeDueOnFrequencies.Name,
-                FeeDueOnFrequencyNameAr = e.FeeDueOnFrequencies.NameAr,
-                e.FeeDueOnIntervalID,
-                FeeDueOnIntervalName = e.FeeDueOnInterval.Name,
-                FeeDueOnIntervalNameAr = e.FeeDueOnInterval.NameAr,
+                e.FeeStructureID,
+                e.ClassID,
+                ClassName=e.Classes.Name,
+                ClassNameAr=e.Classes.NameAr,
+                FeeTypeCode = e.FeeTypes.Code,
+                FeeTypeName = e.FeeTypes.Name,
+                FeeTypeNameAr = e.FeeTypes.NameAr,
+                e.FeeTypes.FeeCycleID,
+                FeeCycleName = e.FeeTypes.FeeCycles.Name,
+                FeeCycleNameAr = e.FeeTypes.FeeCycles.NameAr,
+                e.FeeTypes.FeeDueOnFrequencyID,
+                FeeDueOnFrequencyName = e.FeeTypes.FeeDueOnFrequencies.Name,
+                FeeDueOnFrequencyNameAr = e.FeeTypes.FeeDueOnFrequencies.NameAr,
+                e.FeeTypes.FeeDueOnIntervalID,
+                FeeDueOnIntervalName = e.FeeTypes.FeeDueOnInterval.Name,
+                FeeDueOnIntervalNameAr = e.FeeTypes.FeeDueOnInterval.NameAr,
                 e.FeeDiscountTypeID,
-                FeeDiscountTypeName =e.FeeDiscountTypes !=null ? e.FeeDiscountTypes.Name : "",
+                FeeDiscountTypeName = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.Name : "",
                 FeeDiscountTypeNameAr = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.NameAr : "",
                 DiscountOption = e.DiscountOption,
                 DiscountOptionText = e.DiscountOption.Equals("P") ? "%" : "FixedText",
@@ -70,98 +66,41 @@ namespace SMSServices.Controllers
                 //SectionNameAr = e.Sections.NameAr
             });
 
-            //return query.ToList(); //entities.FeeTypes.Include("Classes").Include("Shifts").Include("Sections");
+            //return query.ToList(); //entities.FeeStructures.Include("Classes").Include("Shifts").Include("Sections");
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
-        //// GET api/<controller>/5/1/2
-        //[Route("api/FeeTypes/{ShiftId}/{ClassId}/{SectionId}")]
-        //public FeeTypes Get(int ShiftId, int ClassId, int SectionId)
-        //{
-        //    entities.Configuration.ProxyCreationEnabled = false;
-         
-        //    FeeTypes FeeType = entities.FeeTypes
-        //        .Where(t => t.ShiftID == ShiftId && t.ClassID == ClassId && t.SectionID == SectionId).FirstOrDefault();
 
-        //    if (FeeType == null)
-        //    {
-        //        FeeType = new FeeTypes() { ClassID = 0 };
-        //    }
-
-        //    return FeeType;
-        //}
-
-        //// GET api/<controller>/5
-        //[Route("api/GetClassesByShiftId/{ShiftId}")]
-        //[HttpGet]
-        //public HttpResponseMessage GetClassesByShiftId(int ShiftId)
-        //{
-        //    entities.Configuration.ProxyCreationEnabled = false;
-
-        //    FeeTypes FeeType = entities.FeeTypes
-        //        .FirstOrDefault();
-
-        //    var query = entities.FeeTypes
-        //        .Where(t => t.ShiftID == ShiftId)
-        //        .Select(e => new
-        //        {   
-        //            Id = e.ClassID,
-        //            Name = e.Classes.Name,
-        //            NameAr = e.Classes.NameAr
-        //        });
-             
-        //    return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList().Distinct());
-        //}
-
-        //// GET api/<controller>/5
-        //[Route("api/GetClassesByShiftIdClassId/{ShiftId}/{ClassId}")]
-        //[HttpGet]
-        //public HttpResponseMessage GetClassesByShiftIdClassId(int ShiftId, int ClassId)
-        //{
-        //    entities.Configuration.ProxyCreationEnabled = false;
-
-        //    FeeTypes FeeType = entities.FeeTypes
-        //        .FirstOrDefault();
-
-        //    var query = entities.FeeTypes
-        //        .Where(t => t.ShiftID == ShiftId && t.ClassID == ClassId)
-        //        .Select(e => new
-        //        {
-        //            Id = e.SectionID,
-        //            Name = e.Sections.Name,
-        //            NameAr = e.Sections.NameAr
-        //        });
-
-        //    return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
-        //}
-
-        //[Route("api/FeeTypesById/{lang}/{id}")]
+        //[Route("api/FeeStructuresById/{lang}/{id}")]
         //public HttpResponseMessage Get(string lang, int id)
-        [Route("api/FeeTypesById/{id}")]
+        [Route("api/FeeStructuresById/{id}")]
         public HttpResponseMessage Get(int id)
         {
             entities.Configuration.ProxyCreationEnabled = false;
             //Teachers teacher = entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
             //if (teacher != null) { teacher.DOB = teacher.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; } 
-            var query = entities.FeeTypes
-                .Where(t => t.FeeTypeID == id)
+            var query = entities.FeeStructures
+                .Where(t => t.FeeStructureID == id)
                 .Select(e => new
             {
-                e.FeeTypeID,
-                e.Code,
-                e.Name,
-                e.NameAr,
-                e.FeeCycleID,
-                FeeCycleName =e.FeeCycles.Name,
-                FeeCycleNameAr = e.FeeCycles.NameAr,
-                e.FeeDueOnFrequencyID,
-                FeeDueOnFrequencyName = e.FeeDueOnFrequencies.Name,
-                FeeDueOnFrequencyNameAr = e.FeeDueOnFrequencies.NameAr,
-                e.FeeDueOnIntervalID,
-                FeeDueOnIntervalName = e.FeeDueOnInterval.Name,
-                FeeDueOnIntervalNameAr = e.FeeDueOnInterval.NameAr,
+                e.FeeStructureID,
+                e.ClassID,
+                ClassName = e.Classes.Name,
+                ClassNameAr = e.Classes.NameAr,
+                FeeTypeCode = e.FeeTypes.Code,
+                FeeTypeName = e.FeeTypes.Name,
+                FeeTypeNameAr = e.FeeTypes.NameAr,
+                e.FeeTypes.FeeCycleID,
+                FeeCycleName = e.FeeTypes.FeeCycles.Name,
+                FeeCycleNameAr = e.FeeTypes.FeeCycles.NameAr,
+                e.FeeTypes.FeeDueOnFrequencyID,
+                FeeDueOnFrequencyName = e.FeeTypes.FeeDueOnFrequencies.Name,
+                FeeDueOnFrequencyNameAr = e.FeeTypes.FeeDueOnFrequencies.NameAr,
+                e.FeeTypes.FeeDueOnIntervalID,
+                FeeDueOnIntervalName = e.FeeTypes.FeeDueOnInterval.Name,
+                FeeDueOnIntervalNameAr = e.FeeTypes.FeeDueOnInterval.NameAr,
                 e.FeeDiscountTypeID,
-                FeeDiscountTypeName = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.Name  : "",
+                FeeDiscountTypeName = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.Name : "",
                 FeeDiscountTypeNameAr = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.NameAr : "",
                 DiscountOption = e.DiscountOption,
                 DiscountOptionText = e.DiscountOption.Equals("P") ? "%" : "FixedText",
@@ -171,39 +110,35 @@ namespace SMSServices.Controllers
                 e.NetFee
             });
 
-            //return query.ToList(); //entities.FeeTypes.Include("Classes").Include("Shifts").Include("Sections");
+            //return query.ToList(); //entities.FeeStructures.Include("Classes").Include("Shifts").Include("Sections");
             return this.Request.CreateResponse(HttpStatusCode.OK, query.FirstOrDefault());
         }
 
         // POST api/<controller>
-        public HttpResponseMessage Post(FeeTypes feeType)
+        public HttpResponseMessage Post(FeeStructures feeStructure)
         {
             try
             {
-                decimal DiscountRate =0;
+                decimal DiscountRate = 0;
                 decimal DiscountValue = 0;
                 string DiscountOption = "P";
-                decimal NetFee = feeType.Fee;
+                decimal NetFee = feeStructure.Fee;
 
-                  if (feeType.FeeDiscountTypeID != null)
+                  if (feeStructure.FeeDiscountTypeID != null)
                   {
-                      DiscountRate = feeType.DiscountRate;
-                      DiscountValue = feeType.DiscountOption.Equals("P") ? feeType.Fee * feeType.DiscountRate / 100 : feeType.DiscountRate;
-                      DiscountOption = feeType.DiscountOption;
-                      NetFee = feeType.Fee - DiscountValue < 0 ? 0 : feeType.Fee - DiscountValue;
+                      DiscountRate = feeStructure.DiscountRate;
+                      DiscountValue = feeStructure.DiscountOption.Equals("P") ? feeStructure.Fee * feeStructure.DiscountRate / 100 : feeStructure.DiscountRate;
+                      DiscountOption = feeStructure.DiscountOption;
+                      NetFee = feeStructure.Fee - DiscountValue < 0 ? 0 : feeStructure.Fee - DiscountValue;
                   }
 
 
-                entities.FeeTypes.Add(new FeeTypes()
+                entities.FeeStructures.Add(new FeeStructures()
                 {
-                    Code = new AutoCodeGeneration().GenerateCode("FeeTypes", "Code"),  // feeType.Code,
-                    Name = feeType.Name,
-                    NameAr = feeType.NameAr,
-                    FeeCycleID = feeType.FeeCycleID,
-                    FeeDueOnFrequencyID = feeType.FeeDueOnFrequencyID,
-                    FeeDueOnIntervalID = feeType.FeeDueOnIntervalID,
-                    Fee = feeType.Fee,
-                    FeeDiscountTypeID = feeType.FeeDiscountTypeID,
+                    ClassID = feeStructure.ClassID,
+                    FeeTypeID = feeStructure.FeeTypeID, 
+                    Fee = feeStructure.Fee,
+                    FeeDiscountTypeID = feeStructure.FeeDiscountTypeID,
                     DiscountRate = DiscountRate,
                     DiscountValue = DiscountValue,
                     DiscountOption = DiscountOption,
@@ -257,14 +192,14 @@ namespace SMSServices.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(FeeTypes FeeType)
+        public void Put(FeeStructures FeeStructure)
         {
             try
             {
-                var entity = entities.FeeTypes.Find(FeeType.FeeTypeID);
+                var entity = entities.FeeStructures.Find(FeeStructure.FeeStructureID);
                 if (entity != null)
                 {
-                    entities.Entry(entity).CurrentValues.SetValues(FeeType);
+                    entities.Entry(entity).CurrentValues.SetValues(FeeStructure);
                     entities.SaveChanges();
                 }
             }
@@ -280,11 +215,11 @@ namespace SMSServices.Controllers
         {
             try
             {
-                var teacher = new FeeTypes { TeacherId = id };
+                var teacher = new FeeStructures { TeacherId = id };
                 if (teacher != null)
                 {
                     entities.Entry(teacher).State = EntityState.Deleted;
-                    entities.FeeTypes.Remove(teacher);
+                    entities.FeeStructures.Remove(teacher);
                     entities.SaveChanges();
                 }
             }
@@ -297,16 +232,16 @@ namespace SMSServices.Controllers
         */
 
         [HttpPost]
-        [Route("api/RemoveFeeType/{id}")]
-        public HttpResponseMessage RemoveFeeType(int id)
+        [Route("api/RemoveFeeStructure/{id}")]
+        public HttpResponseMessage RemoveFeeStructure(int id)
         {
             try
             {
-                var FeeType = new FeeTypes { FeeTypeID = id };
-                if (FeeType != null)
+                var FeeStructure = new FeeStructures { FeeStructureID = id };
+                if (FeeStructure != null)
                 {
-                    entities.Entry(FeeType).State = EntityState.Deleted;
-                    entities.FeeTypes.Remove(FeeType);
+                    entities.Entry(FeeStructure).State = EntityState.Deleted;
+                    entities.FeeStructures.Remove(FeeStructure);
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, "Removed...");
                 }

@@ -222,4 +222,12 @@ ul#horizontal-list li{
     vertical-align: middle !important;
 }
 
-  
+.highlight{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-right: 5px;
+    margin-bottom: 5px;
+    border-color: lightgray;
+    background: #fafafa;
+    border: 1px lightgray;
+} 

@@ -71,18 +71,21 @@
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Subjects" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_TimeTable" />
-        <EntityTypeShape EntityType="SMSModel.DiscountTypes" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="SMSModel.FeeCycles" Width="1.5" PointX="0.75" PointY="4" />
         <EntityTypeShape EntityType="SMSModel.FeeDiscountTypes" Width="1.5" PointX="7.75" PointY="2.75" />
         <EntityTypeShape EntityType="SMSModel.FeeDueOnFrequencies" Width="1.5" PointX="3" PointY="3.875" />
         <AssociationConnector Association="SMSModel.FK_FeeDueOnFrequencies_FeeCycles" />
-        <EntityTypeShape EntityType="SMSModel.FeeTypes" Width="1.5" PointX="5.375" PointY="2.875" />
+        <EntityTypeShape EntityType="SMSModel.FeeDueOnInterval" Width="1.5" PointX="5.25" PointY="33.75" />
+        <AssociationConnector Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" />
+        <EntityTypeShape EntityType="SMSModel.FeeTypes" Width="1.5" PointX="10" PointY="17.5" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeCycles" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDiscountTypes" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDueOnFrequencies" />
-        <EntityTypeShape EntityType="SMSModel.FeeDueOnInterval" Width="1.5" PointX="5.25" PointY="33.75" />
-        <AssociationConnector Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDueOnInterval" />
+        <EntityTypeShape EntityType="SMSModel.FeeStructures" Width="1.5" PointX="12.25" PointY="18.5" />
+        <AssociationConnector Association="SMSModel.FK_FeeStructures_Classes" />
+        <AssociationConnector Association="SMSModel.FK_FeeStructures_FeeDiscountTypes" />
+        <AssociationConnector Association="SMSModel.FK_FeeStructures_FeeTypes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

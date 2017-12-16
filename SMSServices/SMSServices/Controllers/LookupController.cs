@@ -23,13 +23,25 @@ namespace SMSServices.Controllers
             //return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
         }
 
-        // GET api/<controller>
-        [Route("api/Lookup/{TblName}/{LangCode}")]
-        public IEnumerable<KeyValue> Get(string TblName, string LangCode)
+        //// GET api/<controller>
+        //[Route("api/Lookup/{TblName}/{LangCode}")]
+        //public IEnumerable<KeyValue> Get(string TblName, string LangCode)
+        //{
+        //    entities.Configuration.ProxyCreationEnabled = false;
+
+        //    return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name{0} as Name FROM {1}", LangCode, TblName)).ToList();
+        //    //return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
+        //}
+
+        // GET api/<controller> // Cols3 => e.g:    Id, Code, Name, NameAr
+        [Route("api/Lookup/{TblName}/{Cols3}")] 
+        public IEnumerable<KeyValue> Get(string TblName, string Cols3)
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
-            return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name{0} as Name FROM {1}", LangCode, TblName)).ToList();
+            string[] cols = Cols3.Split(','); 
+
+            return entities.Database.SqlQuery<KeyValue>(string.Format("SELECT {0} as Id, {1} as Name, {2} as NameAr FROM {3}", cols[0], cols[1], cols[2], TblName)).ToList();
             //return entities.Countries.Where(c => !string.IsNullOrEmpty(c.Nationality)).Select(a => new KeyValue() { Id = a.CountryId, Name = a.Name });
         }
 

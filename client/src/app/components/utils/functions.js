@@ -14,17 +14,17 @@ let phrasesUs = {}
 let phrasesUr = {}
 let phrasesAr = {} 
 
-function mapForCombo(keyValues){
+function mapForCombo(keyValues) {
     let key = getLangKey();
-    return keyValues.map(function(item, index){
-                return {value: item.Id + "", label: key=='ar'? item.NameAr : item.Name};
-            });                       
+    return keyValues.map(function (item, index) {
+        return { value: item.Id + "", label: key == 'ar' ? item.NameAr : item.Name };
+    });
 }
 
-export function mapForRadioList(keyValues){
-    return keyValues.map(function(item, index){
-                return {title: item.Name, value: item.Id + ""};
-            });                       
+export function mapForRadioList(keyValues) {
+    return keyValues.map(function (item, index) {
+        return { title: item.Name, value: item.Id + "" };
+    });
 } 
 
 export function isYesClicked(ButtonPressed){

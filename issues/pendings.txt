@@ -1,3 +1,8 @@
+Common:
+=======
+- duplication proper message
+
+
 Student Pages:
 ==============
 - search page; Add new open edit link, should open add new, refresh after first add.
@@ -14,10 +19,11 @@ Teacher Pages:
 - on teacherclasses, teachersubjects popup pages; just show remaining classes/subject in combo
 
 
-Time table pages:
-=================
-- just 20% completed... finalize the design
+FeeTypes:
+- Edit pending
 
+FeeStructures:
+- Edit pending
 
 
 

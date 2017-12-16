@@ -373,16 +373,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DiscountTypes">
-      <EntityTypeMapping TypeName="SMSModel.DiscountTypes">
-        <MappingFragment StoreEntitySet="DiscountTypes">
-          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FeeCycles">
       <EntityTypeMapping TypeName="SMSModel.FeeCycles">
         <MappingFragment StoreEntitySet="FeeCycles">
@@ -414,6 +404,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FeeDueOnInterval">
+      <EntityTypeMapping TypeName="SMSModel.FeeDueOnInterval">
+        <MappingFragment StoreEntitySet="FeeDueOnInterval">
+          <ScalarProperty Name="EndDay" ColumnName="EndDay" />
+          <ScalarProperty Name="StartDay" ColumnName="StartDay" />
+          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="FeeDueOnFrequencyID" ColumnName="FeeDueOnFrequencyID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FeeTypes">
       <EntityTypeMapping TypeName="SMSModel.FeeTypes">
         <MappingFragment StoreEntitySet="FeeTypes">
@@ -433,16 +436,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FeeDueOnInterval">
-      <EntityTypeMapping TypeName="SMSModel.FeeDueOnInterval">
-        <MappingFragment StoreEntitySet="FeeDueOnInterval">
-          <ScalarProperty Name="EndDay" ColumnName="EndDay" />
-          <ScalarProperty Name="StartDay" ColumnName="StartDay" />
-          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="FeeDueOnFrequencyID" ColumnName="FeeDueOnFrequencyID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+    <EntitySetMapping Name="FeeStructures">
+      <EntityTypeMapping TypeName="SMSModel.FeeStructures">
+        <MappingFragment StoreEntitySet="FeeStructures">
+          <ScalarProperty Name="NetFee" ColumnName="NetFee" />
+          <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+          <ScalarProperty Name="DiscountOption" ColumnName="DiscountOption" />
+          <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+          <ScalarProperty Name="FeeDiscountTypeID" ColumnName="FeeDiscountTypeID" />
+          <ScalarProperty Name="Fee" ColumnName="Fee" />
+          <ScalarProperty Name="FeeTypeID" ColumnName="FeeTypeID" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="FeeStructureID" ColumnName="FeeStructureID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

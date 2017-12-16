@@ -8,11 +8,11 @@ import {connect} from 'react-redux'
 import {Field, reduxForm, formValueSelector, getFormValues} from 'redux-form'
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 
-import {RFField, RFReactSelect, RFRadioButtonList} from '../../../../components/ui'
+import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel} from '../../../../components/ui'
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, getLangKey} from '../../../../components/utils/functions'
  
 class FeeStructureForm extends React.Component {
  
@@ -21,54 +21,53 @@ class FeeStructureForm extends React.Component {
     this.state = {
       editDataLoaded: false, 
       percentageOptions: [],
-      feeCycleOptions: [],
+      classOptions: [],
       feeDiscountTypeOptions: [],
-      feeDueOnFrequencyOptions: [],
-      feeDueOnIntervalOptions: []
+      feeTypeOptions: [] ,
+      feeTypeCode: ''
     }  
-    this.handleFeeCycleBlur = this.handleFeeCycleBlur.bind(this);
-    this.handleFeeDueOnFrequencyBlur = this.handleFeeDueOnFrequencyBlur.bind(this);
+    this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
     this.handleFeeBlur = this.handleFeeBlur.bind(this);
     this.handleDiscountRateBlur = this.handleDiscountRateBlur.bind(this);
     this.handleDiscountOptionChange = this.handleDiscountOptionChange.bind(this);
   }
   
   componentDidMount(){
-       
+
     axios.get('assets/api/common/discount-options.json')
-      .then(res => {        
+      .then(res => {
         const percentageOptions = mapForRadioList(res.data);
         this.setState({ percentageOptions });
       });
 
-    axios.get('/api/lookup/feeCycles/')
-      .then(res=>{            
-          const feeCycleOptions = mapForCombo(res.data);
-          this.setState({feeCycleOptions});
-    });            
-    
+    axios.get('/api/lookup/Classes/')
+      .then(res => {
+        const classOptions = mapForCombo(res.data);
+        this.setState({ classOptions });
+      });
+
+    axios.get("/api/lookup/FeeTypes/FeeTypeID,Name,NameAr")
+      .then(res => {
+        const feeTypeOptions = mapForCombo(res.data);
+        this.setState({ feeTypeOptions });
+      });
+
     axios.get('/api/lookup/feeDiscountTypes/')
-      .then(res=>{            
-          const feeDiscountTypeOptions = mapForCombo(res.data);
-          this.setState({feeDiscountTypeOptions});
-    });
+      .then(res => {
+        const feeDiscountTypeOptions = mapForCombo(res.data);
+        this.setState({ feeDiscountTypeOptions });
+      });
 
-    
-    axios.get('/api/GetFeeTypeGeneratedCode')  
-    .then(res=>{      
-      //console.log(res);       
-      const initData = {
-          "feeTypeId": 0,
-          "discountOption": 'P',
-          "discountRate": 0,
-          "discountValue": 0,
-          "code": res.data
-      }
+    const initData = {
+      "feeStuctureId": 0,
+      "discountOption": 'P',
+      "discountRate": 0,
+      "discountValue": 0,
+      "feeTypeCode": ''
+    }
 
-      this.props.initialize(initData);
-      
-    });
- 
+    this.props.initialize(initData);
+    //this.props.change("feeDiscountTypeId", 1);
     console.log('componentDidMount --> FeeStructureForm');
   }
 
@@ -91,101 +90,117 @@ class FeeStructureForm extends React.Component {
     this.props.change("netFee", this.props.netFee); 
   }
 
-  handleFeeCycleBlur(obj, value){
-    if(value!=''){
-      axios.get('/api/Lookup/FeeDueOnFrequencies/FeecycleID/' + value)
-        .then(res=>{
-            const feeDueOnFrequencyOptions = mapForCombo(res.data);
-            this.setState({feeDueOnFrequencyOptions});
-        });
-    }
-    else{ 
-      this.setState({feeDueOnFrequencyOptions: [], feeDueOnIntervalOptions: []}); 
-    }
-  }
+  handleFeeTypeBlur(index, event) {
+    
+    var val = event.target.value;
+    if (val) { 
 
-  handleFeeDueOnFrequencyBlur(obj, value){  
-    //console.log('this.props.shiftId', this.props.shiftId);
-    if(value){
-      axios.get('/api/Lookup/FeeDueOnInterval/FeeDueOnFrequencyID/'  + value)
-        .then(res=>{
-            const feeDueOnIntervalOptions = mapForCombo(res.data);
-            this.setState({feeDueOnIntervalOptions});
+      //let langKey = getLangKey();
+
+      axios.get('/api/FeeTypesById/'+ val)    //+langKey +'/'
+        .then(res => {
+          this.props.change("feeTypeCode", res.data.Code);
+          this.props.change("feeTypeName", res.data.Name);
+          this.props.change("feeTypeNameAr", res.data.NameAr);
+          this.props.change("feeCycleName", res.data.FeeCycleName);
+          this.props.change("feeDueOnFrequency", res.data.FeeDueOnFrequencyName);
+          this.props.change("feeDueOnInterval", res.data.FeeDueOnIntervalName);
+          this.props.change("fee", res.data.Fee);
+          this.props.change("feeDiscountTypeId", res.data.FeeDiscountTypeID);
+          this.props.change("discountOption", res.data.DiscountOption);
+          this.props.change("discountRate", res.data.DiscountRate);
+          this.calculateDiscount();
+
         });
     }
-    else{      
-      this.setState({feeDueOnIntervalOptions: []});
+    else {
+      //this.setState({feeDueOnIntervalOptions: []});
     }
   }
  
   render() {
-    const { feeTypeId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { feeCycleOptions, feeDiscountTypeOptions, feeDueOnFrequencyOptions, feeDueOnIntervalOptions, percentageOptions } = this.state;
+    const { feeStuctureId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
+    const { classOptions, feeDiscountTypeOptions, feeTypeOptions, percentageOptions } = this.state;
 
     return (
-      <form id="form-Fee-Types" className="smart-form"
+      <form id="form-Fee-Structure" className="smart-form"
         onSubmit={handleSubmit}>
 
         <fieldset>
 
           <div className="row">
-            <section className="remove-col-padding col-sm-2 col-md-2 col-lg-2">
-              <Field name="code" labelClassName="input"
-                labelIconClassName="icon-append fa fa-barcode"
-                validate={required} component={RFField} readOnly="readOnly"
-                maxLength="5" type="text" placeholder=""
-                label="CodeText" />
+            <section className="col col-4">
+              <Field
+                multi={false}
+                name="classId"
+                label="ClassText"
+                validate={required}
+                options={classOptions} 
+                component={RFReactSelectSingle} />
             </section>
 
-            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-5">
-              <Field name="name" labelClassName="input"
-                labelIconClassName="icon-append fa fa-file-text-o"
-                validate={required} component={RFField}
-                maxLength="100" type="text" placeholder=""
-                label="NameText" />
+            <section className="col col-4">
+              <Field
+                multi={false}
+                name="feeTypeId"
+                label="FeeTypeText"
+                validate={required}
+                options={feeTypeOptions}  
+                onChange={(e) => this.handleFeeTypeBlur(0, e)}
+                component={RFReactSelectSingle} />
             </section>
-            
-            <section className="remove-col-padding col-sm-4 col-md-4 col-lg-5">
-              <Field name="nameAr" labelClassName="input"
-                labelIconClassName="icon-append fa fa-file-text-o"
-                validate={required} component={RFField}
-                maxLength="100" type="text" placeholder=""
-                label="NameArText" />
-            </section>
+
+            <section className="col col-4"> 
+            </section> 
           </div>
 
-          <div className="row">
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="feeCycleId"
-                label="FeeCycleText"
-                validate={required}
-                options={feeCycleOptions}
-                onBlur={this.handleFeeCycleBlur}
-                component={RFReactSelect} />
-            </section>
+          <div className="highlight">
+            <div className="row">
+              <section className="col col-4">
+                <Field name="feeTypeCode" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="CodeText" />
+              </section>
 
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="feeDueOnFrequencyId"
-                label="FeeDueOnFrequencyText"
-                validate={required}
-                options={feeDueOnFrequencyOptions}
-                onBlur={this.handleFeeDueOnFrequencyBlur}
-                component={RFReactSelect} />
-            </section>
+              <section className="col col-4">
+                <Field name="feeTypeName" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="NameText" />
+              </section>
 
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="feeDueOnIntervalId"
-                label="FeeDueOnIntervalText"
-                validate={required}
-                options={feeDueOnIntervalOptions}
-                component={RFReactSelect} />
-            </section> 
+              <section className="col col-4">
+                <Field name="feeTypeNameAr" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="NameArText" />
+              </section>
+            </div>
+
+            <div className="row">
+              <section className="col col-4">
+                <Field name="feeCycleName" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="FeeCycleText" />
+              </section>
+
+              <section className="col col-4">
+                <Field name="feeDueOnFrequency" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="FeeDueOnFrequencyText" />
+              </section>
+
+              <section className="col col-4">
+                <Field name="feeDueOnInterval" labelClassName="input"
+                  component={RFField} readOnly="readOnly"
+                  type="text" placeholder=""
+                  label="FeeDueOnIntervalText" />
+              </section>
+            </div>
+
           </div>
 
           <div className="row">
@@ -210,7 +225,7 @@ class FeeStructureForm extends React.Component {
                 name="feeDiscountTypeId"
                 label="FeeDiscountTypeText" 
                 options={feeDiscountTypeOptions}
-                component={RFReactSelect} />
+                component={RFReactSelectSingle} />
             </section>
 
             <section className="col col-4">
@@ -255,7 +270,7 @@ class FeeStructureForm extends React.Component {
 
         <footer>
           <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-            {feeTypeId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
+            {feeStuctureId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
           </button>
           <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
             <Msg phrase="SaveText" />
@@ -291,13 +306,4 @@ FeeStructureForm = connect(
   }
 )(FeeStructureForm)
 
-export default FeeStructureForm;
-// //export default 
-// FeeStructureForm = reduxForm({
-//   form: 'FeeStructureForm',  // a unique identifier for this form
-//   onSubmitSuccess: afterSubmit,
-//   keepDirtyOnReinitialize: false 
-// })(FeeStructureForm)
- 
-// export default FeeStructureForm;
- 
+export default FeeStructureForm; 

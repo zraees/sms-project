@@ -16,8 +16,8 @@ namespace SMSServices.Models
     {
         public FeeDueOnFrequencies()
         {
-            this.FeeTypes = new HashSet<FeeTypes>();
             this.FeeDueOnInterval = new HashSet<FeeDueOnInterval>();
+            this.FeeTypes = new HashSet<FeeTypes>();
         }
     
         public int ID { get; set; }
@@ -27,7 +27,7 @@ namespace SMSServices.Models
         public string NameAr { get; set; }
     
         public virtual FeeCycles FeeCycles { get; set; }
-        public virtual ICollection<FeeTypes> FeeTypes { get; set; }
         public virtual ICollection<FeeDueOnInterval> FeeDueOnInterval { get; set; }
+        public virtual ICollection<FeeTypes> FeeTypes { get; set; }
     }
 }

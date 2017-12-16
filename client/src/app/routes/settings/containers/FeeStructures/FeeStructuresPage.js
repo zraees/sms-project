@@ -40,7 +40,7 @@ class FeeStructuresPages extends React.Component {
 
     console.log('componentDidMount --> FeeStructuresPages');
     
-    $('#FeeTypeGrid').on('click', 'td', function(event) {
+    $('#FeeStructureGrid').on('click', 'td', function(event) {
       
       if ($(this).find('#dele').length > 0) {
          
@@ -51,7 +51,7 @@ class FeeStructuresPages extends React.Component {
     });
     
     // call before modal open
-    $('#FeeTypePopup').on('show.bs.modal', function (e) {      
+    $('#FeeStructurePopup').on('show.bs.modal', function (e) {      
 
       var button = $(e.relatedTarget);                    // Button that triggered the modal   
       var feeTypeId = button.data('id');             // Extract info from data-* attributes
@@ -60,9 +60,9 @@ class FeeStructuresPages extends React.Component {
     }.bind(this));
 
     // call on modal close
-    $('#FeeTypePopup').on('hidden.bs.modal', function (e) {
+    $('#FeeStructurePopup').on('hidden.bs.modal', function (e) {
       this.setState({ feeTypeId: 0 });
-      var table = $('#FeeTypeGrid').DataTable();
+      var table = $('#FeeStructureGrid').DataTable();
       table.clear();
       table.ajax.reload(null, false); // user paging is not reset on reload
     }.bind(this));
@@ -93,7 +93,7 @@ class FeeStructuresPages extends React.Component {
                 <header>
                   <span className="widget-icon"> <i className="fa fa-edit"/> </span>
 
-                  <h2><Msg phrase="FeeTypes" /></h2>
+                  <h2><Msg phrase="FeeStructures" /></h2>
                   
                 </header>
 
@@ -111,7 +111,7 @@ class FeeStructuresPages extends React.Component {
                             </div>
                             <div className="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
                                 <button className="btn btn-primary" data-toggle="modal"
-                                  data-target="#FeeTypePopup">
+                                  data-target="#FeeStructurePopup">
                                     <i className="fa fa-plus"/> 
                                     <span className="hidden-mobile"><Msg phrase="AddNewText" /></span>
                                 </button> 
@@ -120,20 +120,20 @@ class FeeStructuresPages extends React.Component {
                     </div> 
                     
                     <Loader isLoading={this.props.isLoading} />
-                    <Datatable id="FeeTypeGrid"  
+                    <Datatable id="FeeStructureGrid"  
                       options={{
-                        ajax: {"url":'/api/FeeTypes/All', "dataSrc": ""},                         
+                        ajax: {"url":'/api/FeeStructures/All', "dataSrc": ""},                         
                         columnDefs: [                             
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the
                                 // `data` option, which defaults to the column being worked with, in
                                 // this case `data: 0`.
                                 "render": function ( data, type, row ) {
-                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#FeeTypePopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                    return '<a data-toggle="modal" data-id="' + data + '" data-target="#FeeStructurePopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                                 },
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 9
+                                "targets": 8
                             }
                             ,{ 
                                 "render": function ( data, type, row ) { 
@@ -141,24 +141,20 @@ class FeeStructuresPages extends React.Component {
                                 }.bind(self),
                                 "className": "dt-center",
                                 "sorting": false,
-                                "targets": 10
+                                "targets": 9
                             }
                         ],
                         columns: [ 
-                          {data: "FeeTypeID"},
-                          {data: "Code"},
-                          {data: "Name"},
-                          {data: "NameAr"},       
+                          {data: "FeeStructureID"},
+                          {data: "ClassName"},
+                          {data: "FeeTypeName"},       
                           {data: "FeeCycleName"},
                           {data: "FeeDueOnFrequencyName"}, 
-                          {data: "Fee"},  
-                          // {data: "FeeDiscountTypeName"},
-                          // {data: "DiscountOption"},  
-                          // {data: "DiscountRate"},  
+                          {data: "Fee"},    
                           {data: "DiscountValue"},  
                           {data: "NetFee"},                   
-                          {data: "FeeTypeID"},
-                          {data: "FeeTypeID"}
+                          {data: "FeeStructureID"},
+                          {data: "FeeStructureID"}
                         ],
                         buttons: [
                           'copy', 'excel', 'pdf'
@@ -170,15 +166,11 @@ class FeeStructuresPages extends React.Component {
                       <thead>
                       <tr>
                         <th><Msg phrase="IDText"/></th>
-                        <th><Msg phrase="CodeText"/></th>
-                        <th><Msg phrase="NameText"/></th>
-                        <th><Msg phrase="NameArText"/></th>  
+                        <th><Msg phrase="ClassText"/></th>
+                        <th><Msg phrase="FeeTypes"/></th>
                         <th><Msg phrase="FeeCycleText"/></th>
                         <th><Msg phrase="FeeDueOnFrequencyText"/></th>
-                        <th><Msg phrase="FeeText"/></th>
-                        {/* <th><Msg phrase="FeeDiscountTypeText"/></th>
-                        <th><Msg phrase="DiscountOptionText"/></th>
-                        <th><Msg phrase="DiscountRateText"/></th> */}
+                        <th><Msg phrase="FeeText"/></th> 
                         <th><Msg phrase="DiscountValueText"/></th>
                         <th><Msg phrase="FeeAmountAfterDiscountText"/></th>   
                         <th></th>
@@ -209,16 +201,16 @@ class FeeStructuresPages extends React.Component {
 
         {/* end widget grid */}
   
-        <div className="modal fade" id="FeeTypePopup" tabIndex="-1" role="dialog" 
+        <div className="modal fade" id="FeeStructurePopup" tabIndex="-1" role="dialog" 
             data-backdrop="static" data-keyboard="false"
-            aria-labelledby="FeeTypePopupLabel" aria-hidden="true">
+            aria-labelledby="FeeStructurePopupLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="FeeTypePopupLabel">
+                <h4 className="modal-title" id="FeeStructurePopupLabel">
                   { this.state.feeTypeId > 0 ? <Msg phrase="ManageText" /> : <Msg phrase="AddNewText"/> }
                 </h4>
               </div>

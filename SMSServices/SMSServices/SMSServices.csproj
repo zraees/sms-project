@@ -151,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\FeeStructuresController.cs" />
     <Compile Include="Controllers\FeeTypesController.cs" />
     <Compile Include="Controllers\CodingFormatsController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
@@ -207,9 +208,6 @@
     <Compile Include="Models\Days.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DiscountTypes.cs">
-      <DependentUpon>SMSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Errors.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -223,6 +221,9 @@
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeeDueOnInterval.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeeStructures.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeeTypes.cs">

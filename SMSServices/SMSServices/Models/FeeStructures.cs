@@ -12,20 +12,11 @@ namespace SMSServices.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FeeTypes
+    public partial class FeeStructures
     {
-        public FeeTypes()
-        {
-            this.FeeStructures = new HashSet<FeeStructures>();
-        }
-    
+        public int FeeStructureID { get; set; }
+        public int ClassID { get; set; }
         public int FeeTypeID { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string NameAr { get; set; }
-        public int FeeCycleID { get; set; }
-        public int FeeDueOnFrequencyID { get; set; }
-        public int FeeDueOnIntervalID { get; set; }
         public decimal Fee { get; set; }
         public Nullable<int> FeeDiscountTypeID { get; set; }
         public decimal DiscountRate { get; set; }
@@ -33,10 +24,8 @@ namespace SMSServices.Models
         public decimal DiscountValue { get; set; }
         public decimal NetFee { get; set; }
     
-        public virtual FeeCycles FeeCycles { get; set; }
+        public virtual Classes Classes { get; set; }
         public virtual FeeDiscountTypes FeeDiscountTypes { get; set; }
-        public virtual FeeDueOnFrequencies FeeDueOnFrequencies { get; set; }
-        public virtual FeeDueOnInterval FeeDueOnInterval { get; set; }
-        public virtual ICollection<FeeStructures> FeeStructures { get; set; }
+        public virtual FeeTypes FeeTypes { get; set; }
     }
 }

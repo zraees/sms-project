@@ -53,11 +53,11 @@ namespace SMSServices.Models
         public virtual DbSet<TeachersSubjects> TeachersSubjects { get; set; }
         public virtual DbSet<TimeTables> TimeTables { get; set; }
         public virtual DbSet<TimeTableDetails> TimeTableDetails { get; set; }
-        public virtual DbSet<DiscountTypes> DiscountTypes { get; set; }
         public virtual DbSet<FeeCycles> FeeCycles { get; set; }
         public virtual DbSet<FeeDiscountTypes> FeeDiscountTypes { get; set; }
         public virtual DbSet<FeeDueOnFrequencies> FeeDueOnFrequencies { get; set; }
-        public virtual DbSet<FeeTypes> FeeTypes { get; set; }
         public virtual DbSet<FeeDueOnInterval> FeeDueOnInterval { get; set; }
+        public virtual DbSet<FeeTypes> FeeTypes { get; set; }
+        public virtual DbSet<FeeStructures> FeeStructures { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace SMSServices.Models
         public FeeDiscountTypes()
         {
             this.FeeTypes = new HashSet<FeeTypes>();
+            this.FeeStructures = new HashSet<FeeStructures>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,6 @@ namespace SMSServices.Models
         public string NameAr { get; set; }
     
         public virtual ICollection<FeeTypes> FeeTypes { get; set; }
+        public virtual ICollection<FeeStructures> FeeStructures { get; set; }
     }
 }
