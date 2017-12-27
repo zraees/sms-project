@@ -64,6 +64,29 @@ namespace SMSServices.Controllers
             return Student;
         }
 
+        [Route("api/GetStudentsByShiftIdClassIdSectionId/{ShiftId}/{ClassId}/{SectionId}")]
+        public HttpResponseMessage GetStudentsByShiftClassSection(int ShiftID, int ClassID, int SectionID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            ClassesSections ClassSection = entities.ClassesSections
+                .FirstOrDefault();
+
+            var query = entities.StudentsClasses
+                .Where(t => t.ShiftId == ShiftID && t.ClassId == ClassID && t.SectionId == SectionID)
+                .Select(e => new
+                {
+                    RollNp = e.RollNo,
+                    StudentID = e.StudentId,
+                    Id = e.StudentId,
+                    Name = e.Students.FullName,
+                    NameAr = e.Students.FullNameAr
+                });
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList().Distinct());
+        }
+
+
         // POST api/<controller>
         public HttpResponseMessage Post(Students Student)
         {

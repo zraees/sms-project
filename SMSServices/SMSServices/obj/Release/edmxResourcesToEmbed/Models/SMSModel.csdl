@@ -12,7 +12,6 @@
     <EntitySet Name="Admissions" EntityType="SMSModel.Admissions" />
     <EntitySet Name="Languages" EntityType="SMSModel.Languages" />
     <EntitySet Name="Religions" EntityType="SMSModel.Religions" />
-    <EntitySet Name="ClassesSections" EntityType="SMSModel.ClassesSections" />
     <EntitySet Name="TeachersClasses" EntityType="SMSModel.TeachersClasses" />
     <EntitySet Name="Cities" EntityType="SMSModel.Cities" />
     <EntitySet Name="States" EntityType="SMSModel.States" />
@@ -38,7 +37,6 @@
     <EntitySet Name="Sections" EntityType="SMSModel.Sections" />
     <EntitySet Name="Shifts" EntityType="SMSModel.Shifts" />
     <EntitySet Name="Students" EntityType="SMSModel.Students" />
-    <EntitySet Name="StudentsClasses" EntityType="SMSModel.StudentsClasses" />
     <EntitySet Name="Subjects" EntityType="SMSModel.Subjects" />
     <EntitySet Name="SubjectTypes" EntityType="SMSModel.SubjectTypes" />
     <EntitySet Name="Teachers" EntityType="SMSModel.Teachers" />
@@ -46,33 +44,13 @@
       <End Role="Students" EntitySet="Students" />
       <End Role="Admissions" EntitySet="Admissions" />
     </AssociationSet>
-    <AssociationSet Name="FK_StudentsClasses_Batches" Association="SMSModel.FK_StudentsClasses_Batches">
-      <End Role="Batches" EntitySet="Batches" />
-      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-    </AssociationSet>
     <AssociationSet Name="FK_Students_Cities" Association="SMSModel.FK_Students_Cities">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK_ClassesSections_Classes" Association="SMSModel.FK_ClassesSections_Classes">
-      <End Role="Classes" EntitySet="Classes" />
-      <End Role="ClassesSections" EntitySet="ClassesSections" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StudentsClasses_Classes" Association="SMSModel.FK_StudentsClasses_Classes">
-      <End Role="Classes" EntitySet="Classes" />
-      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-    </AssociationSet>
     <AssociationSet Name="FK_TeachersClasses_Classes" Association="SMSModel.FK_TeachersClasses_Classes">
       <End Role="Classes" EntitySet="Classes" />
       <End Role="TeachersClasses" EntitySet="TeachersClasses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ClassesSections_Sections" Association="SMSModel.FK_ClassesSections_Sections">
-      <End Role="Sections" EntitySet="Sections" />
-      <End Role="ClassesSections" EntitySet="ClassesSections" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ClassesSections_Shifts" Association="SMSModel.FK_ClassesSections_Shifts">
-      <End Role="Shifts" EntitySet="Shifts" />
-      <End Role="ClassesSections" EntitySet="ClassesSections" />
     </AssociationSet>
     <AssociationSet Name="FK_States_Countries" Association="SMSModel.FK_States_Countries">
       <End Role="Countries" EntitySet="Countries" />
@@ -106,21 +84,9 @@
       <End Role="Religions" EntitySet="Religions" />
       <End Role="Students" EntitySet="Students" />
     </AssociationSet>
-    <AssociationSet Name="FK_StudentsClasses_Sections" Association="SMSModel.FK_StudentsClasses_Sections">
-      <End Role="Sections" EntitySet="Sections" />
-      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StudentsClasses_Shifts" Association="SMSModel.FK_StudentsClasses_Shifts">
-      <End Role="Shifts" EntitySet="Shifts" />
-      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
-    </AssociationSet>
     <AssociationSet Name="FK_Students_States" Association="SMSModel.FK_Students_States">
       <End Role="States" EntitySet="States" />
       <End Role="Students" EntitySet="Students" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StudentsClasses_Students" Association="SMSModel.FK_StudentsClasses_Students">
-      <End Role="Students" EntitySet="Students" />
-      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
     </AssociationSet>
     <AssociationSet Name="FK_StudentsEmergencyContactDetails_Students" Association="SMSModel.FK_StudentsEmergencyContactDetails_Students">
       <End Role="Students" EntitySet="Students" />
@@ -181,26 +147,80 @@
       <End Role="TimeTables" EntitySet="TimeTables" />
       <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
     </AssociationSet>
+    <EntitySet Name="ClassesSections" EntityType="SMSModel.ClassesSections" />
+    <EntitySet Name="FeeCollectionAging" EntityType="SMSModel.FeeCollectionAging" />
+    <EntitySet Name="FeeCollections" EntityType="SMSModel.FeeCollections" />
+    <EntitySet Name="FeeCollectionsDetails" EntityType="SMSModel.FeeCollectionsDetails" />
     <EntitySet Name="FeeCycles" EntityType="SMSModel.FeeCycles" />
     <EntitySet Name="FeeDiscountTypes" EntityType="SMSModel.FeeDiscountTypes" />
     <EntitySet Name="FeeDueOnFrequencies" EntityType="SMSModel.FeeDueOnFrequencies" />
+    <EntitySet Name="FeeDueOnInterval" EntityType="SMSModel.FeeDueOnInterval" />
+    <EntitySet Name="FeeStructures" EntityType="SMSModel.FeeStructures" />
+    <EntitySet Name="FeeTypes" EntityType="SMSModel.FeeTypes" />
+    <EntitySet Name="StudentsClasses" EntityType="SMSModel.StudentsClasses" />
+    <AssociationSet Name="FK_StudentsClasses_Batches" Association="SMSModel.FK_StudentsClasses_Batches">
+      <End Role="Batches" EntitySet="Batches" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Classes" Association="SMSModel.FK_ClassesSections_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeStructures_Classes" Association="SMSModel.FK_FeeStructures_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="FeeStructures" EntitySet="FeeStructures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Classes" Association="SMSModel.FK_StudentsClasses_Classes">
+      <End Role="Classes" EntitySet="Classes" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Sections" Association="SMSModel.FK_ClassesSections_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassesSections_Shifts" Association="SMSModel.FK_ClassesSections_Shifts">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1">
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+      <End Role="FeeCollectionAging" EntitySet="FeeCollectionAging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollections_StudentsClasses" Association="SMSModel.FK_FeeCollections_StudentsClasses">
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+      <End Role="FeeCollections" EntitySet="FeeCollections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeCollections" Association="SMSModel.FK_FeeCollectionsDetails_FeeCollections">
+      <End Role="FeeCollections" EntitySet="FeeCollections" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeDiscountTypes" Association="SMSModel.FK_FeeCollectionsDetails_FeeDiscountTypes">
+      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeStructures" Association="SMSModel.FK_FeeCollectionsDetails_FeeStructures">
+      <End Role="FeeStructures" EntitySet="FeeStructures" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_FeeDueOnFrequencies_FeeCycles" Association="SMSModel.FK_FeeDueOnFrequencies_FeeCycles">
       <End Role="FeeCycles" EntitySet="FeeCycles" />
       <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
     </AssociationSet>
-    <EntitySet Name="FeeDueOnInterval" EntityType="SMSModel.FeeDueOnInterval" />
-    <AssociationSet Name="FK_FeeDueOnInterval_FeeDueOnFrequencies" Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies">
-      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
-      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
-    </AssociationSet>
-    <EntitySet Name="FeeTypes" EntityType="SMSModel.FeeTypes" />
     <AssociationSet Name="FK_FeeTypes_FeeCycles" Association="SMSModel.FK_FeeTypes_FeeCycles">
       <End Role="FeeCycles" EntitySet="FeeCycles" />
       <End Role="FeeTypes" EntitySet="FeeTypes" />
     </AssociationSet>
+    <AssociationSet Name="FK_FeeStructures_FeeDiscountTypes" Association="SMSModel.FK_FeeStructures_FeeDiscountTypes">
+      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
+      <End Role="FeeStructures" EntitySet="FeeStructures" />
+    </AssociationSet>
     <AssociationSet Name="FK_FeeTypes_FeeDiscountTypes" Association="SMSModel.FK_FeeTypes_FeeDiscountTypes">
       <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
       <End Role="FeeTypes" EntitySet="FeeTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeDueOnInterval_FeeDueOnFrequencies" Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies">
+      <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
+      <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
     </AssociationSet>
     <AssociationSet Name="FK_FeeTypes_FeeDueOnFrequencies" Association="SMSModel.FK_FeeTypes_FeeDueOnFrequencies">
       <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
@@ -210,18 +230,21 @@
       <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
       <End Role="FeeTypes" EntitySet="FeeTypes" />
     </AssociationSet>
-    <EntitySet Name="FeeStructures" EntityType="SMSModel.FeeStructures" />
-    <AssociationSet Name="FK_FeeStructures_Classes" Association="SMSModel.FK_FeeStructures_Classes">
-      <End Role="Classes" EntitySet="Classes" />
-      <End Role="FeeStructures" EntitySet="FeeStructures" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FeeStructures_FeeDiscountTypes" Association="SMSModel.FK_FeeStructures_FeeDiscountTypes">
-      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
-      <End Role="FeeStructures" EntitySet="FeeStructures" />
-    </AssociationSet>
     <AssociationSet Name="FK_FeeStructures_FeeTypes" Association="SMSModel.FK_FeeStructures_FeeTypes">
       <End Role="FeeTypes" EntitySet="FeeTypes" />
       <End Role="FeeStructures" EntitySet="FeeStructures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Sections" Association="SMSModel.FK_StudentsClasses_Sections">
+      <End Role="Sections" EntitySet="Sections" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Shifts" Association="SMSModel.FK_StudentsClasses_Shifts">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsClasses_Students" Association="SMSModel.FK_StudentsClasses_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="QualificationTypes">
@@ -327,18 +350,6 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Students" Relationship="SMSModel.FK_Students_Religions" FromRole="Religions" ToRole="Students" />
-  </EntityType>
-  <EntityType Name="ClassesSections">
-    <Key>
-      <PropertyRef Name="ClassSectionID" />
-    </Key>
-    <Property Name="ClassSectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ClassID" Type="Int32" Nullable="false" />
-    <Property Name="ShiftID" Type="Int32" Nullable="false" />
-    <Property Name="SectionID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="ClassesSections" ToRole="Classes" />
-    <NavigationProperty Name="Sections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="ClassesSections" ToRole="Sections" />
-    <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="ClassesSections" ToRole="Shifts" />
   </EntityType>
   <EntityType Name="TeachersClasses">
     <Key>
@@ -479,11 +490,11 @@
     <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="Classes" ToRole="ClassesSections" />
-    <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="Classes" ToRole="StudentsClasses" />
     <NavigationProperty Name="TeachersClasses" Relationship="SMSModel.FK_TeachersClasses_Classes" FromRole="Classes" ToRole="TeachersClasses" />
     <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Classes" FromRole="Classes" ToRole="TimeTables" />
+    <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="Classes" ToRole="ClassesSections" />
     <NavigationProperty Name="FeeStructures" Relationship="SMSModel.FK_FeeStructures_Classes" FromRole="Classes" ToRole="FeeStructures" />
+    <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="Classes" ToRole="StudentsClasses" />
   </EntityType>
   <EntityType Name="Countries">
     <Key>
@@ -510,9 +521,9 @@
     <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Sections" FromRole="Sections" ToRole="TimeTables" />
     <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="Sections" ToRole="ClassesSections" />
     <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="Sections" ToRole="StudentsClasses" />
-    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Sections" FromRole="Sections" ToRole="TimeTables" />
   </EntityType>
   <EntityType Name="Shifts">
     <Key>
@@ -526,9 +537,9 @@
     <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
     <Property Name="BreakStartTime" Type="Time" Nullable="false" Precision="7" />
     <Property Name="BreakEndTime" Type="Time" Nullable="false" Precision="7" />
+    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Shifts" FromRole="Shifts" ToRole="TimeTables" />
     <NavigationProperty Name="ClassesSections" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="Shifts" ToRole="ClassesSections" />
     <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="Shifts" ToRole="StudentsClasses" />
-    <NavigationProperty Name="TimeTables" Relationship="SMSModel.FK_TimeTable_Shifts" FromRole="Shifts" ToRole="TimeTables" />
   </EntityType>
   <EntityType Name="Students">
     <Key>
@@ -583,25 +594,8 @@
     <NavigationProperty Name="Languages1" Relationship="SMSModel.FK_Students_Languages1" FromRole="Students" ToRole="Languages" />
     <NavigationProperty Name="Religions" Relationship="SMSModel.FK_Students_Religions" FromRole="Students" ToRole="Religions" />
     <NavigationProperty Name="States" Relationship="SMSModel.FK_Students_States" FromRole="Students" ToRole="States" />
-    <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
     <NavigationProperty Name="StudentsEmergencyContactDetails" Relationship="SMSModel.FK_StudentsEmergencyContactDetails_Students" FromRole="Students" ToRole="StudentsEmergencyContactDetails" />
-  </EntityType>
-  <EntityType Name="StudentsClasses">
-    <Key>
-      <PropertyRef Name="StudentClassId" />
-    </Key>
-    <Property Name="StudentClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="StudentId" Type="Int32" Nullable="false" />
-    <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="ShiftId" Type="Int32" Nullable="false" />
-    <Property Name="ClassId" Type="Int32" Nullable="false" />
-    <Property Name="SectionId" Type="Int32" Nullable="false" />
-    <Property Name="BatchID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Batches" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="StudentsClasses" ToRole="Batches" />
-    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="StudentsClasses" ToRole="Classes" />
-    <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
-    <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
-    <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+    <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="Students" ToRole="StudentsClasses" />
   </EntityType>
   <EntityType Name="Subjects">
     <Key>
@@ -660,18 +654,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StudentsClasses_Batches">
-    <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
-    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Batches">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="StudentsClasses">
-        <PropertyRef Name="BatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Students_Cities">
     <End Type="SMSModel.Cities" Role="Cities" Multiplicity="0..1" />
     <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
@@ -684,30 +666,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ClassesSections_Classes">
-    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Classes">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ClassesSections">
-        <PropertyRef Name="ClassID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StudentsClasses_Classes">
-    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Classes">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="StudentsClasses">
-        <PropertyRef Name="ClassId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TeachersClasses_Classes">
     <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
     <End Type="SMSModel.TeachersClasses" Role="TeachersClasses" Multiplicity="*" />
@@ -717,30 +675,6 @@
       </Principal>
       <Dependent Role="TeachersClasses">
         <PropertyRef Name="ClassID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ClassesSections_Sections">
-    <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
-    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sections">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ClassesSections">
-        <PropertyRef Name="SectionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ClassesSections_Shifts">
-    <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
-    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shifts">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ClassesSections">
-        <PropertyRef Name="ShiftID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -840,30 +774,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StudentsClasses_Sections">
-    <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
-    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sections">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="StudentsClasses">
-        <PropertyRef Name="SectionId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StudentsClasses_Shifts">
-    <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
-    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shifts">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="StudentsClasses">
-        <PropertyRef Name="ShiftId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Students_States">
     <End Type="SMSModel.States" Role="States" Multiplicity="0..1" />
     <End Type="SMSModel.Students" Role="Students" Multiplicity="*" />
@@ -873,18 +783,6 @@
       </Principal>
       <Dependent Role="Students">
         <PropertyRef Name="StateId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StudentsClasses_Students">
-    <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
-    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Students">
-        <PropertyRef Name="StudentId" />
-      </Principal>
-      <Dependent Role="StudentsClasses">
-        <PropertyRef Name="StudentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1101,6 +999,60 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ClassesSections">
+    <Key>
+      <PropertyRef Name="ClassSectionID" />
+    </Key>
+    <Property Name="ClassSectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassID" Type="Int32" Nullable="false" />
+    <Property Name="ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="SectionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_ClassesSections_Classes" FromRole="ClassesSections" ToRole="Classes" />
+    <NavigationProperty Name="Sections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="ClassesSections" ToRole="Sections" />
+    <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="ClassesSections" ToRole="Shifts" />
+  </EntityType>
+  <EntityType Name="FeeCollectionAging">
+    <Key>
+      <PropertyRef Name="FeeCollectionAgingID" />
+    </Key>
+    <Property Name="FeeCollectionAgingID" Type="Int32" Nullable="false" />
+    <Property Name="FeeCollectionDetailID" Type="Int32" Nullable="false" />
+    <Property Name="DueOn" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AdditionalDiscount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="DueAmount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="PaymentCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PaidOn" Type="DateTime" Precision="0" />
+    <Property Name="Paid" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionAging" ToRole="FeeCollectionsDetails" />
+  </EntityType>
+  <EntityType Name="FeeCollections">
+    <Key>
+      <PropertyRef Name="FeeCollectionID" />
+    </Key>
+    <Property Name="FeeCollectionID" Type="Int32" Nullable="false" />
+    <Property Name="StudentClassId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StudentsClasses" Relationship="SMSModel.FK_FeeCollections_StudentsClasses" FromRole="FeeCollections" ToRole="StudentsClasses" />
+    <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeCollections" FromRole="FeeCollections" ToRole="FeeCollectionsDetails" />
+  </EntityType>
+  <EntityType Name="FeeCollectionsDetails">
+    <Key>
+      <PropertyRef Name="FeeCollectionDetailID" />
+    </Key>
+    <Property Name="FeeCollectionDetailID" Type="Int32" Nullable="false" />
+    <Property Name="FeeCollectionID" Type="Int32" Nullable="false" />
+    <Property Name="FeeStructureID" Type="Int32" Nullable="false" />
+    <Property Name="Fee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="FeeDiscountTypeID" Type="Int32" />
+    <Property Name="DiscountRate" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="DiscountOption" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="DiscountValue" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="NetFee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <NavigationProperty Name="FeeCollectionAging" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionsDetails" ToRole="FeeCollectionAging" />
+    <NavigationProperty Name="FeeCollections" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeCollections" FromRole="FeeCollectionsDetails" ToRole="FeeCollections" />
+    <NavigationProperty Name="FeeDiscountTypes" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeDiscountTypes" FromRole="FeeCollectionsDetails" ToRole="FeeDiscountTypes" />
+    <NavigationProperty Name="FeeStructures" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeStructures" FromRole="FeeCollectionsDetails" ToRole="FeeStructures" />
+  </EntityType>
   <EntityType Name="FeeCycles">
     <Key>
       <PropertyRef Name="ID" />
@@ -1120,8 +1072,9 @@
     <Property Name="Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDiscountTypes" FromRole="FeeDiscountTypes" ToRole="FeeTypes" />
+    <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeDiscountTypes" FromRole="FeeDiscountTypes" ToRole="FeeCollectionsDetails" />
     <NavigationProperty Name="FeeStructures" Relationship="SMSModel.FK_FeeStructures_FeeDiscountTypes" FromRole="FeeDiscountTypes" ToRole="FeeStructures" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDiscountTypes" FromRole="FeeDiscountTypes" ToRole="FeeTypes" />
   </EntityType>
   <EntityType Name="FeeDueOnFrequencies">
     <Key>
@@ -1136,18 +1089,6 @@
     <NavigationProperty Name="FeeDueOnInterval" Relationship="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" FromRole="FeeDueOnFrequencies" ToRole="FeeDueOnInterval" />
     <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDueOnFrequencies" FromRole="FeeDueOnFrequencies" ToRole="FeeTypes" />
   </EntityType>
-  <Association Name="FK_FeeDueOnFrequencies_FeeCycles">
-    <End Type="SMSModel.FeeCycles" Role="FeeCycles" Multiplicity="1" />
-    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FeeCycles">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="FeeDueOnFrequencies">
-        <PropertyRef Name="FeeCycleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="FeeDueOnInterval">
     <Key>
       <PropertyRef Name="ID" />
@@ -1162,18 +1103,24 @@
     <NavigationProperty Name="FeeDueOnFrequencies" Relationship="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" FromRole="FeeDueOnInterval" ToRole="FeeDueOnFrequencies" />
     <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeDueOnInterval" FromRole="FeeDueOnInterval" ToRole="FeeTypes" />
   </EntityType>
-  <Association Name="FK_FeeDueOnInterval_FeeDueOnFrequencies">
-    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="1" />
-    <End Type="SMSModel.FeeDueOnInterval" Role="FeeDueOnInterval" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FeeDueOnFrequencies">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="FeeDueOnInterval">
-        <PropertyRef Name="FeeDueOnFrequencyID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityType Name="FeeStructures">
+    <Key>
+      <PropertyRef Name="FeeStructureID" />
+    </Key>
+    <Property Name="FeeStructureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassID" Type="Int32" Nullable="false" />
+    <Property Name="FeeTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Fee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="FeeDiscountTypeID" Type="Int32" />
+    <Property Name="DiscountRate" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="DiscountOption" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="DiscountValue" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="NetFee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_FeeStructures_Classes" FromRole="FeeStructures" ToRole="Classes" />
+    <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeStructures" FromRole="FeeStructures" ToRole="FeeCollectionsDetails" />
+    <NavigationProperty Name="FeeDiscountTypes" Relationship="SMSModel.FK_FeeStructures_FeeDiscountTypes" FromRole="FeeStructures" ToRole="FeeDiscountTypes" />
+    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeStructures_FeeTypes" FromRole="FeeStructures" ToRole="FeeTypes" />
+  </EntityType>
   <EntityType Name="FeeTypes">
     <Key>
       <PropertyRef Name="FeeTypeID" />
@@ -1197,6 +1144,168 @@
     <NavigationProperty Name="FeeDueOnInterval" Relationship="SMSModel.FK_FeeTypes_FeeDueOnInterval" FromRole="FeeTypes" ToRole="FeeDueOnInterval" />
     <NavigationProperty Name="FeeStructures" Relationship="SMSModel.FK_FeeStructures_FeeTypes" FromRole="FeeTypes" ToRole="FeeStructures" />
   </EntityType>
+  <EntityType Name="StudentsClasses">
+    <Key>
+      <PropertyRef Name="StudentClassId" />
+    </Key>
+    <Property Name="StudentClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="RollNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ShiftId" Type="Int32" Nullable="false" />
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="SectionId" Type="Int32" Nullable="false" />
+    <Property Name="BatchID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Batches" Relationship="SMSModel.FK_StudentsClasses_Batches" FromRole="StudentsClasses" ToRole="Batches" />
+    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_StudentsClasses_Classes" FromRole="StudentsClasses" ToRole="Classes" />
+    <NavigationProperty Name="FeeCollections" Relationship="SMSModel.FK_FeeCollections_StudentsClasses" FromRole="StudentsClasses" ToRole="FeeCollections" />
+    <NavigationProperty Name="Sections" Relationship="SMSModel.FK_StudentsClasses_Sections" FromRole="StudentsClasses" ToRole="Sections" />
+    <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_StudentsClasses_Shifts" FromRole="StudentsClasses" ToRole="Shifts" />
+    <NavigationProperty Name="Students" Relationship="SMSModel.FK_StudentsClasses_Students" FromRole="StudentsClasses" ToRole="Students" />
+  </EntityType>
+  <Association Name="FK_StudentsClasses_Batches">
+    <End Type="SMSModel.Batches" Role="Batches" Multiplicity="1" />
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batches">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Classes">
+    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeStructures_Classes">
+    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+    <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeStructures">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Classes">
+    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Sections">
+    <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
+    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassesSections_Shifts">
+    <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
+    <End Type="SMSModel.ClassesSections" Role="ClassesSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClassesSections">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
+    <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="1" />
+    <End Type="SMSModel.FeeCollectionAging" Role="FeeCollectionAging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeCollectionDetailID" />
+      </Principal>
+      <Dependent Role="FeeCollectionAging">
+        <PropertyRef Name="FeeCollectionDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollections_StudentsClasses">
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="1" />
+    <End Type="SMSModel.FeeCollections" Role="FeeCollections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentsClasses">
+        <PropertyRef Name="StudentClassId" />
+      </Principal>
+      <Dependent Role="FeeCollections">
+        <PropertyRef Name="StudentClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeCollections">
+    <End Type="SMSModel.FeeCollections" Role="FeeCollections" Multiplicity="1" />
+    <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCollections">
+        <PropertyRef Name="FeeCollectionID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeCollectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeDiscountTypes">
+    <End Type="SMSModel.FeeDiscountTypes" Role="FeeDiscountTypes" Multiplicity="0..1" />
+    <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDiscountTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeStructures">
+    <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="1" />
+    <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeStructures">
+        <PropertyRef Name="FeeStructureID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeStructureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeDueOnFrequencies_FeeCycles">
+    <End Type="SMSModel.FeeCycles" Role="FeeCycles" Multiplicity="1" />
+    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCycles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnFrequencies">
+        <PropertyRef Name="FeeCycleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FeeTypes_FeeCycles">
     <End Type="SMSModel.FeeCycles" Role="FeeCycles" Multiplicity="1" />
     <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
@@ -1209,6 +1318,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FeeStructures_FeeDiscountTypes">
+    <End Type="SMSModel.FeeDiscountTypes" Role="FeeDiscountTypes" Multiplicity="0..1" />
+    <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDiscountTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeStructures">
+        <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FeeTypes_FeeDiscountTypes">
     <End Type="SMSModel.FeeDiscountTypes" Role="FeeDiscountTypes" Multiplicity="0..1" />
     <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="*" />
@@ -1218,6 +1339,18 @@
       </Principal>
       <Dependent Role="FeeTypes">
         <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeDueOnInterval_FeeDueOnFrequencies">
+    <End Type="SMSModel.FeeDueOnFrequencies" Role="FeeDueOnFrequencies" Multiplicity="1" />
+    <End Type="SMSModel.FeeDueOnInterval" Role="FeeDueOnInterval" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDueOnFrequencies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeDueOnInterval">
+        <PropertyRef Name="FeeDueOnFrequencyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1245,47 +1378,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="FeeStructures">
-    <Key>
-      <PropertyRef Name="FeeStructureID" />
-    </Key>
-    <Property Name="FeeStructureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ClassID" Type="Int32" Nullable="false" />
-    <Property Name="FeeTypeID" Type="Int32" Nullable="false" />
-    <Property Name="Fee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-    <Property Name="FeeDiscountTypeID" Type="Int32" />
-    <Property Name="DiscountRate" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
-    <Property Name="DiscountOption" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
-    <Property Name="DiscountValue" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
-    <Property Name="NetFee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-    <NavigationProperty Name="Classes" Relationship="SMSModel.FK_FeeStructures_Classes" FromRole="FeeStructures" ToRole="Classes" />
-    <NavigationProperty Name="FeeDiscountTypes" Relationship="SMSModel.FK_FeeStructures_FeeDiscountTypes" FromRole="FeeStructures" ToRole="FeeDiscountTypes" />
-    <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeStructures_FeeTypes" FromRole="FeeStructures" ToRole="FeeTypes" />
-  </EntityType>
-  <Association Name="FK_FeeStructures_Classes">
-    <End Type="SMSModel.Classes" Role="Classes" Multiplicity="1" />
-    <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Classes">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="FeeStructures">
-        <PropertyRef Name="ClassID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FeeStructures_FeeDiscountTypes">
-    <End Type="SMSModel.FeeDiscountTypes" Role="FeeDiscountTypes" Multiplicity="0..1" />
-    <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FeeDiscountTypes">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="FeeStructures">
-        <PropertyRef Name="FeeDiscountTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_FeeStructures_FeeTypes">
     <End Type="SMSModel.FeeTypes" Role="FeeTypes" Multiplicity="1" />
     <End Type="SMSModel.FeeStructures" Role="FeeStructures" Multiplicity="*" />
@@ -1295,6 +1387,42 @@
       </Principal>
       <Dependent Role="FeeStructures">
         <PropertyRef Name="FeeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Sections">
+    <End Type="SMSModel.Sections" Role="Sections" Multiplicity="1" />
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sections">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Shifts">
+    <End Type="SMSModel.Shifts" Role="Shifts" Multiplicity="1" />
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="ShiftId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsClasses_Students">
+    <End Type="SMSModel.Students" Role="Students" Multiplicity="1" />
+    <End Type="SMSModel.StudentsClasses" Role="StudentsClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentsClasses">
+        <PropertyRef Name="StudentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

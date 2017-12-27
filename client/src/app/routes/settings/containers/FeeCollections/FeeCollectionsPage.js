@@ -37,10 +37,13 @@ class FeeCollectionsPage extends React.Component {
       shiftOptions: [],
       classOptions: [],
       sectionOptions: [],
+      studentOptions: [],
       //gridData: [{"$id":"1","FeeStructureID":1,"ClassID":3,"ClassName":"II","ClassNameAr":"II","FeeTypeCode":"0004","FeeTypeName":"abc 2","FeeTypeNameAr":"ed ed","FeeCycleID":1,"FeeCycleName":"Monthly","FeeCycleNameAr":"شهريا\r\n","FeeDueOnFrequencyID":1,"FeeDueOnFrequencyName":"Monthly","FeeDueOnFrequencyNameAr":"شهريا\r\n","FeeDueOnIntervalID":1,"FeeDueOnIntervalName":"First of every month","FeeDueOnIntervalNameAr":"أولا من كل شهر","FeeDiscountTypeID":null,"FeeDiscountTypeName":"","FeeDiscountTypeNameAr":"","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":0.00,"DiscountValue":0.00,"Fee":5000.00,"NetFee":5000.00},{"$id":"2","FeeStructureID":3,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0005","FeeTypeName":"abc","FeeTypeNameAr":"aaaa","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":3,"FeeDueOnFrequencyName":"Every 2 Months","FeeDueOnFrequencyNameAr":"كل شهرين\r\n","FeeDueOnIntervalID":4,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":25.00,"DiscountValue":3750.00,"Fee":15000.00,"NetFee":11250.00},{"$id":"3","FeeStructureID":1002,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0008","FeeTypeName":"tution fee","FeeTypeNameAr":"edc","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":4,"FeeDueOnFrequencyName":"Quarterly","FeeDueOnFrequencyNameAr":"فصليا","FeeDueOnIntervalID":5,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":5.00,"DiscountValue":550.00,"Fee":11000.00,"NetFee":10450.00}]
     }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
     this.handleClassBlur = this.handleClassBlur.bind(this);
+    this.handleSectionBlur = this.handleSectionBlur.bind(this);
+    this.handleGenerateDataClick = this.handleGenerateDataClick.bind(this);
   }
 
   componentWillMount() {
@@ -89,6 +92,10 @@ class FeeCollectionsPage extends React.Component {
 
 
   handleShiftBlur(obj, value) {
+    
+    this.setState({ sectionOptions: [] });
+    this.setState({ studentOptions: [] });
+
     if (value != '') {
       axios.get('/api/GetClassesByShiftId/' + value)
         .then(res => {
@@ -96,27 +103,28 @@ class FeeCollectionsPage extends React.Component {
           this.setState({ classOptions });
         });
 
-      axios.get('/api/shifts/' + value)
-        .then(res => {
-          this.props.change('shiftStartTime', res.data.StartTime);
-          this.props.change('shiftEndTime', res.data.EndTime);
-          this.props.change('breakStartTime', res.data.BreakStartTime);
-          this.props.change('breakEndTime', res.data.BreakEndTime);
-        });
+      // axios.get('/api/shifts/' + value)
+      //   .then(res => {
+      //     this.props.change('shiftStartTime', res.data.StartTime);
+      //     this.props.change('shiftEndTime', res.data.EndTime);
+      //     this.props.change('breakStartTime', res.data.BreakStartTime);
+      //     this.props.change('breakEndTime', res.data.BreakEndTime);
+      //   });
     }
     else {
-      this.props.change('shiftStartTime', '');
-      this.props.change('shiftEndTime', '');
-      this.props.change('breakStartTime', '');
-      this.props.change('breakEndTime', '');
+      // this.props.change('shiftStartTime', '');
+      // this.props.change('shiftEndTime', '');
+      // this.props.change('breakStartTime', '');
+      // this.props.change('breakEndTime', '');
 
-      this.setState({ classOptions: [] });
-      this.setState({ sectionOptions: [] });
+      this.setState({ classOptions: [] }); 
     }
   }
 
   handleClassBlur(obj, value) {
-    console.log('this.props.shiftId', this.props.shiftId);
+    //console.log('this.props.shiftId', this.props.shiftId);
+    this.setState({ studentOptions: [] });
+
     if (this.props.shiftId && value) {
       axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
         .then(res => {
@@ -129,9 +137,28 @@ class FeeCollectionsPage extends React.Component {
     }
   }
 
+  handleSectionBlur(obj, value) {
+    //console.log('this.props.sectionID ', this.props.shiftId, this.props.sectionId);
+    if (this.props.shiftId && this.props.classId && value) {
+      axios.get('/api/GetStudentsByShiftIdClassIdSectionId/' + this.props.shiftId + '/' + this.props.classId + '/' + value)
+        .then(res => {
+          const studentOptions = mapForCombo(res.data);
+          this.setState({ studentOptions });
+        });
+    }
+    else { 
+      this.setState({ studentOptions: [] });
+    }
+  }
+
+  handleGenerateDataClick(obj, value) {
+    console.log('handleGenerateDataClick(obj, value) ', this.props.shiftId, this.props.classId, this.props.sectionId, this.props.studentId);
+     
+  }
+
   render() {
   
-    const { shiftOptions, classOptions, sectionOptions, feeCollectionId } = this.state;    
+    const { shiftOptions, classOptions, sectionOptions, feeCollectionId, studentOptions } = this.state;    
     var self = this;
     return (
       
@@ -196,10 +223,17 @@ class FeeCollectionsPage extends React.Component {
                             label="SectionText"
                             validate={required}
                             options={sectionOptions}
+                            onBlur={this.handleSectionBlur}
                             component={RFReactSelect} />
                         </section>
 
-                        <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3"> 
+                        <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                          <Field
+                            multi={false}
+                            name="studentId"
+                            label="StudentText" 
+                            options={studentOptions}
+                            component={RFReactSelect} />
                         </section>
 
                       </div>
@@ -212,15 +246,14 @@ class FeeCollectionsPage extends React.Component {
                         <div className="col-md-5">
                         </div>
                         <div className="col-md-3 text-right">
-                          <button className="btn btn-primary" data-toggle="modal"
-                            data-target="#FeeCollectionPopup">
+                          <button className="btn btn-primary"  onClick={this.handleGenerateDataClick}>
                             <i className="fa fa-plus" />
-                            <span className="hidden-mobile"><Msg phrase="AddNewText" /></span>
+                            <span className="hidden-mobile"><Msg phrase="GenerateText" /></span>
                           </button>
                           &nbsp;
-                                <button className="btn btn-primary" data-toggle="modal"
+                          <button className="btn btn-primary" data-toggle="modal"
                             data-target="#FeeCollectionPopup">
-                            <i className="fa fa-plus" />
+                            <i className="fa fa-search" />
                             <span className="hidden-mobile"><Msg phrase="AddNewText" /></span>
                           </button>
                         </div>
@@ -359,7 +392,10 @@ FeeCollectionsPage = connect(
 state => { 
   //const { shiftId111 } = selector(state, 'shiftId')
   return {
-    shiftId: selector(state, 'shiftId')
+    shiftId: selector(state, 'shiftId'),
+    classId: selector(state, 'classId'),
+    sectionId: selector(state, 'sectionId'),
+    studentId: selector(state, 'studentId'), 
     //shiftId111
   }
 }

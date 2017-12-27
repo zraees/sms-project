@@ -114,6 +114,19 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.FirstOrDefault());
         }
 
+        [Route("api/FeeStructures/FeeStructuresByClassId/{classId}")]
+        public List<FeeStructures> FeeStructuresByClassId(int ClassID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+            //Teachers teacher = entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
+            //if (teacher != null) { teacher.DOB = teacher.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; } 
+            List<FeeStructures> result = entities.FeeStructures
+                .Where(t => t.ClassID == ClassID)
+                .ToList();
+
+            return result;
+        }
+
         // POST api/<controller>
         public HttpResponseMessage Post(FeeStructures feeStructure)
         {

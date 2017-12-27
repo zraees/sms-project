@@ -2,6 +2,7 @@ OtherDetailsText
 SpecialServiceNameText
 DetailsText
 ChooseYesIfReceivedSpeicalServiceText
+GenerateText
 
 BloodGroupText
 ChronicMedicationText

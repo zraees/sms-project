@@ -218,8 +218,7 @@ namespace SMSServices.Controllers
             //    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             //}
         }
-
-
+        
         [HttpGet]
         [Route("api/CreateEmptyTimeTableDetails/{timeTableId}/{dayId}")]
         public HttpResponseMessage CreateEmptyTimeTableDetails(int TimeTableID, int DayID)

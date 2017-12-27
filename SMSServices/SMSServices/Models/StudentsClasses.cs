@@ -14,6 +14,11 @@ namespace SMSServices.Models
     
     public partial class StudentsClasses
     {
+        public StudentsClasses()
+        {
+            this.FeeCollections = new HashSet<FeeCollections>();
+        }
+    
         public int StudentClassId { get; set; }
         public int StudentId { get; set; }
         public string RollNo { get; set; }
@@ -24,6 +29,7 @@ namespace SMSServices.Models
     
         public virtual Batches Batches { get; set; }
         public virtual Classes Classes { get; set; }
+        public virtual ICollection<FeeCollections> FeeCollections { get; set; }
         public virtual Sections Sections { get; set; }
         public virtual Shifts Shifts { get; set; }
         public virtual Students Students { get; set; }

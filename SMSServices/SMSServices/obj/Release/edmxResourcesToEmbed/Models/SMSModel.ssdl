@@ -94,6 +94,41 @@
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
   </EntityType>
+  <EntityType Name="FeeCollectionAging">
+    <Key>
+      <PropertyRef Name="FeeCollectionAgingID" />
+    </Key>
+    <Property Name="FeeCollectionAgingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FeeCollectionDetailID" Type="int" Nullable="false" />
+    <Property Name="DueOn" Type="date" Nullable="false" />
+    <Property Name="AdditionalDiscount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="DueAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="PaymentCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="PaidOn" Type="date" />
+    <Property Name="Paid" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="FeeCollections">
+    <Key>
+      <PropertyRef Name="FeeCollectionID" />
+    </Key>
+    <Property Name="FeeCollectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentClassId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeCollectionsDetails">
+    <Key>
+      <PropertyRef Name="FeeCollectionDetailID" />
+    </Key>
+    <Property Name="FeeCollectionDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FeeCollectionID" Type="int" Nullable="false" />
+    <Property Name="FeeStructureID" Type="int" Nullable="false" />
+    <Property Name="Fee" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="FeeDiscountTypeID" Type="int" />
+    <Property Name="DiscountRate" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="DiscountOption" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="DiscountValue" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="NetFee" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+  </EntityType>
   <EntityType Name="FeeCycles">
     <Key>
       <PropertyRef Name="ID" />
@@ -473,6 +508,66 @@
       </Principal>
       <Dependent Role="ClassesSections">
         <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
+    <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="1" />
+    <End Role="FeeCollectionAging" Type="Self.FeeCollectionAging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeCollectionDetailID" />
+      </Principal>
+      <Dependent Role="FeeCollectionAging">
+        <PropertyRef Name="FeeCollectionDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollections_StudentsClasses">
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="1" />
+    <End Role="FeeCollections" Type="Self.FeeCollections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentsClasses">
+        <PropertyRef Name="StudentClassId" />
+      </Principal>
+      <Dependent Role="FeeCollections">
+        <PropertyRef Name="StudentClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeCollections">
+    <End Role="FeeCollections" Type="Self.FeeCollections" Multiplicity="1" />
+    <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeCollections">
+        <PropertyRef Name="FeeCollectionID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeCollectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeDiscountTypes">
+    <End Role="FeeDiscountTypes" Type="Self.FeeDiscountTypes" Multiplicity="0..1" />
+    <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeDiscountTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeDiscountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeeCollectionsDetails_FeeStructures">
+    <End Role="FeeStructures" Type="Self.FeeStructures" Multiplicity="1" />
+    <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FeeStructures">
+        <PropertyRef Name="FeeStructureID" />
+      </Principal>
+      <Dependent Role="FeeCollectionsDetails">
+        <PropertyRef Name="FeeStructureID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -990,6 +1085,9 @@
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeCollectionAging" EntityType="Self.FeeCollectionAging" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeCollections" EntityType="Self.FeeCollections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeCollectionsDetails" EntityType="Self.FeeCollectionsDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeCycles" EntityType="Self.FeeCycles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeDiscountTypes" EntityType="Self.FeeDiscountTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeDueOnFrequencies" EntityType="Self.FeeDueOnFrequencies" Schema="dbo" store:Type="Tables" />
@@ -1034,6 +1132,26 @@
     <AssociationSet Name="FK_ClassesSections_Shifts" Association="Self.FK_ClassesSections_Shifts">
       <End Role="Shifts" EntitySet="Shifts" />
       <End Role="ClassesSections" EntitySet="ClassesSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="Self.FK_FeeCollectionAging_FeeCollectionsDetails1">
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+      <End Role="FeeCollectionAging" EntitySet="FeeCollectionAging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollections_StudentsClasses" Association="Self.FK_FeeCollections_StudentsClasses">
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+      <End Role="FeeCollections" EntitySet="FeeCollections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeCollections" Association="Self.FK_FeeCollectionsDetails_FeeCollections">
+      <End Role="FeeCollections" EntitySet="FeeCollections" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeDiscountTypes" Association="Self.FK_FeeCollectionsDetails_FeeDiscountTypes">
+      <End Role="FeeDiscountTypes" EntitySet="FeeDiscountTypes" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeeCollectionsDetails_FeeStructures" Association="Self.FK_FeeCollectionsDetails_FeeStructures">
+      <End Role="FeeStructures" EntitySet="FeeStructures" />
+      <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_FeeDueOnFrequencies_FeeCycles" Association="Self.FK_FeeDueOnFrequencies_FeeCycles">
       <End Role="FeeCycles" EntitySet="FeeCycles" />

@@ -151,9 +151,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\FeeCollectionsController.cs" />
     <Compile Include="Controllers\FeeStructuresController.cs" />
     <Compile Include="Controllers\FeeTypesController.cs" />
     <Compile Include="Controllers\CodingFormatsController.cs" />
+    <Compile Include="Controllers\StudentsClassesController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
     <Compile Include="Controllers\StudentsEmergencyContactDetailsController.cs" />
     <Compile Include="Controllers\ShiftsController.cs" />
@@ -208,7 +210,17 @@
     <Compile Include="Models\Days.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentToUpload.cs" />
     <Compile Include="Models\Errors.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeeCollectionAging.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeeCollections.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeeCollectionsDetails.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeeCycles.cs">
@@ -232,7 +244,6 @@
     <Compile Include="Models\Languages.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DocumentToUpload.cs" />
     <Compile Include="Models\Locations.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>

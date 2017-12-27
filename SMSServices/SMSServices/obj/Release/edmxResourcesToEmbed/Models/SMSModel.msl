@@ -89,16 +89,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ClassesSections">
-      <EntityTypeMapping TypeName="SMSModel.ClassesSections">
-        <MappingFragment StoreEntitySet="ClassesSections">
-          <ScalarProperty Name="SectionID" ColumnName="SectionID" />
-          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-          <ScalarProperty Name="ClassSectionID" ColumnName="ClassSectionID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TeachersClasses">
       <EntityTypeMapping TypeName="SMSModel.TeachersClasses">
         <MappingFragment StoreEntitySet="TeachersClasses">
@@ -283,19 +273,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StudentsClasses">
-      <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
-        <MappingFragment StoreEntitySet="StudentsClasses">
-          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
-          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Subjects">
       <EntityTypeMapping TypeName="SMSModel.Subjects">
         <MappingFragment StoreEntitySet="Subjects">
@@ -373,6 +350,54 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ClassesSections">
+      <EntityTypeMapping TypeName="SMSModel.ClassesSections">
+        <MappingFragment StoreEntitySet="ClassesSections">
+          <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="ClassSectionID" ColumnName="ClassSectionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeCollectionAging">
+      <EntityTypeMapping TypeName="SMSModel.FeeCollectionAging">
+        <MappingFragment StoreEntitySet="FeeCollectionAging">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+          <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
+          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+          <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
+          <ScalarProperty Name="DueOn" ColumnName="DueOn" />
+          <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
+          <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeCollections">
+      <EntityTypeMapping TypeName="SMSModel.FeeCollections">
+        <MappingFragment StoreEntitySet="FeeCollections">
+          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+          <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeCollectionsDetails">
+      <EntityTypeMapping TypeName="SMSModel.FeeCollectionsDetails">
+        <MappingFragment StoreEntitySet="FeeCollectionsDetails">
+          <ScalarProperty Name="NetFee" ColumnName="NetFee" />
+          <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+          <ScalarProperty Name="DiscountOption" ColumnName="DiscountOption" />
+          <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+          <ScalarProperty Name="FeeDiscountTypeID" ColumnName="FeeDiscountTypeID" />
+          <ScalarProperty Name="Fee" ColumnName="Fee" />
+          <ScalarProperty Name="FeeStructureID" ColumnName="FeeStructureID" />
+          <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
+          <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FeeCycles">
       <EntityTypeMapping TypeName="SMSModel.FeeCycles">
         <MappingFragment StoreEntitySet="FeeCycles">
@@ -417,6 +442,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FeeStructures">
+      <EntityTypeMapping TypeName="SMSModel.FeeStructures">
+        <MappingFragment StoreEntitySet="FeeStructures">
+          <ScalarProperty Name="NetFee" ColumnName="NetFee" />
+          <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+          <ScalarProperty Name="DiscountOption" ColumnName="DiscountOption" />
+          <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+          <ScalarProperty Name="FeeDiscountTypeID" ColumnName="FeeDiscountTypeID" />
+          <ScalarProperty Name="Fee" ColumnName="Fee" />
+          <ScalarProperty Name="FeeTypeID" ColumnName="FeeTypeID" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="FeeStructureID" ColumnName="FeeStructureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FeeTypes">
       <EntityTypeMapping TypeName="SMSModel.FeeTypes">
         <MappingFragment StoreEntitySet="FeeTypes">
@@ -436,18 +476,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FeeStructures">
-      <EntityTypeMapping TypeName="SMSModel.FeeStructures">
-        <MappingFragment StoreEntitySet="FeeStructures">
-          <ScalarProperty Name="NetFee" ColumnName="NetFee" />
-          <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
-          <ScalarProperty Name="DiscountOption" ColumnName="DiscountOption" />
-          <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
-          <ScalarProperty Name="FeeDiscountTypeID" ColumnName="FeeDiscountTypeID" />
-          <ScalarProperty Name="Fee" ColumnName="Fee" />
-          <ScalarProperty Name="FeeTypeID" ColumnName="FeeTypeID" />
-          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-          <ScalarProperty Name="FeeStructureID" ColumnName="FeeStructureID" />
+    <EntitySetMapping Name="StudentsClasses">
+      <EntityTypeMapping TypeName="SMSModel.StudentsClasses">
+        <MappingFragment StoreEntitySet="StudentsClasses">
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

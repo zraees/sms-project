@@ -14,6 +14,11 @@ namespace SMSServices.Models
     
     public partial class FeeStructures
     {
+        public FeeStructures()
+        {
+            this.FeeCollectionsDetails = new HashSet<FeeCollectionsDetails>();
+        }
+    
         public int FeeStructureID { get; set; }
         public int ClassID { get; set; }
         public int FeeTypeID { get; set; }
@@ -25,6 +30,7 @@ namespace SMSServices.Models
         public decimal NetFee { get; set; }
     
         public virtual Classes Classes { get; set; }
+        public virtual ICollection<FeeCollectionsDetails> FeeCollectionsDetails { get; set; }
         public virtual FeeDiscountTypes FeeDiscountTypes { get; set; }
         public virtual FeeTypes FeeTypes { get; set; }
     }

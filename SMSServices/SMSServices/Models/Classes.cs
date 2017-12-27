@@ -16,11 +16,11 @@ namespace SMSServices.Models
     {
         public Classes()
         {
-            this.ClassesSections = new HashSet<ClassesSections>();
-            this.StudentsClasses = new HashSet<StudentsClasses>();
             this.TeachersClasses = new HashSet<TeachersClasses>();
             this.TimeTables = new HashSet<TimeTables>();
+            this.ClassesSections = new HashSet<ClassesSections>();
             this.FeeStructures = new HashSet<FeeStructures>();
+            this.StudentsClasses = new HashSet<StudentsClasses>();
         }
     
         public int ID { get; set; }
@@ -28,10 +28,10 @@ namespace SMSServices.Models
         public string Name { get; set; }
         public string NameAr { get; set; }
     
-        public virtual ICollection<ClassesSections> ClassesSections { get; set; }
-        public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
         public virtual ICollection<TeachersClasses> TeachersClasses { get; set; }
         public virtual ICollection<TimeTables> TimeTables { get; set; }
+        public virtual ICollection<ClassesSections> ClassesSections { get; set; }
         public virtual ICollection<FeeStructures> FeeStructures { get; set; }
+        public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
     }
 }

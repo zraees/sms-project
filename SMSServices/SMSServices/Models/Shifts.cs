@@ -16,9 +16,9 @@ namespace SMSServices.Models
     {
         public Shifts()
         {
+            this.TimeTables = new HashSet<TimeTables>();
             this.ClassesSections = new HashSet<ClassesSections>();
             this.StudentsClasses = new HashSet<StudentsClasses>();
-            this.TimeTables = new HashSet<TimeTables>();
         }
     
         public int ID { get; set; }
@@ -30,8 +30,8 @@ namespace SMSServices.Models
         public System.TimeSpan BreakStartTime { get; set; }
         public System.TimeSpan BreakEndTime { get; set; }
     
+        public virtual ICollection<TimeTables> TimeTables { get; set; }
         public virtual ICollection<ClassesSections> ClassesSections { get; set; }
         public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
-        public virtual ICollection<TimeTables> TimeTables { get; set; }
     }
 }

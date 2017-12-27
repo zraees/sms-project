@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="SMSModel.Admissions" Width="1.5" PointX="10.25" PointY="13.375" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Languages" Width="1.5" PointX="10.375" PointY="0.875" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Religions" Width="1.5" PointX="5.75" PointY="13.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="SMSModel.ClassesSections" Width="1.5" PointX="14.625" PointY="18.75" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.TeachersClasses" Width="1.5" PointX="14.625" PointY="22.25" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Cities" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.States" Width="1.5" PointX="3" PointY="25.125" IsExpanded="false" />
@@ -26,22 +25,16 @@
         <EntityTypeShape EntityType="SMSModel.Locations" Width="1.5" PointX="6" PointY="31.75" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Batches" Width="1.5" PointX="13" PointY="23.875" />
         <EntityTypeShape EntityType="SMSModel.Classes" Width="1.5" PointX="3.375" PointY="26.75" />
-        <EntityTypeShape EntityType="SMSModel.Countries" Width="1.5" PointX="1.125" PointY="14.125" />
+        <EntityTypeShape EntityType="SMSModel.Countries" Width="1.5" PointX="1.125" PointY="14.125" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Sections" Width="1.5" PointX="3.375" PointY="21.875" />
         <EntityTypeShape EntityType="SMSModel.Shifts" Width="1.5" PointX="8.375" PointY="23.5" />
-        <EntityTypeShape EntityType="SMSModel.Students" Width="1.5" PointX="13" PointY="6.875" />
-        <EntityTypeShape EntityType="SMSModel.StudentsClasses" Width="1.5" PointX="15.25" PointY="14.5" />
+        <EntityTypeShape EntityType="SMSModel.Students" Width="1.5" PointX="13" PointY="6.875" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Subjects" Width="1.5" PointX="6.375" PointY="18" />
         <EntityTypeShape EntityType="SMSModel.SubjectTypes" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="3.375" PointY="9" />
+        <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="3.375" PointY="9" IsExpanded="false" />
         <AssociationConnector Association="SMSModel.FK_Admissions_Students" />
-        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Batches" />
         <AssociationConnector Association="SMSModel.FK_Students_Cities" />
-        <AssociationConnector Association="SMSModel.FK_ClassesSections_Classes" />
-        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Classes" />
         <AssociationConnector Association="SMSModel.FK_TeachersClasses_Classes" />
-        <AssociationConnector Association="SMSModel.FK_ClassesSections_Sections" />
-        <AssociationConnector Association="SMSModel.FK_ClassesSections_Shifts" />
         <AssociationConnector Association="SMSModel.FK_States_Countries" />
         <AssociationConnector Association="SMSModel.FK_Students_Countries" />
         <AssociationConnector Association="SMSModel.FK_Students_Countries1" />
@@ -50,10 +43,7 @@
         <AssociationConnector Association="SMSModel.FK_Students_Languages" />
         <AssociationConnector Association="SMSModel.FK_Students_Languages1" />
         <AssociationConnector Association="SMSModel.FK_Students_Religions" />
-        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Sections" />
-        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Shifts" />
         <AssociationConnector Association="SMSModel.FK_Students_States" />
-        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Students" />
         <AssociationConnector Association="SMSModel.FK_StudentsEmergencyContactDetails_Students" />
         <AssociationConnector Association="SMSModel.FK_TeacherExperiences_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_Teachers" />
@@ -71,21 +61,39 @@
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Subjects" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_Teachers" />
         <AssociationConnector Association="SMSModel.FK_TimeTableDetails_TimeTable" />
-        <EntityTypeShape EntityType="SMSModel.FeeCycles" Width="1.5" PointX="0.75" PointY="4" />
-        <EntityTypeShape EntityType="SMSModel.FeeDiscountTypes" Width="1.5" PointX="7.75" PointY="2.75" />
-        <EntityTypeShape EntityType="SMSModel.FeeDueOnFrequencies" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="SMSModel.ClassesSections" Width="1.5" PointX="10.625" PointY="20.5" />
+        <EntityTypeShape EntityType="SMSModel.FeeCollectionAging" Width="1.5" PointX="22" PointY="16.75" />
+        <EntityTypeShape EntityType="SMSModel.FeeCollections" Width="1.5" PointX="17.5" PointY="17.25" />
+        <EntityTypeShape EntityType="SMSModel.FeeCollectionsDetails" Width="1.5" PointX="19.75" PointY="16.375" />
+        <EntityTypeShape EntityType="SMSModel.FeeCycles" Width="1.5" PointX="13" PointY="34" />
+        <EntityTypeShape EntityType="SMSModel.FeeDiscountTypes" Width="1.5" PointX="17.5" PointY="12.125" />
+        <EntityTypeShape EntityType="SMSModel.FeeDueOnFrequencies" Width="1.5" PointX="13" PointY="30.75" />
+        <EntityTypeShape EntityType="SMSModel.FeeDueOnInterval" Width="1.5" PointX="13" PointY="27.25" />
+        <EntityTypeShape EntityType="SMSModel.FeeStructures" Width="1.5" PointX="17.5" PointY="30" />
+        <EntityTypeShape EntityType="SMSModel.FeeTypes" Width="1.5" PointX="15.25" PointY="29.5" />
+        <EntityTypeShape EntityType="SMSModel.StudentsClasses" Width="1.5" PointX="15.25" PointY="16.375" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Batches" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Classes" />
+        <AssociationConnector Association="SMSModel.FK_FeeStructures_Classes" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Classes" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Sections" />
+        <AssociationConnector Association="SMSModel.FK_ClassesSections_Shifts" />
+        <AssociationConnector Association="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" />
+        <AssociationConnector Association="SMSModel.FK_FeeCollections_StudentsClasses" />
+        <AssociationConnector Association="SMSModel.FK_FeeCollectionsDetails_FeeCollections" />
+        <AssociationConnector Association="SMSModel.FK_FeeCollectionsDetails_FeeDiscountTypes" />
+        <AssociationConnector Association="SMSModel.FK_FeeCollectionsDetails_FeeStructures" />
         <AssociationConnector Association="SMSModel.FK_FeeDueOnFrequencies_FeeCycles" />
-        <EntityTypeShape EntityType="SMSModel.FeeDueOnInterval" Width="1.5" PointX="5.25" PointY="33.75" />
-        <AssociationConnector Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" />
-        <EntityTypeShape EntityType="SMSModel.FeeTypes" Width="1.5" PointX="10" PointY="17.5" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeCycles" />
+        <AssociationConnector Association="SMSModel.FK_FeeStructures_FeeDiscountTypes" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDiscountTypes" />
+        <AssociationConnector Association="SMSModel.FK_FeeDueOnInterval_FeeDueOnFrequencies" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDueOnFrequencies" />
         <AssociationConnector Association="SMSModel.FK_FeeTypes_FeeDueOnInterval" />
-        <EntityTypeShape EntityType="SMSModel.FeeStructures" Width="1.5" PointX="12.25" PointY="18.5" />
-        <AssociationConnector Association="SMSModel.FK_FeeStructures_Classes" />
-        <AssociationConnector Association="SMSModel.FK_FeeStructures_FeeDiscountTypes" />
         <AssociationConnector Association="SMSModel.FK_FeeStructures_FeeTypes" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Sections" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Shifts" />
+        <AssociationConnector Association="SMSModel.FK_StudentsClasses_Students" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

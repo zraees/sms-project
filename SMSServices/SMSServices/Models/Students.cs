@@ -17,8 +17,8 @@ namespace SMSServices.Models
         public Students()
         {
             this.Admissions = new HashSet<Admissions>();
-            this.StudentsClasses = new HashSet<StudentsClasses>();
             this.StudentsEmergencyContactDetails = new HashSet<StudentsEmergencyContactDetails>();
+            this.StudentsClasses = new HashSet<StudentsClasses>();
         }
     
         public int StudentId { get; set; }
@@ -71,7 +71,7 @@ namespace SMSServices.Models
         public virtual Languages Languages1 { get; set; }
         public virtual Religions Religions { get; set; }
         public virtual States States { get; set; }
-        public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
         public virtual ICollection<StudentsEmergencyContactDetails> StudentsEmergencyContactDetails { get; set; }
+        public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
     }
 }

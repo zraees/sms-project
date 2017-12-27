@@ -32,7 +32,6 @@ namespace SMSServices.Models
         public virtual DbSet<Admissions> Admissions { get; set; }
         public virtual DbSet<Languages> Languages { get; set; }
         public virtual DbSet<Religions> Religions { get; set; }
-        public virtual DbSet<ClassesSections> ClassesSections { get; set; }
         public virtual DbSet<TeachersClasses> TeachersClasses { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<States> States { get; set; }
@@ -46,18 +45,22 @@ namespace SMSServices.Models
         public virtual DbSet<Sections> Sections { get; set; }
         public virtual DbSet<Shifts> Shifts { get; set; }
         public virtual DbSet<Students> Students { get; set; }
-        public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<SubjectTypes> SubjectTypes { get; set; }
         public virtual DbSet<Teachers> Teachers { get; set; }
         public virtual DbSet<TeachersSubjects> TeachersSubjects { get; set; }
         public virtual DbSet<TimeTables> TimeTables { get; set; }
         public virtual DbSet<TimeTableDetails> TimeTableDetails { get; set; }
+        public virtual DbSet<ClassesSections> ClassesSections { get; set; }
+        public virtual DbSet<FeeCollectionAging> FeeCollectionAging { get; set; }
+        public virtual DbSet<FeeCollections> FeeCollections { get; set; }
+        public virtual DbSet<FeeCollectionsDetails> FeeCollectionsDetails { get; set; }
         public virtual DbSet<FeeCycles> FeeCycles { get; set; }
         public virtual DbSet<FeeDiscountTypes> FeeDiscountTypes { get; set; }
         public virtual DbSet<FeeDueOnFrequencies> FeeDueOnFrequencies { get; set; }
         public virtual DbSet<FeeDueOnInterval> FeeDueOnInterval { get; set; }
-        public virtual DbSet<FeeTypes> FeeTypes { get; set; }
         public virtual DbSet<FeeStructures> FeeStructures { get; set; }
+        public virtual DbSet<FeeTypes> FeeTypes { get; set; }
+        public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
     }
 }
