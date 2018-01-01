@@ -12,7 +12,7 @@ namespace SMSServices.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FeeCollectionAging
+    public partial class FeeCollectionsAging
     {
         public int FeeCollectionAgingID { get; set; }
         public int FeeCollectionDetailID { get; set; }

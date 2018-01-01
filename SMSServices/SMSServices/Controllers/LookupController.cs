@@ -66,6 +66,16 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
+         
+        //public List<KeyValue> GetByID(string TblName, string ForeignKeyName, int ForeignKeyId)
+        //{
+        //    var query = entities.Database.
+        //        SqlQuery<KeyValue>(string.Format("SELECT Id, Code, Name FROM {0} WHERE {1} = {2}",
+        //                                            TblName, ForeignKeyName, ForeignKeyId));
+
+        //    return  query.ToList();
+        //}
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

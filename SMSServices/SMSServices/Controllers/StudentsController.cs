@@ -64,8 +64,8 @@ namespace SMSServices.Controllers
             return Student;
         }
 
-        [Route("api/GetStudentsByShiftIdClassIdSectionId/{ShiftId}/{ClassId}/{SectionId}")]
-        public HttpResponseMessage GetStudentsByShiftClassSection(int ShiftID, int ClassID, int SectionID)
+        [Route("api/GetStudentsByShiftIdClassIdSectionId/{ShiftId}/{ClassId}/{SectionId}/{BatchId}")]
+        public HttpResponseMessage GetStudentsByShiftClassSection(int ShiftID, int ClassID, int SectionID, int BatchID)
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
@@ -73,7 +73,7 @@ namespace SMSServices.Controllers
                 .FirstOrDefault();
 
             var query = entities.StudentsClasses
-                .Where(t => t.ShiftId == ShiftID && t.ClassId == ClassID && t.SectionId == SectionID)
+                .Where(t => t.ShiftId == ShiftID && t.ClassId == ClassID && t.SectionId == SectionID && t.BatchID == BatchID)
                 .Select(e => new
                 {
                     RollNp = e.RollNo,

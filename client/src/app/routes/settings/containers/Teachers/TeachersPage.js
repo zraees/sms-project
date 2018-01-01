@@ -202,24 +202,24 @@ class TeachersPage extends React.Component {
     
     //https://jsonplaceholder.typicode.com/posts
     axios.get('/api/nationalities/')
-        .then(res=>{
-            const nationalities = mapForCombo(res.data);      
-            this.setState({nationalities});
-        });
- 
+      .then(res => {
+        const nationalities = mapForCombo(res.data);
+        this.setState({ nationalities });
+      });
+
     axios.get('/api/countries/')
-        .then(res=>{
-            const countries = mapForCombo(res.data);
-            this.setState({countries});
-        });
- 
+      .then(res => {
+        const countries = mapForCombo(res.data);
+        this.setState({ countries });
+      });
+
     axios.get('assets/api/common/gender.json')
-        .then(res=>{
-            //console.log('gender.json');            
-            const genderOptions = mapForRadioList(res.data);
-            //console.log(genderOptions);
-            this.setState({genderOptions});
-        });
+      .then(res => {
+        //console.log('gender.json');            
+        const genderOptions = mapForRadioList(res.data);
+        //console.log(genderOptions);
+        this.setState({ genderOptions });
+      });
 
       //   //console.log(this.props.isLoading);
       // setTimeout(function(){ 

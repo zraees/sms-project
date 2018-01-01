@@ -16,7 +16,7 @@ namespace SMSServices.Models
     {
         public FeeCollectionsDetails()
         {
-            this.FeeCollectionAging = new HashSet<FeeCollectionAging>();
+            this.FeeCollectionsAging = new HashSet<FeeCollectionsAging>();
         }
     
         public int FeeCollectionDetailID { get; set; }
@@ -29,9 +29,9 @@ namespace SMSServices.Models
         public decimal DiscountValue { get; set; }
         public decimal NetFee { get; set; }
     
-        public virtual ICollection<FeeCollectionAging> FeeCollectionAging { get; set; }
         public virtual FeeCollections FeeCollections { get; set; }
         public virtual FeeDiscountTypes FeeDiscountTypes { get; set; }
         public virtual FeeStructures FeeStructures { get; set; }
+        public virtual ICollection<FeeCollectionsAging> FeeCollectionsAging { get; set; }
     }
 }

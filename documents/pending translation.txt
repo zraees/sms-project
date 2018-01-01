@@ -29,6 +29,7 @@ Please enter special service that your child ever evaluated. e.g: Speech/Languag
 Please enter details about the special service
 
 At least one record must be entered
+data has been generated successfully
 
 FeeTypes
 NameAr
@@ -44,3 +45,12 @@ FeeAmountAfterDiscountText
 DiscountOptionText
 
 FixedText
+
+RollNoText
+TotalFeeText
+TotalPaidText
+TotalDueAmountText
+DueDateText
+FeeStatusNameText
+
+SearchText

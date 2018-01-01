@@ -155,6 +155,7 @@
     <Compile Include="Controllers\FeeStructuresController.cs" />
     <Compile Include="Controllers\FeeTypesController.cs" />
     <Compile Include="Controllers\CodingFormatsController.cs" />
+    <Compile Include="Controllers\BatchesController.cs" />
     <Compile Include="Controllers\StudentsClassesController.cs" />
     <Compile Include="Controllers\TeachersClassesController.cs" />
     <Compile Include="Controllers\StudentsEmergencyContactDetailsController.cs" />
@@ -214,10 +215,10 @@
     <Compile Include="Models\Errors.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FeeCollectionAging.cs">
+    <Compile Include="Models\FeeCollections.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FeeCollections.cs">
+    <Compile Include="Models\FeeCollectionsAging.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeeCollectionsDetails.cs">
@@ -275,6 +276,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spFeeCollections_Result.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\States.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>

@@ -12,6 +12,8 @@ namespace SMSServices.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SMSEntities : DbContext
     {
@@ -52,7 +54,6 @@ namespace SMSServices.Models
         public virtual DbSet<TimeTables> TimeTables { get; set; }
         public virtual DbSet<TimeTableDetails> TimeTableDetails { get; set; }
         public virtual DbSet<ClassesSections> ClassesSections { get; set; }
-        public virtual DbSet<FeeCollectionAging> FeeCollectionAging { get; set; }
         public virtual DbSet<FeeCollections> FeeCollections { get; set; }
         public virtual DbSet<FeeCollectionsDetails> FeeCollectionsDetails { get; set; }
         public virtual DbSet<FeeCycles> FeeCycles { get; set; }
@@ -62,5 +63,31 @@ namespace SMSServices.Models
         public virtual DbSet<FeeStructures> FeeStructures { get; set; }
         public virtual DbSet<FeeTypes> FeeTypes { get; set; }
         public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
+        public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
+    
+        public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
+        {
+            var shiftIdParameter = shiftId.HasValue ?
+                new ObjectParameter("ShiftId", shiftId) :
+                new ObjectParameter("ShiftId", typeof(int));
+    
+            var classIdParameter = classId.HasValue ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(int));
+    
+            var sectionIdParameter = sectionId.HasValue ?
+                new ObjectParameter("SectionId", sectionId) :
+                new ObjectParameter("SectionId", typeof(int));
+    
+            var batchIdParameter = batchId.HasValue ?
+                new ObjectParameter("BatchId", batchId) :
+                new ObjectParameter("BatchId", typeof(int));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeCollections_Result>("spFeeCollections", shiftIdParameter, classIdParameter, sectionIdParameter, batchIdParameter, studentIdParameter);
+        }
     }
 }

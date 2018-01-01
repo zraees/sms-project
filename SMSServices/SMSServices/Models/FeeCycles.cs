@@ -24,6 +24,7 @@ namespace SMSServices.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public string NameAr { get; set; }
+        public int Factor { get; set; }
     
         public virtual ICollection<FeeDueOnFrequencies> FeeDueOnFrequencies { get; set; }
         public virtual ICollection<FeeTypes> FeeTypes { get; set; }

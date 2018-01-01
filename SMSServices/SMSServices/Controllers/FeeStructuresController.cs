@@ -118,13 +118,15 @@ namespace SMSServices.Controllers
         public List<FeeStructures> FeeStructuresByClassId(int ClassID)
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            //Teachers teacher = entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
-            //if (teacher != null) { teacher.DOB = teacher.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; } 
-            List<FeeStructures> result = entities.FeeStructures
-                .Where(t => t.ClassID == ClassID)
-                .ToList();
+         
+            //List<FeeStructures> result = entities.FeeStructures
+            //    .Where(t => t.ClassID == ClassID)
+            //    .ToList();
 
-            return result;
+            var query = entities.FeeStructures.Include("FeeTypes").Include("FeeTypes.FeeCycles");
+            query = query.Include("FeeTypes.FeeDueOnFrequencies").Include("FeeTypes.FeeDueOnInterval");
+
+            return query.Where(t => t.ClassID == ClassID).ToList(); ;
         }
 
         // POST api/<controller>

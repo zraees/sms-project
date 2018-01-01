@@ -94,7 +94,14 @@
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="Active" Type="bit" />
   </EntityType>
-  <EntityType Name="FeeCollectionAging">
+  <EntityType Name="FeeCollections">
+    <Key>
+      <PropertyRef Name="FeeCollectionID" />
+    </Key>
+    <Property Name="FeeCollectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentClassId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeeCollectionsAging">
     <Key>
       <PropertyRef Name="FeeCollectionAgingID" />
     </Key>
@@ -107,13 +114,6 @@
     <Property Name="PaidOn" Type="date" />
     <Property Name="Paid" Type="decimal" Precision="8" Scale="2" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
-  </EntityType>
-  <EntityType Name="FeeCollections">
-    <Key>
-      <PropertyRef Name="FeeCollectionID" />
-    </Key>
-    <Property Name="FeeCollectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StudentClassId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="FeeCollectionsDetails">
     <Key>
@@ -137,6 +137,7 @@
     <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Factor" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="FeeDiscountTypes">
     <Key>
@@ -513,12 +514,12 @@
   </Association>
   <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
     <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="1" />
-    <End Role="FeeCollectionAging" Type="Self.FeeCollectionAging" Multiplicity="*" />
+    <End Role="FeeCollectionsAging" Type="Self.FeeCollectionsAging" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FeeCollectionsDetails">
         <PropertyRef Name="FeeCollectionDetailID" />
       </Principal>
-      <Dependent Role="FeeCollectionAging">
+      <Dependent Role="FeeCollectionsAging">
         <PropertyRef Name="FeeCollectionDetailID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1075,6 +1076,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="spFeeCollections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ShiftId" Type="int" Mode="In" />
+    <Parameter Name="ClassId" Type="int" Mode="In" />
+    <Parameter Name="SectionId" Type="int" Mode="In" />
+    <Parameter Name="BatchId" Type="int" Mode="In" />
+    <Parameter Name="StudentId" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
@@ -1085,8 +1093,8 @@
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="FeeCollectionAging" EntityType="Self.FeeCollectionAging" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeCollections" EntityType="Self.FeeCollections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeCollectionsAging" EntityType="Self.FeeCollectionsAging" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeCollectionsDetails" EntityType="Self.FeeCollectionsDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeCycles" EntityType="Self.FeeCycles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeeDiscountTypes" EntityType="Self.FeeDiscountTypes" Schema="dbo" store:Type="Tables" />
@@ -1135,7 +1143,7 @@
     </AssociationSet>
     <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="Self.FK_FeeCollectionAging_FeeCollectionsDetails1">
       <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
-      <End Role="FeeCollectionAging" EntitySet="FeeCollectionAging" />
+      <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />
     </AssociationSet>
     <AssociationSet Name="FK_FeeCollections_StudentsClasses" Association="Self.FK_FeeCollections_StudentsClasses">
       <End Role="StudentsClasses" EntitySet="StudentsClasses" />

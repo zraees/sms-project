@@ -9,6 +9,33 @@ import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
+
+export function generateFeeCollections(values) {
+  // console.log('in generateFeeCollections ', values);
+  // console.log('hi ' , values.studentId==null?"null":values.studentId);
+
+  LoaderVisibility(true);
+  axios.get('api/GenerateFeeCollections/' + values.shiftId + '/' + values.classId + '/' 
+            + values.sectionId + '/' + values.batchId + '/' + (values.studentId==null?"null":values.studentId))
+    .then(function (response) {
+
+      alert('s', 'data has been generated successfully');
+
+      var table = $('#FeeCollectionGrid').DataTable();
+      table.clear();
+      table.ajax.reload(null, false);
+
+      LoaderVisibility(false);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert('f', '');
+      LoaderVisibility(false);
+    });
+}
+
+
 function submit(values) {
   console.log(values);
 
@@ -29,7 +56,7 @@ function insert(values) {
 
       LoaderVisibility(false);
       alert('s', 'data has been saved successfully');
-      $('#FeeStructurePopup').modal('hide');
+      $('#FeeCollectionPopup').modal('hide');
 
     })
     .catch(function (error) {
@@ -66,7 +93,7 @@ function update(values) {
     .then(function (response) {
 
       alert('s', 'data has been updated successfully');
-      $('#FeeStructurePopup').modal('hide');
+      $('#FeeCollectionPopup').modal('hide');
       LoaderVisibility(false);
 
     })
@@ -92,16 +119,17 @@ function deleteRecord(ButtonPressed, id, delCell) {
 
   if (isYesClicked(ButtonPressed)) {
     LoaderVisibility(true);
-
+    console.log('delete feecoll id ', id);
+    
     $.ajax({
-      url: '/api/RemoveFeeStructure/' + id,
+      url: '/api/RemoveFeeCollection/' + id,
       type: "POST",
       //data : formData,
       success: function (data, textStatus, jqXHR) {
         console.log('success...');
         alert('s', 'data has been deleted successfully');
 
-        var table = $('#FeeStructureGrid').DataTable();
+        var table = $('#FeeCollectionGrid').DataTable();
         table
           .row(delCell.parents('tr'))
           .remove()

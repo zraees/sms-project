@@ -1,4 +1,5 @@
-﻿using SMSServices.Models;
+﻿using SMSServices.Helper;
+using SMSServices.Models;
 using SMSServices.Utilities;
 using System;
 using System.Collections.Generic;
@@ -20,54 +21,14 @@ namespace SMSServices.Controllers
         private SMSEntities entities = new SMSEntities();
          
         // GET api/<controller>
-        [Route("api/FeeCollections/All")]
+        [Route("api/FeeCollections/{shiftId}/{classId}/{sectionId}/{batchId}/{studentId}")]
         //public IEnumerable<FeeCollections> Get()
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(int? ShiftID, int? ClassID, int? SectionID, int? BatchID, int? StudentID)
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
-            var query = entities.FeeCollections//.Include("Classes").Include("Shifts");
-                //query.Include("Sections")
-            .Select(e => new
-            {
-                e.FeeCollectionID,
-                //e.ClassID,
-                //ClassName=e.Classes.Name,
-                //ClassNameAr=e.Classes.NameAr,
-                //FeeTypeCode = e.FeeTypes.Code,
-                //FeeTypeName = e.FeeTypes.Name,
-                //FeeTypeNameAr = e.FeeTypes.NameAr,
-                //e.FeeTypes.FeeCycleID,
-                //FeeCycleName = e.FeeTypes.FeeCycles.Name,
-                //FeeCycleNameAr = e.FeeTypes.FeeCycles.NameAr,
-                //e.FeeTypes.FeeDueOnFrequencyID,
-                //FeeDueOnFrequencyName = e.FeeTypes.FeeDueOnFrequencies.Name,
-                //FeeDueOnFrequencyNameAr = e.FeeTypes.FeeDueOnFrequencies.NameAr,
-                //e.FeeTypes.FeeDueOnIntervalID,
-                //FeeDueOnIntervalName = e.FeeTypes.FeeDueOnInterval.Name,
-                //FeeDueOnIntervalNameAr = e.FeeTypes.FeeDueOnInterval.NameAr,
-                //e.FeeDiscountTypeID,
-                //FeeDiscountTypeName = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.Name : "",
-                //FeeDiscountTypeNameAr = e.FeeDiscountTypes != null ? e.FeeDiscountTypes.NameAr : "",
-                //DiscountOption = e.DiscountOption,
-                //DiscountOptionText = e.DiscountOption.Equals("P") ? "%" : "FixedText",
-                //e.DiscountRate,
-                //e.DiscountValue,
-                //e.Fee,
-                //e.NetFee,
-                //e.ShiftID,
-                //ShiftName = e.Shifts.Name,
-                //ShiftNameAr = e.Shifts.NameAr,
-                //e.ClassID,
-                //ClassName = e.Classes.Name,
-                //ClassNameAr = e.Classes.NameAr,
-                //e.SectionID,
-                //SectionName = e.Sections.Name,
-                //SectionNameAr = e.Sections.NameAr
-            });
-
-            //return query.ToList(); //entities.FeeCollections.Include("Classes").Include("Shifts").Include("Sections");
-            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
+            //var query = entities.spFeeCollections;
+            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeCollections(ShiftID, ClassID, SectionID, BatchID, StudentID));
         }
 
         //[Route("api/FeeCollectionsById/{lang}/{id}")]
@@ -119,80 +80,37 @@ namespace SMSServices.Controllers
         {
             try
             {
-                //bool IsBreak;
+                bool IsSaveChanges=false;
                 string strLog = "";
+                Batches batch;
 
                 List<StudentsClasses> StudentClassCollection = new StudentsClassesController().GetByIDs(ShiftID, ClassID, SectionID, BatchID, StudentID);
                 if (StudentClassCollection.Count > 0)
-                {
+                {  
+                    batch = new BatchesController().Get(BatchID);
                     foreach (StudentsClasses StudentClass in StudentClassCollection)
                     {
-                        strLog = strLog + string.Format("{0} - {1} // ", StudentClass.ClassId, StudentClass.StudentClassId);
-
-                        List<FeeStructures> FeeStructureCollection = new FeeStructuresController().FeeStructuresByClassId(StudentClass.ClassId);
-                        List<FeeCollectionsDetails> FeeCollectionDetailCollection = CreateFeeCollectionDetails(FeeStructureCollection);
-
-                        strLog = strLog + string.Format("{0} - {1} - {2} // ", StudentClass.ClassId, StudentClass.StudentClassId, FeeCollectionDetailCollection.Count);
-
-                        entities.FeeCollections.Add(new FeeCollections()
+                        if (entities.FeeCollections.Where(x => x.StudentClassId == StudentClass.StudentClassId).Count() <= 0)
                         {
-                            StudentClassId = StudentClass.StudentClassId,
-                            FeeCollectionsDetails = FeeCollectionDetailCollection
-                        });
+                            IsSaveChanges = true;
+                            strLog = strLog + string.Format("{0} - {1} // ", StudentClass.ClassId, StudentClass.StudentClassId);
+
+                            List<FeeStructures> FeeStructureCollection = new FeeStructuresController().FeeStructuresByClassId(StudentClass.ClassId);
+                            List<FeeCollectionsDetails> FeeCollectionDetailCollection = CreateFeeCollectionDetails(FeeStructureCollection, batch);
+
+                            strLog = strLog + string.Format("{0} - {1} - {2} // ", StudentClass.ClassId, StudentClass.StudentClassId, FeeCollectionDetailCollection.Count);
+
+                            entities.FeeCollections.Add(new FeeCollections()
+                            {
+                                StudentClassId = StudentClass.StudentClassId,
+                                FeeCollectionsDetails = FeeCollectionDetailCollection
+                            });
+                        }
                     }
-                    entities.SaveChanges();
+
+                    if (IsSaveChanges) entities.SaveChanges();
                 }
-                //TimeTables TimeTable = entities.TimeTables.Include("Shifts").FirstOrDefault(t => t.TimeTableID == TimeTableID);
-                //if (TimeTable != null && TimeTable.TimeTableID > 0)
-                //{
-                //    TimeSpan ShiftDifference = TimeTable.Shifts.EndTime - TimeTable.Shifts.StartTime;
-
-                //    //return Request.CreateResponse(HttpStatusCode.OK, ShiftDifference.TotalMinutes/TimeTable.PeriodDurationMIns);
-                //    for (int index = 0; index < ShiftDifference.TotalMinutes; )
-                //    {
-                //        if (index == 0)
-                //        {
-                //            TimeIn = TimeTable.Shifts.StartTime.Add(new TimeSpan(0, index, 0));
-                //            index = index + TimeTable.PeriodDurationMIns;
-                //            TimeOut = TimeTable.Shifts.StartTime.Add(new TimeSpan(0, index, 0));
-                //        }
-                //        else
-                //        {
-                //            TimeIn = TimeTable.Shifts.StartTime.Add(new TimeSpan(0, index + 1, 0));
-                //            index = index + TimeTable.PeriodDurationMIns;
-                //            TimeOut = TimeTable.Shifts.StartTime.Add(new TimeSpan(0, index, 0));
-                //        }
-
-                //        strLog = strLog + string.Format(" [ {0}  *  {1} = {2} ] ", Math.Abs((TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes),
-                //            Math.Abs((TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes),
-                //             (Math.Abs((TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes) + Math.Abs((TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes)));
-
-                //        IsBreak = (Math.Abs((TimeIn - TimeTable.Shifts.BreakStartTime).TotalMinutes) + Math.Abs((TimeTable.Shifts.BreakEndTime - TimeOut).TotalMinutes)) <= 5 ? true : false;
-
-                //        entities.TimeTableDetails.Add(new TimeTableDetails()
-                //        {
-                //            TimeTableID = TimeTableID,
-                //            DayID = DayID,
-                //            StartTime = TimeIn,
-                //            EndTime = TimeOut,
-                //            IsBreak = IsBreak
-                //            //ShiftID = timeTable.ShiftID,
-                //            //ClassID = timeTable.ClassID,
-                //            //SectionID = timeTable.SectionID,
-                //            //PeriodDurationMIns = timeTable.PeriodDurationMIns
-                //        });
-                //    }
-                //    entities.SaveChanges();
-                //}
-                //entities.TimeTableDetails.Add(new TimeTableDetails()
-                //{
-                //    TimeTableID = TimeTableID,
-                //    //ShiftID = timeTable.ShiftID,
-                //    //ClassID = timeTable.ClassID,
-                //    //SectionID = timeTable.SectionID,
-                //    //PeriodDurationMIns = timeTable.PeriodDurationMIns
-                //});
-                //entities.SaveChanges();
+                
                 return Request.CreateResponse(HttpStatusCode.OK, "Done ... " + strLog);
                 //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
             }
@@ -226,11 +144,14 @@ namespace SMSServices.Controllers
             //}
         }
 
-        private List<FeeCollectionsDetails> CreateFeeCollectionDetails(List<FeeStructures> FeeStructureCollection)
+        private List<FeeCollectionsDetails> CreateFeeCollectionDetails(List<FeeStructures> FeeStructureCollection, Batches Batch)
         {
             List<FeeCollectionsDetails> result = new List<FeeCollectionsDetails>();
+            List<FeeCollectionsAging> AgingCollection ;
+
             foreach (FeeStructures item in FeeStructureCollection)
             {
+                AgingCollection = CreateFeeCollectionsAging(item, Batch);
                 result.Add(new FeeCollectionsDetails()
                 {
                     FeeStructureID = item.FeeStructureID,
@@ -239,9 +160,53 @@ namespace SMSServices.Controllers
                     DiscountRate = item.DiscountRate,
                     DiscountOption = item.DiscountOption,
                     DiscountValue = item.DiscountValue,
-                    NetFee = item.NetFee
+                    NetFee = item.NetFee,
+                    FeeCollectionsAging = AgingCollection
                 });
             }
+            return result;
+        }
+
+        private List<FeeCollectionsAging> CreateFeeCollectionsAging(FeeStructures FeeStructure, Batches Batch)
+        { 
+            List<FeeCollectionsAging> result = new List<FeeCollectionsAging>();
+            FeeCollectionsAging Aging;
+            string FeeCycleCode = FeeStructure.FeeTypes.FeeCycles.Code.ToUpper();
+            string FeeFreqCode = FeeStructure.FeeTypes.FeeDueOnFrequencies.Code.ToUpper();
+            string FeeIntervalCode = FeeStructure.FeeTypes.FeeDueOnInterval.Code.ToUpper();
+
+            int CycleFactor = FeeStructure.FeeTypes.FeeCycles.Factor;
+            int Interval = Convert.ToInt32(FeeFreqCode.Replace("M", ""));
+            int DueOnDay = FeeStructure.FeeTypes.FeeDueOnInterval.EndDay;
+            decimal MonthlyFee = FeeStructure.NetFee / CycleFactor;
+            //int Month = 1;
+
+            DateTime DueOn= DateTime.Now;
+
+            for (int i = 0; i < 12; )
+            {
+                Aging = new FeeCollectionsAging();
+
+                DueOn = i == 0 ? new DateTime(Batch.StartDate.Year, Batch.StartDate.Month, DueOnDay) : DueOn.AddMonths(Interval);
+
+                Aging.DueOn = DueOn;
+                Aging.DueAmount = MonthlyFee * Interval; 
+                Aging.AdditionalDiscount = 0;
+
+
+                result.Add(Aging);
+
+                i += Interval;
+            }
+
+            //if (FeeStructure.FeeTypes.FeeCycles.Code.Equals("M"))
+            //{
+            //}
+            //else if (FeeStructure.FeeTypes.FeeCycles.Code.Equals("Y"))
+            //{
+            //}
+
+
             return result;
         }
 
@@ -366,22 +331,43 @@ namespace SMSServices.Controllers
         [Route("api/RemoveFeeCollection/{id}")]
         public HttpResponseMessage RemoveFeeCollection(int id)
         {
+            string strLog = "";
             try
             {
-                var FeeCollection = new FeeCollections { FeeCollectionID = id };
+                //var FeeCollection = new FeeCollections { FeeCollectionID = id };
+                FeeCollections FeeCollection = entities.FeeCollections.FirstOrDefault(fc => fc.FeeCollectionID == id);
                 if (FeeCollection != null)
                 {
+                    foreach (FeeCollectionsDetails FeeCollectionDetail in FeeCollection.FeeCollectionsDetails.ToList())
+                    {
+                        foreach (FeeCollectionsAging Aging in FeeCollectionDetail.FeeCollectionsAging.ToList())
+                        {
+                            entities.Entry(Aging).State = EntityState.Deleted;
+                            //entities.FeeCollectionsAging.Remove(Aging);
+                            //entities.SaveChanges();
+                            //strLog += " --- aging remove";
+                        }
+                        entities.Entry(FeeCollectionDetail).State = EntityState.Deleted;
+                        //entities.FeeCollectionsDetails.Remove(FeeCollectionDetail);
+                        //entities.SaveChanges();
+
+                        //strLog += " --- FeeCollectionDetail remove";
+                    }
+
                     entities.Entry(FeeCollection).State = EntityState.Deleted;
                     entities.FeeCollections.Remove(FeeCollection);
                     entities.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, "Removed...");
+
+                    //strLog += " --- FeeCollections remove";
+                    return Request.CreateResponse(HttpStatusCode.OK, "Removed... " + strLog);
                 }
                 else
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "not found...");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "not found... " + strLog);
 
             }
             catch (Exception ex)
             {
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, strLog + " =+++= "+ ex.Message + " +++ " + ex.InnerException.Message);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 //return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message + 
                 //    " inner ex: " + ex.InnerException !=null ? ex.InnerException.Message : "null" );

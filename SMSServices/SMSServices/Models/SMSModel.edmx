@@ -99,7 +99,14 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <EntityType Name="FeeCollectionAging">
+        <EntityType Name="FeeCollections">
+          <Key>
+            <PropertyRef Name="FeeCollectionID" />
+          </Key>
+          <Property Name="FeeCollectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeeCollectionsAging">
           <Key>
             <PropertyRef Name="FeeCollectionAgingID" />
           </Key>
@@ -112,13 +119,6 @@
           <Property Name="PaidOn" Type="date" />
           <Property Name="Paid" Type="decimal" Precision="8" Scale="2" />
           <Property Name="Comments" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="FeeCollections">
-          <Key>
-            <PropertyRef Name="FeeCollectionID" />
-          </Key>
-          <Property Name="FeeCollectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentClassId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FeeCollectionsDetails">
           <Key>
@@ -142,6 +142,7 @@
           <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Factor" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FeeDiscountTypes">
           <Key>
@@ -518,12 +519,12 @@
         </Association>
         <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
           <End Role="FeeCollectionsDetails" Type="Self.FeeCollectionsDetails" Multiplicity="1" />
-          <End Role="FeeCollectionAging" Type="Self.FeeCollectionAging" Multiplicity="*" />
+          <End Role="FeeCollectionsAging" Type="Self.FeeCollectionsAging" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FeeCollectionsDetails">
               <PropertyRef Name="FeeCollectionDetailID" />
             </Principal>
-            <Dependent Role="FeeCollectionAging">
+            <Dependent Role="FeeCollectionsAging">
               <PropertyRef Name="FeeCollectionDetailID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1080,6 +1081,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spFeeCollections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ShiftId" Type="int" Mode="In" />
+          <Parameter Name="ClassId" Type="int" Mode="In" />
+          <Parameter Name="SectionId" Type="int" Mode="In" />
+          <Parameter Name="BatchId" Type="int" Mode="In" />
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="SMSModelStoreContainer">
           <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Batches" EntityType="Self.Batches" Schema="dbo" store:Type="Tables" />
@@ -1090,8 +1098,8 @@
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Days" EntityType="Self.Days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Errors" EntityType="Self.Errors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FeeCollectionAging" EntityType="Self.FeeCollectionAging" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeeCollections" EntityType="Self.FeeCollections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeeCollectionsAging" EntityType="Self.FeeCollectionsAging" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeeCollectionsDetails" EntityType="Self.FeeCollectionsDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeeCycles" EntityType="Self.FeeCycles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeeDiscountTypes" EntityType="Self.FeeDiscountTypes" Schema="dbo" store:Type="Tables" />
@@ -1140,7 +1148,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="Self.FK_FeeCollectionAging_FeeCollectionsDetails1">
             <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
-            <End Role="FeeCollectionAging" EntitySet="FeeCollectionAging" />
+            <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />
           </AssociationSet>
           <AssociationSet Name="FK_FeeCollections_StudentsClasses" Association="Self.FK_FeeCollections_StudentsClasses">
             <End Role="StudentsClasses" EntitySet="StudentsClasses" />
@@ -1479,7 +1487,6 @@
             <End Role="TimeTableDetails" EntitySet="TimeTableDetails" />
           </AssociationSet>
           <EntitySet Name="ClassesSections" EntityType="SMSModel.ClassesSections" />
-          <EntitySet Name="FeeCollectionAging" EntityType="SMSModel.FeeCollectionAging" />
           <EntitySet Name="FeeCollections" EntityType="SMSModel.FeeCollections" />
           <EntitySet Name="FeeCollectionsDetails" EntityType="SMSModel.FeeCollectionsDetails" />
           <EntitySet Name="FeeCycles" EntityType="SMSModel.FeeCycles" />
@@ -1512,10 +1519,6 @@
           <AssociationSet Name="FK_ClassesSections_Shifts" Association="SMSModel.FK_ClassesSections_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
             <End Role="ClassesSections" EntitySet="ClassesSections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1">
-            <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
-            <End Role="FeeCollectionAging" EntitySet="FeeCollectionAging" />
           </AssociationSet>
           <AssociationSet Name="FK_FeeCollections_StudentsClasses" Association="SMSModel.FK_FeeCollections_StudentsClasses">
             <End Role="StudentsClasses" EntitySet="StudentsClasses" />
@@ -1577,6 +1580,18 @@
             <End Role="Students" EntitySet="Students" />
             <End Role="StudentsClasses" EntitySet="StudentsClasses" />
           </AssociationSet>
+          <EntitySet Name="FeeCollectionsAging" EntityType="SMSModel.FeeCollectionsAging" />
+          <AssociationSet Name="FK_FeeCollectionAging_FeeCollectionsDetails1" Association="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1">
+            <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
+            <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />
+          </AssociationSet>
+          <FunctionImport Name="spFeeCollections" ReturnType="Collection(SMSModel.spFeeCollections_Result)" >
+            <Parameter Name="ShiftId" Mode="In" Type="Int32" />
+            <Parameter Name="ClassId" Mode="In" Type="Int32" />
+            <Parameter Name="SectionId" Mode="In" Type="Int32" />
+            <Parameter Name="BatchId" Mode="In" Type="Int32" />
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="QualificationTypes">
           <Key>
@@ -2342,21 +2357,6 @@
           <NavigationProperty Name="Sections" Relationship="SMSModel.FK_ClassesSections_Sections" FromRole="ClassesSections" ToRole="Sections" />
           <NavigationProperty Name="Shifts" Relationship="SMSModel.FK_ClassesSections_Shifts" FromRole="ClassesSections" ToRole="Shifts" />
         </EntityType>
-        <EntityType Name="FeeCollectionAging">
-          <Key>
-            <PropertyRef Name="FeeCollectionAgingID" />
-          </Key>
-          <Property Name="FeeCollectionAgingID" Type="Int32" Nullable="false" />
-          <Property Name="FeeCollectionDetailID" Type="Int32" Nullable="false" />
-          <Property Name="DueOn" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="AdditionalDiscount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="DueAmount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="PaymentCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PaidOn" Type="DateTime" Precision="0" />
-          <Property Name="Paid" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionAging" ToRole="FeeCollectionsDetails" />
-        </EntityType>
         <EntityType Name="FeeCollections">
           <Key>
             <PropertyRef Name="FeeCollectionID" />
@@ -2379,10 +2379,10 @@
           <Property Name="DiscountOption" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="DiscountValue" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
           <Property Name="NetFee" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <NavigationProperty Name="FeeCollectionAging" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionsDetails" ToRole="FeeCollectionAging" />
           <NavigationProperty Name="FeeCollections" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeCollections" FromRole="FeeCollectionsDetails" ToRole="FeeCollections" />
           <NavigationProperty Name="FeeDiscountTypes" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeDiscountTypes" FromRole="FeeCollectionsDetails" ToRole="FeeDiscountTypes" />
           <NavigationProperty Name="FeeStructures" Relationship="SMSModel.FK_FeeCollectionsDetails_FeeStructures" FromRole="FeeCollectionsDetails" ToRole="FeeStructures" />
+          <NavigationProperty Name="FeeCollectionsAging" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionsDetails" ToRole="FeeCollectionsAging" />
         </EntityType>
         <EntityType Name="FeeCycles">
           <Key>
@@ -2394,6 +2394,7 @@
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FeeDueOnFrequencies" Relationship="SMSModel.FK_FeeDueOnFrequencies_FeeCycles" FromRole="FeeCycles" ToRole="FeeDueOnFrequencies" />
           <NavigationProperty Name="FeeTypes" Relationship="SMSModel.FK_FeeTypes_FeeCycles" FromRole="FeeCycles" ToRole="FeeTypes" />
+          <Property Name="Factor" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="FeeDiscountTypes">
           <Key>
@@ -2562,18 +2563,6 @@
             </Principal>
             <Dependent Role="ClassesSections">
               <PropertyRef Name="ShiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
-          <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="1" />
-          <End Type="SMSModel.FeeCollectionAging" Role="FeeCollectionAging" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FeeCollectionsDetails">
-              <PropertyRef Name="FeeCollectionDetailID" />
-            </Principal>
-            <Dependent Role="FeeCollectionAging">
-              <PropertyRef Name="FeeCollectionDetailID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2757,6 +2746,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FeeCollectionsAging">
+          <Key>
+            <PropertyRef Name="FeeCollectionAgingID" />
+          </Key>
+          <Property Name="FeeCollectionAgingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeeCollectionDetailID" Type="Int32" Nullable="false" />
+          <Property Name="DueOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AdditionalDiscount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="DueAmount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="PaymentCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaidOn" Type="DateTime" Precision="0" />
+          <Property Name="Paid" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FeeCollectionsDetails" Relationship="SMSModel.FK_FeeCollectionAging_FeeCollectionsDetails1" FromRole="FeeCollectionsAging" ToRole="FeeCollectionsDetails" />
+        </EntityType>
+        <Association Name="FK_FeeCollectionAging_FeeCollectionsDetails1">
+          <End Type="SMSModel.FeeCollectionsDetails" Role="FeeCollectionsDetails" Multiplicity="1" />
+          <End Type="SMSModel.FeeCollectionsAging" Role="FeeCollectionsAging" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeeCollectionsDetails">
+              <PropertyRef Name="FeeCollectionDetailID" />
+            </Principal>
+            <Dependent Role="FeeCollectionsAging">
+              <PropertyRef Name="FeeCollectionDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spFeeCollections_Result">
+          <Property Type="Int32" Name="FeeCollectionID" Nullable="false" />
+          <Property Type="Int32" Name="StudentClassId" Nullable="false" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="210" />
+          <Property Type="String" Name="FullNameAr" Nullable="false" MaxLength="210" />
+          <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="TotalFee" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalPaid" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalDueAmount" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="DateTime" Name="DueDate" Nullable="true" />
+          <Property Type="Int32" Name="DueCount" Nullable="false" />
+          <Property Type="String" Name="FeeStatusName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FeeStatusNameAr" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3122,21 +3153,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FeeCollectionAging">
-            <EntityTypeMapping TypeName="SMSModel.FeeCollectionAging">
-              <MappingFragment StoreEntitySet="FeeCollectionAging">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
-                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
-                <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
-                <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
-                <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
-                <ScalarProperty Name="DueOn" ColumnName="DueOn" />
-                <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
-                <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FeeCollections">
             <EntityTypeMapping TypeName="SMSModel.FeeCollections">
               <MappingFragment StoreEntitySet="FeeCollections">
@@ -3163,6 +3179,7 @@
           <EntitySetMapping Name="FeeCycles">
             <EntityTypeMapping TypeName="SMSModel.FeeCycles">
               <MappingFragment StoreEntitySet="FeeCycles">
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
                 <ScalarProperty Name="NameAr" ColumnName="NameAr" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -3251,6 +3268,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FeeCollectionsAging">
+            <EntityTypeMapping TypeName="SMSModel.FeeCollectionsAging">
+              <MappingFragment StoreEntitySet="FeeCollectionsAging">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+                <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
+                <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+                <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
+                <ScalarProperty Name="DueOn" ColumnName="DueOn" />
+                <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
+                <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spFeeCollections" FunctionName="SMSModel.Store.spFeeCollections">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SMSModel.spFeeCollections_Result">
+                <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
+                <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+                <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
+                <ScalarProperty Name="TotalDueAmount" ColumnName="TotalDueAmount" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="DueCount" ColumnName="DueCount" />
+                <ScalarProperty Name="FeeStatusName" ColumnName="FeeStatusName" />
+                <ScalarProperty Name="FeeStatusNameAr" ColumnName="FeeStatusNameAr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
