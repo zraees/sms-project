@@ -1585,7 +1585,7 @@
             <End Role="FeeCollectionsDetails" EntitySet="FeeCollectionsDetails" />
             <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />
           </AssociationSet>
-          <FunctionImport Name="spFeeCollections" ReturnType="Collection(SMSModel.spFeeCollections_Result)" >
+          <FunctionImport Name="spFeeCollections" ReturnType="Collection(SMSModel.spFeeCollections_Result)">
             <Parameter Name="ShiftId" Mode="In" Type="Int32" />
             <Parameter Name="ClassId" Mode="In" Type="Int32" />
             <Parameter Name="SectionId" Mode="In" Type="Int32" />
@@ -2777,6 +2777,10 @@
           <Property Type="Int32" Name="FeeCollectionID" Nullable="false" />
           <Property Type="Int32" Name="StudentClassId" Nullable="false" />
           <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="Int32" Name="ShiftId" Nullable="false" />
+          <Property Type="Int32" Name="ClassId" Nullable="false" />
+          <Property Type="Int32" Name="SectionId" Nullable="false" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="String" Name="FullName" Nullable="false" MaxLength="210" />
           <Property Type="String" Name="FullNameAr" Nullable="false" MaxLength="210" />
           <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />
@@ -3289,6 +3293,10 @@
                 <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
                 <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
                 <ScalarProperty Name="RollNo" ColumnName="RollNo" />

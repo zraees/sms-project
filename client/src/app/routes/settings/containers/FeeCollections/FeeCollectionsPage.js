@@ -43,6 +43,11 @@ class FeeCollectionsPage extends React.Component {
       batchOptions: [],
       //url: '/api/FeeCollections/null/null/null/null/null',
       pageName: '',
+      batchId: 0,
+      sectionId: 0,
+      classId: 0,
+      shiftId: 0,
+      studentId: 0,
       //gridData: [{"$id":"1","FeeStructureID":1,"ClassID":3,"ClassName":"II","ClassNameAr":"II","FeeTypeCode":"0004","FeeTypeName":"abc 2","FeeTypeNameAr":"ed ed","FeeCycleID":1,"FeeCycleName":"Monthly","FeeCycleNameAr":"شهريا\r\n","FeeDueOnFrequencyID":1,"FeeDueOnFrequencyName":"Monthly","FeeDueOnFrequencyNameAr":"شهريا\r\n","FeeDueOnIntervalID":1,"FeeDueOnIntervalName":"First of every month","FeeDueOnIntervalNameAr":"أولا من كل شهر","FeeDiscountTypeID":null,"FeeDiscountTypeName":"","FeeDiscountTypeNameAr":"","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":0.00,"DiscountValue":0.00,"Fee":5000.00,"NetFee":5000.00},{"$id":"2","FeeStructureID":3,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0005","FeeTypeName":"abc","FeeTypeNameAr":"aaaa","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":3,"FeeDueOnFrequencyName":"Every 2 Months","FeeDueOnFrequencyNameAr":"كل شهرين\r\n","FeeDueOnIntervalID":4,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":25.00,"DiscountValue":3750.00,"Fee":15000.00,"NetFee":11250.00},{"$id":"3","FeeStructureID":1002,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0008","FeeTypeName":"tution fee","FeeTypeNameAr":"edc","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":4,"FeeDueOnFrequencyName":"Quarterly","FeeDueOnFrequencyNameAr":"فصليا","FeeDueOnIntervalID":5,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":5.00,"DiscountValue":550.00,"Fee":11000.00,"NetFee":10450.00}]
     }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
@@ -90,7 +95,13 @@ class FeeCollectionsPage extends React.Component {
       var button = $(e.relatedTarget);                    // Button that triggered the modal   
       var feeTypeId = button.data('id');             // Extract info from data-* attributes
       var pageName = button.data('page-name');
-      this.setState({pageName, feeTypeId});    
+      var batchId = button.data('batch-id');
+      var classId = button.data('class-id');
+      var sectionId = button.data('section-id');
+      var shiftId = button.data('shift-id');
+      var studentId = button.data('student-id');
+
+      this.setState({pageName, feeTypeId, batchId, classId, sectionId, shiftId, studentId});    
 
     }.bind(this));
 
@@ -202,10 +213,18 @@ class FeeCollectionsPage extends React.Component {
 
   renderModalBody(popupPageName){ 
     var modalBody ;
+    const {feeCollectionId, batchId, sectionId, classId, shiftId, studentId} = this.state;
 
     if(popupPageName == "details"){ 
       //this.setState({refreshGrid:true});
-      modalBody = <Details feeCollectionId={this.state.feeCollectionId} /> //onSubmit={submit}
+      modalBody = <Details 
+        feeCollectionId={this.state.feeCollectionId}
+        batchId={batchId}
+        sectionId={sectionId}
+        classId={classId}
+        shiftId={shiftId}
+        studentId={studentId}
+      /> //onSubmit={submit}
     }
     else if(popupPageName == "payments"){
       modalBody = <Payments feeCollectionId={this.state.feeCollectionId} /> //onSubmit={submit}
@@ -363,7 +382,14 @@ class FeeCollectionsPage extends React.Component {
                             // `data` option, which defaults to the column being worked with, in
                             // this case `data: 0`.
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="details" data-id="' + data + '" data-target="#FeeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                              //console.log('row', row);
+                              return '<a data-toggle="modal" data-page-name="details"'
+                                + ' data-batch-id="'+ row.BatchID + '"'
+                                + ' data-class-id="'+ row.ClassId + '"'
+                                + ' data-section-id="'+ row.SectionId + '"'
+                                + ' data-shift-id="'+ row.ShiftId + '"'
+                                + ' data-student-id="'+ row.StudentId + '"'
+                                + ' data-id="' + data + '" data-target="#FeeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -396,7 +422,7 @@ class FeeCollectionsPage extends React.Component {
                         ],
                         columns: [ 
                           {data: "FeeCollectionID"}, 
-                          {data: "RollNo"},
+                          {data: "BatchID"},
                           {data: "FullName"},
                           {data: "FullNameAr"},      
                           {data: "TotalFee"}, 

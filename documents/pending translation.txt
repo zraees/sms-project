@@ -4,6 +4,7 @@ DetailsText
 ChooseYesIfReceivedSpeicalServiceText
 GenerateText
 
+StudentText
 BloodGroupText
 ChronicMedicationText
 OtherMedicalConditionsText

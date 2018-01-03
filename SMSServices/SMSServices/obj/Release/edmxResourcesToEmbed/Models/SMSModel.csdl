@@ -1438,6 +1438,10 @@
     <Property Type="Int32" Name="FeeCollectionID" Nullable="false" />
     <Property Type="Int32" Name="StudentClassId" Nullable="false" />
     <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="Int32" Name="ShiftId" Nullable="false" />
+    <Property Type="Int32" Name="ClassId" Nullable="false" />
+    <Property Type="Int32" Name="SectionId" Nullable="false" />
+    <Property Type="Int32" Name="BatchID" Nullable="false" />
     <Property Type="String" Name="FullName" Nullable="false" MaxLength="210" />
     <Property Type="String" Name="FullNameAr" Nullable="false" MaxLength="210" />
     <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />

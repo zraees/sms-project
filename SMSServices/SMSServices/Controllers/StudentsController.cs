@@ -86,6 +86,27 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList().Distinct());
         }
 
+        [Route("api/GetStudentControlData/{lang}/{ShiftId}/{ClassId}/{SectionId}/{BatchId}/{studentId}")]
+        public HttpResponseMessage GetStudentsByShiftClassSection(string Lang, int ShiftID, int ClassID, int SectionID, int BatchID, int StudentID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            Shifts Shift = entities.Shifts.FirstOrDefault(s=>s.ID ==ShiftID);
+            string ShiftName = Shift != null ? Lang == "" || Lang == "us" ? Shift.Name : Shift.NameAr : "";
+            Classes Class = entities.Classes.FirstOrDefault(s => s.ID == ClassID);
+            string ClassName = Class != null ? Lang == "" || Lang == "us" ? Class.Name : Class.NameAr : "";
+            Sections Section = entities.Sections.FirstOrDefault(s => s.ID == SectionID);
+            string SectionName = Section != null ? Lang == "" || Lang == "us" ? Section.Name : Section.NameAr : "";
+            Batches Batch = entities.Batches.FirstOrDefault(s => s.ID == BatchID);
+            string BatchName = Batch != null ? Lang == "" || Lang == "us" ? Batch.Name : Batch.NameAr : "";
+            Students Student = entities.Students.FirstOrDefault(s => s.StudentId == StudentID);
+            string StudentName = Student != null ? Lang == "" || Lang == "us" ? Student.FullName : Student.FullNameAr : "";
+            string StudentCode = Student != null ? Student.Code : "";
+            string StudentRollNo =  "";
+
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, new { ShiftName, ClassName, SectionName, BatchName, StudentCode, StudentRollNo, StudentName });
+        }
 
         // POST api/<controller>
         public HttpResponseMessage Post(Students Student)

@@ -13,6 +13,8 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel}
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
 import mapForCombo, {mapForRadioList, getLangKey} from '../../../../components/utils/functions'
+
+import StudentControl from '../Students/StudentControl'
  
 class FeeStructureForm extends React.Component {
  
@@ -127,6 +129,14 @@ class FeeStructureForm extends React.Component {
         onSubmit={handleSubmit}>
 
         <fieldset>
+
+          <div>
+            
+            <section className="col col-4">
+              <StudentControl />
+            </section>
+
+          </div>
 
           <div className="row">
             <section className="col col-4">

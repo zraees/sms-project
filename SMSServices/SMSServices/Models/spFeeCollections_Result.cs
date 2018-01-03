@@ -16,6 +16,10 @@ namespace SMSServices.Models
         public int FeeCollectionID { get; set; }
         public int StudentClassId { get; set; }
         public int StudentId { get; set; }
+        public int ShiftId { get; set; }
+        public int ClassId { get; set; }
+        public int SectionId { get; set; }
+        public int BatchID { get; set; }
         public string FullName { get; set; }
         public string FullNameAr { get; set; }
         public string RollNo { get; set; }

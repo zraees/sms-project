@@ -496,6 +496,10 @@
           <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
           <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
           <ScalarProperty Name="RollNo" ColumnName="RollNo" />
