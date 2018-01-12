@@ -236,6 +236,18 @@
     <Compile Include="Models\FeeDueOnInterval.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeePayments.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeePaymentsDetails.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeePaymentStatus.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeeStatus.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FeeStructures.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
@@ -278,6 +290,9 @@
       <DependentUpon>SMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\spFeeCollections_Result.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spFeeDueDetailsByStudentID_Result.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\States.cs">

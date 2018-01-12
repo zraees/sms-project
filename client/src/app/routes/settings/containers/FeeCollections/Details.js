@@ -5,281 +5,268 @@ import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import {connect} from 'react-redux'
 
-import {Field, reduxForm, formValueSelector, getFormValues} from 'redux-form'
+import { Field, FieldArray, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
+import Datatable from '../../../../components/tables/Datatable'
 
-import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel} from '../../../../components/ui'
+import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel, RFDatePicker} from '../../../../components/ui'
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey} from '../../../../components/utils/functions'
- 
+import mapForCombo, {mapForRadioList, getLangKey, renderDate} from '../../../../components/utils/functions'
+import { submitFeePayment } from './submit'
+
 import StudentControl from '../Students/StudentControl'
+import { config } from '../../../../config/config';
  
 class Details extends React.Component {
  
   constructor(props){
     super(props);
-    this.state = {
-      editDataLoaded: false, 
-      percentageOptions: [],
-      classOptions: [],
-      feeDiscountTypeOptions: [],
-      feeTypeOptions: [] ,
-      feeTypeCode: ''
+    this.state = {     
+      langKey: getLangKey(),
+      feeDueDetails: []
     }  
-    this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
-    this.handleFeeBlur = this.handleFeeBlur.bind(this);
-    this.handleDiscountRateBlur = this.handleDiscountRateBlur.bind(this);
-    this.handleDiscountOptionChange = this.handleDiscountOptionChange.bind(this);
+    // this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
+    // this.handleFeeBlur = this.handleFeeBlur.bind(this);
+    // this.handleDiscountRateBlur = this.handleDiscountRateBlur.bind(this);
+    this.handleAdditionalDiscountBlur = this.handleAdditionalDiscountBlur.bind(this);
   }
   
   componentDidMount(){
 
-    axios.get('assets/api/common/discount-options.json')
+    axios.get( '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId)
       .then(res => {
-        const percentageOptions = mapForRadioList(res.data);
-        this.setState({ percentageOptions });
-      });
+        if (res.data) {
+          //console.log('exists..');
+          let feeDueDetails = []; 
 
-    axios.get('/api/lookup/Classes/')
-      .then(res => {
-        const classOptions = mapForCombo(res.data);
-        this.setState({ classOptions });
-      });
+          res.data.map(function (item, index) {
+            feeDueDetails.push({
+              "feeCollectionAgingID": item.FeeCollectionAgingID,
+              "feeCollectionId": item.FeeCollectionID,
+              // "studentId":item.StudentId,
+              // "studentClassId":item.StudentClassId,
+              //"feeTypeID":FeeTypeID,
+              "feeTypeName":item.FeeTypeName,
+              "dueOn":item.DueOn != null ? moment(item.DueOn).format("MM/DD/YYYY") : "",
+              "dueAmountBeforeAdditionalDiscount":item.DueAmountBeforeAdditionalDiscount,
+              "additionalDiscount":item.AdditionalDiscount,
+              "dueAmount":item.DueAmount,
+              "outstandingAmount": item.OutstandingAmount,
+              "totalPaidAmount":item.TotalPaidAmount,
+              "feePaymentStatusName":item.FeePaymentStatusName
+            });
 
-    axios.get("/api/lookup/FeeTypes/FeeTypeID,Name,NameAr")
-      .then(res => {
-        const feeTypeOptions = mapForCombo(res.data);
-        this.setState({ feeTypeOptions });
-      });
+            
+          });
 
-    axios.get('/api/lookup/feeDiscountTypes/')
-      .then(res => {
-        const feeDiscountTypeOptions = mapForCombo(res.data);
-        this.setState({ feeDiscountTypeOptions });
-      });
+          const initData = {
+            "feeCollectionDetailId": 0,
+            "feeDueDetails": feeDueDetails
+          } 
 
-    const initData = {
-      "feeStuctureId": 0,
-      "discountOption": 'P',
-      "discountRate": 0,
-      "discountValue": 0,
-      "feeTypeCode": ''
-    }
+          this.props.initialize(initData); 
+          //this.setState({feeDueDetails})
+          
+          //console.log('this.state.feeDueDetails', initData.feeDueDetails, this.state.feeDueDetails);
 
-    this.props.initialize(initData);
+        }
+        else {
+          // show error message, there is some this went wrong 
+        }
+
+      });   
+    // this.props.initialize(initData);
     //this.props.change("feeDiscountTypeId", 1);
+
+    // var url = '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId;
+    // console.log(url);
+    // var table = $('#feeDueDetailsGrid').DataTable();
+    // table.ajax.url(url).load();
+
     console.log('componentDidMount --> Details');
   }
 
+  // componentWillMount() {
+  //   console.log('componentWillMount --> Details');
+ 
+  // }
   
-  handleDiscountOptionChange(obj, value) {
-    this.calculateDiscount();
-  }
+  
+  handleAdditionalDiscountBlur(index, event) {
 
-  handleFeeBlur(obj, value){
-    this.calculateDiscount();
-  } 
+    console.log('handleAdditionalDiscountBlur(obj, value) == ', index, event, this.state.feeDueDetails[index].additionalDiscount);
+    //var value = event.target.value;
 
-  handleDiscountRateBlur(obj, value){
-    //console.log('test ' );   
-    this.calculateDiscount();
-  } 
 
-  calculateDiscount(){
-    this.props.change("discountValue", this.props.discountValue);
-    this.props.change("netFee", this.props.netFee); 
-  }
+    // if (value) {
+    //   axios.get('api/TeachersSubjects/All/' + value)
+    //     .then(res => {
 
-  handleFeeTypeBlur(index, event) {
-    
-    var val = event.target.value;
-    if (val) { 
+    //       //console.log('subjectOptions2D 1 -- ', subjectOptions2D);
 
-      //let langKey = getLangKey();
+    //       let subjectOptions2D = this.state.subjectOptions2D;
+    //       const subjectOptions = mapForCombo(res.data);
+    //       subjectOptions2D[index] = subjectOptions;
+    //       this.setState({ subjectOptions2D });
 
-      axios.get('/api/FeeTypesById/'+ val)    //+langKey +'/'
-        .then(res => {
-          this.props.change("feeTypeCode", res.data.Code);
-          this.props.change("feeTypeName", res.data.Name);
-          this.props.change("feeTypeNameAr", res.data.NameAr);
-          this.props.change("feeCycleName", res.data.FeeCycleName);
-          this.props.change("feeDueOnFrequency", res.data.FeeDueOnFrequencyName);
-          this.props.change("feeDueOnInterval", res.data.FeeDueOnIntervalName);
-          this.props.change("fee", res.data.Fee);
-          this.props.change("feeDiscountTypeId", res.data.FeeDiscountTypeID);
-          this.props.change("discountOption", res.data.DiscountOption);
-          this.props.change("discountRate", res.data.DiscountRate);
-          this.calculateDiscount();
+    //       //console.log('subjectOptions2D 2 -- ', subjectOptions2D);
+    //     });
+    // }
+    // else {
 
-        });
-    }
-    else {
-      //this.setState({feeDueOnIntervalOptions: []});
-    }
+    //   let subjectOptions2D = this.state.subjectOptions2D;
+    //   subjectOptions2D[index] = [];
+    //   this.setState({ subjectOptions2D });
+    //   //this.setState({ subjectOptions2D: [] });
+    // }
+
   }
  
   render() {
-    const { feeStuctureId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props;
+    const { feeCollectionId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props;
     const { batchId, sectionId, classId, shiftId, studentId } = this.props;
-    const { classOptions, feeDiscountTypeOptions, feeTypeOptions, percentageOptions } = this.state;
+    const { langKey } = this.state;
 
     return (
-      <form id="form-Fee-Structure" className="smart-form"
-        onSubmit={handleSubmit}>
-        
+      <form id="form-Fee-Aging" className="smart-form"
+        onSubmit={handleSubmit((values) => { submitFeePayment(values) })}>
+
+        {studentId}
+
         <StudentControl batchId={batchId}
           sectionId={sectionId}
           classId={classId}
           shiftId={shiftId}
-          studentId={studentId} />  
-        
+          studentId={studentId} />
+
+        <div className="row">
+          <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+
+          </section>
+        </div>
+
         <fieldset>
+          <div className="tabbable tabs">
 
-        <div>
-            
-            <section className="col col-4">
-              
-            </section>
+            <ul className="nav nav-tabs">
+              <li id="tabFeeDetailsLink" className="active">
+                <a id="tabAddFeeDetails" data-toggle="tab" href="#A1P1A"><Msg phrase="FeeDetailsText" /></a>
+              </li>
+              <li id="tabPaymentHistoryLink">
+                <a id="tabPaymentHistory" data-toggle="tab" href="#B1P1B"><Msg phrase="PaymentHistoryText" /></a>
+              </li>
+            </ul>
 
-          </div>
+            <div className="tab-content">
+              <div className="tab-pane active" id="A1P1A">
 
-          <div className="row">
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="classId"
-                label="ClassText"
-                validate={required}
-                options={classOptions} 
-                component={RFReactSelectSingle} />
-            </section>
+                <FieldArray name="feeDueDetails" component={renderFeeDueDetails} />
 
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="feeTypeId"
-                label="FeeTypeText"
-                validate={required}
-                options={feeTypeOptions}  
-                onChange={(e) => this.handleFeeTypeBlur(0, e)}
-                component={RFReactSelectSingle} />
-            </section>
+                {/* <div className="table-responsive">
 
-            <section className="col col-4"> 
-            </section> 
-          </div>
+                  <Datatable id="feeDueDetailsGrid"
+                    options={{
+                      ajax: { "url": '/api/FeeDueDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },
+                      columnDefs: [
+                        {
+                          "type": "date",
+                          "render": function (data, type, row) {
+                            return renderDate(data);
+                          },
+                          "targets": 1
+                        },
+                        {
+                          "render": function (data, type, row) {
+                            return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                          }.bind(self),
+                          "className": "dt-center",
+                          "sorting": false,
+                          "targets": 7
+                        }
+                      ],
+                      columns: [
+                        { data: "FeeTypeName" },
+                        { data: "DueOn" },
+                        { data: "DueAmountBeforeAdditionalDiscount" },
+                        { data: "AdditionalDiscount" },
+                        { data: "DueAmount" },
+                        { data: "TotalPaidAmount" },
+                        { data: "FeePaymentStatusName" },
+                        { data: "FeeCollectionAgingID" }
+                      ],
+                      buttons: [
+                        'copy', 'excel', 'pdf'
+                      ]
+                    }}
+                    paginationLength={true}
+                    className="table table-striped table-bordered table-hover"
+                    width="100%">
+                    <thead>
+                      <tr>
+                        <th data-hide="mobile-p"><Msg phrase="FeeTypeText" /></th>
+                        <th data-class="expand"><Msg phrase="DueDateText" /></th>
+                        <th data-hide="mobile-p"><Msg phrase="DueAmountBeforeAdditionalDiscountText" /></th>
+                        <th data-hide="mobile-p"><Msg phrase="AdditionalDiscountText" /></th>
+                        <th data-hide="mobile-p"><Msg phrase="TotalDueAmountText" /></th>
+                        <th data-hide="mobile-p"><Msg phrase="TotalPaidAmountText" /></th>
+                        <th data-hide="mobile-p"><Msg phrase="FeePaymentStatusText" /></th>
+                        <th data-hide="mobile-p"></th>
+                      </tr>
+                    </thead>
+                  </Datatable>
 
-          <div className="highlight">
-            <div className="row">
-              <section className="col col-4">
-                <Field name="feeTypeCode" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="CodeText" />
-              </section>
+                </div> */}
 
-              <section className="col col-4">
-                <Field name="feeTypeName" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="NameText" />
-              </section>
+              </div>
+              <div className="tab-pane table-responsive" id="B1P1B">
 
-              <section className="col col-4">
-                <Field name="feeTypeNameAr" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="NameArText" />
-              </section>
+                {/* <Datatable id="parentsGrid"
+                  options={{
+                    ajax: { "url": '/api/FeeDueDetailsByStudentID/' + studentId, "dataSrc": "" },
+                    columnDefs: [
+                      {
+                        "render": function (data, type, row) {
+                          return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                        }.bind(self),
+                        "className": "dt-center",
+                        "sorting": false,
+                        "targets": 6
+                      }
+                    ],
+                    columns: [
+                      { data: "FirstName" },
+                      { data: "SurName" },
+                      { data: "parentType" },
+                      { data: "SchoolName" },
+                      { data: "ClassName" },
+                      { data: "SectionName" },
+                      { data: "FeeCollectionAgingID" }
+                    ],
+                    buttons: [
+                      'copy', 'excel', 'pdf'
+                    ]
+                  }}
+                  paginationLength={true}
+                  className="table table-striped table-bordered table-hover"
+                  width="100%">
+                  <thead>
+                    <tr>
+                      <th data-hide="mobile-p"><Msg phrase="FirstNameText" /></th>
+                      <th data-class="expand"><Msg phrase="SurNameText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="parentTypeInOurSchoolText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="SchoolNameText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="ClassText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="SectionText" /></th>
+                      <th data-hide="mobile-p"></th>
+                    </tr>
+                  </thead>
+                </Datatable> */}
+
+              </div>
             </div>
-
-            <div className="row">
-              <section className="col col-4">
-                <Field name="feeCycleName" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="FeeCycleText" />
-              </section>
-
-              <section className="col col-4">
-                <Field name="feeDueOnFrequency" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="FeeDueOnFrequencyText" />
-              </section>
-
-              <section className="col col-4">
-                <Field name="feeDueOnInterval" labelClassName="input"
-                  component={RFField} readOnly="readOnly"
-                  type="text" placeholder=""
-                  label="FeeDueOnIntervalText" />
-              </section>
-            </div>
-
           </div>
-
-          <div className="row">
-          <section className="col col-4">
-              <Field name="fee" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[required, number]} component={RFField} type="text" maxLength="10"
-                onBlur={this.handleFeeBlur}
-                label="FeeText" />
-            </section>
-            <section className="col col-4">
-
-            </section>
-            <section className="col col-4">
-
-            </section> 
-          </div>
-
-          <div className="row">
-            <section className="col col-4">
-              <Field
-                multi={false}
-                name="feeDiscountTypeId"
-                label="FeeDiscountTypeText" 
-                options={feeDiscountTypeOptions}
-                component={RFReactSelectSingle} />
-            </section>
-
-            <section className="col col-4">
-              <Field component={RFRadioButtonList} name="discountOption" required={true}
-                label=""
-                onChange={this.handleDiscountOptionChange}
-                options={percentageOptions} />
-            </section>
-
-            <section className="col col-4">
-              <Field name="discountRate" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[number]} component={RFField} type="text" maxLength="10"
-                onBlur={this.handleDiscountRateBlur}
-                label="DiscountRateText" />
-            </section> 
-
-          </div>
-
-          <div className="row">
-
-            <section className="col col-4">
-              <Field name="discountValue" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[number]} component={RFField} type="text" maxLength="10" readOnly={true}
-                label="DiscountValueText" />
-            </section>
-
-            <section className="col col-4">
-              <Field name="netFee" labelClassName="input" labelIconClassName="icon-append fa fa-money"
-                validate={[required, number]} component={RFField} type="text" maxLength="10"
-                label="FeeAmountAfterDiscountText" />
-            </section>
-
-            <section className="col col-4">
-            </section>
-
-          </div>
-
         </fieldset>
 
         {(error !== undefined && <AlertMessage type="w"
@@ -287,7 +274,7 @@ class Details extends React.Component {
 
         <footer>
           <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
-            {feeStuctureId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
+            {feeCollectionId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
           </button>
           <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
             <Msg phrase="SaveText" />
@@ -322,5 +309,123 @@ Details = connect(
     }
   }
 )(Details)
+
+
+const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
+  <div >         
+    <div className="table-responsive"> 
+
+      <table className="table table-striped table-bordered table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>
+              <Msg phrase="FeeTypeText" />
+            </th>
+            <th>
+              <Msg phrase="DueDateText" />
+            </th>
+            {/* <th>
+              <Msg phrase="DueAmountBeforeAdditionalDiscountText" />
+            </th> */}
+            <th>
+              <Msg phrase="AdditionalDiscountText" />
+            </th>
+            <th>
+              <Msg phrase="TotalDueAmountText" />
+            </th>
+            <th>
+              <Msg phrase="OutstandingAmountText" />
+            </th>  
+            <th>
+              <Msg phrase="TotalPaidAmountText" />
+            </th>
+            {/* <th>
+              <Msg phrase="FeePaymentStatusText" />
+            </th> */}
+            <th>
+
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {fields.map((period, index) =>
+            <tr key={period}>
+              <td>
+                <Field name={`${period}.feeTypeName`}
+                  component={RFLabel}
+                  className="width-150-px"
+                  disabled={true}
+                  type="label" />
+              </td>
+              <td>
+                <Field name={`${period}.dueOn`}
+                  component={RFLabel}
+                  labelClassName="width-50-px"
+                  disabled={true}
+                  label=""
+                  type="label" />
+              </td>
+              {/* <td>
+                <Field name={`${period}.dueAmountBeforeAdditionalDiscount`}
+                  component={RFLabel}
+                  className="width-50-px"
+                  disabled={true}
+                  type="label" />
+              </td> */}
+              <td>
+                {/* <Field name={`${period}.additionalDiscount`}
+                  component="input"
+                  className="width-50-px"
+                  disabled={true}
+                  type="text" /> */}
+                <Field name={`${period}.additionalDiscount`} labelClassName="input remove-col-padding "
+                  labelIconClassName=""
+                  validate={[number]}
+                  component={RFField}
+                  // onBlur={(e) => this.handleAdditionalDiscountBlur(index, `${period}.additionalDiscount`)} 
+                  type="text" maxLength="5" />
+              </td>
+              <td>
+                <Field name={`${period}.dueAmount`}
+                  component={RFLabel}
+                  className="width-50-px"
+                  disabled={true}
+                  type="text" />
+              </td>                  
+              <td>
+                <Field name={`${period}.outstandingAmount`}
+                  component={RFLabel}
+                  className="width-50-px"
+                  disabled={true}
+                  type="text" /> 
+              </td>
+              <td>
+                <Field name={`${period}.totalPaidAmount`} labelClassName="input remove-col-padding "
+                  labelIconClassName=""
+                  validate={[number]}
+                  component={RFField} 
+                  type="text" /> 
+              </td>
+              {/* <td>
+                <Field name={`${period}.feePaymentStatusName`}
+                  component="input"
+                  className="width-50-px"
+                  disabled={true}
+                  type="text" />
+              </td> */}
+              <td>
+                <a onClick={() => fields.remove(index)}><i className="glyphicon glyphicon-trash"></i></a>
+
+              </td>
+            </tr>
+          )}
+          {/* {fields.error && <li className="error">{fields.error}</li>} */}
+
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+)
 
 export default Details; 

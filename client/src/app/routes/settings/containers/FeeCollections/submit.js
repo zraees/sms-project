@@ -36,73 +36,120 @@ export function generateFeeCollections(values) {
 }
 
 
-function submit(values) {
-  console.log(values);
+export function submitFeePayment(values) {
 
-  if (values.feeStructureId > 0) {
-    update(values);
+  LoaderVisibility(true);
+
+  if (values.feeDueDetails.length > 0) {
+    console.log(' not empty ..', values.feeDueDetails);
+
+    axios.put('/api/UpdateFeeAging', values.feeDueDetails)
+      .then(function (response) {
+
+        alert('s', 'data has been updated.');
+        $('#feeCollectionPopup').modal('hide');
+        $('#paymentId').val('123xx45');
+        
+        LoaderVisibility(false);
+
+      })
+      .catch(function (error) {
+        console.log('error agya');
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          alert('f', error.response.data.StatusMessage);
+          LoaderVisibility(false);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        //console.log(error.config);
+
+        //alert('f', '');
+        LoaderVisibility(false);
+      });
   }
   else {
-    insert(values);
+    LoaderVisibility(false);
+    alert('f', "At least one record must be entered");
   }
-
 }
 
-function insert(values) {
-  LoaderVisibility(true);
-  console.log(values);
-  axios.post('/api/FeeStructures', values)
-    .then(function (response) {
 
-      LoaderVisibility(false);
-      alert('s', 'data has been saved successfully');
-      $('#FeeCollectionPopup').modal('hide');
+// function submit(values) {
+//   console.log(values);
 
-    })
-    .catch(function (error) {
-      if (error.response) {
-        alert('f', error.response.data.StatusMessage);
+//   if (values.feeStructureId > 0) {
+//     update(values);
+//   }
+//   else {
+//     insert(values);
+//   }
 
-        LoaderVisibility(false);
-        //throw new SubmissionError({ _error: "That's weird. "});   
-        //reject('error error error');
-        console.log('submission error')
-        throw new SubmissionError({
-          shiftId: 'record already exists',
-          _error: 'You cannot proceed further!',
-        });
+// }
 
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-      }
-      //console.log(error.config);
+// function insert(values) {
+//   LoaderVisibility(true);
+//   console.log(values);
+//   axios.post('/api/FeeStructures', values)
+//     .then(function (response) {
 
-      //alert('f', '');
-      LoaderVisibility(false);
-    });
-}
+//       LoaderVisibility(false);
+//       alert('s', 'data has been saved successfully');
+//       $('#FeeCollectionPopup').modal('hide');
 
-function update(values) {
-  //console.log('in update');
-  //console.log(values);
-  LoaderVisibility(true);
-  axios.put('/api/FeeStructures', values)
-    .then(function (response) {
+//     })
+//     .catch(function (error) {
+//       if (error.response) {
+//         alert('f', error.response.data.StatusMessage);
 
-      alert('s', 'data has been updated successfully');
-      $('#FeeCollectionPopup').modal('hide');
-      LoaderVisibility(false);
+//         LoaderVisibility(false);
+//         //throw new SubmissionError({ _error: "That's weird. "});   
+//         //reject('error error error');
+//         console.log('submission error')
+//         throw new SubmissionError({
+//           shiftId: 'record already exists',
+//           _error: 'You cannot proceed further!',
+//         });
 
-    })
-    .catch(function (error) {
-      console.log(error);
-      alert('f', '');
-      LoaderVisibility(false);
-    });
-}
+//       } else if (error.request) {
+//         console.log(error.request);
+//       } else {
+//         // Something happened in setting up the request that triggered an Error
+//         console.log('Error', error.message);
+//       }
+//       //console.log(error.config);
+
+//       //alert('f', '');
+//       LoaderVisibility(false);
+//     });
+// }
+
+// function update(values) {
+//   //console.log('in update');
+//   //console.log(values);
+//   LoaderVisibility(true);
+//   axios.put('/api/FeeStructures', values)
+//     .then(function (response) {
+
+//       alert('s', 'data has been updated successfully');
+//       $('#FeeCollectionPopup').modal('hide');
+//       LoaderVisibility(false);
+
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//       alert('f', '');
+//       LoaderVisibility(false);
+//     });
+// }
 
 export function remove(id, delCell) {
 
@@ -152,6 +199,4 @@ function deleteRecord(ButtonPressed, id, delCell) {
 
 
 }
-
-
-export default submit
+ 

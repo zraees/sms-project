@@ -90,7 +90,9 @@ class FeeCollectionsPage extends React.Component {
     });
     
     // call before modal open
-    $('#FeeCollectionPopup').on('show.bs.modal', function (e) {      
+    $('#feeCollectionPopup').on('show.bs.modal', function (e) {      
+
+      console.log('show.bs.modal');
 
       var button = $(e.relatedTarget);                    // Button that triggered the modal   
       var feeTypeId = button.data('id');             // Extract info from data-* attributes
@@ -106,11 +108,20 @@ class FeeCollectionsPage extends React.Component {
     }.bind(this));
 
     // call on modal close
-    $('#FeeCollectionPopup').on('hidden.bs.modal', function (e) {
+    $('#feeCollectionPopup').on('hidden.bs.modal', function (e) {
       this.setState({ feeTypeId: 0 });
+
+      $(this).data('modal', null);
+      // $(".modal-body").html("");
+
+      console.log($('#paymentId').val());
+
       var table = $('#FeeCollectionGrid').DataTable();
       table.clear();
       table.ajax.reload(null, false); // user paging is not reset on reload
+
+      $(this).data('bs.modal', null);
+      $(this).remove();
     }.bind(this));
      
     LoaderVisibility(false);
@@ -215,6 +226,7 @@ class FeeCollectionsPage extends React.Component {
     var modalBody ;
     const {feeCollectionId, batchId, sectionId, classId, shiftId, studentId} = this.state;
 
+
     if(popupPageName == "details"){ 
       //this.setState({refreshGrid:true});
       modalBody = <Details 
@@ -232,6 +244,8 @@ class FeeCollectionsPage extends React.Component {
     else if(popupPageName == "alerts"){
       modalBody = <Alerts feeCollectionId={this.state.feeCollectionId} /> //onSubmit={submit}
     }
+
+    console.log('mdal body ==>', popupPageName, feeCollectionId);
     return modalBody;
   }
 
@@ -389,7 +403,7 @@ class FeeCollectionsPage extends React.Component {
                                 + ' data-section-id="'+ row.SectionId + '"'
                                 + ' data-shift-id="'+ row.ShiftId + '"'
                                 + ' data-student-id="'+ row.StudentId + '"'
-                                + ' data-id="' + data + '" data-target="#FeeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                + ' data-id="' + data + '" data-target="#feeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -397,7 +411,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#FeeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -405,7 +419,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#FeeCollectionPopup"><i id="alrt" class=\"fa fa-bell\"></i><span class=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" class=\"fa fa-bell\"></i><span class=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -482,17 +496,18 @@ class FeeCollectionsPage extends React.Component {
         </WidgetGrid>
 
         {/* end widget grid */}
-  
-        <div className="modal fade" id="FeeCollectionPopup" tabIndex="-1" role="dialog" 
+                      <input id="paymentId" type="text"></input>
+                      
+        <div className="modal fade" id="feeCollectionPopup" tabIndex="-1" role="dialog" 
             data-backdrop="static" data-keyboard="false"
-            aria-labelledby="FeeCollectionPopupLabel" aria-hidden="true">
-          <div className="modal-dialog modal-lg">
+            aria-labelledby="feeCollectionPopupLabel" aria-hidden="true">
+          <div className="modal-dialog modal-lg-xl">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="FeeCollectionPopupLabel">
+                <h4 className="modal-title" id="feeCollectionPopupLabel">
                   { this.state.feeTypeId > 0 ? <Msg phrase="ManageText" /> : <Msg phrase="AddNewText"/> }
                 </h4>
               </div>

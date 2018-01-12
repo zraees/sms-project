@@ -31,6 +31,18 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeCollections(ShiftID, ClassID, SectionID, BatchID, StudentID));
         }
 
+        // GET api/<controller>
+        [HttpGet]
+        [Route("api/FeeDueDetailsByStudentID/{lang}/{studentId}")]         //
+        public HttpResponseMessage FeeDueDetailsByStudentID(string Lang, int StudentID)//
+        {
+            //string Lang = "us";
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            //var query = entities.spFeeCollections;
+            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeDueDetailsByStudentID(Lang, StudentID));
+        }
+
         //[Route("api/FeeCollectionsById/{lang}/{id}")]
         //public HttpResponseMessage Get(string lang, int id)
         [Route("api/FeeCollectionsById/{id}")]
@@ -210,6 +222,8 @@ namespace SMSServices.Controllers
             return result;
         }
 
+        //MakeFeePayment
+
         // POST api/<controller>
         public HttpResponseMessage Post(FeeCollections FeeCollection)
         {
@@ -302,6 +316,106 @@ namespace SMSServices.Controllers
             catch //(DbUpdateException)
             {
                 throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("api/UpdateFeeAging")]
+        public HttpResponseMessage UpdateFeeAging(List<spFeeDueDetailsByStudentID_Result> FeeCollectionsAging)
+        {
+            string strLog = "";
+            try
+            {
+                int FeeCollectionID = FeeCollectionsAging.FirstOrDefault().FeeCollectionID;
+
+
+                strLog += " -- " + string.Format("FeeCollectionID={0}", FeeCollectionID);
+
+
+                List<FeeCollectionsAging> entityFeeCollectionsAging = entities.FeeCollectionsAging
+                                                                                    .Where(t => t.FeeCollectionsDetails.FeeCollectionID == FeeCollectionID).ToList();
+
+                foreach (FeeCollectionsAging item in entityFeeCollectionsAging)
+                {
+                    strLog += " --- " + string.Format("item.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
+                    var tt = FeeCollectionsAging.FirstOrDefault(t => t.FeeCollectionAgingID == item.FeeCollectionAgingID);
+                    if (!(tt != null && tt.FeeCollectionAgingID > 0))
+                    {
+                        strLog += " ---- " + string.Format(" inside delete tt.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
+                        entities.Entry(item).State = EntityState.Deleted;
+                        entities.FeeCollectionsAging.Remove(item);
+                    }
+                }
+
+                if (FeeCollectionsAging.Count > 0)
+                {
+                    strLog += " ----- " + string.Format(" inside if FeeCollectionsAging.Count ={0}", FeeCollectionsAging.Count );
+                    foreach (var feeCollectionAging in FeeCollectionsAging)
+                    {
+                        if (feeCollectionAging.FeeCollectionAgingID > 0) // Edit
+                        {
+
+                            var entity = entities.FeeCollectionsAging.Find(feeCollectionAging.FeeCollectionAgingID);
+                            if (entity != null)
+                            {
+                                strLog += " ------ " + string.Format(" inside update feeCollectionAging.FeeCollectionAgingID={0}", feeCollectionAging.FeeCollectionAgingID);
+
+                                entity.AdditionalDiscount = feeCollectionAging.AdditionalDiscount;
+                                entity.DueAmount = feeCollectionAging.DueAmount;
+                                entity.FeePaymentStatusID = 1;
+                                entity.TotalPaidAmount = (entity.TotalPaidAmount.HasValue ? entity.TotalPaidAmount.Value : 0) + feeCollectionAging.TotalPaidAmount;
+                                
+
+                                entities.Entry(entity).State = EntityState.Modified;
+
+
+                                //entities.SaveChanges();
+                            }
+                        }
+                        //else if (feeCollectionAging.FeeCollectionAgingID == 0) // Add
+                        //{
+                        //    entities.FeeCollectionsAging.Add(new FeeCollectionsAging()
+                        //    {
+                        //        FeeCollectionAgingID = TimeTableID,
+                        //        DayID = DayID,
+                        //        StartTime = feeCollectionAging.StartTime,
+                        //        EndTime = feeCollectionAging.EndTime,
+                        //        IsBreak = feeCollectionAging.IsBreak,
+                        //        LocationID = feeCollectionAging.LocationID,
+                        //        SubjectID = feeCollectionAging.SubjectID,
+                        //        TeacherId = feeCollectionAging.TeacherId,
+                        //        //ShiftID = timeTable.ShiftID,
+                        //        //ClassID = timeTable.ClassID,
+                        //        //SectionID = timeTable.SectionID,
+                        //        //PeriodDurationMIns = timeTable.PeriodDurationMIns
+                        //    });
+                        //}
+                    }
+
+                    entities.SaveChanges();
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, "OK hogya ... " + strLog );
+                //var result = entities.FeeCollectionsAging.SingleOrDefault(t => t.TimeTableID == timeTable.TimeTableID);
+                //if (result != null)
+                //{
+                //    //int a = Convert.ToInt32("aaa");
+                //    result.Name = timeTable.Name;
+                //    result.Email = timeTable.Email;
+                //    result.DOB = timeTable.DOB;
+                //    result.Gender = timeTable.Gender;
+                //    result.IDNo = timeTable.IDNo;
+                //    result.NationalityId = timeTable.NationalityId;
+                //    result.Rating = timeTable.Rating;
+
+                //    entities.FeeCollectionsAging.Attach(result);
+                //    entities.Entry(result).State = System.Data.Entity.EntityState.Modified;
+                //    entities.SaveChanges();
+                //}
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message);
             }
         }
 

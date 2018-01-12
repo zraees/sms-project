@@ -245,6 +245,37 @@
     "TeacherText": "Teacher",
     "BreakPeriodText": "Break",
 
+    "FeeTypes": "Fee Types",
+    "NameAr": "Name (Ar)",
+    "FeeTypeText": "Fee Type",
+    "FeeCycleText": "Fee Cycle",
+    "FeeDiscountTypeText": "Fee Discount Type",
+    "FeeDueOnFrequencyText": "Fee Due on Frequency",
+    "FeeDueOnIntervalText": "Fee Due on interval",
+    
+    "FeeText": "Fee",
+    "DiscountRateText": "Discount Rate",
+    "DiscountValueText": "Discount Value",
+    "FeeAmountAfterDiscountText": "Fee Amount After Discount",
+    "DiscountOptionText": "Discount Option",
+    
+    "FixedText": "Fixed",
+    
+    "RollNoText": "Roll #",
+    "TotalFeeText": "Total Fee",
+    "TotalPaidText": "Total Paid",
+    "TotalDueAmountText": "Total Due Amount",
+    "DueDateText": "Due Date",
+    "FeeStatusNameText": "Fee Status",
+    "AdditionalDiscountText": "Additional Discount",
+    "TotalPaidAmountText": "Total Paid Amount",
+    "FeePaymentStatusText": "Payment Status",
+    
+    "SearchText": "Search",
+    "FeeDetailsText": "Fee Details",
+    "PaymentHistoryText": "Payment History",
+    
+    "DueAmountBeforeAdditionalDiscountText": "Due Amount Before Discount",
     
     "Please enter full name": "الرجاء إدخال الاسم بالكامل",
     "Please enter email address": "الرجاء إدخال عنوان البريد الإلكتروني",

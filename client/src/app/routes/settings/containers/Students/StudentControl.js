@@ -50,15 +50,15 @@ class StudentControl extends React.Component {
                             <thead>
                                 <tr>
                                     <th><Msg phrase="CodeText" /></th>
-                                    <th>{student.StudentRollNo?<Msg phrase="RollNoText" />:""}</th>
                                     <th colSpan="2"><Msg phrase="FullNameText" /></th>
+                                    <th>{student.StudentRollNo?<Msg phrase="RollNoText" />:""}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{student.StudentCode}</td>
-                                    <td>{student.StudentRollNo}</td>
                                     <td colSpan="2">{student.StudentName}</td>
+                                    <td>{student.StudentRollNo}</td>
                                 </tr>
                                 <tr>
                                     <th><Msg phrase="BatchText" /></th>

@@ -64,6 +64,10 @@ namespace SMSServices.Models
         public virtual DbSet<FeeTypes> FeeTypes { get; set; }
         public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
         public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
+        public virtual DbSet<FeePayments> FeePayments { get; set; }
+        public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
+        public virtual DbSet<FeePaymentStatus> FeePaymentStatus { get; set; }
+        public virtual DbSet<FeeStatus> FeeStatus { get; set; }
     
         public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
         {
@@ -88,6 +92,19 @@ namespace SMSServices.Models
                 new ObjectParameter("StudentId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeCollections_Result>("spFeeCollections", shiftIdParameter, classIdParameter, sectionIdParameter, batchIdParameter, studentIdParameter);
+        }
+    
+        public virtual ObjectResult<spFeeDueDetailsByStudentID_Result> spFeeDueDetailsByStudentID(string lang, Nullable<int> studentId)
+        {
+            var langParameter = lang != null ?
+                new ObjectParameter("lang", lang) :
+                new ObjectParameter("lang", typeof(string));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeDueDetailsByStudentID_Result>("spFeeDueDetailsByStudentID", langParameter, studentIdParameter);
         }
     }
 }
