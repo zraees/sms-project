@@ -25,7 +25,7 @@ namespace SMSServices.Models
         public string RollNo { get; set; }
         public Nullable<decimal> TotalFee { get; set; }
         public Nullable<decimal> TotalPaid { get; set; }
-        public Nullable<decimal> TotalDueAmount { get; set; }
+        public Nullable<decimal> TotalDueAmountAfterAddDisc { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
         public int DueCount { get; set; }
         public string FeeStatusName { get; set; }

@@ -63,11 +63,11 @@ namespace SMSServices.Models
         public virtual DbSet<FeeStructures> FeeStructures { get; set; }
         public virtual DbSet<FeeTypes> FeeTypes { get; set; }
         public virtual DbSet<StudentsClasses> StudentsClasses { get; set; }
-        public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
-        public virtual DbSet<FeePayments> FeePayments { get; set; }
-        public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
         public virtual DbSet<FeePaymentStatus> FeePaymentStatus { get; set; }
         public virtual DbSet<FeeStatus> FeeStatus { get; set; }
+        public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
+        public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
+        public virtual DbSet<FeePayments> FeePayments { get; set; }
     
         public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
         {

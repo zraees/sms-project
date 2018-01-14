@@ -104,6 +104,7 @@
     "ManageText": "Manage",
     "EditText": "Edit",
     "DeleteText": "Delete",
+    "OldNewText": " (Old / New)",
     
     "RequiredFieldText": "This field is required",
     "InvalidEmailAddressText": "Invalid email address",
@@ -269,6 +270,7 @@
     "AdditionalDiscountText": "Additional Discount",
     "TotalPaidAmountText": "Total Paid Amount",
     "FeePaymentStatusText": "Payment Status",
+    "TotalDueAmountAfterAdditionalDiscountText": "Total Due Amount After Additional Discount",
     
     "SearchText": "Search",
     "FeeDetailsText": "Fee Details",

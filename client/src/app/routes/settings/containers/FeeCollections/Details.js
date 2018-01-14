@@ -13,18 +13,21 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel,
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey, renderDate} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat} from '../../../../components/utils/functions'
 import { submitFeePayment } from './submit'
 
 import StudentControl from '../Students/StudentControl'
 import { config } from '../../../../config/config';
  
+import validate from './validate'
+
 class Details extends React.Component {
  
   constructor(props){
     super(props);
     this.state = {     
       langKey: getLangKey(),
+      paymentDate: today(),
       feeDueDetails: []
     }  
     // this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
@@ -52,10 +55,13 @@ class Details extends React.Component {
               "dueOn":item.DueOn != null ? moment(item.DueOn).format("MM/DD/YYYY") : "",
               "dueAmountBeforeAdditionalDiscount":item.DueAmountBeforeAdditionalDiscount,
               "additionalDiscount":item.AdditionalDiscount,
-              "dueAmount":item.DueAmount,
+              "newAdditionalDiscount":item.NewAdditionalDiscount,
+              "dueAmountAfterAddDisc":item.DueAmountAfterAddDisc,
               "outstandingAmount": item.OutstandingAmount,
-              "totalPaidAmount":item.TotalPaidAmount,
-              "feePaymentStatusName":item.FeePaymentStatusName
+              "paymentAmount":item.PaymentAmount,
+              //"feePaymentStatusName":item.FeePaymentStatusName,
+              "paymentDate": "",
+              "paymentComments": ""
             });
 
             
@@ -63,6 +69,7 @@ class Details extends React.Component {
 
           const initData = {
             "feeCollectionDetailId": 0,
+            "paymentDate": today(),
             "feeDueDetails": feeDueDetails
           } 
 
@@ -133,19 +140,12 @@ class Details extends React.Component {
       <form id="form-Fee-Aging" className="smart-form"
         onSubmit={handleSubmit((values) => { submitFeePayment(values) })}>
 
-        {studentId}
-
         <StudentControl batchId={batchId}
           sectionId={sectionId}
           classId={classId}
           shiftId={shiftId}
           studentId={studentId} />
 
-        <div className="row">
-          <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
-
-          </section>
-        </div>
 
         <fieldset>
           <div className="tabbable tabs">
@@ -162,7 +162,26 @@ class Details extends React.Component {
             <div className="tab-content">
               <div className="tab-pane active" id="A1P1A">
 
-                <FieldArray name="feeDueDetails" component={renderFeeDueDetails} />
+                <div className="row">
+                  <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                    <Field name="paymentDate" label="PaymentDateText" 
+                      component={RFDatePicker} />
+                  </section>
+                  <section className="remove-col-padding col-sm-9 col-md-9 col-lg-9">
+                    <Field name="paymentComments" labelClassName="input" 
+                      labelIconClassName="icon-append fa fa-file-text-o"
+                      component={RFField}
+                      maxLength="150" type="text"
+                      label="FeePaymentCommentsText"
+                      placeholder="P" />
+                  </section>
+                </div>
+
+                <div className="row">
+                  <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                    <FieldArray name="feeDueDetails" component={renderFeeDueDetails} />
+                  </section>
+                </div>
 
                 {/* <div className="table-responsive">
 
@@ -295,6 +314,7 @@ const afterSubmit = function(result, dispatch) {
 //export default 
 Details = reduxForm({
   form: 'Details',  // a unique identifier for this form
+  validate,
   onSubmitSuccess: afterSubmit,
   keepDirtyOnReinitialize: false 
 })(Details)
@@ -314,7 +334,7 @@ Details = connect(
 const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
   <div >         
     <div className="table-responsive"> 
-
+      <span>Delete func is pending... also fix webApi code</span>
       <table className="table table-striped table-bordered table-hover table-responsive">
         <thead>
           <tr>
@@ -329,9 +349,10 @@ const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
             </th> */}
             <th>
               <Msg phrase="AdditionalDiscountText" />
+              <Msg phrase="OldNewText" />
             </th>
             <th>
-              <Msg phrase="TotalDueAmountText" />
+              <Msg phrase="TotalDueAmountAfterAdditionalDiscountText" />
             </th>
             <th>
               <Msg phrase="OutstandingAmountText" />
@@ -373,20 +394,20 @@ const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
                   type="label" />
               </td> */}
               <td>
-                {/* <Field name={`${period}.additionalDiscount`}
-                  component="input"
+                <Field name={`${period}.additionalDiscount`}
+                  component={RFLabel}
                   className="width-50-px"
                   disabled={true}
-                  type="text" /> */}
-                <Field name={`${period}.additionalDiscount`} labelClassName="input remove-col-padding "
-                  labelIconClassName=""
+                  type="text" />
+                <Field name={`${period}.newAdditionalDiscount`} labelClassName="input remove-col-padding "
+                  labelIconClassName="" 
                   validate={[number]}
                   component={RFField}
                   // onBlur={(e) => this.handleAdditionalDiscountBlur(index, `${period}.additionalDiscount`)} 
                   type="text" maxLength="5" />
               </td>
               <td>
-                <Field name={`${period}.dueAmount`}
+                <Field name={`${period}.dueAmountAfterAddDisc`}
                   component={RFLabel}
                   className="width-50-px"
                   disabled={true}
@@ -400,7 +421,7 @@ const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
                   type="text" /> 
               </td>
               <td>
-                <Field name={`${period}.totalPaidAmount`} labelClassName="input remove-col-padding "
+                <Field name={`${period}.paymentAmount`} labelClassName="input remove-col-padding "
                   labelIconClassName=""
                   validate={[number]}
                   component={RFField} 

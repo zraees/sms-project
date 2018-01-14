@@ -23,7 +23,7 @@ namespace SMSServices.Models
         public int FeeCollectionDetailID { get; set; }
         public System.DateTime DueOn { get; set; }
         public decimal AdditionalDiscount { get; set; }
-        public decimal DueAmount { get; set; }
+        public decimal DueAmountAfterAddDisc { get; set; }
         public Nullable<decimal> TotalPaidAmount { get; set; }
         public Nullable<int> FeePaymentStatusID { get; set; }
     

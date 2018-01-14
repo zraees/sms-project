@@ -109,7 +109,7 @@
     <Property Name="FeeCollectionDetailID" Type="int" Nullable="false" />
     <Property Name="DueOn" Type="date" Nullable="false" />
     <Property Name="AdditionalDiscount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
-    <Property Name="DueAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="DueAmountAfterAddDisc" Type="decimal" Precision="8" Scale="2" Nullable="false" />
     <Property Name="TotalPaidAmount" Type="decimal" Precision="8" Scale="2" />
     <Property Name="FeePaymentStatusID" Type="int" />
   </EntityType>
@@ -172,16 +172,17 @@
     <Key>
       <PropertyRef Name="FeePaymentID" />
     </Key>
-    <Property Name="FeePaymentID" Type="int" Nullable="false" />
-    <Property Name="PaymentCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="FeePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="PaidOn" Type="date" Nullable="false" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="FeePaymentsDetails">
     <Key>
       <PropertyRef Name="FeePaymentDetailID" />
     </Key>
-    <Property Name="FeePaymentDetailID" Type="int" Nullable="false" />
+    <Property Name="FeePaymentDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FeePaymentID" Type="int" Nullable="false" />
     <Property Name="FeeCollectionAgingID" Type="int" Nullable="false" />
     <Property Name="PaidAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />

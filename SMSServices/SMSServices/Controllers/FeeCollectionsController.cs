@@ -202,8 +202,9 @@ namespace SMSServices.Controllers
                 DueOn = i == 0 ? new DateTime(Batch.StartDate.Year, Batch.StartDate.Month, DueOnDay) : DueOn.AddMonths(Interval);
 
                 Aging.DueOn = DueOn;
-                Aging.DueAmount = MonthlyFee * Interval; 
+                Aging.DueAmountAfterAddDisc = MonthlyFee * Interval; 
                 Aging.AdditionalDiscount = 0;
+                Aging.FeePaymentStatusID =1;
 
 
                 result.Add(Aging);
@@ -326,30 +327,41 @@ namespace SMSServices.Controllers
             string strLog = "";
             try
             {
-                int FeeCollectionID = FeeCollectionsAging.FirstOrDefault().FeeCollectionID;
+                bool IsFeePaidSaved = false;
+                bool IsFeePaidDeleted = false;
+                int PaymentID = 0;
 
+                FeePayments FeePayment= new FeePayments();
+                List<FeePaymentsDetails> FeePaymentsDetailsList = new List<FeePaymentsDetails>();
+                int FeeCollectionID = FeeCollectionsAging.FirstOrDefault().FeeCollectionID;
+                DateTime PaymentDate = FeeCollectionsAging.FirstOrDefault().PaymentDate;
+                string PaymentComments = FeeCollectionsAging.FirstOrDefault().PaymentComments;
 
                 strLog += " -- " + string.Format("FeeCollectionID={0}", FeeCollectionID);
-
-
+                
                 List<FeeCollectionsAging> entityFeeCollectionsAging = entities.FeeCollectionsAging
                                                                                     .Where(t => t.FeeCollectionsDetails.FeeCollectionID == FeeCollectionID).ToList();
 
-                foreach (FeeCollectionsAging item in entityFeeCollectionsAging)
-                {
-                    strLog += " --- " + string.Format("item.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
-                    var tt = FeeCollectionsAging.FirstOrDefault(t => t.FeeCollectionAgingID == item.FeeCollectionAgingID);
-                    if (!(tt != null && tt.FeeCollectionAgingID > 0))
-                    {
-                        strLog += " ---- " + string.Format(" inside delete tt.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
-                        entities.Entry(item).State = EntityState.Deleted;
-                        entities.FeeCollectionsAging.Remove(item);
-                    }
-                }
+                /* 
+                 * delete has issue: because I loaded just pending payment records, so difficult to know record delete my user or not loaded by SP
+                */ 
+                //foreach (FeeCollectionsAging item in entityFeeCollectionsAging)
+                //{
+                //    //strLog += " --- " + string.Format("item.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
+                //    var tt = FeeCollectionsAging.FirstOrDefault(t => t.FeeCollectionAgingID == item.FeeCollectionAgingID);
+                //    if (!(tt != null && tt.FeeCollectionAgingID > 0))
+                //    {
+                //        //strLog += " ---- " + string.Format(" inside delete tt.FeeCollectionAgingID={0}", item.FeeCollectionAgingID);
+                //        entities.Entry(item).State = EntityState.Deleted;
+                //        entities.FeeCollectionsAging.Remove(item);
+
+                //        IsFeePaidDeleted = true;
+                //    }
+                //}
 
                 if (FeeCollectionsAging.Count > 0)
                 {
-                    strLog += " ----- " + string.Format(" inside if FeeCollectionsAging.Count ={0}", FeeCollectionsAging.Count );
+                    //strLog += " ----- " + string.Format(" inside if FeeCollectionsAging.Count ={0}", FeeCollectionsAging.Count );
                     foreach (var feeCollectionAging in FeeCollectionsAging)
                     {
                         if (feeCollectionAging.FeeCollectionAgingID > 0) // Edit
@@ -358,18 +370,31 @@ namespace SMSServices.Controllers
                             var entity = entities.FeeCollectionsAging.Find(feeCollectionAging.FeeCollectionAgingID);
                             if (entity != null)
                             {
-                                strLog += " ------ " + string.Format(" inside update feeCollectionAging.FeeCollectionAgingID={0}", feeCollectionAging.FeeCollectionAgingID);
+                                // change db values if there is addtional discount or paymentAmount.
+                                if (feeCollectionAging.NewAdditionalDiscount > 0 || feeCollectionAging.PaymentAmount > 0)
+                                {
+                                    IsFeePaidSaved = true;
+                                    //strLog += " ------ " + string.Format(" inside update feeCollectionAging.FeeCollectionAgingID={0}", feeCollectionAging.FeeCollectionAgingID);
 
-                                entity.AdditionalDiscount = feeCollectionAging.AdditionalDiscount;
-                                entity.DueAmount = feeCollectionAging.DueAmount;
-                                entity.FeePaymentStatusID = 1;
-                                entity.TotalPaidAmount = (entity.TotalPaidAmount.HasValue ? entity.TotalPaidAmount.Value : 0) + feeCollectionAging.TotalPaidAmount;
-                                
+                                    entity.AdditionalDiscount = entity.AdditionalDiscount + feeCollectionAging.NewAdditionalDiscount;
+                                    entity.DueAmountAfterAddDisc = feeCollectionAging.DueAmountAfterAddDisc - feeCollectionAging.NewAdditionalDiscount;
+                                    entity.TotalPaidAmount = (entity.TotalPaidAmount.HasValue ? entity.TotalPaidAmount.Value : 0) + feeCollectionAging.PaymentAmount;
+                                    entity.FeePaymentStatusID = entity.TotalPaidAmount >= entity.DueAmountAfterAddDisc ? 3 : (entity.TotalPaidAmount > 0 ? 2 : 1);
 
-                                entities.Entry(entity).State = EntityState.Modified;
+                                    entities.Entry(entity).State = EntityState.Modified;
 
-
-                                //entities.SaveChanges();
+                                    // add payment db entry in case when there is paymentAmount
+                                    if (feeCollectionAging.PaymentAmount > 0)
+                                    {
+                                         
+                                        FeePaymentsDetailsList.Add(new FeePaymentsDetails()
+                                        {
+                                            FeeCollectionAgingID = entity.FeeCollectionAgingID,
+                                            PaidAmount = feeCollectionAging.PaymentAmount
+                                        });
+                                    }
+                                    //entities.SaveChanges();
+                                }
                             }
                         }
                         //else if (feeCollectionAging.FeeCollectionAgingID == 0) // Add
@@ -392,10 +417,33 @@ namespace SMSServices.Controllers
                         //}
                     }
 
-                    entities.SaveChanges();
+                    if (IsFeePaidSaved)
+                    {
+                        //FeePayments FeePayment = new FeePayments();
+                        //FeePayment.FeePaymentsDetails = FeePaymentsDetailsList;
+                        //FeePayment.Comments = "This is new comments ...";
+                        //FeePayment.PaidOn = DateTime.Now;
+                        //new FeePaymentsController().AddFeePayment(FeePayment);
+                        strLog += " ------ " + string.Format(" IsFeePaidSaved={0}", IsFeePaidSaved);
+
+                         FeePayment =new FeePayments()
+                        {
+                            Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
+                            PaidOn = PaymentDate,
+                            Comments = PaymentComments,
+                            FeePaymentsDetails = FeePaymentsDetailsList,
+                            CreatedOn = DateTime.Now
+                        };
+                        entities.FeePayments.Add(FeePayment);
+                    }
+                    if (IsFeePaidDeleted || IsFeePaidSaved)
+                        entities.SaveChanges();
+
+                    if (IsFeePaidSaved)
+                        PaymentID = FeePayment.FeePaymentID;
                 }
-                
-                return Request.CreateResponse(HttpStatusCode.OK, "OK hogya ... " + strLog );
+
+                return Request.CreateResponse(HttpStatusCode.OK, PaymentID);
                 //var result = entities.FeeCollectionsAging.SingleOrDefault(t => t.TimeTableID == timeTable.TimeTableID);
                 //if (result != null)
                 //{
@@ -415,7 +463,7 @@ namespace SMSServices.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message + " inner ex ==> " + ex.InnerException.Message + " inner ex 2 ==> " + ex.InnerException.InnerException.Message);
             }
         }
 
@@ -446,6 +494,7 @@ namespace SMSServices.Controllers
         public HttpResponseMessage RemoveFeeCollection(int id)
         {
             string strLog = "";
+            int ID = 0;
             try
             {
                 //var FeeCollection = new FeeCollections { FeeCollectionID = id };
@@ -456,6 +505,17 @@ namespace SMSServices.Controllers
                     {
                         foreach (FeeCollectionsAging Aging in FeeCollectionDetail.FeeCollectionsAging.ToList())
                         {
+                            foreach (FeePaymentsDetails FeePaymentDetail in Aging.FeePaymentsDetails.ToList())
+                            {
+                                if ( FeePaymentDetail.FeePayments!=null)
+                                {
+                                    entities.Entry(FeePaymentDetail.FeePayments).State = EntityState.Deleted;
+                                }
+                                
+                                entities.Entry(FeePaymentDetail).State = EntityState.Deleted;
+
+                                ID = FeePaymentDetail.FeePaymentID;
+                            }
                             entities.Entry(Aging).State = EntityState.Deleted;
                             //entities.FeeCollectionsAging.Remove(Aging);
                             //entities.SaveChanges();

@@ -20,9 +20,10 @@ namespace SMSServices.Models
         }
     
         public int FeePaymentID { get; set; }
-        public string PaymentCode { get; set; }
+        public string Code { get; set; }
         public System.DateTime PaidOn { get; set; }
         public string Comments { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     
         public virtual ICollection<FeePaymentsDetails> FeePaymentsDetails { get; set; }
     }

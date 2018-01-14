@@ -23,9 +23,11 @@ namespace SMSServices.Models
         public System.DateTime DueOn { get; set; }
         public Nullable<decimal> DueAmountBeforeAdditionalDiscount { get; set; }
         public decimal AdditionalDiscount { get; set; }
-        public decimal DueAmount { get; set; }
+        public decimal DueAmountAfterAddDisc { get; set; }
         public Nullable<decimal> OutstandingAmount { get; set; }
         public decimal TotalPaidAmount { get; set; }
+        public decimal NewAdditionalDiscount { get; set; }
+        public decimal PaymentAmount { get; set; }
         public string FeePaymentStatusCode { get; set; }
         public string FeePaymentStatusName { get; set; }
     }

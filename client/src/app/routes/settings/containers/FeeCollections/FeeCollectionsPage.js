@@ -92,7 +92,8 @@ class FeeCollectionsPage extends React.Component {
     // call before modal open
     $('#feeCollectionPopup').on('show.bs.modal', function (e) {      
 
-      console.log('show.bs.modal');
+      //console.log('show.bs.modal');
+      $('#paymentId').val('');
 
       var button = $(e.relatedTarget);                    // Button that triggered the modal   
       var feeTypeId = button.data('id');             // Extract info from data-* attributes
@@ -114,7 +115,7 @@ class FeeCollectionsPage extends React.Component {
       $(this).data('modal', null);
       // $(".modal-body").html("");
 
-      console.log($('#paymentId').val());
+      //console.log($('#paymentId').val());
 
       var table = $('#FeeCollectionGrid').DataTable();
       table.clear();
@@ -441,7 +442,7 @@ class FeeCollectionsPage extends React.Component {
                           {data: "FullNameAr"},      
                           {data: "TotalFee"}, 
                           {data: "TotalPaid"},    
-                          {data: "TotalDueAmount"},  
+                          {data: "TotalDueAmountAfterAddDisc"},  
                           {data: "DueDate"}, 
                           {data: "FeeStatusName"},
                           {data: "FeeCollectionID"},
@@ -464,7 +465,7 @@ class FeeCollectionsPage extends React.Component {
                         <th><Msg phrase="FullNameArText"/></th>
                         <th><Msg phrase="TotalFeeText"/></th>   
                         <th><Msg phrase="TotalPaidText"/></th>
-                        <th><Msg phrase="TotalDueAmountText"/></th> 
+                        <th><Msg phrase="TotalDueAmountAfterAdditionalDiscountText"/></th> 
                         <th><Msg phrase="DueDateText"/></th>
                         <th><Msg phrase="FeeStatusNameText"/></th>   
                         <th></th>

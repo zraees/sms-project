@@ -15,4 +15,10 @@ namespace SMSServices.Models
         public string NameAr { get { return string.Format("{0} {1} {2} {3}", NameAr1, NameAr2, NameAr3, NameAr4); } }
 
     }
+
+    public partial class spFeeDueDetailsByStudentID_Result
+    {
+        public DateTime PaymentDate { get; set; }
+        public string PaymentComments { get; set; }
+    }
 }

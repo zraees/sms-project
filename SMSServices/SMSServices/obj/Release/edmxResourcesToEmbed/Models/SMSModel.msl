@@ -475,62 +475,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="spFeeCollections" FunctionName="SMSModel.Store.spFeeCollections">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SMSModel.spFeeCollections_Result">
-          <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
-          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
-          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
-          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
-          <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
-          <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
-          <ScalarProperty Name="TotalDueAmount" ColumnName="TotalDueAmount" />
-          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-          <ScalarProperty Name="DueCount" ColumnName="DueCount" />
-          <ScalarProperty Name="FeeStatusName" ColumnName="FeeStatusName" />
-          <ScalarProperty Name="FeeStatusNameAr" ColumnName="FeeStatusNameAr" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="FeeCollectionsAging">
-      <EntityTypeMapping TypeName="SMSModel.FeeCollectionsAging">
-        <MappingFragment StoreEntitySet="FeeCollectionsAging">
-          <ScalarProperty Name="FeePaymentStatusID" ColumnName="FeePaymentStatusID" />
-          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
-          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
-          <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
-          <ScalarProperty Name="DueOn" ColumnName="DueOn" />
-          <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
-          <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FeePayments">
-      <EntityTypeMapping TypeName="SMSModel.FeePayments">
-        <MappingFragment StoreEntitySet="FeePayments">
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
-          <ScalarProperty Name="PaymentCode" ColumnName="PaymentCode" />
-          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FeePaymentsDetails">
-      <EntityTypeMapping TypeName="SMSModel.FeePaymentsDetails">
-        <MappingFragment StoreEntitySet="FeePaymentsDetails">
-          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-          <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
-          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
-          <ScalarProperty Name="FeePaymentDetailID" ColumnName="FeePaymentDetailID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FeePaymentStatus">
       <EntityTypeMapping TypeName="SMSModel.FeePaymentStatus">
         <MappingFragment StoreEntitySet="FeePaymentStatus">
@@ -551,6 +495,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FeeCollectionsAging">
+      <EntityTypeMapping TypeName="SMSModel.FeeCollectionsAging">
+        <MappingFragment StoreEntitySet="FeeCollectionsAging">
+          <ScalarProperty Name="FeePaymentStatusID" ColumnName="FeePaymentStatusID" />
+          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+          <ScalarProperty Name="DueAmountAfterAddDisc" ColumnName="DueAmountAfterAddDisc" />
+          <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
+          <ScalarProperty Name="DueOn" ColumnName="DueOn" />
+          <ScalarProperty Name="FeeCollectionDetailID" ColumnName="FeeCollectionDetailID" />
+          <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spFeeCollections" FunctionName="SMSModel.Store.spFeeCollections">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMSModel.spFeeCollections_Result">
+          <ScalarProperty Name="FeeCollectionID" ColumnName="FeeCollectionID" />
+          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="TotalFee" ColumnName="TotalFee" />
+          <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
+          <ScalarProperty Name="TotalDueAmountAfterAddDisc" ColumnName="TotalDueAmountAfterAddDisc" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="DueCount" ColumnName="DueCount" />
+          <ScalarProperty Name="FeeStatusName" ColumnName="FeeStatusName" />
+          <ScalarProperty Name="FeeStatusNameAr" ColumnName="FeeStatusNameAr" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="spFeeDueDetailsByStudentID" FunctionName="SMSModel.Store.spFeeDueDetailsByStudentID">
       <ResultMapping>
         <ComplexTypeMapping TypeName="SMSModel.spFeeDueDetailsByStudentID_Result">
@@ -564,13 +544,36 @@
           <ScalarProperty Name="DueOn" ColumnName="DueOn" />
           <ScalarProperty Name="DueAmountBeforeAdditionalDiscount" ColumnName="DueAmountBeforeAdditionalDiscount" />
           <ScalarProperty Name="AdditionalDiscount" ColumnName="AdditionalDiscount" />
-          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+          <ScalarProperty Name="DueAmountAfterAddDisc" ColumnName="DueAmountAfterAddDisc" />
           <ScalarProperty Name="OutstandingAmount" ColumnName="OutstandingAmount" />
           <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+          <ScalarProperty Name="NewAdditionalDiscount" ColumnName="NewAdditionalDiscount" />
+          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
           <ScalarProperty Name="FeePaymentStatusCode" ColumnName="FeePaymentStatusCode" />
           <ScalarProperty Name="FeePaymentStatusName" ColumnName="FeePaymentStatusName" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="FeePaymentsDetails">
+      <EntityTypeMapping TypeName="SMSModel.FeePaymentsDetails">
+        <MappingFragment StoreEntitySet="FeePaymentsDetails">
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="FeeCollectionAgingID" ColumnName="FeeCollectionAgingID" />
+          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+          <ScalarProperty Name="FeePaymentDetailID" ColumnName="FeePaymentDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeePayments">
+      <EntityTypeMapping TypeName="SMSModel.FeePayments">
+        <MappingFragment StoreEntitySet="FeePayments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

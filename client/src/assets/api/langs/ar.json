@@ -105,6 +105,7 @@
     "ManageText": "تصحيح", 
     "EditText": "Edit",
     "DeleteText": "Delete",
+    "OldNewText": " (Old / New)",
 
     "RequiredFieldText": "هذا مجال مطلوب",
     "InvalidEmailAddressText": "عنوان البريد الإلكتروني غير صالح",
@@ -270,6 +271,7 @@
     "AdditionalDiscountText": "Additional Discount",
     "TotalPaidAmountText": "Total Paid Amount",
     "FeePaymentStatusText": "Payment Status",
+    "TotalDueAmountAfterAdditionalDiscountText": "Total Due Amount After Additional Discount",
     
     "SearchText": "Search",
     "FeeDetailsText": "Fee Details",

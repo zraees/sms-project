@@ -9,7 +9,7 @@ import Msg from '../i18n/Msg'
 import 'react-datepicker/dist/react-datepicker.css';
 
 const RFDatePicker = ({input, disabled, label, labelClassName, defaultValue, minDate, handleChange, meta: {touched, error, warning} }) => (
-  <div>
+  <div> 
     {label==""?"":<label><Msg phrase={label}/></label>}
     <label className={classnames(['input', labelClassName, {'state-error':touched && error!==undefined}])}>
         <i className="icon-append fa fa-calendar"/>

@@ -41,14 +41,19 @@ export function submitFeePayment(values) {
   LoaderVisibility(true);
 
   if (values.feeDueDetails.length > 0) {
+
+    values.feeDueDetails[0].paymentDate = values.paymentDate;
+    values.feeDueDetails[0].paymentComments = values.paymentComments;
+    
     console.log(' not empty ..', values.feeDueDetails);
 
     axios.put('/api/UpdateFeeAging', values.feeDueDetails)
       .then(function (response) {
 
+        console.log('response ',response);
         alert('s', 'data has been updated.');
         $('#feeCollectionPopup').modal('hide');
-        $('#paymentId').val('123xx45');
+        $('#paymentId').val(response.data);
         
         LoaderVisibility(false);
 

@@ -108,6 +108,7 @@
     "ManageText": "ترمیم", 
     "EditText": "Edit",
     "DeleteText": "Delete",
+    "OldNewText": " (Old / New)",
 
     "RequiredFieldText": "یہ ایک مطلوبہ فیلڈ ہے",
     "InvalidEmailAddressText": "غلط ای میل ایڈریس",
@@ -273,6 +274,7 @@
     "AdditionalDiscountText": "Additional Discount",
     "TotalPaidAmountText": "Total Paid Amount",
     "FeePaymentStatusText": "Payment Status",
+    "TotalDueAmountAfterAdditionalDiscountText": "Total Due Amount After Additional Discount",
     
     "SearchText": "Search",
     "FeeDetailsText": "Fee Details",
