@@ -7,6 +7,8 @@ import axios from 'axios'
 import {SubmissionError, reset} from 'redux-form'
 import {connect} from 'react-redux' 
 import moment from 'moment'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jsPDF'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
@@ -29,6 +31,10 @@ import mapForCombo, {renderDate} from '../../../../components/utils/functions'
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
 import {RFField, RFReactSelect, RFLabel} from '../../../../components/ui'
 import submit, {remove, generateFeeCollections} from './submit' 
+
+import HtmlRender from '../../../../components/utils/HtmlRender'
+
+const feePaymentSlipTemplate = require('html-loader!./FeePaymentSlip-1.html');
 
 class FeeCollectionsPage extends React.Component {
   
@@ -57,6 +63,8 @@ class FeeCollectionsPage extends React.Component {
     this.handleBatchBlur = this.handleBatchBlur.bind(this);
     this.renderModalBody = this.renderModalBody.bind(this);
     
+    this.handlePrintClick = this.handlePrintClick.bind(this);
+
   }
 
   componentWillMount() {
@@ -124,7 +132,18 @@ class FeeCollectionsPage extends React.Component {
       $(this).data('bs.modal', null);
       $(this).remove();
     }.bind(this));
-     
+
+    $('#reportPopup').on('shown.bs.modal', function () {
+      // $(this).find('.modal-body').css({
+      //   width: 'auto',
+      //   height: 'auto',
+      //   'max-height': '100%'
+      // });
+
+      $(this).find('.modal-body').height(500);
+
+    });
+
     LoaderVisibility(false);
   }
 
@@ -221,6 +240,132 @@ class FeeCollectionsPage extends React.Component {
 
     table.ajax.url(url).load();
 
+  }
+
+  handlePrintClick(obj, value) {
+
+    //console.log('handleSearchClick this.props.sectionID ', this.props.shiftId, this.props.sectionId);
+    
+    /*var pdf = new jsPDF('p', 'pt', 'letter');
+    var canvas = pdf.canvas;
+    canvas.width = 8.5 * 72;
+    html2canvas(document.getElementById("content11"), {
+        canvas:canvas,
+        logging:false,
+        onrendered: function(canvas) {
+            var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
+            iframe.setAttribute('style','position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+            //document.body.appendChild(iframe);
+            iframe.src = pdf.output('datauristring');
+           //var div = document.createElement('pre');
+           //div.innerText=pdf.output();
+           //document.body.appendChild(div);
+        }
+    });
+    */
+
+
+    /*
+    var doc = new jsPDF();
+
+    $('#reportPopup').modal('show');
+    var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
+    iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:100%');
+
+    doc.fromHTML($("#feePaymentSlip").get(0), 20, 20, { 'width': 500 }, function (bla) {
+      console.log('aaa');
+    iframe.src = doc.output('datauristring');
+    });
+    //doc.save('test.pdf');
+    */
+    
+     
+
+    // var content = document.getElementById("feePaymentSlip").removeClass('hide');
+    // console.log(content)
+    //var a = document.getElementById("feePaymentSlip");
+    //a.style.display = "block";
+    $("#feePaymentSlip").removeClass('hide');
+    html2canvas(document.getElementById("feePaymentSlip"), {
+      logging: false
+      , onclone: function (document) {
+        console.log('onclone ..', document);
+        //$("#feePaymentSlip").show();
+      }
+    }).then(function (canvas) {
+      var img = canvas.toDataURL('image/png');
+      //var doc = new jsPDF('p', 'cm',  [22, 29]);
+      var doc = new jsPDF('p', 'pt', 'a4');
+      doc.addImage(img, 'JPEG', 1, 1);
+      //doc.save('test.pdf');
+
+      //$('#reportPopup').modal('show');
+
+      //var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
+      //iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:100%');
+      //document.body.appendChild(iframe);
+      //iframe.src = doc.output('datauristring');  it takes too much time so open in new window option is suitable
+
+      //good solution to open in new window
+      window.open(doc.output('bloburl'), '_blank');
+      //a.style.display = "none";
+      //$("#feePaymentSlip").hide();
+      $("#feePaymentSlip").addClass('hide');
+    });
+
+
+    /*
+    var pdf = new jsPDF('p', 'pt', 'letter');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        //source = $('#FeeCollectionGrid_wrapper')[0];
+
+        // we support special element handlers. Register them with jQuery-style 
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors 
+        // (class, of compound) at this time.
+        // specialElementHandlers = {
+        //     // element with id of "bypass" - jQuery style selector
+        //     '#bypassme': function (element, renderer) {
+        //         // true = "handled elsewhere, bypass text extraction"
+        //         return true
+        //     }
+        // };
+        // margins = {
+        //     top: 80,
+        //     bottom: 60,
+        //     left: 40,
+        //     width: 522
+        // };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+
+        pdf.fromHTML(
+          document.getElementById("FeeCollectionGrid_wrapper"), // HTML string or DOM elem ref.
+          40, // x coord
+          80, { // y coord
+                'width': 522, // max width of content on PDF
+                'elementHandlers': {
+                  // element with id of "bypass" - jQuery style selector
+                  '#bypassme': function (element, renderer) {
+                      // true = "handled elsewhere, bypass text extraction"
+                      return true
+                  }
+              }
+            },
+
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('Test.pdf');
+            }, {
+              top: 80,
+              bottom: 60,
+              left: 40,
+              width: 522
+          }
+        );
+        */
   }
 
   renderModalBody(popupPageName){ 
@@ -367,6 +512,9 @@ class FeeCollectionsPage extends React.Component {
                           <button type="button" onClick={this.handleSearchClick} className="btn btn-primary">
                             <Msg phrase="SearchText" />
                           </button>
+                          <button type="button" onClick={this.handlePrintClick} download className="btn btn-primary">
+                            <Msg phrase="PrintText" />
+                          </button>
                           {/* <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
                             {feeCollectionId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
                           </button> */}
@@ -404,7 +552,7 @@ class FeeCollectionsPage extends React.Component {
                                 + ' data-section-id="'+ row.SectionId + '"'
                                 + ' data-shift-id="'+ row.ShiftId + '"'
                                 + ' data-student-id="'+ row.StudentId + '"'
-                                + ' data-id="' + data + '" data-target="#feeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">Edit</span></a>';
+                                + ' data-id="' + data + '" data-target="#feeCollectionPopup"><i id="edi" className=\"glyphicon glyphicon-edit\"></i><span className=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -412,7 +560,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" className=\"fa fa-money\"></i><span className=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -420,7 +568,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" class=\"fa fa-bell\"></i><span class=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" className=\"fa fa-bell\"></i><span className=\"sr-only\">Edit</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -428,7 +576,7 @@ class FeeCollectionsPage extends React.Component {
                           }
                           , {
                             "render": function (data, type, row) {
-                              return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
+                              return '<a id="dele" data-tid="' + data + '"><i className=\"glyphicon glyphicon-trash\"></i><span className=\"sr-only\">Edit</span></a>';
                             }.bind(self),
                             "className": "dt-center",
                             "sorting": false,
@@ -497,11 +645,11 @@ class FeeCollectionsPage extends React.Component {
         </WidgetGrid>
 
         {/* end widget grid */}
-                      <input id="paymentId" type="text"></input>
-                      
-        <div className="modal fade" id="feeCollectionPopup" tabIndex="-1" role="dialog" 
-            data-backdrop="static" data-keyboard="false"
-            aria-labelledby="feeCollectionPopupLabel" aria-hidden="true">
+        <input id="paymentId" type="text"></input>
+
+        <div className="modal fade" id="feeCollectionPopup" tabIndex="-1" role="dialog"
+          data-backdrop="static" data-keyboard="false"
+          aria-labelledby="feeCollectionPopupLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg-xl">
             <div className="modal-content">
               <div className="modal-header">
@@ -509,13 +657,13 @@ class FeeCollectionsPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="feeCollectionPopupLabel">
-                  { this.state.feeTypeId > 0 ? <Msg phrase="ManageText" /> : <Msg phrase="AddNewText"/> }
+                  {this.state.feeTypeId > 0 ? <Msg phrase="ManageText" /> : <Msg phrase="AddNewText" />}
                 </h4>
               </div>
-              <div className="modal-body"> 
-              {
-                this.renderModalBody(this.state.pageName) 
-              }
+              <div className="modal-body">
+                {
+                  this.renderModalBody(this.state.pageName)
+                }
                 {/* { this.state.feeTypeId > 0 ?                     
                   <Details 
                     FeeTypeID={this.state.feeTypeId}  
@@ -531,6 +679,116 @@ class FeeCollectionsPage extends React.Component {
           {/* /.modal-dialog */}
         </div>
         {/* /.modal */}
+
+
+        <HtmlRender html={feePaymentSlipTemplate}/>
+
+        {/* <div id="content11" className="width-400-px" >
+
+          <div  className="row">
+            <div className="col-md-9">
+              <h4 className="semi-bold">Rogers, Inc.</h4>
+              <address>
+                <strong>Mr. Simon Hedger</strong>
+                <br />
+                342 Mirlington Road,
+                                            <br />
+                Calfornia, CA 431464
+                                            <br />
+                <abbr title="Phone">P:</abbr> (467) 143-4317
+                                        </address>
+            </div>
+            <div className="col-md-3">
+              <div>
+                <div>
+                  <strong>INVOICE NO :</strong>
+                  <span className="pull-right"> #AA-454-4113-00 </span>
+                </div>
+              </div>
+              <div>
+                <div className="font-md">
+                  <strong>INVOICE DATE :</strong>
+                  <span className="pull-right"> <i className="fa fa-calendar"></i> 15/02/13 </span>
+                </div>
+              </div>
+              <br />
+              <div className="well well-sm  bg-color-darken txt-color-white no-border">
+                <div className="fa-lg">
+                  Total Due :
+                                                <span className="pull-right"> 4,972 USD** </span>
+                </div>
+              </div>
+              <br />
+              <br />
+            </div>
+          </div>
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th className="text-center">QTY</th>
+                <th>ITEM</th>
+                <th>DESCRIPTION</th>
+                <th>PRICE</th>
+                <th>SUBTOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="text-center"><strong>1</strong></td>
+                <td><a href="#">Print and Web Logo Design</a></td>
+                <td>Perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam xplicabo.</td>
+                <td>$1,300.00</td>
+                <td>$1,300.00</td>
+              </tr>
+              <tr>
+                <td className="text-center"><strong>1</strong></td>
+                <td><a href="#">SEO Management</a></td>
+                <td>Sit voluptatem accusantium doloremque laudantium inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</td>
+                <td>$1,400.00</td>
+                <td>$1,400.00</td>
+              </tr>
+              <tr>
+                <td className="text-center"><strong>1</strong></td>
+                <td><a href="#">Backend Support and Upgrade</a></td>
+                <td>Inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</td>
+                <td>$1,700.00</td>
+                <td>$1,700.00</td>
+              </tr>
+              <tr>
+                <td colSpan="4">Total</td>
+                <td><strong>$4,400.00</strong></td>
+              </tr>
+              <tr>
+                <td colSpan="4">HST/GST</td>
+                <td><strong>13%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div> */}
+
+        {/* print popup modal start */}
+        <div className="modal fade" id="reportPopup" tabIndex="-1" role="dialog"
+          data-backdrop="static" data-keyboard="false"
+          aria-labelledby="reportPopupLabel" aria-hidden="true">
+          <div className="modal-dialog modal-lg-xl">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h4 className="modal-title" id="reportPopupLabel">
+                  <Msg phrase="ReportText" />
+                </h4>
+              </div>
+              <div className="modal-body">
+                <iframe id="iframeReport" type="application/pdf"></iframe>
+              </div>
+            </div> 
+          </div> 
+        </div>
+        {/* print popup modal end */} 
+
 
       </div>
     )

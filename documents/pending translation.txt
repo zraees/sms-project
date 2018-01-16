@@ -16,6 +16,7 @@ DetailsText
 CodeText
 NameText
 NameArText
+ReportText
 
 TimetableText
 TimetableTitleText

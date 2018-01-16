@@ -334,7 +334,7 @@ Details = connect(
 const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
   <div >         
     <div className="table-responsive"> 
-      <span>Delete func is pending... also fix webApi code</span>
+      <span>Delete func is pending... also fix webApi code, also validate func need to fix</span>
       <table className="table table-striped table-bordered table-hover table-responsive">
         <thead>
           <tr>
