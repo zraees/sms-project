@@ -17,6 +17,29 @@ namespace SMSServices.Controllers
     public class ClassesSectionsController : ApiController
     {
         private SMSEntities entities = new SMSEntities();
+        [HttpGet]
+        [Route("api/ClassesSections/GenerateSampleData/")]
+        public int GenerateSampleData()
+        {  
+            foreach (var shift in entities.Shifts.ToList())
+            {
+                foreach (var classe in entities.Classes.ToList())
+                {
+                    foreach (var section in entities.Sections.ToList())
+                    {
+                        entities.ClassesSections.Add(new ClassesSections()
+                        {
+                            ShiftID = shift.ID,
+                            ClassID = classe.ID,
+                            SectionID = section.ID
+                        });
+                        
+                    }
+                }
+            }
+
+            return entities.SaveChanges();
+        }
 
         // GET api/<controller>
         [Route("api/ClassesSections/All")]
@@ -110,8 +133,8 @@ namespace SMSServices.Controllers
         public ClassesSections Get(int id)
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            //Teachers teacher = entities.Teachers.Where(t => t.TeacherId == id).FirstOrDefault();
-            //if (teacher != null) { teacher.DOB = teacher.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; }
+            //classSections classSection = entities.classSections.Where(t => t.classSectionId == id).FirstOrDefault();
+            //if (classSection != null) { classSection.DOB = classSection.DOB.HasValue ? DateTime.Now.Date : (DateTime?)null; }
             return entities.ClassesSections.Where(t => t.ClassSectionID == id).FirstOrDefault();
         }
 
@@ -120,24 +143,19 @@ namespace SMSServices.Controllers
         //public ClassesSections Get(int id, string email)
         //{
         //    entities.Configuration.ProxyCreationEnabled = false;
-        //    ClassesSections teacher;
-        //    //teacher = entities.ClassesSections.Where(t => t.TeacherId == id && t.Email == email).FirstOrDefault();
-        //    //if (teacher == null)
-        //        teacher = new ClassesSections() { Email = string.Empty };
-        //    return teacher;
+        //    ClassesSections classSection;
+        //    //classSection = entities.ClassesSections.Where(t => t.classSectionId == id && t.Email == email).FirstOrDefault();
+        //    //if (classSection == null)
+        //        classSection = new ClassesSections() { Email = string.Empty };
+        //    return classSection;
         //}
 
         // POST api/<controller>
-        public HttpResponseMessage Post(ClassesSections teacher)
+        public HttpResponseMessage Post(ClassesSections classSection)
         {
             try
             {
-                entities.ClassesSections.Add(new ClassesSections()
-                {
-                    ShiftID = teacher.ShiftID,
-                    ClassID = teacher.ClassID,
-                    SectionID = teacher.SectionID
-                });
+                entities.ClassesSections.Add(CreateClassSection(classSection));
                 entities.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
                 //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
@@ -145,7 +163,7 @@ namespace SMSServices.Controllers
             //catch (Exception e)
             //{
             //    return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
-                
+
             //}
             catch (DbUpdateException dbEx)
             {
@@ -171,6 +189,17 @@ namespace SMSServices.Controllers
             //    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             //}
         }
+
+        private ClassesSections CreateClassSection(ClassesSections classSection)
+        {
+            return new ClassesSections()
+            {
+                ShiftID = classSection.ShiftID,
+                ClassID = classSection.ClassID,
+                SectionID = classSection.SectionID
+            };
+        }
+        
         private int GetErrorCode(DbEntityValidationException dbEx)
         {
             int ErrorCode = (int)HttpStatusCode.BadRequest;
@@ -209,11 +238,11 @@ namespace SMSServices.Controllers
         {
             try
             {
-                var teacher = new ClassesSections { TeacherId = id };
-                if (teacher != null)
+                var classSection = new ClassesSections { classSectionId = id };
+                if (classSection != null)
                 {
-                    entities.Entry(teacher).State = EntityState.Deleted;
-                    entities.ClassesSections.Remove(teacher);
+                    entities.Entry(classSection).State = EntityState.Deleted;
+                    entities.ClassesSections.Remove(classSection);
                     entities.SaveChanges();
                 }
             }

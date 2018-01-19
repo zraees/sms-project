@@ -18,6 +18,7 @@
     <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="StartDate" Type="date" Nullable="false" />
     <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="IsActive" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Cities">
     <Key>
@@ -257,10 +258,12 @@
   </EntityType>
   <EntityType Name="QualificationTypes">
     <Key>
-      <PropertyRef Name="QualificationTypeId" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="QualificationTypeId" Type="int" Nullable="false" />
-    <Property Name="QualificationType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Religions">
     <Key>
@@ -967,12 +970,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeacherQualifications_QualificationTypes">
+  <Association Name="FK_TeacherQualifications_QualificationTypes1">
     <End Role="QualificationTypes" Type="Self.QualificationTypes" Multiplicity="0..1" />
     <End Role="TeacherQualifications" Type="Self.TeacherQualifications" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="QualificationTypes">
-        <PropertyRef Name="QualificationTypeId" />
+        <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="TeacherQualifications">
         <PropertyRef Name="QualificationTypeId" />
@@ -1360,7 +1363,7 @@
       <End Role="Teachers" EntitySet="Teachers" />
       <End Role="TeacherExperiences" EntitySet="TeacherExperiences" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeacherQualifications_QualificationTypes" Association="Self.FK_TeacherQualifications_QualificationTypes">
+    <AssociationSet Name="FK_TeacherQualifications_QualificationTypes1" Association="Self.FK_TeacherQualifications_QualificationTypes1">
       <End Role="QualificationTypes" EntitySet="QualificationTypes" />
       <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
     </AssociationSet>

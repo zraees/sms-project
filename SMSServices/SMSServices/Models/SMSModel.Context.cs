@@ -27,7 +27,6 @@ namespace SMSServices.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
         public virtual DbSet<TeacherQualifications> TeacherQualifications { get; set; }
         public virtual DbSet<TeacherExperiences> TeacherExperiences { get; set; }
         public virtual DbSet<Errors> Errors { get; set; }
@@ -68,6 +67,7 @@ namespace SMSServices.Models
         public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
         public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
         public virtual DbSet<FeePayments> FeePayments { get; set; }
+        public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
     
         public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
         {

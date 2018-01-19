@@ -14,12 +14,13 @@ const validate = values => {
       periodErrors.newAdditionalDiscount = '';
       periodErrors.paymentAmount = '';
 
-      console.log('period.newAdditionalDiscount => ', periodIndex, period.newAdditionalDiscount, period.paymentAmount, period.newAdditionalDiscount=='');
+      //console.log('period.newAdditionalDiscount => ', periodIndex, period.newAdditionalDiscount, period.paymentAmount, period.newAdditionalDiscount=='');
 
       // if(period.newAdditionalDiscount==0){        
       //   periodErrors.newAdditionalDiscount = ''
       //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
       // }
+      /*
       if (period.newAdditionalDiscount=='' ) {    
         
         //console.log('hi hi', periodIndex, period.newAdditionalDiscount );
@@ -36,6 +37,7 @@ const validate = values => {
         //     feeDueDetailsArrayErrors[periodIndex] = periodErrors
         // }
       }
+      */
       // else if(period.newAdditionalDiscount<0){        
       //   periodErrors.newAdditionalDiscount = 'InvalidText'
       //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
@@ -46,7 +48,8 @@ const validate = values => {
       //   periodErrors.paymentAmount = ''
       //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
       // }
-      else if ((!period || !period.paymentAmount)) {
+      //else 
+      if ((!period || !period.paymentAmount)) {
         periodErrors.paymentAmount = 'RequiredFieldText'
         feeDueDetailsArrayErrors[periodIndex] = periodErrors
       }

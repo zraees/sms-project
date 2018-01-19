@@ -17,7 +17,92 @@ namespace SMSServices.Controllers
 {
     public class StudentsController : ApiController
     {
+
         private SMSEntities entities = new SMSEntities();
+
+        [HttpGet]
+        [Route("api/Students/GenerateSampleData/")]
+        public int GenerateSampleData()
+        {
+            int index0, index1, index2, index3, boyOrGirl;
+            string gender;
+            int result = 0;
+
+            Random rnd = new Random();
+            Students student = new Students();
+            string[,] StudentNames = new SampleData().StudentNames;
+            string[,] StudentNamesAr = new SampleData().StudentNamesAr;
+
+            foreach (var shift in entities.Shifts.ToList())
+            {
+                foreach (var classe in entities.Classes.ToList())
+                {
+                    foreach (var section in entities.Sections.ToList())
+                    {
+                        foreach (var batch in entities.Batches.ToList())
+                        {
+                            for (int i = 0; i < (shift.ID+classe.ID+section.ID+batch.ID )% 10; i++)
+                            {
+                                student = new Students();
+                                student.ShiftId = shift.ID;
+                                student.ClassId = classe.ID;
+                                student.SectionId = section.ID;
+                                student.BatchId = batch.ID;
+
+                                index0 = rnd.Next(10); index1 = rnd.Next(10); index2 = rnd.Next(10); index3 = rnd.Next(10);
+
+                                if (i % 2 == 0) {
+                                    gender = "Female";
+                                    boyOrGirl = 0;
+                                }
+                                else
+                                {
+                                    gender = "Male";
+                                    boyOrGirl = 1;
+                                }
+                                student.Name1 = StudentNames[boyOrGirl,index0];
+                                student.Name2 = StudentNames[boyOrGirl, index1];
+                                student.Name3 = StudentNames[boyOrGirl, index2];
+                                student.Name4 = StudentNames[boyOrGirl, index3];
+                                student.FullName = string.Format("{0} {1} {2} {3}", student.Name1, student.Name2, student.Name3, student.Name4);
+                                student.NameAr1 = StudentNamesAr[boyOrGirl, index0];
+                                student.NameAr2 = StudentNamesAr[boyOrGirl, index1];
+                                student.NameAr3 = StudentNamesAr[boyOrGirl, index2];
+                                student.NameAr4 = StudentNamesAr[boyOrGirl, index3];
+                                student.FullNameAr = string.Format("{0} {1} {2} {3}", student.NameAr1, student.NameAr2, student.NameAr3, student.NameAr4);
+                                student.DOB = DateTime.Now.AddYears(-1 * (classe.ID == 1 ? 3 : classe.ID + 1));
+                                student.FullNamePassport = student.FullName;
+                                student.FullNameArPassport = student.FullNameAr;
+                                student.FatherIDNo = rnd.Next(int.MaxValue - 50000, int.MaxValue).ToString().PadLeft(10, '0');
+                                student.StudentIDNo = rnd.Next(int.MaxValue - 250000, int.MaxValue).ToString().PadLeft(10, '0');
+                                student.PlaceOfBirth = "";
+                                //student.NationalityId = Student.NationalityId;
+                                student.Email = student.Name1 +"."+ student.Name2 + "@domain.com";
+                                student.Gender = gender;
+                                //student.Lang1ID = Student.Lang1ID;
+                                //student.Lang2Id = Student.Lang2Id;
+                                //student.ReligionId = Student.ReligionId;
+                                //student.PhoneNo = Student.PhoneNo;
+                                //student.MobileNo = Student.MobileNo;
+                                //student.Address = Student.Address;
+                                //student.StudentStayWith = Student.StudentStayWith;
+                                //student.StudentStayWithOther = Student.StudentStayWithOther;
+                                //student.CountryId = Student.CountryId;
+                                //student.StateId = Student.StateId;
+                                //student.CityId = Student.CityId;
+                                 
+                                entities.Students.Add(CreateStudent(student));
+                                entities.SaveChanges();
+                                result++;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
 
         [HttpGet]
         [Route("api/GetStudentGeneratedCode/")]
@@ -113,62 +198,10 @@ namespace SMSServices.Controllers
         {
             try
             {
-                List<StudentsClasses> classes = new List<StudentsClasses>();
-                classes.Add(new StudentsClasses()
-                    {
-                        ShiftId = Student.ShiftId,
-                        ClassId = Student.ClassId,
-                        SectionId = Student.SectionId,
-                        BatchID = Student.BatchId,
-                        RollNo = GetStudentRollNo(Student)
-                    });
-                Students std = new Students()
-                {
-                    //StudentId
-                    Code = new AutoCodeGeneration().GenerateCode("Students", "Code"),   //"" + Student.Code,
-                    Name1 = "" + Student.Name1,
-                    Name2 = "" + Student.Name2,
-                    Name3 = "" + Student.Name3,
-                    Name4 = "" + Student.Name4,
-                    FullName = "" + Student.FullName,
-                    NameAr1 = "" + Student.NameAr1,
-                    NameAr2 = "" + Student.NameAr2,
-                    NameAr3 = "" + Student.NameAr3,
-                    NameAr4 = "" + Student.NameAr4,
-                    FullNameAr = "" + Student.FullNameAr,
-                    StudentsClasses = classes,
-                    DOB = Student.DOB,
-                    FullNamePassport = "" + Student.FullNamePassport,
-                    FullNameArPassport = "" + Student.FullNameArPassport,
-                    FatherIDNo = Student.FatherIDNo,
-                    StudentIDNo = Student.StudentIDNo,
-                    PlaceOfBirth = Student.PlaceOfBirth,
-                    NationalityId = Student.NationalityId,
-                    Email = Student.Email,
-                    Gender = Student.Gender,
-                    Lang1ID = Student.Lang1ID,
-                    Lang2Id = Student.Lang2Id,
-                    ReligionId = Student.Lang2Id,
-                    PhoneNo = Student.PhoneNo,
-                    MobileNo = Student.MobileNo,
-                    Address = Student.Address,
-                    StudentStayWith = Student.StudentStayWith,
-                    StudentStayWithOther = Student.StudentStayWithOther,
-                    //HasSameSchoolAttendedBefore = Student.HasSameSchoolAttendedBefore,
-                    //SchoolAttendedStartDate = Student.SchoolAttendedStartDate,
-                    //SchoolAttendedEndDate = Student.SchoolAttendedEndDate,
-                    //HasStudentEverSkippedGrade = Student.HasStudentEverSkippedGrade,
-                    //SkippedGrades = Student.SkippedGrades,
-                    //HasStudentRepeatGrade = Student.HasStudentRepeatGrade,
-                    //RepeatGrades = Student.RepeatGrades
-                    CountryId = Student.CountryId,
-                    StateId = Student.StateId,
-                    CityId = Student.CityId,
-                    CreatedOn = DateTime.Now
-                };
+                Students std = CreateStudent(Student);
+
                 entities.Students.Add(std);
                 entities.SaveChanges();
-
                 //var entity = entities.Students.Find(std.StudentId);
                 //if (entity != null)
                 //{
@@ -215,6 +248,64 @@ namespace SMSServices.Controllers
             ////    throw ex;
             ////    //return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             ////}
+        }
+
+        private Students CreateStudent(Students Student)
+        {
+            List<StudentsClasses> classes = new List<StudentsClasses>();
+            classes.Add(new StudentsClasses()
+            {
+                ShiftId = Student.ShiftId,
+                ClassId = Student.ClassId,
+                SectionId = Student.SectionId,
+                BatchID = Student.BatchId,
+                RollNo = GetStudentRollNo(Student)
+            });
+            Students std = new Students()
+            {
+                //StudentId
+                Code = new AutoCodeGeneration().GenerateCode("Students", "Code"),   //"" + Student.Code,
+                Name1 = "" + Student.Name1,
+                Name2 = "" + Student.Name2,
+                Name3 = "" + Student.Name3,
+                Name4 = "" + Student.Name4,
+                FullName = "" + Student.FullName,
+                NameAr1 = "" + Student.NameAr1,
+                NameAr2 = "" + Student.NameAr2,
+                NameAr3 = "" + Student.NameAr3,
+                NameAr4 = "" + Student.NameAr4,
+                FullNameAr = "" + Student.FullNameAr,
+                StudentsClasses = classes,
+                DOB = Student.DOB,
+                FullNamePassport = "" + Student.FullNamePassport,
+                FullNameArPassport = "" + Student.FullNameArPassport,
+                FatherIDNo = Student.FatherIDNo,
+                StudentIDNo = Student.StudentIDNo,
+                PlaceOfBirth = Student.PlaceOfBirth,
+                NationalityId = Student.NationalityId,
+                Email = Student.Email,
+                Gender = Student.Gender,
+                Lang1ID = Student.Lang1ID,
+                Lang2Id = Student.Lang2Id,
+                ReligionId = Student.ReligionId,
+                PhoneNo = Student.PhoneNo,
+                MobileNo = Student.MobileNo,
+                Address = Student.Address,
+                StudentStayWith = Student.StudentStayWith,
+                StudentStayWithOther = Student.StudentStayWithOther,
+                //HasSameSchoolAttendedBefore = Student.HasSameSchoolAttendedBefore,
+                //SchoolAttendedStartDate = Student.SchoolAttendedStartDate,
+                //SchoolAttendedEndDate = Student.SchoolAttendedEndDate,
+                //HasStudentEverSkippedGrade = Student.HasStudentEverSkippedGrade,
+                //SkippedGrades = Student.SkippedGrades,
+                //HasStudentRepeatGrade = Student.HasStudentRepeatGrade,
+                //RepeatGrades = Student.RepeatGrades
+                CountryId = Student.CountryId,
+                StateId = Student.StateId,
+                CityId = Student.CityId,
+                CreatedOn = DateTime.Now
+            };
+            return std;
         }
         
         private int GetErrorCode(DbEntityValidationException dbEx)

@@ -11,7 +11,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
 
 export function generateFeeCollections(values) {
-  // console.log('in generateFeeCollections ', values);
+  console.log('in generateFeeCollections ', values);
   // console.log('hi ' , values.studentId==null?"null":values.studentId);
 
   LoaderVisibility(true);
@@ -59,7 +59,7 @@ export function submitFeePayment(values) {
 
       })
       .catch(function (error) {
-        console.log('error agya');
+        console.log('error agya.. ', error);
         if (error.response) {
           console.log(error.response.data);
           console.log(error.response.status);

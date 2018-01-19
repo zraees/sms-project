@@ -461,9 +461,28 @@ namespace SMSServices.Controllers
                 //    entities.SaveChanges();
                 //}
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                //throw dbEx;
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have more issue ...");
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in dbEx.EntityValidationErrors)
+                {
+                    sb.Append(item + " errors: ");
+                    foreach (var i in item.ValidationErrors)
+                    {
+                        sb.Append(i.PropertyName + " : " + i.ErrorMessage);
+                    }
+                    sb.Append(Environment.NewLine);
+                }
+                //throw new ApiDataException(GetErrorCode(dbEx), sb.ToString(), HttpStatusCode.BadRequest);
+                //throw new ApiDataException(1021, "too many errors ...", HttpStatusCode.BadRequest);
+                //return Request.CreateResponse(HttpStatusCode.OK, sb.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + dbEx.Message + " EntityValidationErrors = " + sb.ToString());
+            }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message + " inner ex ==> " + ex.InnerException.Message + " inner ex 2 ==> " + ex.InnerException.InnerException.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message );
             }
         }
 

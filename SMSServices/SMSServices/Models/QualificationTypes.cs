@@ -19,8 +19,10 @@ namespace SMSServices.Models
             this.TeacherQualifications = new HashSet<TeacherQualifications>();
         }
     
-        public int QualificationTypeId { get; set; }
-        public string QualificationType { get; set; }
+        public int ID { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string NameAr { get; set; }
     
         public virtual ICollection<TeacherQualifications> TeacherQualifications { get; set; }
     }

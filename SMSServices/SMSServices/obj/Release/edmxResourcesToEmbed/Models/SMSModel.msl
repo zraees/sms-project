@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SMSModelStoreContainer" CdmEntityContainer="SMSEntities">
-    <EntitySetMapping Name="QualificationTypes">
-      <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
-        <MappingFragment StoreEntitySet="QualificationTypes">
-          <ScalarProperty Name="QualificationType" ColumnName="QualificationType" />
-          <ScalarProperty Name="QualificationTypeId" ColumnName="QualificationTypeId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TeacherQualifications">
       <EntityTypeMapping TypeName="SMSModel.TeacherQualifications">
         <MappingFragment StoreEntitySet="TeacherQualifications">
@@ -170,6 +162,7 @@
     <EntitySetMapping Name="Batches">
       <EntityTypeMapping TypeName="SMSModel.Batches">
         <MappingFragment StoreEntitySet="Batches">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="NameAr" ColumnName="NameAr" />
@@ -572,6 +565,16 @@
           <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QualificationTypes">
+      <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
+        <MappingFragment StoreEntitySet="QualificationTypes">
+          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

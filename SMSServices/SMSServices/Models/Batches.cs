@@ -25,6 +25,7 @@ namespace SMSServices.Models
         public string NameAr { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public int IsActive { get; set; }
     
         public virtual ICollection<StudentsClasses> StudentsClasses { get; set; }
     }

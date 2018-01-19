@@ -18,6 +18,49 @@ namespace SMSServices.Controllers
     {
         private SMSEntities entities = new SMSEntities();
 
+        [HttpGet]
+        [Route("api/Teachers/GenerateSampleData/")]
+        public int GenerateSampleData()
+        {
+            int index0, index1, boyOrGirl;
+            string gender;
+
+            Random rnd = new Random();
+            Teachers teacher = new Teachers();
+            string[,] TeacherNames = new SampleData().StudentNames;
+            //string[,] StudentNamesAr = new SampleData().StudentNamesAr;
+
+            for (int i = 0; i < 20; i++)
+            {
+                teacher = new Teachers();
+
+                index0 = rnd.Next(10); index1 = rnd.Next(10); 
+
+                if (i % 2 == 0)
+                {
+                    gender = "Female";
+                    boyOrGirl = 0;
+                }
+                else
+                {
+                    gender = "Male";
+                    boyOrGirl = 1;
+                }
+
+                teacher.Name = string.Format("{0} {1}", TeacherNames[boyOrGirl, index0], TeacherNames[boyOrGirl, index1]);
+
+                teacher.DOB = DateTime.Now.AddYears(-1 * rnd.Next(20, 60));
+                teacher.IDNo = rnd.Next(int.MaxValue - 250000, int.MaxValue).ToString().PadLeft(10, '0');
+                teacher.Email = TeacherNames[boyOrGirl, index0] + "." + TeacherNames[boyOrGirl, index1] + "." + rnd.Next(100).ToString() +"@domain.com";
+                teacher.Rating = rnd.Next(0, 5);
+                teacher.Gender = gender;
+
+                entities.Teachers.Add(teacher);
+            }
+
+            return entities.SaveChanges();
+        }
+
         // GET api/<controller>
         public IEnumerable<Teachers> Get()
         {

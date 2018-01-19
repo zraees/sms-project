@@ -26,7 +26,7 @@ namespace SMSServices.Models
         public string Majors { get; set; }
         public string InstitutionName { get; set; }
     
-        public virtual QualificationTypes QualificationTypes { get; set; }
         public virtual Teachers Teachers { get; set; }
+        public virtual QualificationTypes QualificationTypes { get; set; }
     }
 }

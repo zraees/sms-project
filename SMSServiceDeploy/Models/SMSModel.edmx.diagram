@@ -5,9 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0e3f1c93d1e9454ba48ce9fdb43744df" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="2.25" PointX="4" PointY="2.125" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.TeacherQualifications" Width="2" PointX="5.875" PointY="0.5" IsExpanded="false" />
-        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes" />
         <EntityTypeShape EntityType="SMSModel.TeacherExperiences" Width="2" PointX="7.75" PointY="6" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Errors" Width="1.5" PointX="8.375" PointY="0.75" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Admissions" Width="1.5" PointX="10.25" PointY="13.375" IsExpanded="false" />
@@ -101,6 +99,8 @@
         <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeeCollectionsAging" />
         <EntityTypeShape EntityType="SMSModel.FeePayments" Width="1.5" PointX="3.375" PointY="3.875" />
         <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeePayments" />
+        <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="1.5" PointX="5.375" PointY="1.875" />
+        <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

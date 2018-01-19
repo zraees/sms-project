@@ -18,7 +18,7 @@ namespace SMSServices.Controllers
     public class FeeTypesController : ApiController
     {
         private SMSEntities entities = new SMSEntities();
-        
+         
         [HttpGet]
         [Route("api/GetFeeTypeGeneratedCode/")]
         public string GetFeeTypeGeneratedCode()

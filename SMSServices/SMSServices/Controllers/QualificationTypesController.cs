@@ -17,13 +17,13 @@ namespace SMSServices.Controllers
         public IEnumerable<KeyValue> Get()
         {
             entities.Configuration.ProxyCreationEnabled = false;
-            return entities.QualificationTypes.Select(a => new KeyValue() { Id = a.QualificationTypeId, Name = a.QualificationType });
+            return entities.QualificationTypes.Select(a => new KeyValue() { Id = a.ID, Name = a.Name });
         }
 
         // GET api/<controller>/5
         public QualificationTypes Get(int id)
         {
-            return entities.QualificationTypes.Where(n => n.QualificationTypeId == id).FirstOrDefault();
+            return entities.QualificationTypes.Where(n => n.ID == id).FirstOrDefault();
         }
 
         // POST api/<controller>
