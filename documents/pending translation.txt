@@ -21,6 +21,8 @@ ReportText
 TimetableText
 TimetableTitleText
 
+FeeStructureText
+
 ManageTimetablePeriodsText
 DocumentTitleName
 AddDocumentText

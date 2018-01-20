@@ -66,8 +66,8 @@ namespace SMSServices.Models
         public virtual DbSet<FeeStatus> FeeStatus { get; set; }
         public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
         public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
-        public virtual DbSet<FeePayments> FeePayments { get; set; }
         public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
+        public virtual DbSet<FeePayments> FeePayments { get; set; }
     
         public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
         {
@@ -105,6 +105,15 @@ namespace SMSServices.Models
                 new ObjectParameter("StudentId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeDueDetailsByStudentID_Result>("spFeeDueDetailsByStudentID", langParameter, studentIdParameter);
+        }
+    
+        public virtual int spDeleteTables(string level)
+        {
+            var levelParameter = level != null ?
+                new ObjectParameter("level", level) :
+                new ObjectParameter("level", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteTables", levelParameter);
         }
     }
 }

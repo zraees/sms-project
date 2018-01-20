@@ -28,17 +28,34 @@ class Details extends React.Component {
     this.state = {     
       langKey: getLangKey(),
       paymentDate: today(),
-      feeDueDetails: []
+      feeDueDetails: [],
+      studentId: this.props.studentId,
     }  
     // this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
     // this.handleFeeBlur = this.handleFeeBlur.bind(this);
     // this.handleDiscountRateBlur = this.handleDiscountRateBlur.bind(this);
     this.handleAdditionalDiscountBlur = this.handleAdditionalDiscountBlur.bind(this);
+    this.initializeFeeDues = this.initializeFeeDues.bind(this);
   }
   
   componentDidMount(){
 
-    axios.get( '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId)
+    // this.props.initialize(initData);
+    //this.props.change("feeDiscountTypeId", 1);
+
+    // var url = '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId;
+    // console.log(url);
+    // var table = $('#feeDueDetailsGrid').DataTable();
+    // table.ajax.url(url).load();
+    this.initializeFeeDues(this.state.studentId);
+    console.log('componentDidMount --> Details');
+  }
+
+  initializeFeeDues(studentId){
+
+    console.log('initializeFeeDues -- this.state.studentId ', this.state.studentId);
+
+    axios.get( '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
       .then(res => {
         if (res.data) {
           //console.log('exists..');
@@ -84,23 +101,29 @@ class Details extends React.Component {
         }
 
       });   
-    // this.props.initialize(initData);
-    //this.props.change("feeDiscountTypeId", 1);
-
-    // var url = '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId;
-    // console.log(url);
-    // var table = $('#feeDueDetailsGrid').DataTable();
-    // table.ajax.url(url).load();
-
-    console.log('componentDidMount --> Details');
+    
   }
 
-  // componentWillMount() {
-  //   console.log('componentWillMount --> Details');
- 
-  // }
-  
-  
+  shouldComponentUpdate(nextProps, nextState) {
+
+    // const { batchId, sectionId, classId, shiftId, studentId } = this.props;
+    // const { nbatchId, nsectionId, nclassId, nshiftId, nstudentId } = nextProps;
+
+    //console.log('shouldComponentUpdate --> FeeCollection Details', this.state.studentId != nextState.nstudentId, nextProps, nextState);
+
+    if (this.state.studentId != nextState.studentId && nextState.studentId) {
+      console.log('update state yes ', nextState.studentId);
+      //let key = getLangKey(); 
+      this.initializeFeeDues(nextState.studentId);
+    }
+    else if (this.props.studentId != nextProps.studentId && nextProps.studentId) {
+      console.log('update props yes ', nextProps.studentId);
+      this.initializeFeeDues(nextProps.studentId);
+    }
+
+    return this.state.studentId != nextState.studentId || this.props.studentId != nextProps.studentId;
+  }
+
   handleAdditionalDiscountBlur(index, event) {
 
     console.log('handleAdditionalDiscountBlur(obj, value) == ', index, event, this.state.feeDueDetails[index].additionalDiscount);
@@ -152,7 +175,7 @@ class Details extends React.Component {
 
             <ul className="nav nav-tabs">
               <li id="tabFeeDetailsLink" className="active">
-                <a id="tabAddFeeDetails" data-toggle="tab" href="#A1P1A"><Msg phrase="FeeDetailsText" /></a>
+                <a id="tabAddFeeDetails" data-toggle="tab" href="#A1P1A"><Msg phrase="FeeOutstandingText" /></a>
               </li>
               <li id="tabPaymentHistoryLink">
                 <a id="tabPaymentHistory" data-toggle="tab" href="#B1P1B"><Msg phrase="PaymentHistoryText" /></a>
@@ -292,10 +315,10 @@ class Details extends React.Component {
           icon="alert-danger" message={error} />)}
 
         <footer>
-          <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-primary">
+          <button type="button" disabled={submitting} onClick={reset} className="btn btn-primary">
             {feeCollectionId > 0 ? <Msg phrase="UndoChangesText" /> : <Msg phrase="ResetText" />}
           </button>
-          <button type="submit" disabled={pristine || submitting} className="btn btn-primary">
+          <button type="submit" disabled={submitting} className="btn btn-primary">
             <Msg phrase="SaveText" />
           </button>
         </footer>
@@ -319,16 +342,16 @@ Details = reduxForm({
   keepDirtyOnReinitialize: false 
 })(Details)
 
-const selector = formValueSelector('Details') // <-- same as form name
-Details = connect(
-  state => { 
-    const { fee, discountOption, discountRate, discountValue } = selector(state, 'fee', 'discountOption', 'discountRate', 'discountValue')
-    return {
-      discountValue: discountOption=='P'? fee * (discountRate||0) / 100 : discountRate,
-      netFee: fee - (discountOption=='P'? fee * (discountRate||0) / 100 : discountRate)
-    }
-  }
-)(Details)
+// const selector = formValueSelector('Details') // <-- same as form name
+// Details = connect(
+//   state => { 
+//     const { fee, discountOption, discountRate, discountValue } = selector(state, 'fee', 'discountOption', 'discountRate', 'discountValue')
+//     return {
+//       discountValue: discountOption=='P'? fee * (discountRate||0) / 100 : discountRate,
+//       netFee: fee - (discountOption=='P'? fee * (discountRate||0) / 100 : discountRate)
+//     }
+//   }
+// )(Details)
 
 
 const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (

@@ -176,7 +176,7 @@
     <Property Name="FeePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="PaidOn" Type="date" Nullable="false" />
-    <Property Name="Comments" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="FeePaymentsDetails">
@@ -1150,6 +1150,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="spDeleteTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="level" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="spFeeCollections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ShiftId" Type="int" Mode="In" />
     <Parameter Name="ClassId" Type="int" Mode="In" />

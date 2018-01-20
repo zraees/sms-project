@@ -11,12 +11,12 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
 
 export function generateFeeCollections(values) {
-  console.log('in generateFeeCollections ', values);
+  console.log('in generateFeeCollections ', values, values.feeStructureId.join());
   // console.log('hi ' , values.studentId==null?"null":values.studentId);
 
   LoaderVisibility(true);
   axios.get('api/GenerateFeeCollections/' + values.shiftId + '/' + values.classId + '/' 
-            + values.sectionId + '/' + values.batchId + '/' + (values.studentId==null?"null":values.studentId))
+            + values.sectionId + '/' + values.batchId +'/'+values.feeStructureId.join()+ '/' + (values.studentId==null?"null":values.studentId))
     .then(function (response) {
 
       alert('s', 'data has been generated successfully');

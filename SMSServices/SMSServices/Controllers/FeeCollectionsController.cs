@@ -87,8 +87,8 @@ namespace SMSServices.Controllers
         }
 
         [HttpGet]
-        [Route("api/GenerateFeeCollections/{shiftId}/{classId}/{sectionId}/{batchId}/{studentId}")]
-        public HttpResponseMessage GenerateFeeCollections(int ShiftID, int ClassID, int SectionID, int BatchID, int? StudentID)
+        [Route("api/GenerateFeeCollections/{shiftId}/{classId}/{sectionId}/{batchId}/{feeStructureIds}/{studentId}")]
+        public HttpResponseMessage GenerateFeeCollections(int ShiftID, int ClassID, int SectionID, int BatchID,string FeeStructureIDs, int? StudentID)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace SMSServices.Controllers
                             IsSaveChanges = true;
                             strLog = strLog + string.Format("{0} - {1} // ", StudentClass.ClassId, StudentClass.StudentClassId);
 
-                            List<FeeStructures> FeeStructureCollection = new FeeStructuresController().FeeStructuresByClassId(StudentClass.ClassId);
+                            List<FeeStructures> FeeStructureCollection = new FeeStructuresController().FeeStructuresByClassId(StudentClass.ClassId, FeeStructureIDs);
                             List<FeeCollectionsDetails> FeeCollectionDetailCollection = CreateFeeCollectionDetails(FeeStructureCollection, batch);
 
                             strLog = strLog + string.Format("{0} - {1} - {2} // ", StudentClass.ClassId, StudentClass.StudentClassId, FeeCollectionDetailCollection.Count);

@@ -47,6 +47,7 @@ class FeeCollectionsPage extends React.Component {
       sectionOptions: [],
       studentOptions: [],
       batchOptions: [],
+      feeStructureOptions: [],
       //url: '/api/FeeCollections/null/null/null/null/null',
       pageName: '',
       batchId: 0,
@@ -75,6 +76,15 @@ class FeeCollectionsPage extends React.Component {
 
     console.log('componentDidMount --> FeeCollectionsPage');
 
+    $('body').on('click', '.modal-toggle', function (event) {
+      console.log('asdasd ');
+      event.preventDefault();
+      $('.modal-content').empty();
+      $('#myModal')
+        .removeData('bs.modal')
+        .modal({ remote: $(this).attr('href') });
+    });
+
     axios.get('/api/lookup/shifts/')
       .then(res => {
         const shiftOptions = mapForCombo(res.data);
@@ -86,6 +96,12 @@ class FeeCollectionsPage extends React.Component {
         const batchOptions = mapForCombo(res.data);
         this.setState({ batchOptions });
       });
+
+    // axios.get('/api/FeeStructures/GetFeeTypes/')
+    //   .then(res => {
+    //     const feeStructureOptions = mapForCombo(res.data);
+    //     this.setState({ feeStructureOptions });
+    //   });
 
     $('#FeeCollectionGrid').on('click', 'td', function(event) {
       
@@ -188,9 +204,15 @@ class FeeCollectionsPage extends React.Component {
           const sectionOptions = mapForCombo(res.data);
           this.setState({ sectionOptions });
         });
+
+      axios.get('/api/FeeStructures/GetFeeTypes/'+value)
+        .then(res => {
+          const feeStructureOptions = mapForCombo(res.data);
+          this.setState({ feeStructureOptions });
+        });
     }
     else {
-      this.setState({ sectionOptions: [] });
+      this.setState({ sectionOptions: [], feeStructureOptions: [] });
     }
   }
 
@@ -244,8 +266,9 @@ class FeeCollectionsPage extends React.Component {
 
   handlePrintClick(obj, value) {
 
+    LoaderVisibility(true);
     //console.log('handleSearchClick this.props.sectionID ', this.props.shiftId, this.props.sectionId);
-    
+
     /*var pdf = new jsPDF('p', 'pt', 'letter');
     var canvas = pdf.canvas;
     canvas.width = 8.5 * 72;
@@ -278,13 +301,15 @@ class FeeCollectionsPage extends React.Component {
     });
     //doc.save('test.pdf');
     */
-    
-     
+
+
 
     // var content = document.getElementById("feePaymentSlip").removeClass('hide');
     // console.log(content)
     //var a = document.getElementById("feePaymentSlip");
     //a.style.display = "block";
+
+
     $("#feePaymentSlip").removeClass('hide');
     html2canvas(document.getElementById("feePaymentSlip"), {
       logging: false
@@ -366,6 +391,8 @@ class FeeCollectionsPage extends React.Component {
           }
         );
         */
+
+    LoaderVisibility(false);
   }
 
   renderModalBody(popupPageName){ 
@@ -398,7 +425,7 @@ class FeeCollectionsPage extends React.Component {
   render() {
   
     const { handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props
-    const { shiftOptions, classOptions, sectionOptions, feeCollectionId, studentOptions, batchOptions } = this.state;    
+    const { shiftOptions, classOptions, sectionOptions, feeCollectionId, studentOptions, batchOptions, feeStructureOptions } = this.state;    
     var self = this;
     return (
       
@@ -503,6 +530,20 @@ class FeeCollectionsPage extends React.Component {
 
                           </div>
 
+                          <div className="row">
+
+                            <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                              <Field
+                                multi={true}
+                                name="feeStructureId"
+                                label="FeeTypes"
+                                validate={required}
+                                options={feeStructureOptions}
+                                component={RFReactSelect} />
+                            </section>
+
+                          </div>
+
                         </fieldset>
                         
                         {(error !== undefined && <AlertMessage type="w"
@@ -552,7 +593,7 @@ class FeeCollectionsPage extends React.Component {
                                 + ' data-section-id="'+ row.SectionId + '"'
                                 + ' data-shift-id="'+ row.ShiftId + '"'
                                 + ' data-student-id="'+ row.StudentId + '"'
-                                + ' data-id="' + data + '" data-target="#feeCollectionPopup"><i id="edi" className=\"glyphicon glyphicon-edit\"></i><span className=\"sr-only\">Edit</span></a>';
+                                + ' data-id="' + data + '" data-target="#feeCollectionPopup"><i id="edi" class=\"glyphicon glyphicon-edit\"></i><span class=\"sr-only\">EditText</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -560,7 +601,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" className=\"fa fa-money\"></i><span className=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Payments</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -568,7 +609,7 @@ class FeeCollectionsPage extends React.Component {
                           },
                           {
                             "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" className=\"fa fa-bell\"></i><span className=\"sr-only\">Edit</span></a>';
+                              return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" class=\"fa fa-bell\"></i><span class=\"sr-only\">Alerts</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
@@ -576,7 +617,7 @@ class FeeCollectionsPage extends React.Component {
                           }
                           , {
                             "render": function (data, type, row) {
-                              return '<a id="dele" data-tid="' + data + '"><i className=\"glyphicon glyphicon-trash\"></i><span className=\"sr-only\">Edit</span></a>';
+                              return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Delete</span></a>';
                             }.bind(self),
                             "className": "dt-center",
                             "sorting": false,
@@ -585,7 +626,7 @@ class FeeCollectionsPage extends React.Component {
                         ],
                         columns: [ 
                           {data: "FeeCollectionID"}, 
-                          {data: "BatchID"},
+                          {data: "RollNo"},
                           {data: "FullName"},
                           {data: "FullNameAr"},      
                           {data: "TotalFee"}, 
@@ -657,7 +698,7 @@ class FeeCollectionsPage extends React.Component {
                   &times;
                 </button>
                 <h4 className="modal-title" id="feeCollectionPopupLabel">
-                  {this.state.feeTypeId > 0 ? <Msg phrase="ManageText" /> : <Msg phrase="AddNewText" />}
+                  {this.state.pageName =='details' ? <Msg phrase="FeeDetailsText" /> : <Msg phrase="AlertText" />}
                 </h4>
               </div>
               <div className="modal-body">

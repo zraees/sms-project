@@ -19,7 +19,7 @@ namespace SMSServices.Utilities
             bool isMonthIncluded = IsPatternIncluded(format, "DD");
             bool isDayIncluded = IsPatternIncluded(format, "MM");
             int SeqCount = GetSeqCount(format);
-            int Seq = 1;
+            int Seq = 0;
             string Code = "";
 
             string WhereClause = " 1=1 ";
@@ -79,7 +79,7 @@ namespace SMSServices.Utilities
             bool isMonthIncluded = IsPatternIncluded(format, "DD");
             bool isDayIncluded = IsPatternIncluded(format, "MM");
             int SeqCount = GetSeqCount(format);
-            int Seq = 1;
+            int Seq = 0;
             string Code = "";
 
             string WhereClause = " 1=1 ";

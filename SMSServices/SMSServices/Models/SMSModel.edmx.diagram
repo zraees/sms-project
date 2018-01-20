@@ -97,10 +97,10 @@
         <AssociationConnector Association="SMSModel.FK_FeeCollectionsAging_FeePaymentStatus" />
         <EntityTypeShape EntityType="SMSModel.FeePaymentsDetails" Width="1.5" PointX="24.625" PointY="16.375" />
         <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeeCollectionsAging" />
-        <EntityTypeShape EntityType="SMSModel.FeePayments" Width="1.5" PointX="3.375" PointY="3.875" />
-        <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeePayments" />
         <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="1.5" PointX="5.375" PointY="1.875" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes1" />
+        <EntityTypeShape EntityType="SMSModel.FeePayments" Width="1.5" PointX="3.375" PointY="4.875" />
+        <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeePayments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

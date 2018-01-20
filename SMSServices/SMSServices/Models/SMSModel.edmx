@@ -181,7 +181,7 @@
           <Property Name="FeePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PaidOn" Type="date" Nullable="false" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedOn" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="FeePaymentsDetails">
@@ -1155,6 +1155,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spDeleteTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="level" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="spFeeCollections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ShiftId" Type="int" Mode="In" />
           <Parameter Name="ClassId" Type="int" Mode="In" />
@@ -1696,16 +1699,19 @@
             <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />
             <End Role="FeePaymentsDetails" EntitySet="FeePaymentsDetails" />
           </AssociationSet>
-          <EntitySet Name="FeePayments" EntityType="SMSModel.FeePayments" />
-          <AssociationSet Name="FK_FeePaymentsDetails_FeePayments" Association="SMSModel.FK_FeePaymentsDetails_FeePayments">
-            <End Role="FeePayments" EntitySet="FeePayments" />
-            <End Role="FeePaymentsDetails" EntitySet="FeePaymentsDetails" />
-          </AssociationSet>
           <EntitySet Name="QualificationTypes" EntityType="SMSModel.QualificationTypes" />
           <AssociationSet Name="FK_TeacherQualifications_QualificationTypes1" Association="SMSModel.FK_TeacherQualifications_QualificationTypes1">
             <End Role="QualificationTypes" EntitySet="QualificationTypes" />
             <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
           </AssociationSet>
+          <EntitySet Name="FeePayments" EntityType="SMSModel.FeePayments" />
+          <AssociationSet Name="FK_FeePaymentsDetails_FeePayments" Association="SMSModel.FK_FeePaymentsDetails_FeePayments">
+            <End Role="FeePayments" EntitySet="FeePayments" />
+            <End Role="FeePaymentsDetails" EntitySet="FeePaymentsDetails" />
+          </AssociationSet>
+          <FunctionImport Name="spDeleteTables">
+            <Parameter Name="level" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="TeacherQualifications">
           <Key>
@@ -2960,29 +2966,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="FeePayments">
-          <Key>
-            <PropertyRef Name="FeePaymentID" />
-          </Key>
-          <Property Name="FeePaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PaidOn" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Comments" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="FeePaymentsDetails" Relationship="SMSModel.FK_FeePaymentsDetails_FeePayments" FromRole="FeePayments" ToRole="FeePaymentsDetails" />
-        </EntityType>
-        <Association Name="FK_FeePaymentsDetails_FeePayments">
-          <End Type="SMSModel.FeePayments" Role="FeePayments" Multiplicity="1" />
-          <End Type="SMSModel.FeePaymentsDetails" Role="FeePaymentsDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FeePayments">
-              <PropertyRef Name="FeePaymentID" />
-            </Principal>
-            <Dependent Role="FeePaymentsDetails">
-              <PropertyRef Name="FeePaymentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="QualificationTypes">
           <Key>
             <PropertyRef Name="ID" />
@@ -3002,6 +2985,29 @@
             </Principal>
             <Dependent Role="TeacherQualifications">
               <PropertyRef Name="QualificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FeePayments">
+          <Key>
+            <PropertyRef Name="FeePaymentID" />
+          </Key>
+          <Property Name="FeePaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaidOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="FeePaymentsDetails" Relationship="SMSModel.FK_FeePaymentsDetails_FeePayments" FromRole="FeePayments" ToRole="FeePaymentsDetails" />
+        </EntityType>
+        <Association Name="FK_FeePaymentsDetails_FeePayments">
+          <End Type="SMSModel.FeePayments" Role="FeePayments" Multiplicity="1" />
+          <End Type="SMSModel.FeePaymentsDetails" Role="FeePaymentsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeePayments">
+              <PropertyRef Name="FeePaymentID" />
+            </Principal>
+            <Dependent Role="FeePaymentsDetails">
+              <PropertyRef Name="FeePaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3567,6 +3573,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QualificationTypes">
+            <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
+              <MappingFragment StoreEntitySet="QualificationTypes">
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FeePayments">
             <EntityTypeMapping TypeName="SMSModel.FeePayments">
               <MappingFragment StoreEntitySet="FeePayments">
@@ -3578,16 +3594,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="QualificationTypes">
-            <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
-              <MappingFragment StoreEntitySet="QualificationTypes">
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDeleteTables" FunctionName="SMSModel.Store.spDeleteTables" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

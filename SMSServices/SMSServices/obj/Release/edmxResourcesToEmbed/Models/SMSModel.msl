@@ -557,6 +557,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="QualificationTypes">
+      <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
+        <MappingFragment StoreEntitySet="QualificationTypes">
+          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FeePayments">
       <EntityTypeMapping TypeName="SMSModel.FeePayments">
         <MappingFragment StoreEntitySet="FeePayments">
@@ -568,15 +578,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="QualificationTypes">
-      <EntityTypeMapping TypeName="SMSModel.QualificationTypes">
-        <MappingFragment StoreEntitySet="QualificationTypes">
-          <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spDeleteTables" FunctionName="SMSModel.Store.spDeleteTables" />
   </EntityContainerMapping>
 </Mapping>

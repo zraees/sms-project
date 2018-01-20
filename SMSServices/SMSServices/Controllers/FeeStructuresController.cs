@@ -70,6 +70,25 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
         }
 
+        [Route("api/FeeStructures/GetFeeTypes/{ClassID}")]
+        //public IEnumerable<FeeStructures> Get()
+        public HttpResponseMessage GetFeeTypes(int ClassID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            var query = entities.FeeStructures
+                .Where(fs => fs.ClassID == ClassID)
+            .Select(e => new
+            {
+                e.FeeStructureID,
+                Id = e.FeeTypeID,
+                Name = e.FeeTypes.Name,
+                NameAr = e.FeeTypes.NameAr
+            });
+
+            //return query.ToList(); //entities.FeeStructures.Include("Classes").Include("Shifts").Include("Sections");
+            return this.Request.CreateResponse(HttpStatusCode.OK, query.ToList());
+        }
 
         //[Route("api/FeeStructuresById/{lang}/{id}")]
         //public HttpResponseMessage Get(string lang, int id)
@@ -114,19 +133,16 @@ namespace SMSServices.Controllers
             return this.Request.CreateResponse(HttpStatusCode.OK, query.FirstOrDefault());
         }
 
-        [Route("api/FeeStructures/FeeStructuresByClassId/{classId}")]
-        public List<FeeStructures> FeeStructuresByClassId(int ClassID)
+        [Route("api/FeeStructures/FeeStructuresByClassId/{classId}/{feeStructureIds}")]
+        public List<FeeStructures> FeeStructuresByClassId(int ClassID, string FeeStructureIDs)
         {
             entities.Configuration.ProxyCreationEnabled = false;
          
-            //List<FeeStructures> result = entities.FeeStructures
-            //    .Where(t => t.ClassID == ClassID)
-            //    .ToList();
-
+            List<int> TagIds = new UtilityFunctions().StringToIntegerList(FeeStructureIDs);
             var query = entities.FeeStructures.Include("FeeTypes").Include("FeeTypes.FeeCycles");
             query = query.Include("FeeTypes.FeeDueOnFrequencies").Include("FeeTypes.FeeDueOnInterval");
 
-            return query.Where(t => t.ClassID == ClassID).ToList(); ;
+            return query.Where(t => t.ClassID == ClassID && TagIds.Contains(t.FeeStructureID)).ToList();
         }
 
         // POST api/<controller>

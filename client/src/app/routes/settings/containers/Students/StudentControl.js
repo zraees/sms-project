@@ -11,31 +11,52 @@ class StudentControl extends React.Component {
         super(props);
         this.state = { 
             student: {},
-               
+            key: getLangKey()     
         } 
+        this.getStudent = this.getStudent.bind(this);
     }
 
     componentDidMount() {
         console.log('componentDidMount --> StudentControl');
 
+        this.getStudent(this.props);
+
+    }
+
+    getStudent(props){
         var shiftId, classId, sectionId, batchId, studentId;
-        let key = getLangKey();
-        shiftId = this.props.shiftId ? this.props.shiftId : 0;
-        classId = this.props.classId ? this.props.classId : 0;
-        sectionId = this.props.sectionId ? this.props.sectionId : 0;
-        batchId = this.props.batchId ? this.props.batchId : 0;
-        studentId = this.props.studentId ? this.props.studentId : 0;
+        //let key = getLangKey();
+        shiftId = props.shiftId ? props.shiftId : 0;
+        classId = props.classId ? props.classId : 0;
+        sectionId = props.sectionId ? props.sectionId : 0;
+        batchId = props.batchId ? props.batchId : 0;
+        studentId = props.studentId ? props.studentId : 0;
 
         //console.log('sdasd');
-        axios.get('/api/GetStudentControlData/' + key + '/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId)
+        axios.get('/api/GetStudentControlData/' + this.state.key + '/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId)
             .then(res => {
                 //console.log('sdas asd d', res.data);
                 const student = res.data;
                 this.setState({ student });
             });
-
     }
+  
+    shouldComponentUpdate(nextProps, nextState) {
 
+        //const { batchId, sectionId, classId, shiftId, studentId } = this.props;
+        //const { nbatchId, nsectionId, nclassId, nshiftId, nstudentId } = nextProps;
+
+        // console.log('shouldComponentUpdate --> StudentControl',this.props.studentId != nextProps.nstudentId, studentId, nstudentId, nextState.student);
+        // console.log('nextProps.studentId ', nextProps.studentId, nextProps);
+
+        if (this.props.studentId != nextProps.studentId && nextProps.studentId) {
+            //let key = getLangKey();
+            this.setState({ student: [] });
+            this.getStudent(nextProps);
+        }
+
+        return this.props.studentId != nextProps.nstudentId;
+    }
   //
     render() {
         const { student } = this.state;
