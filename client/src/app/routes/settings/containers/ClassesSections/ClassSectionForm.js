@@ -32,19 +32,23 @@ class ClassSectionForm extends React.Component {
       "classSectionId": 0
     }        
        
-    axios.get('/api/lookup/shifts/')
+    const instance = axios.create({baseURL: 'http://localhost:8082'})
+
+console.log('instance', instance);
+
+    instance.get('/api/lookup/shifts/')
       .then(res=>{            
           const shiftOptions = mapForCombo(res.data);
           this.setState({shiftOptions});
     });            
     
-    axios.get('/api/lookup/classes/')
+    instance.get('/api/lookup/classes/')
       .then(res=>{            
           const classOptions = mapForCombo(res.data);
           this.setState({classOptions});
     });
 
-    axios.get('/api/lookup/sections/')
+    instance.get('/api/lookup/sections/')
       .then(res=>{            
           const sectionOptions = mapForCombo(res.data);
           this.setState({sectionOptions});
