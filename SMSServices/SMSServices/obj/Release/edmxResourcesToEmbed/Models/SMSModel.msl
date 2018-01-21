@@ -567,10 +567,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spDeleteTables" FunctionName="SMSModel.Store.spDeleteTables" />
     <EntitySetMapping Name="FeePayments">
       <EntityTypeMapping TypeName="SMSModel.FeePayments">
         <MappingFragment StoreEntitySet="FeePayments">
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
           <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
           <ScalarProperty Name="Code" ColumnName="Code" />
@@ -578,6 +581,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="spDeleteTables" FunctionName="SMSModel.Store.spDeleteTables" />
+    <FunctionImportMapping FunctionImportName="spReportFeePaymentByID" FunctionName="SMSModel.Store.spReportFeePaymentByID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMSModel.spReportFeePaymentByID_Result">
+          <ScalarProperty Name="SrNo" ColumnName="SrNo" />
+          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+          <ScalarProperty Name="FeePaymentCode" ColumnName="FeePaymentCode" />
+          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="StudentsCode" ColumnName="StudentsCode" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="FullNameAr" ColumnName="FullNameAr" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+          <ScalarProperty Name="BatchNameAr" ColumnName="BatchNameAr" />
+          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+          <ScalarProperty Name="ShiftNameAr" ColumnName="ShiftNameAr" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="ClassNameAr" ColumnName="ClassNameAr" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="SectionNameAr" ColumnName="SectionNameAr" />
+          <ScalarProperty Name="FeeTypeCode" ColumnName="FeeTypeCode" />
+          <ScalarProperty Name="FeeTypeName" ColumnName="FeeTypeName" />
+          <ScalarProperty Name="FeeTypeNameAr" ColumnName="FeeTypeNameAr" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spFeeOutstandingByAgingID" FunctionName="SMSModel.Store.spFeeOutstandingByAgingID" />
   </EntityContainerMapping>
 </Mapping>

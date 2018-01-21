@@ -268,13 +268,19 @@
       <End Role="QualificationTypes" EntitySet="QualificationTypes" />
       <End Role="TeacherQualifications" EntitySet="TeacherQualifications" />
     </AssociationSet>
+    <FunctionImport Name="spDeleteTables">
+      <Parameter Name="level" Mode="In" Type="String" />
+    </FunctionImport>
     <EntitySet Name="FeePayments" EntityType="SMSModel.FeePayments" />
     <AssociationSet Name="FK_FeePaymentsDetails_FeePayments" Association="SMSModel.FK_FeePaymentsDetails_FeePayments">
       <End Role="FeePayments" EntitySet="FeePayments" />
       <End Role="FeePaymentsDetails" EntitySet="FeePaymentsDetails" />
     </AssociationSet>
-    <FunctionImport Name="spDeleteTables">
-      <Parameter Name="level" Mode="In" Type="String" />
+    <FunctionImport Name="spReportFeePaymentByID" ReturnType="Collection(SMSModel.spReportFeePaymentByID_Result)">
+      <Parameter Name="FeePaymentID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spFeeOutstandingByAgingID" ReturnType="Collection(Decimal)">
+      <Parameter Name="FeeCollectionAgingID" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="TeacherQualifications">
@@ -1560,6 +1566,8 @@
     <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="PaidOn" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TotalPaidAmount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="Balance" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
     <Property Name="CreatedOn" Type="DateTime" Precision="0" />
     <NavigationProperty Name="FeePaymentsDetails" Relationship="SMSModel.FK_FeePaymentsDetails_FeePayments" FromRole="FeePayments" ToRole="FeePaymentsDetails" />
   </EntityType>
@@ -1575,4 +1583,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="spReportFeePaymentByID_Result">
+    <Property Type="Int64" Name="SrNo" Nullable="true" />
+    <Property Type="Int32" Name="FeePaymentID" Nullable="false" />
+    <Property Type="String" Name="FeePaymentCode" Nullable="false" MaxLength="10" />
+    <Property Type="DateTime" Name="PaidOn" Nullable="false" />
+    <Property Type="String" Name="Comments" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="16" />
+    <Property Type="String" Name="StudentsCode" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="FullName" Nullable="false" MaxLength="210" />
+    <Property Type="String" Name="FullNameAr" Nullable="false" MaxLength="210" />
+    <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="BatchName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="BatchNameAr" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ShiftNameAr" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ClassName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="ClassNameAr" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="SectionName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="SectionNameAr" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="FeeTypeCode" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="FeeTypeName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="FeeTypeNameAr" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="TotalPaidAmount" Nullable="false" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="Balance" Nullable="false" Precision="8" Scale="2" />
+  </ComplexType>
 </Schema>

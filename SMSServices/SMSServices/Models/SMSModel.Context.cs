@@ -115,5 +115,23 @@ namespace SMSServices.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteTables", levelParameter);
         }
+    
+        public virtual ObjectResult<spReportFeePaymentByID_Result> spReportFeePaymentByID(Nullable<int> feePaymentID)
+        {
+            var feePaymentIDParameter = feePaymentID.HasValue ?
+                new ObjectParameter("FeePaymentID", feePaymentID) :
+                new ObjectParameter("FeePaymentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportFeePaymentByID_Result>("spReportFeePaymentByID", feePaymentIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> spFeeOutstandingByAgingID(Nullable<int> feeCollectionAgingID)
+        {
+            var feeCollectionAgingIDParameter = feeCollectionAgingID.HasValue ?
+                new ObjectParameter("FeeCollectionAgingID", feeCollectionAgingID) :
+                new ObjectParameter("FeeCollectionAgingID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spFeeOutstandingByAgingID", feeCollectionAgingIDParameter);
+        }
     }
 }

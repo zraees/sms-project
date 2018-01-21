@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jsPDF'
+import converter from 'number-to-words'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 
@@ -55,6 +56,7 @@ class FeeCollectionsPage extends React.Component {
       classId: 0,
       shiftId: 0,
       studentId: 0,
+      feePaymentSlipTemplate: feePaymentSlipTemplate,
       //gridData: [{"$id":"1","FeeStructureID":1,"ClassID":3,"ClassName":"II","ClassNameAr":"II","FeeTypeCode":"0004","FeeTypeName":"abc 2","FeeTypeNameAr":"ed ed","FeeCycleID":1,"FeeCycleName":"Monthly","FeeCycleNameAr":"شهريا\r\n","FeeDueOnFrequencyID":1,"FeeDueOnFrequencyName":"Monthly","FeeDueOnFrequencyNameAr":"شهريا\r\n","FeeDueOnIntervalID":1,"FeeDueOnIntervalName":"First of every month","FeeDueOnIntervalNameAr":"أولا من كل شهر","FeeDiscountTypeID":null,"FeeDiscountTypeName":"","FeeDiscountTypeNameAr":"","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":0.00,"DiscountValue":0.00,"Fee":5000.00,"NetFee":5000.00},{"$id":"2","FeeStructureID":3,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0005","FeeTypeName":"abc","FeeTypeNameAr":"aaaa","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":3,"FeeDueOnFrequencyName":"Every 2 Months","FeeDueOnFrequencyNameAr":"كل شهرين\r\n","FeeDueOnIntervalID":4,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":25.00,"DiscountValue":3750.00,"Fee":15000.00,"NetFee":11250.00},{"$id":"3","FeeStructureID":1002,"ClassID":4,"ClassName":"III","ClassNameAr":"III","FeeTypeCode":"0008","FeeTypeName":"tution fee","FeeTypeNameAr":"edc","FeeCycleID":2,"FeeCycleName":"Yearly","FeeCycleNameAr":"سنوي","FeeDueOnFrequencyID":4,"FeeDueOnFrequencyName":"Quarterly","FeeDueOnFrequencyNameAr":"فصليا","FeeDueOnIntervalID":5,"FeeDueOnIntervalName":"Till tenth of every month","FeeDueOnIntervalNameAr":"حتى عشر من كل شهر\r\n","FeeDiscountTypeID":1,"FeeDiscountTypeName":"Session Discount","FeeDiscountTypeNameAr":"خصم الجلسة\r\n","DiscountOption":"P","DiscountOptionText":"%","DiscountRate":5.00,"DiscountValue":550.00,"Fee":11000.00,"NetFee":10450.00}]
     }
     this.handleShiftBlur = this.handleShiftBlur.bind(this);
@@ -65,7 +67,7 @@ class FeeCollectionsPage extends React.Component {
     this.renderModalBody = this.renderModalBody.bind(this);
     
     this.handlePrintClick = this.handlePrintClick.bind(this);
-
+    this.printFeeSlip = this.printFeeSlip.bind(this);
   }
 
   componentWillMount() {
@@ -76,14 +78,14 @@ class FeeCollectionsPage extends React.Component {
 
     console.log('componentDidMount --> FeeCollectionsPage');
 
-    $('body').on('click', '.modal-toggle', function (event) {
-      console.log('asdasd ');
-      event.preventDefault();
-      $('.modal-content').empty();
-      $('#myModal')
-        .removeData('bs.modal')
-        .modal({ remote: $(this).attr('href') });
-    });
+    // $('body').on('click', '.modal-toggle', function (event) {
+    //   console.log('asdasd ');
+    //   event.preventDefault();
+    //   $('.modal-content').empty();
+    //   $('#myModal')
+    //     .removeData('bs.modal')
+    //     .modal({ remote: $(this).attr('href') });
+    // });
 
     axios.get('/api/lookup/shifts/')
       .then(res => {
@@ -147,6 +149,9 @@ class FeeCollectionsPage extends React.Component {
 
       $(this).data('bs.modal', null);
       $(this).remove();
+
+      this.printFeeSlip($('#paymentId').val());
+
     }.bind(this));
 
     $('#reportPopup').on('shown.bs.modal', function () {
@@ -264,8 +269,53 @@ class FeeCollectionsPage extends React.Component {
 
   }
 
-  handlePrintClick(obj, value) {
+  printFeeSlip(feePaymentId) {
 
+    console.log('feePaymentId ==> ', feePaymentId, converter.toWords(4434));
+
+    if (feePaymentId) {
+
+      var htmlContent = this.state.feePaymentSlipTemplate; 
+
+      htmlContent = htmlContent.replace('$PaymentCode$', feePaymentId);
+      htmlContent = htmlContent.replace('$AmountInWords$', converter.toWords(4434));
+      
+
+      this.setState({feePaymentSlipTemplate: htmlContent});
+
+      $("#feePaymentSlip").removeClass('hide');
+      html2canvas(document.getElementById("feePaymentSlip"), {
+        logging: false
+        , onclone: function (document) {
+          console.log('onclone ..', document);
+          //$("#feePaymentSlip").show();
+        }
+      }).then(function (canvas) {
+        var img = canvas.toDataURL('image/png');
+        //var doc = new jsPDF('p', 'cm',  [22, 29]);
+        var doc = new jsPDF('p', 'pt', 'a4');
+        doc.addImage(img, 'JPEG', 1, 1);
+        //doc.save('test.pdf');
+
+        //$('#reportPopup').modal('show');
+
+        //var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
+        //iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:100%');
+        //document.body.appendChild(iframe);
+        //iframe.src = doc.output('datauristring');  it takes too much time so open in new window option is suitable
+
+        //good solution to open in new window
+        window.open(doc.output('bloburl'), '_blank');
+        //a.style.display = "none";
+        //$("#feePaymentSlip").hide();
+        $("#feePaymentSlip").addClass('hide');
+      });
+
+    }
+  }
+
+  handlePrintClick(obj, value) {
+     
     LoaderVisibility(true);
     //console.log('handleSearchClick this.props.sectionID ', this.props.shiftId, this.props.sectionId);
 
@@ -309,6 +359,11 @@ class FeeCollectionsPage extends React.Component {
     //var a = document.getElementById("feePaymentSlip");
     //a.style.display = "block";
 
+    var htmlContent = this.state.feePaymentSlipTemplate; 
+
+    htmlContent = htmlContent.replace('$PaymentCode$', $('#paymentId').val());
+
+    this.setState({feePaymentSlipTemplate: htmlContent});
 
     $("#feePaymentSlip").removeClass('hide');
     html2canvas(document.getElementById("feePaymentSlip"), {
@@ -722,7 +777,7 @@ class FeeCollectionsPage extends React.Component {
         {/* /.modal */}
 
 
-        <HtmlRender html={feePaymentSlipTemplate}/>
+        <HtmlRender html={this.state.feePaymentSlipTemplate}/>
 
         {/* <div id="content11" className="width-400-px" >
 

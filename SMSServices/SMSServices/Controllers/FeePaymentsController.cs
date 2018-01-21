@@ -42,14 +42,16 @@ namespace SMSServices.Controllers
             return entities.FeePayments.Where(t => t.FeePaymentID == id).FirstOrDefault();
         }
 
+        /*
         // POST api/<controller>
         public HttpResponseMessage Post(FeePayments feePayment)
         {
+            string strLog = "";
             try
             {
-                AddFeePayment(feePayment);
+                strLog = AddFeePayment(feePayment);
                 entities.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, "Done ...");
+                return Request.CreateResponse(HttpStatusCode.OK, "Done ... " + strLog);
                 //return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ...");
             }
             //catch (Exception e)
@@ -82,15 +84,53 @@ namespace SMSServices.Controllers
             //}
         }
 
-        public void AddFeePayment(FeePayments feePayment)
+        public string AddFeePayment(FeePayments feePayment)
         {
+            string strLog = "";
+            decimal TotalPaidAmount = GetTotalPaidAmount(feePayment,ref  strLog);
+            decimal Outstanding = GetFeeOutstandingByAgingID(feePayment, ref strLog);
+
+            strLog = strLog + string.Format("Outstanding {0} TotalPaidAmount {1} // ", Outstanding, TotalPaidAmount);
+
             entities.FeePayments.Add(new FeePayments()
             {
                 Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
                 PaidOn = feePayment.PaidOn,
-                Comments = feePayment.Comments,
+                Comments = "" + feePayment.Comments,
+                TotalPaidAmount = TotalPaidAmount,
+                Balance = Outstanding >= TotalPaidAmount ? Outstanding - TotalPaidAmount : 0,
                 FeePaymentsDetails = feePayment.FeePaymentsDetails
             });
+
+            return strLog;
+        }
+        */
+
+        public decimal GetFeeOutstandingByAgingID(List<FeePaymentsDetails> FeePaymentsDetails, ref string strLog)
+        {
+            strLog = strLog + string.Format(" //  GetFeeOutstandingByAgingID ");
+            if (FeePaymentsDetails.Count > 0)
+            {
+
+                int FeeCollectionAgingID = FeePaymentsDetails.FirstOrDefault().FeeCollectionAgingID;
+                var result = entities.spFeeOutstandingByAgingID(FeeCollectionAgingID).FirstOrDefault();
+
+                strLog = strLog + string.Format(" feePayment.FeePaymentsDetails.Count > 0 //  FeeCollectionAgingID = ", FeeCollectionAgingID);
+                strLog = strLog + string.Format(" //  result.HasValue = ", result.HasValue);
+
+
+                return (result != null) ? (result.HasValue? result.Value : 0) : 0;
+            }
+            else return 0; 
+        }
+
+        public decimal GetTotalPaidAmount(List<FeePaymentsDetails> FeePaymentsDetails, ref string strLog)
+        {
+            strLog = strLog + string.Format(" //  GetTotalPaidAmount ");
+            var result = FeePaymentsDetails.GroupBy(o => o.FeePaymentID)
+                               .Select(g => new { TotalPaidAmount = g.Sum(i => i.PaidAmount) }).FirstOrDefault();
+
+            return (result != null) ? result.TotalPaidAmount : 0;
         }
 
 

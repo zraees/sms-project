@@ -298,6 +298,9 @@
     <Compile Include="Models\spFeeDueDetailsByStudentID_Result.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spReportFeePaymentByID_Result.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\States.cs">
       <DependentUpon>SMSModel.tt</DependentUpon>
     </Compile>

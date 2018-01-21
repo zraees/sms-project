@@ -45,12 +45,16 @@ export function submitFeePayment(values) {
     values.feeDueDetails[0].paymentDate = values.paymentDate;
     values.feeDueDetails[0].paymentComments = values.paymentComments;
     
-    console.log(' not empty ..', values.feeDueDetails);
+    //console.log(' not empty ..', values.feeDueDetails);
 
     axios.put('/api/UpdateFeeAging', values.feeDueDetails)
       .then(function (response) {
 
-        console.log('response ',response);
+        // console.log('response  submitFeePayment(values)',response);
+        // console.log('response  response.data ',response.data);
+        // console.log('response  response.status ',response.status);
+        // console.log('response  response.data.StatusMessage ',response.data.StatusMessage);
+
         alert('s', 'data has been updated.');
         $('#feeCollectionPopup').modal('hide');
         $('#paymentId').val(response.data);

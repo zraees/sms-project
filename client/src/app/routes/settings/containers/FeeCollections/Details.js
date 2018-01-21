@@ -53,7 +53,7 @@ class Details extends React.Component {
 
   initializeFeeDues(studentId){
 
-    console.log('initializeFeeDues -- this.state.studentId ', this.state.studentId);
+    //console.log('initializeFeeDues -- this.state.studentId ', this.state.studentId);
 
     axios.get( '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
       .then(res => {
@@ -112,12 +112,12 @@ class Details extends React.Component {
     //console.log('shouldComponentUpdate --> FeeCollection Details', this.state.studentId != nextState.nstudentId, nextProps, nextState);
 
     if (this.state.studentId != nextState.studentId && nextState.studentId) {
-      console.log('update state yes ', nextState.studentId);
+      //console.log('update state yes ', nextState.studentId);
       //let key = getLangKey(); 
       this.initializeFeeDues(nextState.studentId);
     }
     else if (this.props.studentId != nextProps.studentId && nextProps.studentId) {
-      console.log('update props yes ', nextProps.studentId);
+      //console.log('update props yes ', nextProps.studentId);
       this.initializeFeeDues(nextProps.studentId);
     }
 
@@ -126,7 +126,7 @@ class Details extends React.Component {
 
   handleAdditionalDiscountBlur(index, event) {
 
-    console.log('handleAdditionalDiscountBlur(obj, value) == ', index, event, this.state.feeDueDetails[index].additionalDiscount);
+    //console.log('handleAdditionalDiscountBlur(obj, value) == ', index, event, this.state.feeDueDetails[index].additionalDiscount);
     //var value = event.target.value;
 
 

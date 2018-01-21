@@ -59,6 +59,7 @@
     "moment": "^2.18.1",
     "morris.js": "^0.5.0",
     "nouislider": "^9.0.0",
+    "number-to-words": "^1.2.3",
     "raphael": "^2.2.1",
     "rasterizehtml": "^1.2.4",
     "rc-time-picker": "^3.2.1",

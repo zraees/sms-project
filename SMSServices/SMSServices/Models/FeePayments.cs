@@ -23,6 +23,8 @@ namespace SMSServices.Models
         public string Code { get; set; }
         public System.DateTime PaidOn { get; set; }
         public string Comments { get; set; }
+        public decimal TotalPaidAmount { get; set; }
+        public decimal Balance { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
     
         public virtual ICollection<FeePaymentsDetails> FeePaymentsDetails { get; set; }

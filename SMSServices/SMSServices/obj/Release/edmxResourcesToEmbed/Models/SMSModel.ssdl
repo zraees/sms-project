@@ -177,6 +177,8 @@
     <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="PaidOn" Type="date" Nullable="false" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+    <Property Name="TotalPaidAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="Balance" Type="decimal" Precision="8" Scale="2" Nullable="false" />
     <Property Name="CreatedOn" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="FeePaymentsDetails">
@@ -1163,6 +1165,12 @@
   <Function Name="spFeeDueDetailsByStudentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="lang" Type="nvarchar" Mode="In" />
     <Parameter Name="StudentId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spFeeOutstandingByAgingID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FeeCollectionAgingID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spReportFeePaymentByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FeePaymentID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="SMSModelStoreContainer">
     <EntitySet Name="Admissions" EntityType="Self.Admissions" Schema="dbo" store:Type="Tables" />

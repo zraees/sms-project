@@ -426,11 +426,15 @@ namespace SMSServices.Controllers
                         //new FeePaymentsController().AddFeePayment(FeePayment);
                         strLog += " ------ " + string.Format(" IsFeePaidSaved={0}", IsFeePaidSaved);
 
+                        decimal TotalPaidAmount = new FeePaymentsController().GetTotalPaidAmount(FeePaymentsDetailsList, ref  strLog);
+                        decimal Outstanding = new FeePaymentsController().GetFeeOutstandingByAgingID(FeePaymentsDetailsList, ref strLog);
                          FeePayment =new FeePayments()
                         {
                             Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
                             PaidOn = PaymentDate,
                             Comments = PaymentComments,
+                            TotalPaidAmount = TotalPaidAmount,
+                            Balance = Outstanding >= TotalPaidAmount ? Outstanding - TotalPaidAmount : 0,
                             FeePaymentsDetails = FeePaymentsDetailsList,
                             CreatedOn = DateTime.Now
                         };
