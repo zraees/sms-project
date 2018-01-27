@@ -42,6 +42,18 @@ namespace SMSServices.Controllers
             return entities.FeePayments.Where(t => t.FeePaymentID == id).FirstOrDefault();
         }
 
+
+        // GET api/<controller>
+        [HttpGet]
+        [Route("api/FeePayments/FeePaymentByID/{lang}/{FeePaymentId}")]
+        //public IEnumerable<FeeCollections> Get()
+        public HttpResponseMessage FeePaymentByID(string Lang, int FeePaymentID)
+        {
+            entities.Configuration.ProxyCreationEnabled = false;
+             
+            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spReportFeePaymentByID(Lang, FeePaymentID));
+        }
+
         /*
         // POST api/<controller>
         public HttpResponseMessage Post(FeePayments feePayment)

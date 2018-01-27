@@ -20,6 +20,9 @@ import StudentControl from '../Students/StudentControl'
 import { config } from '../../../../config/config';
  
 import validate from './validate'
+import alert, {confirmation} from '../../../../components/utils/alerts'
+import LanguageStore from '../../../../components/i18n/LanguageStore'
+import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
 
 class Details extends React.Component {
  
@@ -30,6 +33,7 @@ class Details extends React.Component {
       paymentDate: today(),
       feeDueDetails: [],
       studentId: this.props.studentId,
+      paymentModeOptions: []
     }  
     // this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
     // this.handleFeeBlur = this.handleFeeBlur.bind(this);
@@ -38,15 +42,11 @@ class Details extends React.Component {
     this.initializeFeeDues = this.initializeFeeDues.bind(this);
   }
   
-  componentDidMount(){
+  componentDidMount() {
 
     // this.props.initialize(initData);
     //this.props.change("feeDiscountTypeId", 1);
 
-    // var url = '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + this.props.studentId;
-    // console.log(url);
-    // var table = $('#feeDueDetailsGrid').DataTable();
-    // table.ajax.url(url).load();
     this.initializeFeeDues(this.state.studentId);
     console.log('componentDidMount --> Details');
   }
@@ -75,10 +75,13 @@ class Details extends React.Component {
               "newAdditionalDiscount":item.NewAdditionalDiscount,
               "dueAmountAfterAddDisc":item.DueAmountAfterAddDisc,
               "outstandingAmount": item.OutstandingAmount,
+              "totalPaidAmount": item.TotalPaidAmount,
               "paymentAmount":item.PaymentAmount,
               //"feePaymentStatusName":item.FeePaymentStatusName,
               "paymentDate": "",
-              "paymentComments": ""
+              "paymentComments": "",
+              //"paymentModeId":null,
+              "feeCollectedBy":""
             });
 
             
@@ -87,14 +90,23 @@ class Details extends React.Component {
           const initData = {
             "feeCollectionDetailId": 0,
             "paymentDate": today(),
-            "feeDueDetails": feeDueDetails
+            "feeDueDetails": feeDueDetails, 
+            "paymentModeId":null
           } 
 
           this.props.initialize(initData); 
           //this.setState({feeDueDetails})
           
           //console.log('this.state.feeDueDetails', initData.feeDueDetails, this.state.feeDueDetails);
-
+          axios.get('/api/lookup/paymentModes/')
+          .then(res => {
+    
+            console.log('/api/lookup/paymentModes/', res.data);
+    
+            const paymentModeOptions = mapForCombo(res.data);
+            this.setState({ paymentModeOptions });
+          });
+          
         }
         else {
           // show error message, there is some this went wrong 
@@ -157,11 +169,11 @@ class Details extends React.Component {
   render() {
     const { feeCollectionId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props;
     const { batchId, sectionId, classId, shiftId, studentId } = this.props;
-    const { langKey } = this.state;
+    const { langKey, paymentModeOptions } = this.state;
 
     return (
       <form id="form-Fee-Aging" className="smart-form"
-        onSubmit={handleSubmit((values) => { submitFeePayment(values) })}>
+        onSubmit={handleSubmit((values) => { submitFeePayment(values, $('#dueFeeId').val()) })}>
 
         <StudentControl batchId={batchId}
           sectionId={sectionId}
@@ -186,19 +198,39 @@ class Details extends React.Component {
               <div className="tab-pane active" id="A1P1A">
 
                 <div className="row">
-                  <section className="remove-col-padding col-sm-3 col-md-3 col-lg-3">
+                  <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
                     <Field name="paymentDate" label="PaymentDateText" 
                       component={RFDatePicker} />
                   </section>
-                  <section className="remove-col-padding col-sm-9 col-md-9 col-lg-9">
-                    <Field name="paymentComments" labelClassName="input" 
+
+                  <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                    <Field
+                      multi={false}
+                      name="paymentModeId"
+                      label="PaymentModeText" 
+                      options={paymentModeOptions} 
+                      component={RFReactSelect} />
+                  </section>
+
+                  <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
+                    <Field name="feeCollectedBy" labelClassName="input"
+                      validate={required} component={RFField}
+                      maxLength="50" type="text" 
+                      label="FeeCollectedByText" />
+                  </section>
+                  
+                </div>
+
+                <div className="row">
+                  <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                    <Field name="paymentComments" labelClassName="input"
                       labelIconClassName="icon-append fa fa-file-text-o"
                       component={RFField}
                       maxLength="150" type="text"
                       label="FeePaymentCommentsText"
                       placeholder="P" />
                   </section>
-                </div>
+                </div>  
 
                 <div className="row">
                   <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
@@ -310,7 +342,8 @@ class Details extends React.Component {
             </div>
           </div>
         </fieldset>
-
+        
+                <input id="dueFeeId" type="hidden"></input>
         {(error !== undefined && <AlertMessage type="w"
           icon="alert-danger" message={error} />)}
 
@@ -353,11 +386,34 @@ Details = reduxForm({
 //   }
 // )(Details)
 
+const myHandler = (index, fields) => {
+  
+  let messageText = LanguageStore.getData().phrases["DeleteConfirmationMessageText"]
+    || 'Are you sure, you want to delete this record?';
 
-const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
+  confirmation(messageText, function (ButtonPressed) {
+    deleteRecord(ButtonPressed);
+  });
+
+}
+
+function deleteRecord(ButtonPressed) {
+
+  if (isYesClicked(ButtonPressed)) {
+    LoaderVisibility(true);
+
+    $('#dueFeeId').val($('#dueFeeId').val() + ',' + fields.get(index).feeCollectionAgingID);
+  
+    fields.remove(index);
+    console.log('#dueFeeId', $('#dueFeeId').val())
+
+  }
+}
+
+const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (  
   <div >         
     <div className="table-responsive"> 
-      <span>Delete func is pending... also fix webApi code, also validate func need to fix</span>
+      {(error && <span><em className="invalid"><h5><Msg phrase={error}/></h5></em></span>)}
       <table className="table table-striped table-bordered table-hover table-responsive">
         <thead>
           <tr>
@@ -458,12 +514,12 @@ const renderFeeDueDetails = ({ fields, meta: { touched, error } }) => (
                   type="text" />
               </td> */}
               <td>
-                <a onClick={() => fields.remove(index)}><i className="glyphicon glyphicon-trash"></i></a>
-
+                {/* <a onClick={() => fields.remove(index)}><i className="glyphicon glyphicon-trash"></i></a> */}
+                {(fields.get(index).totalPaidAmount<=0)? <a onClick={(e) => myHandler(index, fields)}><i className="glyphicon glyphicon-trash"></i></a> :""}
+                
               </td>
             </tr>
           )}
-          {/* {fields.error && <li className="error">{fields.error}</li>} */}
 
         </tbody>
       </table>

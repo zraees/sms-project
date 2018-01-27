@@ -94,6 +94,24 @@ namespace SMSServices.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeCollections_Result>("spFeeCollections", shiftIdParameter, classIdParameter, sectionIdParameter, batchIdParameter, studentIdParameter);
         }
     
+        public virtual int spDeleteTables(string level)
+        {
+            var levelParameter = level != null ?
+                new ObjectParameter("level", level) :
+                new ObjectParameter("level", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteTables", levelParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> spFeeOutstandingByAgingID(Nullable<int> feeCollectionAgingID)
+        {
+            var feeCollectionAgingIDParameter = feeCollectionAgingID.HasValue ?
+                new ObjectParameter("FeeCollectionAgingID", feeCollectionAgingID) :
+                new ObjectParameter("FeeCollectionAgingID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spFeeOutstandingByAgingID", feeCollectionAgingIDParameter);
+        }
+    
         public virtual ObjectResult<spFeeDueDetailsByStudentID_Result> spFeeDueDetailsByStudentID(string lang, Nullable<int> studentId)
         {
             var langParameter = lang != null ?
@@ -107,31 +125,17 @@ namespace SMSServices.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeDueDetailsByStudentID_Result>("spFeeDueDetailsByStudentID", langParameter, studentIdParameter);
         }
     
-        public virtual int spDeleteTables(string level)
+        public virtual ObjectResult<spReportFeePaymentByID_Result> spReportFeePaymentByID(string lang, Nullable<int> feePaymentID)
         {
-            var levelParameter = level != null ?
-                new ObjectParameter("level", level) :
-                new ObjectParameter("level", typeof(string));
+            var langParameter = lang != null ?
+                new ObjectParameter("lang", lang) :
+                new ObjectParameter("lang", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDeleteTables", levelParameter);
-        }
-    
-        public virtual ObjectResult<spReportFeePaymentByID_Result> spReportFeePaymentByID(Nullable<int> feePaymentID)
-        {
             var feePaymentIDParameter = feePaymentID.HasValue ?
                 new ObjectParameter("FeePaymentID", feePaymentID) :
                 new ObjectParameter("FeePaymentID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportFeePaymentByID_Result>("spReportFeePaymentByID", feePaymentIDParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<decimal>> spFeeOutstandingByAgingID(Nullable<int> feeCollectionAgingID)
-        {
-            var feeCollectionAgingIDParameter = feeCollectionAgingID.HasValue ?
-                new ObjectParameter("FeeCollectionAgingID", feeCollectionAgingID) :
-                new ObjectParameter("FeeCollectionAgingID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("spFeeOutstandingByAgingID", feeCollectionAgingIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportFeePaymentByID_Result>("spReportFeePaymentByID", langParameter, feePaymentIDParameter);
         }
     }
 }

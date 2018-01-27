@@ -317,6 +317,19 @@
 
     "There is time overlapping in periods.": "There is time overlapping in periods.",
     
+    "Please enter other details about contact person": "Please enter other details about contact person",
+    "Please enter special service that your child ever evaluated. e.g: Speech/Language therapy, counseling, wears hearing aids or others": "Please enter special service that your child ever evaluated. e.g: Speech/Language therapy, counseling, wears hearing aids or others",
+    "Please enter details about the special service": "Please enter details about the special service",
+
+    "There is no data available for process": "There is no data available for process",
+    "Please enter payment amount": "Please enter payment amount",
+
+    "At least one record must be entered": "At least one record must be entered",
+    "data has been generated successfully": "data has been generated successfully",
+    "Please wait while report data is loading ...": "Please wait while report data is loading ...",
+
+    "ComputerGeneratedDocumentText":"This is a computer-generated document. No signature is required.",
+
     "ViolationOfUniquenessErrorText": "خصوصیات میں سے ایک منفرد انڈیکس کے طور پر نشان لگا دیا گیا ہے اور پہلے ہی اس قدر کے ساتھ ایک اندراج ہے",
     "data has been saved successfully": "ریکارڈ کامیابی سے محفوظ ہوگیا",
     "data has been updated successfully": "ریکارڈ کو کامیابی سے اپ ڈیٹ کیا گیا ہے",

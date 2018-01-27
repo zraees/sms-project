@@ -18,24 +18,21 @@ namespace SMSServices.Models
         public string FeePaymentCode { get; set; }
         public System.DateTime PaidOn { get; set; }
         public string Comments { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public string StudentsCode { get; set; }
-        public string FullName { get; set; }
-        public string FullNameAr { get; set; }
+        public string StudentFullName { get; set; }
         public string RollNo { get; set; }
         public string BatchName { get; set; }
-        public string BatchNameAr { get; set; }
         public string ShiftName { get; set; }
-        public string ShiftNameAr { get; set; }
         public string ClassName { get; set; }
-        public string ClassNameAr { get; set; }
         public string SectionName { get; set; }
-        public string SectionNameAr { get; set; }
         public string FeeTypeCode { get; set; }
         public string FeeTypeName { get; set; }
-        public string FeeTypeNameAr { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }
         public decimal TotalPaidAmount { get; set; }
         public decimal Balance { get; set; }
+        public int PaymentModeID { get; set; }
+        public string PaymentModeName { get; set; }
+        public string FeeCollectedBy { get; set; }
     }
 }

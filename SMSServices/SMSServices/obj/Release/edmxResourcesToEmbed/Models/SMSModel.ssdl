@@ -179,7 +179,9 @@
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
     <Property Name="TotalPaidAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
     <Property Name="Balance" Type="decimal" Precision="8" Scale="2" Nullable="false" />
-    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="PaymentModeID" Type="int" Nullable="false" />
+    <Property Name="FeeCollectedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" Nullable="false" />
   </EntityType>
   <EntityType Name="FeePaymentsDetails">
     <Key>
@@ -1170,6 +1172,7 @@
     <Parameter Name="FeeCollectionAgingID" Type="int" Mode="In" />
   </Function>
   <Function Name="spReportFeePaymentByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lang" Type="nvarchar" Mode="In" />
     <Parameter Name="FeePaymentID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="SMSModelStoreContainer">

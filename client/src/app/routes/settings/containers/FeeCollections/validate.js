@@ -1,12 +1,19 @@
 
 const validate = values => {
   const errors = {}
+  var totalNewAdditionalDiscount = 0;
+  var totalPaymentAmount = 0;
 
   //   console.log(' aa ', !0, !2, !null, !'');
-  // console.log('values ==> ',values);
+  //console.log('validate values ==> ', values.feeDueDetails);
 
-  if (!values.feeDueDetails || !values.feeDueDetails.length) {
+  if (!$('#dueFeeId').val() &&  (!values.feeDueDetails || !values.feeDueDetails.length || values.feeDueDetails == [])) {
+    console.log('empty hogya hai ');
     errors.feeDueDetails = { _error: 'At least one record must be entered' }
+
+    // if ($('#dueFeeId').val())
+    //   errors.feeDueDetails = { _error: '' }
+
   } else {
     const feeDueDetailsArrayErrors = []
     values.feeDueDetails.forEach((period, periodIndex) => {
@@ -43,20 +50,31 @@ const validate = values => {
       //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
       // }
 
-      
+
       // if(period.paymentAmount==0){        
       //   periodErrors.paymentAmount = ''
       //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
       // }
-      //else 
-      if ((!period || !period.paymentAmount)) {
-        periodErrors.paymentAmount = 'RequiredFieldText'
-        feeDueDetailsArrayErrors[periodIndex] = periodErrors
+      //else
+      if (!$('#dueFeeId').val() && (!period || !period.newAdditionalDiscount)) {
+        //periodErrors.newAdditionalDiscount = 'RequiredFieldText'
+        //feeDueDetailsArrayErrors[periodIndex] = periodErrors
       }
-      else if(period.paymentAmount<0){        
-        periodErrors.paymentAmount = 'InvalidText'
-        feeDueDetailsArrayErrors[periodIndex] = periodErrors
+      else{ 
+        totalNewAdditionalDiscount += period.newAdditionalDiscount; 
       }
+
+      if (!$('#dueFeeId').val() && (!period || !period.paymentAmount)) {
+        //periodErrors.paymentAmount = 'RequiredFieldText'
+        //feeDueDetailsArrayErrors[periodIndex] = periodErrors
+      }
+      else{
+        totalPaymentAmount += period.paymentAmount;
+      }
+      // else if (period.paymentAmount < 0) {
+      //   periodErrors.paymentAmount = 'InvalidText'
+      //   feeDueDetailsArrayErrors[periodIndex] = periodErrors
+      // }
 
       if (periodErrors.newAdditionalDiscount == '' && period.newAdditionalDiscount > 0 && period.newAdditionalDiscount > period.dueAmountAfterAddDisc) {
         periodErrors.newAdditionalDiscount = 'InvalidText'
@@ -68,10 +86,18 @@ const validate = values => {
         feeDueDetailsArrayErrors[periodIndex] = periodErrors
       }
     })
+
+    if (!$('#dueFeeId').val() && (totalNewAdditionalDiscount + totalPaymentAmount <= 0)) {
+      errors.feeDueDetails = { _error: 'Please enter payment amount' }
+    }
+
+
     if (feeDueDetailsArrayErrors.length) {
       errors.feeDueDetails = feeDueDetailsArrayErrors
     }
   }
+
+  console.log('errors: ', errors);
   return errors
 }
 

@@ -6,7 +6,7 @@
         "rtl": false,
         "flag": "us",
         "locale": "en",
-        "frontend": "Do MMM YYYY",
+        "frontend": "DD-MM-YYYY",
         "backend": "YYYY-DD-MM"
     },
     {

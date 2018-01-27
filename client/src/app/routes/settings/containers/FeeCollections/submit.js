@@ -36,7 +36,7 @@ export function generateFeeCollections(values) {
 }
 
 
-export function submitFeePayment(values) {
+export function submitFeePayment(values, dueFeeIdsForDelete) {
 
   LoaderVisibility(true);
 
@@ -44,46 +44,47 @@ export function submitFeePayment(values) {
 
     values.feeDueDetails[0].paymentDate = values.paymentDate;
     values.feeDueDetails[0].paymentComments = values.paymentComments;
+    values.feeDueDetails[0].paymentModeId = 1;  //values.paymentModeId; ????????????
+    values.feeDueDetails[0].feeCollectedBy = values.feeCollectedBy;
     
     //console.log(' not empty ..', values.feeDueDetails);
 
-    axios.put('/api/UpdateFeeAging', values.feeDueDetails)
-      .then(function (response) {
+    if (dueFeeIdsForDelete.length > 0) {
+      axios.post('/api/RemoveFeeCollectionAging/' + dueFeeIdsForDelete)
+        .then(function (response) {
 
-        // console.log('response  submitFeePayment(values)',response);
-        // console.log('response  response.data ',response.data);
-        // console.log('response  response.status ',response.status);
-        // console.log('response  response.data.StatusMessage ',response.data.StatusMessage);
+          console.log('remove done .. ');
+          UpdateFeeAgingApiCall(values);
 
-        alert('s', 'data has been updated.');
-        $('#feeCollectionPopup').modal('hide');
-        $('#paymentId').val(response.data);
-        
-        LoaderVisibility(false);
+        })
+        .catch(function (error) {
+          console.log('error agya.. ', error);
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            alert('f', error.response.data.StatusMessage);
+            LoaderVisibility(false);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          //console.log(error.config);
 
-      })
-      .catch(function (error) {
-        console.log('error agya.. ', error);
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          alert('f', error.response.data.StatusMessage);
+          //alert('f', '');
           LoaderVisibility(false);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        //console.log(error.config);
+        });
+    }
+    else {
 
-        //alert('f', '');
-        LoaderVisibility(false);
-      });
+      UpdateFeeAgingApiCall(values);
+    }
+
   }
   else {
     LoaderVisibility(false);
@@ -91,6 +92,46 @@ export function submitFeePayment(values) {
   }
 }
 
+function UpdateFeeAgingApiCall(values) {
+
+  axios.put('/api/UpdateFeeAging', values.feeDueDetails)
+    .then(function (response) {
+
+      // console.log('response  submitFeePayment(values)',response);
+      // console.log('response  response.data ',response.data);
+      // console.log('response  response.status ',response.status);
+      // console.log('response  response.data.StatusMessage ',response.data.StatusMessage);
+
+      alert('s', 'data has been updated.');
+      $('#feeCollectionPopup').modal('hide');
+      $('#paymentId').val(response.data);
+
+      LoaderVisibility(false);
+
+    })
+    .catch(function (error) {
+      console.log('error agya.. ', error);
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        alert('f', error.response.data.StatusMessage);
+        LoaderVisibility(false);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      //console.log(error.config);
+
+      //alert('f', '');
+      LoaderVisibility(false);
+    });
+}
 
 // function submit(values) {
 //   console.log(values);
