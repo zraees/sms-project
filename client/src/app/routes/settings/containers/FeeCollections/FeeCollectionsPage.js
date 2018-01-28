@@ -153,7 +153,7 @@ class FeeCollectionsPage extends React.Component {
       $(this).data('bs.modal', null);
       $(this).remove();
 
-      this.printFeeSlip($('#paymentId').val());
+      this.printFeeSlip(this.state.langKey, $('#paymentId').val());
 
     }.bind(this));
 
@@ -272,17 +272,17 @@ class FeeCollectionsPage extends React.Component {
 
   }
 
-  printFeeSlip(feePaymentId) {
+  printFeeSlip(langKey, feePaymentId) {
 
     console.log('feePaymentId ==> ', feePaymentId, numeral(2324).format('0,0.00'));
 
     if (feePaymentId) {
       
-      alert('s', 'Please wait while report data is loading ...');
+      alert('i', 'Please wait while report data is loading ...');
 
       var htmlContent = this.state.feePaymentSlipTemplate; 
 
-      axios.get('api/FeePayments/FeePaymentByID/' + this.state.langKey + '/' + feePaymentId)
+      axios.get('api/FeePayments/FeePaymentByID/' + langKey + '/' + feePaymentId)
         .then(res => {
           var masterData = res.data[0];
           //console.log('res from api/FeePayments/FeePaymentByID/ ', res,  converter.toWords(masterData.TotalPaidAmount));
@@ -341,6 +341,11 @@ class FeeCollectionsPage extends React.Component {
           });
           
           htmlContent = htmlContent.replace(tblRow, temp);
+
+          if (langKey == 'ar') {
+            htmlContent = htmlContent.replace('direction: ltr;', 'direction: rtl;');
+            htmlContent = htmlContent.replace('text-right', 'text-left');
+          }
 
           this.setState({ feePaymentSlipTemplate: htmlContent });
 

@@ -8,7 +8,7 @@ const validate = values => {
   //console.log('validate values ==> ', values.feeDueDetails);
 
   if (!$('#dueFeeId').val() &&  (!values.feeDueDetails || !values.feeDueDetails.length || values.feeDueDetails == [])) {
-    console.log('empty hogya hai ');
+    //console.log('empty hogya hai ');
     errors.feeDueDetails = { _error: 'At least one record must be entered' }
 
     // if ($('#dueFeeId').val())
@@ -97,7 +97,7 @@ const validate = values => {
     }
   }
 
-  console.log('errors: ', errors);
+  //console.log('errors: ', errors);
   return errors
 }
 

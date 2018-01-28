@@ -1,16 +1,16 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import {smallBox, bigBox, SmartMessageBox} from "./actions/MessageActions";
+import { smallBox, bigBox, SmartMessageBox } from "./actions/MessageActions";
 import Msg from '../i18n/Msg'
 import LanguageStore from '../i18n/LanguageStore'
-import {getLang} from '../utils/functions'
+import { getLang } from '../utils/functions'
 
-function alert(type, message){
+function alert(type, message) {
     let titleText = LanguageStore.getData().phrases["SystemAlertText"] || "System Alert";
     let messageText = LanguageStore.getData().phrases[message] || message;
-    
-    if(type === 's'){
+
+    if (type === 's') {
         smallBox({
             title: titleText,
             content: "<i class='fa fa-thumbs-o-up'></i> <i>" + messageText + "</i>",
@@ -19,7 +19,16 @@ function alert(type, message){
             timeout: 3000
         });
     }
-    else if(type === 'f'){
+    else if (type === 'i') {
+        smallBox({
+            title: titleText,
+            content: "<i class='fa fa-info-circle'></i> <i>" + messageText + "</i>",
+            color: "#8d58ff",
+            iconSmall: "fa fa-check fa-2x  animated",     //messageText
+            timeout: 3000
+        });
+    }
+    else if (type === 'f') {
         smallBox({
             title: titleText,
             content: "<i class='fa fa-thumbs-o-down'></i> <i>" + messageText + "</i>",
@@ -32,17 +41,17 @@ function alert(type, message){
     }
 }
 
-export function confirmation(message, callback){
+export function confirmation(message, callback) {
     let titleText = LanguageStore.getData().phrases["ConfirmationTitleText"] || "Confirmation!";
     let noText = LanguageStore.getData().phrases["noText"] || "No";
     let yesText = LanguageStore.getData().phrases["yesText"] || "Yes";
     let messageText = LanguageStore.getData().phrases[message] || message;
     let RTL = getLang().rtl;
-    
+
     SmartMessageBox({
         title: titleText,
         content: messageText,
-        buttons: RTL ? '['+yesText+']['+noText+']' : '['+noText+']['+yesText+']'
+        buttons: RTL ? '[' + yesText + '][' + noText + ']' : '[' + noText + '][' + yesText + ']'
     }, callback);
 }
 
