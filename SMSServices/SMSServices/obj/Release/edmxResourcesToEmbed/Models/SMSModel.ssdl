@@ -174,6 +174,7 @@
       <PropertyRef Name="FeePaymentID" />
     </Key>
     <Property Name="FeePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentClassId" Type="int" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="PaidOn" Type="date" Nullable="false" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
@@ -259,6 +260,15 @@
     <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="NameAr" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentModes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAr" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="QualificationTypes">
     <Key>
@@ -647,6 +657,30 @@
       </Principal>
       <Dependent Role="FeeDueOnInterval">
         <PropertyRef Name="FeeDueOnFrequencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeePayments_PaymentModes">
+    <End Role="PaymentModes" Type="Self.PaymentModes" Multiplicity="1" />
+    <End Role="FeePayments" Type="Self.FeePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentModes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FeePayments">
+        <PropertyRef Name="PaymentModeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeePayments_StudentsClasses">
+    <End Role="StudentsClasses" Type="Self.StudentsClasses" Multiplicity="1" />
+    <End Role="FeePayments" Type="Self.FeePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentsClasses">
+        <PropertyRef Name="StudentClassId" />
+      </Principal>
+      <Dependent Role="FeePayments">
+        <PropertyRef Name="StudentClassId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1158,6 +1192,7 @@
     <Parameter Name="level" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="spFeeCollections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lang" Type="nvarchar" Mode="In" />
     <Parameter Name="ShiftId" Type="int" Mode="In" />
     <Parameter Name="ClassId" Type="int" Mode="In" />
     <Parameter Name="SectionId" Type="int" Mode="In" />
@@ -1170,6 +1205,10 @@
   </Function>
   <Function Name="spFeeOutstandingByAgingID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FeeCollectionAgingID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spFeePaymentDetailsByStudentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lang" Type="nvarchar" Mode="In" />
+    <Parameter Name="StudentId" Type="int" Mode="In" />
   </Function>
   <Function Name="spReportFeePaymentByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="lang" Type="nvarchar" Mode="In" />
@@ -1200,6 +1239,7 @@
     <EntitySet Name="FeeTypes" EntityType="Self.FeeTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaymentModes" EntityType="Self.PaymentModes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QualificationTypes" EntityType="Self.QualificationTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Religions" EntityType="Self.Religions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
@@ -1268,6 +1308,14 @@
     <AssociationSet Name="FK_FeeDueOnInterval_FeeDueOnFrequencies" Association="Self.FK_FeeDueOnInterval_FeeDueOnFrequencies">
       <End Role="FeeDueOnFrequencies" EntitySet="FeeDueOnFrequencies" />
       <End Role="FeeDueOnInterval" EntitySet="FeeDueOnInterval" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeePayments_PaymentModes" Association="Self.FK_FeePayments_PaymentModes">
+      <End Role="PaymentModes" EntitySet="PaymentModes" />
+      <End Role="FeePayments" EntitySet="FeePayments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeePayments_StudentsClasses" Association="Self.FK_FeePayments_StudentsClasses">
+      <End Role="StudentsClasses" EntitySet="StudentsClasses" />
+      <End Role="FeePayments" EntitySet="FeePayments" />
     </AssociationSet>
     <AssociationSet Name="FK_FeePaymentsDetails_FeeCollectionsAging" Association="Self.FK_FeePaymentsDetails_FeeCollectionsAging">
       <End Role="FeeCollectionsAging" EntitySet="FeeCollectionsAging" />

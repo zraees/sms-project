@@ -16,8 +16,46 @@ let phrasesUs = {}
 let phrasesUr = {}
 let phrasesAr = {} 
 
-function renderReport() {
+function print(elementName){
     
+    //console.log('print(elementName)');
+    
+    // var pdf = require('html-pdf');
+    // pdf.create(html).toStream(function(err, stream){
+    //     console.log('.toStream(function(err, stream){');
+    //     stream.pipe(fs.createWriteStream('./foo.pdf'));
+    //   });
+    
+      
+    //console.log('html2canvas start ');
+    
+    $("#"+elementName).removeClass('hide');
+    html2canvas(document.getElementById(elementName), {
+       logging: false,
+    //   , onclone: function (document) {
+    //     console.log('onclone ..', document);
+    //     //$("#feePaymentSlip").show();
+    //   }
+    }).then(function (canvas) {
+      var img = canvas.toDataURL('image/png');
+      //var doc = new jsPDF('p', 'cm',  [22, 29]);
+      var doc = new jsPDF('p', 'pt', 'a4');
+      doc.addImage(img, 'JPEG', 1, 1);
+      //doc.save('test.pdf');
+
+      //$('#reportPopup').modal('show');
+
+      //var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
+      //iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:100%');
+      //document.body.appendChild(iframe);
+      //iframe.src = doc.output('datauristring');  it takes too much time so open in new window option is suitable
+
+      //good solution to open in new window
+      window.open(doc.output('bloburl'), '_blank');
+      //a.style.display = "none";
+      //$("#feePaymentSlip").hide();
+      $("#"+elementName).addClass('hide');
+    });
 }
 
 export function printFeeSlip(langKey, feePaymentId, htmlContent) {
@@ -97,7 +135,9 @@ export function printFeeSlip(langKey, feePaymentId, htmlContent) {
 
         this.setState({ feePaymentSlipTemplate: htmlContent });  // ??????????????????????
 
-        print('feePaymentSlip');
+        //return htmlContent;       //>>>>?????????????
+
+        //print('feePaymentSlip');
       });
 
     
@@ -105,4 +145,4 @@ export function printFeeSlip(langKey, feePaymentId, htmlContent) {
   }
 }
 
-export default renderReport
+export default print

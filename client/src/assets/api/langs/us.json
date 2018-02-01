@@ -276,6 +276,24 @@
     "FeeDetailsText": "Fee Details",
     "PaymentHistoryText": "Payment History",
     
+    "PaymentModeText":"Payment Mode",
+    "FeeCollectedByText":"Fee Collected By",
+    
+    "FeeStructureText":"Fee Structure",
+    
+    "PaymentCodeText":"Payment Code",
+    "OutstandingAmountText":"Outstanding",
+    "PaymentDateText":"Payment Date",
+    "FeePaymentCommentsText":"Fee Payment Comments",
+    
+    "AmountText":"Amount",
+    "AmountInWordsText":"Amount in words",
+    "BalanceText":"Balance", 
+    "CommentsText":"Commnets",
+    "PrintDateText":"Print Date",
+    
+    "PrintedByText":"Printed By",
+
     "FeeOutstandingText": "Fee Outstanding",
     "DueAmountBeforeAdditionalDiscountText": "Due Amount Before Discount",
     

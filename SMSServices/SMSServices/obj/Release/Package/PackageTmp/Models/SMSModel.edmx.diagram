@@ -99,7 +99,10 @@
         <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeeCollectionsAging" />
         <EntityTypeShape EntityType="SMSModel.QualificationTypes" Width="1.5" PointX="5.375" PointY="1.875" />
         <AssociationConnector Association="SMSModel.FK_TeacherQualifications_QualificationTypes1" />
-        <EntityTypeShape EntityType="SMSModel.FeePayments" Width="1.5" PointX="3.375" PointY="5" />
+        <EntityTypeShape EntityType="SMSModel.FeePayments" Width="1.5" PointX="19.5" PointY="21.5" />
+        <EntityTypeShape EntityType="SMSModel.PaymentModes" Width="1.5" PointX="17.25" PointY="25.25" />
+        <AssociationConnector Association="SMSModel.FK_FeePayments_PaymentModes" />
+        <AssociationConnector Association="SMSModel.FK_FeePayments_StudentsClasses" />
         <AssociationConnector Association="SMSModel.FK_FeePaymentsDetails_FeePayments" />
         </Diagram>
     </edmx:Diagrams>

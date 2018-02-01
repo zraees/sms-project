@@ -29,11 +29,12 @@ import Details from './Details'
 import Payments from './Payments'
 import Alerts from './Alerts'
 
-import mapForCombo, {renderDate, print, getLangKey, getDateFrontEndFormat, getTranslation} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, getLangKey, getDateFrontEndFormat, getTranslation, renderFeeStatus, renderNumber} from '../../../../components/utils/functions'
+import print from '../../../../components/utils/reportRendering'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
 import {RFField, RFReactSelect, RFLabel} from '../../../../components/ui'
-import submit, {remove, generateFeeCollections} from './submit' 
+import submit, {remove, generateFeeCollections, printFeeSlip} from './submit' 
 
 import HtmlRender from '../../../../components/utils/HtmlRender'
 
@@ -70,7 +71,7 @@ class FeeCollectionsPage extends React.Component {
     this.renderModalBody = this.renderModalBody.bind(this);
     
     this.handlePrintClick = this.handlePrintClick.bind(this);
-    this.printFeeSlip = this.printFeeSlip.bind(this);
+    //this.printFeeSlip = this.printFeeSlip.bind(this);
   }
 
   componentWillMount() {
@@ -153,7 +154,8 @@ class FeeCollectionsPage extends React.Component {
       $(this).data('bs.modal', null);
       $(this).remove();
 
-      this.printFeeSlip(this.state.langKey, $('#paymentId').val());
+      //this.printFeeSlip(this.state.langKey, $('#paymentId').val());
+      printFeeSlip(this.state.langKey, $('#paymentId').val());
 
     }.bind(this));
 
@@ -262,7 +264,9 @@ class FeeCollectionsPage extends React.Component {
     batchId = this.props.batchId ? this.props.batchId : null;
     studentId = this.props.studentId ? this.props.studentId : null;
     
-    var url = '/api/FeeCollections/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId;
+    console.log('this.state.langKey ',this.state.langKey );
+
+    var url = '/api/FeeCollections/Get/' + this.state.langKey + '/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId;
     //console.log(url);
     //this.setState({ url });
 
@@ -272,90 +276,7 @@ class FeeCollectionsPage extends React.Component {
 
   }
 
-  printFeeSlip(langKey, feePaymentId) {
-
-    console.log('feePaymentId ==> ', feePaymentId, numeral(2324).format('0,0.00'));
-
-    if (feePaymentId) {
-      
-      alert('i', 'Please wait while report data is loading ...');
-
-      var htmlContent = this.state.feePaymentSlipTemplate; 
-
-      axios.get('api/FeePayments/FeePaymentByID/' + langKey + '/' + feePaymentId)
-        .then(res => {
-          var masterData = res.data[0];
-          //console.log('res from api/FeePayments/FeePaymentByID/ ', res,  converter.toWords(masterData.TotalPaidAmount));
-         
-          htmlContent = htmlContent.replace('$SchoolName$', getTranslation('Prime Stars International School'));
-          htmlContent = htmlContent.replace('$SchoolAddress$', getTranslation('Al Kharj Saudi Arabia'));
-          
-          htmlContent = htmlContent.replace('$ReportTitle$', getTranslation('Fee Receipt'));
-          htmlContent = htmlContent.replace('$RollNoText$', getTranslation('RollNoText'));
-          
-          htmlContent = htmlContent.replace('$NameText$', getTranslation('NameText'));
-          htmlContent = htmlContent.replace('$BatchText$', getTranslation('BatchText'));
-          htmlContent = htmlContent.replace('$ClassText$', getTranslation('ClassText'));
-          htmlContent = htmlContent.replace('$SectionText$', getTranslation('SectionText'));
-          
-          htmlContent = htmlContent.replace('$PaymentCodeText$', getTranslation('PaymentCodeText'));
-          htmlContent = htmlContent.replace('$PaymentDateText$', getTranslation('PaymentDateText'));
-          htmlContent = htmlContent.replace('$PrintDateText$', getTranslation('PrintDateText'));
-          
-          htmlContent = htmlContent.replace('$FeeTitleText$', getTranslation('FeeTypeText'));
-          htmlContent = htmlContent.replace('$AmountText$', getTranslation('AmountText'));
-          htmlContent = htmlContent.replace('$AmountInWordsText$', getTranslation('AmountInWordsText'));
-          htmlContent = htmlContent.replace('$TotalAmountText$', getTranslation('TotalPaidAmountText'));
-          htmlContent = htmlContent.replace('$PaymentModeText$', getTranslation('PaymentModeText'));
-          htmlContent = htmlContent.replace('$BalanceText$', getTranslation('BalanceText'));
-          htmlContent = htmlContent.replace('$CommentsText$', getTranslation('CommentsText'));
-          
-          htmlContent = htmlContent.replace('$PrintedByText$', getTranslation('PrintedByText'));
-          htmlContent = htmlContent.replace('$FeeCollectedByText$', getTranslation('FeeCollectedByText'));
-
-
-          htmlContent = htmlContent.replace('$Batch$', masterData.BatchName);
-          htmlContent = htmlContent.replace('$Class$', masterData.ClassName);
-          htmlContent = htmlContent.replace('$Section$', masterData.SectionName);
-          htmlContent = htmlContent.replace('$RollNo$', masterData.RollNo);
-          htmlContent = htmlContent.replace('$Name$', masterData.StudentFullName);
-          htmlContent = htmlContent.replace('$PaymentCode$', masterData.FeePaymentCode);
-          htmlContent = htmlContent.replace('$PaymentDate$', getDateFrontEndFormat(masterData.PaidOn));
-          htmlContent = htmlContent.replace('$PrintDate$', getDateFrontEndFormat(moment()));
-          htmlContent = htmlContent.replace('$TotalAmount$', numeral(masterData.TotalPaidAmount).format('0,0.00'));
-          htmlContent = htmlContent.replace('$PaymentMode$', masterData.PaymentModeName);
-          htmlContent = htmlContent.replace('$Balance$', numeral(masterData.Balance).format('0,0.00'));
-
-          htmlContent = htmlContent.replace('$PrintedBy$', "Zeeshan");
-          //htmlContent = htmlContent.replace('$IssuedBy$', "Admin");
-          htmlContent = htmlContent.replace('$FeeCollectedBy$', masterData.FeeCollectedBy);
-          htmlContent = htmlContent.replace('$ComputerGeneratedDocument$', getTranslation('ComputerGeneratedDocumentText')); 
- 
-          htmlContent = htmlContent.replace('$AmountInWords$', converter.toWords(masterData.TotalPaidAmount));
-          htmlContent = htmlContent.replace('$Comments$', masterData.Comments);
- 
-          var tblRow = '<tr><td>#</td><td>$title$</td><td class="text-right">$amount$</td></tr>';
-          var temp = '';
-          res.data.forEach(function(element, index){
-            temp += tblRow.replace('#', index+1).replace('$title$', element.FeeTypeName).replace('$amount$', numeral(element.PaidAmount).format('0,0.00'));
-          });
-          
-          htmlContent = htmlContent.replace(tblRow, temp);
-
-          if (langKey == 'ar') {
-            htmlContent = htmlContent.replace('direction: ltr;', 'direction: rtl;');
-            htmlContent = htmlContent.replace('text-right', 'text-left');
-          }
-
-          this.setState({ feePaymentSlipTemplate: htmlContent });
-
-          print('feePaymentSlip');
-        });
-
-      
-
-    }
-  }
+  
 
   handlePrintClick(obj, value) {
      
@@ -507,6 +428,7 @@ class FeeCollectionsPage extends React.Component {
         classId={classId}
         shiftId={shiftId}
         studentId={studentId}
+        printFeeSlip={this.printFeeSlip}
       /> //onSubmit={submit}
     }
     else if(popupPageName == "payments"){
@@ -516,7 +438,7 @@ class FeeCollectionsPage extends React.Component {
       modalBody = <Alerts feeCollectionId={this.state.feeCollectionId} /> //onSubmit={submit}
     }
 
-    console.log('mdal body ==>', popupPageName, feeCollectionId);
+    //console.log('mdal body ==>', popupPageName, feeCollectionId);
     return modalBody;
   }
 
@@ -671,15 +593,29 @@ class FeeCollectionsPage extends React.Component {
                     {"on Payment: payment mode, populate table on template ... setup school & branch tables. Set print by etc etc "}
                     <Datatable id="FeeCollectionGrid"  
                       options={{
-                        ajax: {"url": '/api/FeeCollections/null/null/null/null/null', "dataSrc": ""},                       
+                        ajax: {"url": '/api/FeeCollections/Get/' + this.state.langKey + '/null/null/null/null/null', "dataSrc": ""},                       
                         columnDefs: [    
+                          {
+                            "type": "num",
+                            "render": renderNumber, 
+                            targets: [ 6, 7, 8, 9]
+                          },
                           {
                             "type": "date",
                             "render": function (data, type, row) {
                               //return moment(data).format('Do MMM YYYY' || 'llll')
                               return renderDate(data);
                             },
-                            "targets": 7
+                            "targets": 10
+                          },
+                          { 
+                            // "render": function (data, type, row) {
+                            //   var t = row.FeeStatusID == 1 ? "txt-color-redLight" : "txt-color-red";
+                            //   var t2 = row.FeeStatusID == 1 ? "font-md" : "font-md";
+                            //   return '<p class=' + t + ' ' + t2 + '>' + data + '</p>';
+                            // },
+                            "render": renderFeeStatus,
+                            "targets": 11
                           },
                           {
                             // The `data` parameter refers to the data for the cell (defined by the
@@ -697,23 +633,23 @@ class FeeCollectionsPage extends React.Component {
                             },
                             "className": "dt-center",
                             "sorting": false,
-                            "targets": 9
+                            "targets": 12
                           },
-                          {
-                            "render": function (data, type, row) {
-                              return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Payments</span></a>';
-                            },
-                            "className": "dt-center",
-                            "sorting": false,
-                            "targets": 10
-                          },
+                          // {
+                          //   "render": function (data, type, row) {
+                          //     return '<a data-toggle="modal" data-page-name="payments" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="pay" class=\"fa fa-money\"></i><span class=\"sr-only\">Payments</span></a>';
+                          //   },
+                          //   "className": "dt-center",
+                          //   "sorting": false,
+                          //   "targets": 13
+                          // },
                           {
                             "render": function (data, type, row) {
                               return '<a data-toggle="modal" data-page-name="alerts" data-id="' + data + '" data-target="#feeCollectionPopup"><i id="alrt" class=\"fa fa-bell\"></i><span class=\"sr-only\">Alerts</span></a>';
                             },
                             "className": "dt-center",
                             "sorting": false,
-                            "targets": 11
+                            "targets": 13
                           }
                           , {
                             "render": function (data, type, row) {
@@ -721,21 +657,25 @@ class FeeCollectionsPage extends React.Component {
                             }.bind(self),
                             "className": "dt-center",
                             "sorting": false,
-                            "targets": 12
+                            "targets": 14
                           }
                         ],
                         columns: [ 
                           {data: "FeeCollectionID"}, 
+                          {data: "ShiftName"},
+                          {data: "ClassName"},
+                          {data: "SectionName"},
                           {data: "RollNo"},
                           {data: "FullName"},
-                          {data: "FullNameAr"},      
+                          // {data: "FullNameAr"},      
                           {data: "TotalFee"}, 
-                          {data: "TotalPaid"},    
+                          {data: "TotalPaid"},  
+                          {data: "Balance"},   
                           {data: "TotalDueAmountAfterAddDisc"},  
                           {data: "DueDate"}, 
                           {data: "FeeStatusName"},
                           {data: "FeeCollectionID"},
-                          {data: "FeeCollectionID"},
+                          // {data: "FeeCollectionID"},
                           {data: "FeeCollectionID"},
                           {data: "FeeCollectionID"}
                         ],
@@ -749,16 +689,21 @@ class FeeCollectionsPage extends React.Component {
                       <thead>
                       <tr>
                         <th><Msg phrase="IDText"/></th>
+                        <th><Msg phrase="ShiftText"/></th>
+                        <th><Msg phrase="ClassText"/></th>
+                        <th><Msg phrase="SectionText"/></th>
                         <th><Msg phrase="RollNoText"/></th>
                         <th><Msg phrase="FullNameText"/></th>
-                        <th><Msg phrase="FullNameArText"/></th>
+                        {/* <th><Msg phrase="FullNameArText"/></th> */}
                         <th><Msg phrase="TotalFeeText"/></th>   
                         <th><Msg phrase="TotalPaidText"/></th>
-                        <th><Msg phrase="TotalDueAmountAfterAdditionalDiscountText"/></th> 
+                        <th><Msg phrase="BalanceText"/></th>
+                        {/* <th><Msg phrase="TotalDueAmountAfterAdditionalDiscountText"/></th>  */}
+                        <th><Msg phrase="TotalDueAmountText"/></th>                        
                         <th><Msg phrase="DueDateText"/></th>
                         <th><Msg phrase="FeeStatusNameText"/></th>   
                         <th></th>
-                        <th></th>
+                        {/* <th></th> */}
                         <th></th>
                         <th></th>
                       </tr>
@@ -821,8 +766,8 @@ class FeeCollectionsPage extends React.Component {
         </div>
         {/* /.modal */}
 
-
-        <HtmlRender html={this.state.feePaymentSlipTemplate}/>
+                <div id="reportContainer"></div>
+        {/* <HtmlRender html={this.state.feePaymentSlipTemplate}/> */}
 
         {/* <div id="content11" className="width-400-px" >
 

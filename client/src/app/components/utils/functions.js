@@ -5,12 +5,12 @@ import LanguageStore from '../i18n/LanguageStore'
 import moment from 'moment'
 import axios from 'axios'
 import _ from 'lodash'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jsPDF'
+import numeral  from 'numeral'
 
 import * as phrases_us from '../../../assets/api/langs/us.json';
 import * as phrases_ar from '../../../assets/api/langs/ar.json';
 import * as phrases_ur from '../../../assets/api/langs/ur.json';
+import { config } from '../../config/config';
 
 let phrasesUs = {}
 let phrasesUr = {}
@@ -97,8 +97,30 @@ export function getDateBackEndFormat(date){
 
 /*  Function for dataTable  */
 export function renderDate( data ){
-	return moment(data).format(getLang().frontend || 'Do MMM YYYY')
+	return data? moment(data).format(getLang().frontend || 'Do MMM YYYY') : "";
 }
+
+export function renderNumber(data){
+    data = data? numeral(data).format('0,0.00') : "0";
+    return '<span class="text-right">' + data + '</span>';
+}
+
+export function renderFeeStatus(data, type, row){
+    var newData=data;
+
+    if(row.FeeStatusID==0){         // paid
+        newData = '<strong><span class="text-success">' + data + '</span></strong>';
+    }
+    else if(row.FeeStatusID==1){         // due
+        newData = '<strong><span class="text-warning">' + data + '</span></strong>';
+    }
+    else if(row.FeeStatusID==2){   // overdue
+        newData = '<strong><span class="text-danger">' + data + '</span></strong>';
+    }
+
+	return newData;
+}
+
 
 export function removeAllSpecialChar(data){ 
     return data.replace(/[^a-zA-Z0-9]/g, "");
@@ -203,37 +225,6 @@ export function today() {
     today = mm + '/' + dd + '/' + yyyy;
     
     return(today);
-}
-
-export function print(elementName){
-    
-    $("#"+elementName).removeClass('hide');
-    html2canvas(document.getElementById(elementName), {
-    //   logging: false
-    //   , onclone: function (document) {
-    //     console.log('onclone ..', document);
-    //     //$("#feePaymentSlip").show();
-    //   }
-    }).then(function (canvas) {
-      var img = canvas.toDataURL('image/png');
-      //var doc = new jsPDF('p', 'cm',  [22, 29]);
-      var doc = new jsPDF('p', 'pt', 'a4');
-      doc.addImage(img, 'JPEG', 1, 1);
-      //doc.save('test.pdf');
-
-      //$('#reportPopup').modal('show');
-
-      //var iframe = document.getElementById('iframeReport'); //document.createElement('iframe');
-      //iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:100%');
-      //document.body.appendChild(iframe);
-      //iframe.src = doc.output('datauristring');  it takes too much time so open in new window option is suitable
-
-      //good solution to open in new window
-      window.open(doc.output('bloburl'), '_blank');
-      //a.style.display = "none";
-      //$("#feePaymentSlip").hide();
-      $("#"+elementName).addClass('hide');
-    });
 }
 
 export default mapForCombo

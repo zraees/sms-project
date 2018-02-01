@@ -17,6 +17,7 @@ namespace SMSServices.Models
         public StudentsClasses()
         {
             this.FeeCollections = new HashSet<FeeCollections>();
+            this.FeePayments = new HashSet<FeePayments>();
         }
     
         public int StudentClassId { get; set; }
@@ -33,5 +34,6 @@ namespace SMSServices.Models
         public virtual Sections Sections { get; set; }
         public virtual Shifts Shifts { get; set; }
         public virtual Students Students { get; set; }
+        public virtual ICollection<FeePayments> FeePayments { get; set; }
     }
 }

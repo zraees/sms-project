@@ -14,7 +14,7 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel,
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
 import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat} from '../../../../components/utils/functions'
-import { submitFeePayment } from './submit'
+import { submitFeePayment, removePayment, printFeeSlip} from './submit'
 
 import StudentControl from '../Students/StudentControl'
 import { config } from '../../../../config/config';
@@ -41,25 +41,47 @@ class Details extends React.Component {
     this.handleAdditionalDiscountBlur = this.handleAdditionalDiscountBlur.bind(this);
     this.initializeFeeDues = this.initializeFeeDues.bind(this);
   }
-  
+
   componentDidMount() {
 
     // this.props.initialize(initData);
     //this.props.change("feeDiscountTypeId", 1);
 
     this.initializeFeeDues(this.state.studentId);
+ 
+    $('#feePaymentDetailsGrid').on('click', 'td', function (event) {
+
+      //var thisElement = $('#feePaymentDetailsGrid td');
+
+      console.log('???? fix the print and delete thisElement -- ', $(this).find('#dele').length, $(this).find('#prnt').length );
+      console.log('test ==> ', $(this).find('#dele').data('tid'),  $(this).find('#prnt').data('tid'))
+
+      if ($(this).find('#dele').length > 0) {
+        var id = $(this).find('#dele').data('tid');
+        removePayment(id, $(this));
+      }
+      else if ($(this).find('#prnt').length > 0) {
+        var id = $(this).find('#prnt').data('tid');
+
+        console.log('print slip from popup -- ', id)
+
+        printFeeSlip('', id);
+      }
+
+    });
+
     console.log('componentDidMount --> Details');
   }
 
-  initializeFeeDues(studentId){
+  initializeFeeDues(studentId) {
 
     //console.log('initializeFeeDues -- this.state.studentId ', this.state.studentId);
 
-    axios.get( '/api/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
+    axios.get('/api/FeeCollections/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
       .then(res => {
         if (res.data) {
           //console.log('exists..');
-          let feeDueDetails = []; 
+          let feeDueDetails = [];
 
           res.data.map(function (item, index) {
             feeDueDetails.push({
@@ -68,52 +90,59 @@ class Details extends React.Component {
               // "studentId":item.StudentId,
               // "studentClassId":item.StudentClassId,
               //"feeTypeID":FeeTypeID,
-              "feeTypeName":item.FeeTypeName,
-              "dueOn":item.DueOn != null ? moment(item.DueOn).format("MM/DD/YYYY") : "",
-              "dueAmountBeforeAdditionalDiscount":item.DueAmountBeforeAdditionalDiscount,
-              "additionalDiscount":item.AdditionalDiscount,
-              "newAdditionalDiscount":item.NewAdditionalDiscount,
-              "dueAmountAfterAddDisc":item.DueAmountAfterAddDisc,
+              "feeTypeName": item.FeeTypeName,
+              "dueOn": item.DueOn != null ? moment(item.DueOn).format("MM/DD/YYYY") : "",
+              "dueAmountBeforeAdditionalDiscount": item.DueAmountBeforeAdditionalDiscount,
+              "additionalDiscount": item.AdditionalDiscount,
+              "newAdditionalDiscount": item.NewAdditionalDiscount,
+              "dueAmountAfterAddDisc": item.DueAmountAfterAddDisc,
               "outstandingAmount": item.OutstandingAmount,
               "totalPaidAmount": item.TotalPaidAmount,
-              "paymentAmount":item.PaymentAmount,
+              "paymentAmount": item.PaymentAmount,
               //"feePaymentStatusName":item.FeePaymentStatusName,
               "paymentDate": "",
               "paymentComments": "",
               //"paymentModeId":null,
-              "feeCollectedBy":""
+              "feeCollectedBy": ""
             });
 
-            
+
           });
 
           const initData = {
             "feeCollectionDetailId": 0,
             "paymentDate": today(),
-            "feeDueDetails": feeDueDetails, 
-            "paymentModeId":null
-          } 
+            "feeDueDetails": feeDueDetails,
+            "paymentModeId": null
+          }
 
-          this.props.initialize(initData); 
+          this.props.initialize(initData);
           //this.setState({feeDueDetails})
-          
+
           //console.log('this.state.feeDueDetails', initData.feeDueDetails, this.state.feeDueDetails);
           axios.get('/api/lookup/paymentModes/')
-          .then(res => {
-    
-            console.log('/api/lookup/paymentModes/', res.data);
-    
-            const paymentModeOptions = mapForCombo(res.data);
-            this.setState({ paymentModeOptions });
-          });
-          
+            .then(res => {
+
+              console.log('/api/lookup/paymentModes/', res.data);
+
+              const paymentModeOptions = mapForCombo(res.data);
+              this.setState({ paymentModeOptions });
+            });
+
+            var url = '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + studentId;
+            console.log(url);
+            //this.setState({ url });
+        
+            var table = $('#feePaymentDetailsGrid').DataTable();
+            table.ajax.url(url).load();
+        
         }
         else {
           // show error message, there is some this went wrong 
         }
 
-      });   
-    
+      });
+
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -238,105 +267,67 @@ class Details extends React.Component {
                   </section>
                 </div>
 
-                {/* <div className="table-responsive">
-
-                  <Datatable id="feeDueDetailsGrid"
-                    options={{
-                      ajax: { "url": '/api/FeeDueDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },
-                      columnDefs: [
-                        {
-                          "type": "date",
-                          "render": function (data, type, row) {
-                            return renderDate(data);
-                          },
-                          "targets": 1
-                        },
-                        {
-                          "render": function (data, type, row) {
-                            return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
-                          }.bind(self),
-                          "className": "dt-center",
-                          "sorting": false,
-                          "targets": 7
-                        }
-                      ],
-                      columns: [
-                        { data: "FeeTypeName" },
-                        { data: "DueOn" },
-                        { data: "DueAmountBeforeAdditionalDiscount" },
-                        { data: "AdditionalDiscount" },
-                        { data: "DueAmount" },
-                        { data: "TotalPaidAmount" },
-                        { data: "FeePaymentStatusName" },
-                        { data: "FeeCollectionAgingID" }
-                      ],
-                      buttons: [
-                        'copy', 'excel', 'pdf'
-                      ]
-                    }}
-                    paginationLength={true}
-                    className="table table-striped table-bordered table-hover"
-                    width="100%">
-                    <thead>
-                      <tr>
-                        <th data-hide="mobile-p"><Msg phrase="FeeTypeText" /></th>
-                        <th data-class="expand"><Msg phrase="DueDateText" /></th>
-                        <th data-hide="mobile-p"><Msg phrase="DueAmountBeforeAdditionalDiscountText" /></th>
-                        <th data-hide="mobile-p"><Msg phrase="AdditionalDiscountText" /></th>
-                        <th data-hide="mobile-p"><Msg phrase="TotalDueAmountText" /></th>
-                        <th data-hide="mobile-p"><Msg phrase="TotalPaidAmountText" /></th>
-                        <th data-hide="mobile-p"><Msg phrase="FeePaymentStatusText" /></th>
-                        <th data-hide="mobile-p"></th>
-                      </tr>
-                    </thead>
-                  </Datatable>
-
-                </div> */}
-
               </div>
               <div className="tab-pane table-responsive" id="B1P1B">
-
-                {/* <Datatable id="parentsGrid"
+                {studentId}
+                <Datatable id="feePaymentDetailsGrid"
                   options={{
-                    ajax: { "url": '/api/FeeDueDetailsByStudentID/' + studentId, "dataSrc": "" },
+                    ajax: { "url": '/api/FeeCollections/FeePaymentDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },
                     columnDefs: [
+                      {
+                        "type": "date",
+                        "render": function (data, type, row) { 
+                          return renderDate(data);
+                        },
+                        "targets": 2
+                      },
+                      {
+                        "render": function (data, type, row) {
+                          return '<a id="prnt" data-tid="' + data + '"><i class=\"glyphicon glyphicon-print\"></i><span class=\"sr-only\">Print</span></a>';
+                        }.bind(self),
+                        "className": "dt-center",
+                        "sorting": false,
+                        "targets": 6
+                      },
                       {
                         "render": function (data, type, row) {
                           return '<a id="dele" data-tid="' + data + '"><i class=\"glyphicon glyphicon-trash\"></i><span class=\"sr-only\">Edit</span></a>';
                         }.bind(self),
                         "className": "dt-center",
                         "sorting": false,
-                        "targets": 6
+                        "targets": 7
                       }
                     ],
                     columns: [
-                      { data: "FirstName" },
-                      { data: "SurName" },
-                      { data: "parentType" },
-                      { data: "SchoolName" },
-                      { data: "ClassName" },
-                      { data: "SectionName" },
-                      { data: "FeeCollectionAgingID" }
+                      { data: "Code" },
+                      { data: "FeeCollectedBy" },
+                      { data: "PaidOn" },
+                      { data: "TotalPaidAmount" },
+                      { data: "Balance" },
+                      { data: "Comments" },
+                      { data: "FeePaymentID" },
+                      { data: "FeePaymentID" }
                     ],
-                    buttons: [
-                      'copy', 'excel', 'pdf'
-                    ]
+                    // buttons: [
+                    //   'copy', 'excel', 'pdf'
+                    // ]
                   }}
                   paginationLength={true}
                   className="table table-striped table-bordered table-hover"
                   width="100%">
                   <thead>
                     <tr>
-                      <th data-hide="mobile-p"><Msg phrase="FirstNameText" /></th>
-                      <th data-class="expand"><Msg phrase="SurNameText" /></th>
-                      <th data-hide="mobile-p"><Msg phrase="parentTypeInOurSchoolText" /></th>
-                      <th data-hide="mobile-p"><Msg phrase="SchoolNameText" /></th>
-                      <th data-hide="mobile-p"><Msg phrase="ClassText" /></th>
-                      <th data-hide="mobile-p"><Msg phrase="SectionText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="CodeText" /></th>
+                      <th data-class="expand"><Msg phrase="FeeCollectedByText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="PaidOnText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="TotalPaidAmountText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="BalanceText" /></th>
+                      <th data-hide="mobile-p"><Msg phrase="CommentsText" /></th>
+                      <th data-hide="mobile-p"></th>
                       <th data-hide="mobile-p"></th>
                     </tr>
                   </thead>
-                </Datatable> */}
+                </Datatable>
 
               </div>
             </div>

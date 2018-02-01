@@ -79,6 +79,9 @@ module.exports = (env) => {
       ]
 
     },
+    node: {
+      fs: "empty"
+    },
     resolve: {
       extensions: [".js", ".jsx"],
 

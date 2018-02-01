@@ -21,23 +21,7 @@ ReportText
 TimetableText
 TimetableTitleText
 
-PaymentModeText
-FeeCollectedByText
 
-FeeStructureText
-
-PaymentCodeText 
-OutstandingAmountText
-PaymentDateText
-FeePaymentCommentsText 
-
-AmountText
-AmountInWordsText
-BalanceText
-CommentsText
-PrintDateText
-
-PrintedByText
 
 
 ManageTimetablePeriodsText

@@ -24,8 +24,8 @@ function alert(type, message) {
             title: titleText,
             content: "<i class='fa fa-info-circle'></i> <i>" + messageText + "</i>",
             color: "#8d58ff",
-            iconSmall: "fa fa-check fa-2x  animated",     //messageText
-            timeout: 3000
+            iconSmall: "fa fa-lightbulb-o fa-2x animated",     //messageText
+            timeout: 5000
         });
     }
     else if (type === 'f') {

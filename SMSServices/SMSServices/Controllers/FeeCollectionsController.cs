@@ -21,19 +21,19 @@ namespace SMSServices.Controllers
         private SMSEntities entities = new SMSEntities();
          
         // GET api/<controller>
-        [Route("api/FeeCollections/{shiftId}/{classId}/{sectionId}/{batchId}/{studentId}")]
+        [Route("api/FeeCollections/Get/{lang}/{shiftId}/{classId}/{sectionId}/{batchId}/{studentId}")]
         //public IEnumerable<FeeCollections> Get()
-        public HttpResponseMessage Get(int? ShiftID, int? ClassID, int? SectionID, int? BatchID, int? StudentID)
+        public HttpResponseMessage Get(string Lang, int? ShiftID, int? ClassID, int? SectionID, int? BatchID, int? StudentID)
         {
             entities.Configuration.ProxyCreationEnabled = false;
 
             //var query = entities.spFeeCollections;
-            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeCollections(ShiftID, ClassID, SectionID, BatchID, StudentID));
+            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeCollections(Lang, ShiftID, ClassID, SectionID, BatchID, StudentID));
         }
 
         // GET api/<controller>
         [HttpGet]
-        [Route("api/FeeDueDetailsByStudentID/{lang}/{studentId}")]         //
+        [Route("api/FeeCollections/FeeDueDetailsByStudentID/{lang}/{studentId}")]         //
         public HttpResponseMessage FeeDueDetailsByStudentID(string Lang, int StudentID)//
         {
             //string Lang = "us";
@@ -41,6 +41,17 @@ namespace SMSServices.Controllers
 
             //var query = entities.spFeeCollections;
             return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeeDueDetailsByStudentID(Lang, StudentID));
+        }
+
+        [HttpGet]
+        [Route("api/FeeCollections/FeePaymentDetailsByStudentID/{lang}/{studentId}")]         //
+        public HttpResponseMessage FeePaymentDetailsByStudentID(string Lang, int StudentID)//
+        {
+            //string Lang = "us";
+            entities.Configuration.ProxyCreationEnabled = false;
+
+            //var query = entities.spFeeCollections;
+            return this.Request.CreateResponse(HttpStatusCode.OK, entities.spFeePaymentDetailsByStudentID(Lang, StudentID));
         }
 
         //[Route("api/FeeCollectionsById/{lang}/{id}")]
@@ -331,6 +342,7 @@ namespace SMSServices.Controllers
                 bool IsFeePaidDeleted = false;
                 bool IsSaveChanges = false;
                 int PaymentID = 0;
+                int StudentClassID;
 
                 FeePayments FeePayment= new FeePayments();
                 List<FeePaymentsDetails> FeePaymentsDetailsList = new List<FeePaymentsDetails>();
@@ -339,6 +351,7 @@ namespace SMSServices.Controllers
                 string PaymentComments = FeeCollectionsAging.FirstOrDefault().PaymentComments;
                 int PaymentModeID = FeeCollectionsAging.FirstOrDefault().PaymentModeID;
                 string FeeCollectedBy = FeeCollectionsAging.FirstOrDefault().FeeCollectedBy;
+                StudentClassID = new FeeCollectionsController().GetStudentClassID(FeeCollectionID);
 
                 strLog += " -- " + string.Format("FeeCollectionID={0}", FeeCollectionID);
                 
@@ -438,6 +451,7 @@ namespace SMSServices.Controllers
                          FeePayment =new FeePayments()
                         {
                             Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
+                            StudentClassId = StudentClassID,
                             PaidOn = PaymentDate,
                             Comments = PaymentComments,
                             TotalPaidAmount = TotalPaidAmount,
@@ -500,6 +514,12 @@ namespace SMSServices.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "I have some issue ... " + strLog + " --> " + ex.Message );
             }
+        }
+
+        private int GetStudentClassID(int FeeCollectionID)
+        {
+            FeeCollections feeCollection =  entities.FeeCollections.FirstOrDefault(f => f.FeeCollectionID == FeeCollectionID);
+            return feeCollection == null ? 0 : feeCollection.StudentClassId;
         }
 
         /*
