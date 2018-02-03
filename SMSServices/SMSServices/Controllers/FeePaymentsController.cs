@@ -211,16 +211,19 @@ namespace SMSServices.Controllers
                 FeePayments FeePayment = entities.FeePayments.FirstOrDefault(fc => fc.FeePaymentID == id);
                 if (FeePayment != null)
                 {
-                    foreach (FeePaymentsDetails FeePaymentDetail in FeePayment.FeePaymentsDetails.ToList())
-                    { 
-                        entities.Entry(FeePaymentDetail).State = EntityState.Deleted;
-                        //strLog += " --- FeePaymentDetail remove";
+                    if (new FeeCollectionsController().UpdateFeeAgingByFeePaymentDelete(FeePayment))
+                    {
+                        foreach (FeePaymentsDetails FeePaymentDetail in FeePayment.FeePaymentsDetails.ToList())
+                        {
+
+                            entities.Entry(FeePaymentDetail).State = EntityState.Deleted;
+                            //strLog += " --- FeePaymentDetail remove";
+                        }
+
+                        entities.Entry(FeePayment).State = EntityState.Deleted;
+                        entities.FeePayments.Remove(FeePayment);
+                        entities.SaveChanges();
                     }
-
-                    entities.Entry(FeePayment).State = EntityState.Deleted;
-                    entities.FeePayments.Remove(FeePayment);
-                    entities.SaveChanges();
-
                     //strLog += " --- FeePayments remove";
                     return Request.CreateResponse(HttpStatusCode.OK, "Removed... " + strLog);
                 }

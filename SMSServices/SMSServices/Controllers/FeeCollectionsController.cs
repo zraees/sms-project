@@ -343,6 +343,7 @@ namespace SMSServices.Controllers
                 bool IsSaveChanges = false;
                 int PaymentID = 0;
                 int StudentClassID;
+                decimal NewAdditionalDiscount = 0;
 
                 FeePayments FeePayment= new FeePayments();
                 List<FeePaymentsDetails> FeePaymentsDetailsList = new List<FeePaymentsDetails>();
@@ -396,6 +397,7 @@ namespace SMSServices.Controllers
                                     IsSaveChanges = true;
                                     //strLog += " ------ " + string.Format(" inside update feeCollectionAging.FeeCollectionAgingID={0}", feeCollectionAging.FeeCollectionAgingID);
 
+                                    NewAdditionalDiscount += feeCollectionAging.NewAdditionalDiscount;
                                     entity.AdditionalDiscount = entity.AdditionalDiscount + feeCollectionAging.NewAdditionalDiscount;
                                     entity.DueAmountAfterAddDisc = feeCollectionAging.DueAmountAfterAddDisc - feeCollectionAging.NewAdditionalDiscount;
                                     entity.TotalPaidAmount = (entity.TotalPaidAmount.HasValue ? entity.TotalPaidAmount.Value : 0) + feeCollectionAging.PaymentAmount;
@@ -448,22 +450,22 @@ namespace SMSServices.Controllers
 
                         decimal TotalPaidAmount = new FeePaymentsController().GetTotalPaidAmount(FeePaymentsDetailsList, ref  strLog);
                         decimal Outstanding = new FeePaymentsController().GetFeeOutstandingByAgingID(FeePaymentsDetailsList, ref strLog);
-                         FeePayment =new FeePayments()
-                        {
-                            Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
-                            StudentClassId = StudentClassID,
-                            PaidOn = PaymentDate,
-                            Comments = PaymentComments,
-                            TotalPaidAmount = TotalPaidAmount,
-                            Balance = Outstanding >= TotalPaidAmount ? Outstanding - TotalPaidAmount : 0,
-                            FeePaymentsDetails = FeePaymentsDetailsList,
-                            PaymentModeID = PaymentModeID,
-                            FeeCollectedBy = FeeCollectedBy,
-                            CreatedOn = DateTime.Now
-                        };
+                        FeePayment = new FeePayments()
+                       {
+                           Code = new AutoCodeGeneration().GenerateCode("FeePayments", "Code"),
+                           StudentClassId = StudentClassID,
+                           PaidOn = PaymentDate,
+                           Comments = PaymentComments,
+                           TotalPaidAmount = TotalPaidAmount,
+                           DiscountAmount = NewAdditionalDiscount,
+                           Balance = Outstanding >= TotalPaidAmount ? Outstanding - TotalPaidAmount - NewAdditionalDiscount : 0,
+                           FeePaymentsDetails = FeePaymentsDetailsList,
+                           PaymentModeID = PaymentModeID,
+                           FeeCollectedBy = FeeCollectedBy,
+                           CreatedOn = DateTime.Now
+                       };
                         entities.FeePayments.Add(FeePayment);
                     }
-
                 }
 
                 if (IsFeePaidDeleted || IsFeePaidSaved || IsSaveChanges)
@@ -647,6 +649,39 @@ namespace SMSServices.Controllers
             }
         }
 
+        internal bool UpdateFeeAgingByFeePaymentDelete(FeePayments FeePayment)
+        {
+            string strLog = "";
+            try
+            {
+                foreach (FeePaymentsDetails FeePaymentDetail in FeePayment.FeePaymentsDetails.ToList())
+                {
+                    FeeCollectionsAging tt = entities.FeeCollectionsAging.FirstOrDefault(t => t.FeeCollectionAgingID == FeePaymentDetail.FeeCollectionAgingID);
+                    if (tt != null && tt.FeeCollectionAgingID > 0)
+                    {
+                        //strLog += " ---- " + string.Format(" inside delete tt.FeeCollectionAgingID={0}", item.FeeCollectionAgingID); 
+
+                        tt.TotalPaidAmount = tt.TotalPaidAmount - FeePaymentDetail.PaidAmount;
+                        tt.FeePaymentStatusID = tt.TotalPaidAmount >= tt.DueAmountAfterAddDisc ? 3 : (tt.TotalPaidAmount > 0 ? 2 : 1);
+                        entities.Entry(tt).State = EntityState.Modified;
+                        
+                    } 
+                    //strLog += " --- FeePaymentDetail remove";
+                }
+                 
+                entities.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message + 
+                //    " inner ex: " + ex.InnerException !=null ? ex.InnerException.Message : "null" );
+                //throw;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -655,5 +690,6 @@ namespace SMSServices.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

@@ -179,6 +179,7 @@
     <Property Name="PaidOn" Type="date" Nullable="false" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
     <Property Name="TotalPaidAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="DiscountAmount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
     <Property Name="Balance" Type="decimal" Precision="8" Scale="2" Nullable="false" />
     <Property Name="PaymentModeID" Type="int" Nullable="false" />
     <Property Name="FeeCollectedBy" Type="nvarchar" MaxLength="50" Nullable="false" />

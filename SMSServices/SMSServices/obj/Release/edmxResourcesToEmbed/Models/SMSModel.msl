@@ -575,22 +575,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="FeePayments">
-      <EntityTypeMapping TypeName="SMSModel.FeePayments">
-        <MappingFragment StoreEntitySet="FeePayments">
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
-          <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
-          <ScalarProperty Name="Balance" ColumnName="Balance" />
-          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
-          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PaymentModes">
       <EntityTypeMapping TypeName="SMSModel.PaymentModes">
         <MappingFragment StoreEntitySet="PaymentModes">
@@ -645,5 +629,22 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="FeePayments">
+      <EntityTypeMapping TypeName="SMSModel.FeePayments">
+        <MappingFragment StoreEntitySet="FeePayments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
+          <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+          <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="StudentClassId" ColumnName="StudentClassId" />
+          <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

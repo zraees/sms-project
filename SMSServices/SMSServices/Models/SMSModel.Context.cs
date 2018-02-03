@@ -67,8 +67,8 @@ namespace SMSServices.Models
         public virtual DbSet<FeeCollectionsAging> FeeCollectionsAging { get; set; }
         public virtual DbSet<FeePaymentsDetails> FeePaymentsDetails { get; set; }
         public virtual DbSet<QualificationTypes> QualificationTypes { get; set; }
-        public virtual DbSet<FeePayments> FeePayments { get; set; }
         public virtual DbSet<PaymentModes> PaymentModes { get; set; }
+        public virtual DbSet<FeePayments> FeePayments { get; set; }
     
         public virtual int spDeleteTables(string level)
         {

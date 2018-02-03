@@ -25,6 +25,7 @@ namespace SMSServices.Models
         public System.DateTime PaidOn { get; set; }
         public string Comments { get; set; }
         public decimal TotalPaidAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
         public decimal Balance { get; set; }
         public int PaymentModeID { get; set; }
         public string FeeCollectedBy { get; set; }
