@@ -23,5 +23,7 @@ namespace SMSServices.Models
         public string FeeCollectedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public string PaymentModeName { get; set; }
+        public int StudentId { get; set; }
+        public decimal DiscountAmount { get; set; }
     }
 }

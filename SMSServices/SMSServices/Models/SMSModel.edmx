@@ -1763,15 +1763,7 @@
             <Parameter Name="lang" Mode="In" Type="String" />
             <Parameter Name="StudentId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spReportFeePaymentByID" ReturnType="Collection(SMSModel.spReportFeePaymentByID_Result)">
-            <Parameter Name="lang" Mode="In" Type="String" />
-            <Parameter Name="FeePaymentID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="PaymentModes" EntityType="SMSModel.PaymentModes" />
-          <FunctionImport Name="spFeePaymentDetailsByStudentID" ReturnType="Collection(SMSModel.spFeePaymentDetailsByStudentID_Result)">
-            <Parameter Name="lang" Mode="In" Type="String" />
-            <Parameter Name="StudentId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="spFeeCollections" ReturnType="Collection(SMSModel.spFeeCollections_Result)">
             <Parameter Name="lang" Mode="In" Type="String" />
             <Parameter Name="ShiftId" Mode="In" Type="Int32" />
@@ -1793,6 +1785,14 @@
             <End Role="FeePayments" EntitySet="FeePayments" />
             <End Role="FeePaymentsDetails" EntitySet="FeePaymentsDetails" />
           </AssociationSet>
+          <FunctionImport Name="spFeePaymentDetailsByStudentID" ReturnType="Collection(SMSModel.spFeePaymentDetailsByStudentID_Result)">
+            <Parameter Name="lang" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spReportFeePaymentByID" ReturnType="Collection(SMSModel.spReportFeePaymentByID_Result)">
+            <Parameter Name="lang" Mode="In" Type="String" />
+            <Parameter Name="FeePaymentID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="TeacherQualifications">
           <Key>
@@ -3053,29 +3053,6 @@
           <Property Type="Int32" Name="PaymentModeID" Nullable="false" />
           <Property Type="String" Name="FeeCollectedBy" Nullable="false" MaxLength="1" />
         </ComplexType>
-        <ComplexType Name="spReportFeePaymentByID_Result">
-          <Property Type="Int64" Name="SrNo" Nullable="true" />
-          <Property Type="Int32" Name="FeePaymentID" Nullable="false" />
-          <Property Type="String" Name="FeePaymentCode" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="PaidOn" Nullable="false" />
-          <Property Type="String" Name="Comments" Nullable="false" MaxLength="500" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="16" />
-          <Property Type="String" Name="StudentsCode" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="StudentFullName" Nullable="false" MaxLength="210" />
-          <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="BatchName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="SectionName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="FeeTypeCode" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="FeeTypeName" Nullable="false" MaxLength="100" />
-          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="TotalPaidAmount" Nullable="false" Precision="8" Scale="2" />
-          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="8" Scale="2" />
-          <Property Type="Int32" Name="PaymentModeID" Nullable="false" />
-          <Property Type="String" Name="PaymentModeName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FeeCollectedBy" Nullable="false" MaxLength="50" />
-        </ComplexType>
         <EntityType Name="PaymentModes">
           <Key>
             <PropertyRef Name="ID" />
@@ -3086,18 +3063,6 @@
           <Property Name="NameAr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FeePayments" Relationship="SMSModel.FK_FeePayments_PaymentModes" FromRole="PaymentModes" ToRole="FeePayments" />
         </EntityType>
-        <ComplexType Name="spFeePaymentDetailsByStudentID_Result">
-          <Property Type="Int32" Name="FeePaymentID" Nullable="false" />
-          <Property Type="String" Name="Code" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="PaidOn" Nullable="false" />
-          <Property Type="String" Name="Comments" Nullable="true" MaxLength="500" />
-          <Property Type="Decimal" Name="TotalPaidAmount" Nullable="false" Precision="8" Scale="2" />
-          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="8" Scale="2" />
-          <Property Type="Int32" Name="PaymentModeID" Nullable="false" />
-          <Property Type="String" Name="FeeCollectedBy" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="16" />
-          <Property Type="String" Name="PaymentModeName" Nullable="false" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="spFeeCollections_Result">
           <Property Type="Int32" Name="FeeCollectionID" Nullable="false" />
           <Property Type="Int32" Name="StudentClassId" Nullable="false" />
@@ -3177,6 +3142,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spFeePaymentDetailsByStudentID_Result">
+          <Property Type="Int32" Name="FeePaymentID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="PaidOn" Nullable="false" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="TotalPaidAmount" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="PaymentModeID" Nullable="false" />
+          <Property Type="String" Name="FeeCollectedBy" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="16" />
+          <Property Type="String" Name="PaymentModeName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="Decimal" Name="DiscountAmount" Nullable="false" Precision="8" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="spReportFeePaymentByID_Result">
+          <Property Type="Int64" Name="SrNo" Nullable="true" />
+          <Property Type="Int32" Name="FeePaymentID" Nullable="false" />
+          <Property Type="String" Name="FeePaymentCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="PaidOn" Nullable="false" />
+          <Property Type="String" Name="Comments" Nullable="false" MaxLength="500" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="16" />
+          <Property Type="String" Name="StudentsCode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="StudentFullName" Nullable="false" MaxLength="210" />
+          <Property Type="String" Name="RollNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="BatchName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SectionName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="FeeTypeCode" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="FeeTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalPaidAmount" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="DiscountAmount" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="PaymentModeID" Nullable="false" />
+          <Property Type="String" Name="PaymentModeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FeeCollectedBy" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3730,33 +3733,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spReportFeePaymentByID" FunctionName="SMSModel.Store.spReportFeePaymentByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SMSModel.spReportFeePaymentByID_Result">
-                <ScalarProperty Name="SrNo" ColumnName="SrNo" />
-                <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
-                <ScalarProperty Name="FeePaymentCode" ColumnName="FeePaymentCode" />
-                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="StudentsCode" ColumnName="StudentsCode" />
-                <ScalarProperty Name="StudentFullName" ColumnName="StudentFullName" />
-                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
-                <ScalarProperty Name="BatchName" ColumnName="BatchName" />
-                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
-                <ScalarProperty Name="FeeTypeCode" ColumnName="FeeTypeCode" />
-                <ScalarProperty Name="FeeTypeName" ColumnName="FeeTypeName" />
-                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
-                <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
-                <ScalarProperty Name="PaymentModeName" ColumnName="PaymentModeName" />
-                <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="PaymentModes">
             <EntityTypeMapping TypeName="SMSModel.PaymentModes">
               <MappingFragment StoreEntitySet="PaymentModes">
@@ -3767,22 +3743,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spFeePaymentDetailsByStudentID" FunctionName="SMSModel.Store.spFeePaymentDetailsByStudentID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SMSModel.spFeePaymentDetailsByStudentID_Result">
-                <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
-                <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="PaymentModeName" ColumnName="PaymentModeName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spFeeCollections" FunctionName="SMSModel.Store.spFeeCollections">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SMSModel.spFeeCollections_Result">
@@ -3828,6 +3788,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spFeePaymentDetailsByStudentID" FunctionName="SMSModel.Store.spFeePaymentDetailsByStudentID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SMSModel.spFeePaymentDetailsByStudentID_Result">
+                <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
+                <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="PaymentModeName" ColumnName="PaymentModeName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReportFeePaymentByID" FunctionName="SMSModel.Store.spReportFeePaymentByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SMSModel.spReportFeePaymentByID_Result">
+                <ScalarProperty Name="SrNo" ColumnName="SrNo" />
+                <ScalarProperty Name="FeePaymentID" ColumnName="FeePaymentID" />
+                <ScalarProperty Name="FeePaymentCode" ColumnName="FeePaymentCode" />
+                <ScalarProperty Name="PaidOn" ColumnName="PaidOn" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="StudentsCode" ColumnName="StudentsCode" />
+                <ScalarProperty Name="StudentFullName" ColumnName="StudentFullName" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="FeeTypeCode" ColumnName="FeeTypeCode" />
+                <ScalarProperty Name="FeeTypeName" ColumnName="FeeTypeName" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="PaymentModeID" ColumnName="PaymentModeID" />
+                <ScalarProperty Name="PaymentModeName" ColumnName="PaymentModeName" />
+                <ScalarProperty Name="FeeCollectedBy" ColumnName="FeeCollectedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

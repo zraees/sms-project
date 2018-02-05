@@ -48,7 +48,7 @@ export function submitFeePayment(values, dueFeeIdsForDelete) {
 
     values.feeDueDetails[0].paymentDate = values.paymentDate;
     values.feeDueDetails[0].paymentComments = values.paymentComments;
-    values.feeDueDetails[0].paymentModeId = 1;  //values.paymentModeId; ????????????
+    values.feeDueDetails[0].paymentModeId = values.paymentModeId;
     values.feeDueDetails[0].feeCollectedBy = values.feeCollectedBy;
     
     //console.log(' not empty ..', values.feeDueDetails);
@@ -177,6 +177,7 @@ export function printFeeSlip(langKey, feePaymentId) {
         htmlContent = htmlContent.replace('$PaymentModeText$', getTranslation('PaymentModeText'));
         htmlContent = htmlContent.replace('$BalanceText$', getTranslation('BalanceText'));
         htmlContent = htmlContent.replace('$CommentsText$', getTranslation('CommentsText'));
+        htmlContent = htmlContent.replace('$DiscountAmountText$', getTranslation('DiscountAmountText'));
         
         htmlContent = htmlContent.replace('$PrintedByText$', getTranslation('PrintedByText'));
         htmlContent = htmlContent.replace('$FeeCollectedByText$', getTranslation('FeeCollectedByText'));
@@ -191,6 +192,7 @@ export function printFeeSlip(langKey, feePaymentId) {
         htmlContent = htmlContent.replace('$PaymentDate$', getDateFrontEndFormat(masterData.PaidOn));
         htmlContent = htmlContent.replace('$PrintDate$', getDateFrontEndFormat(moment()));
         htmlContent = htmlContent.replace('$TotalAmount$', numeral(masterData.TotalPaidAmount).format('0,0.00'));
+        htmlContent = htmlContent.replace('$DiscountAmount$', numeral(masterData.DiscountAmount).format('0,0.00'));
         htmlContent = htmlContent.replace('$PaymentMode$', masterData.PaymentModeName);
         htmlContent = htmlContent.replace('$Balance$', numeral(masterData.Balance).format('0,0.00'));
 

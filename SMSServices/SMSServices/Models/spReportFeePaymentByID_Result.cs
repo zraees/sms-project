@@ -30,6 +30,7 @@ namespace SMSServices.Models
         public string FeeTypeName { get; set; }
         public Nullable<decimal> PaidAmount { get; set; }
         public decimal TotalPaidAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
         public decimal Balance { get; set; }
         public int PaymentModeID { get; set; }
         public string PaymentModeName { get; set; }

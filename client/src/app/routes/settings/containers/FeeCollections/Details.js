@@ -13,7 +13,7 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel,
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat, guid} from '../../../../components/utils/functions'
 import { submitFeePayment, removePayment, printFeeSlip} from './submit'
 
 import StudentControl from '../Students/StudentControl'
@@ -33,7 +33,7 @@ class Details extends React.Component {
       paymentDate: today(),
       feeDueDetails: [],
       studentId: this.props.studentId,
-      paymentModeOptions: []
+      //paymentModeOptions: []
     }  
     // this.handleFeeTypeBlur = this.handleFeeTypeBlur.bind(this);
     // this.handleFeeBlur = this.handleFeeBlur.bind(this);
@@ -48,7 +48,21 @@ class Details extends React.Component {
     //this.props.change("feeDiscountTypeId", 1);
 
     this.initializeFeeDues(this.state.studentId);
- 
+
+    // axios.get('/api/lookup/paymentModes/')
+    //   .then(res => {
+
+    //     console.log('/api/lookup/paymentModes/', res.data);
+
+    //     const paymentModeOptions = mapForCombo(res.data);
+    //     this.setState({ paymentModeOptions });
+    //   });
+
+    // var url = '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + this.state.studentId;     
+    // //this.setState({ url });
+    // var table = $('#feePaymentDetailsGrid').DataTable();
+    // table.ajax.url(url).load();
+
     $('#feePaymentDetailsGrid').on('click', 'td', function (event) {
 
       //var thisElement = $('#feePaymentDetailsGrid td');
@@ -120,22 +134,22 @@ class Details extends React.Component {
           //this.setState({feeDueDetails})
 
           //console.log('this.state.feeDueDetails', initData.feeDueDetails, this.state.feeDueDetails);
-          axios.get('/api/lookup/paymentModes/')
-            .then(res => {
+          // axios.get('/api/lookup/paymentModes/')
+          //   .then(res => {
 
-              console.log('/api/lookup/paymentModes/', res.data);
+          //     //console.log('/api/lookup/paymentModes/', res.data);
 
-              const paymentModeOptions = mapForCombo(res.data);
-              this.setState({ paymentModeOptions });
-            });
+          //     const paymentModeOptions = mapForCombo(res.data);
+          //     this.setState({ paymentModeOptions });
+          //   });
 
-            var url = '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + studentId;
-            console.log(url);
-            //this.setState({ url });
-        
-            var table = $('#feePaymentDetailsGrid').DataTable();
-            table.ajax.url(url).load();
-        
+          var url = '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + studentId;
+          //console.log(url);
+          //this.setState({ url });
+
+          var table = $('#feePaymentDetailsGrid').DataTable();
+          table.ajax.url(url).load();
+
         }
         else {
           // show error message, there is some this went wrong 
@@ -152,17 +166,20 @@ class Details extends React.Component {
 
     //console.log('shouldComponentUpdate --> FeeCollection Details', this.state.studentId != nextState.nstudentId, nextProps, nextState);
 
-    if (this.state.studentId != nextState.studentId && nextState.studentId) {
-      //console.log('update state yes ', nextState.studentId);
-      //let key = getLangKey(); 
-      this.initializeFeeDues(nextState.studentId);
-    }
-    else if (this.props.studentId != nextProps.studentId && nextProps.studentId) {
-      //console.log('update props yes ', nextProps.studentId);
+    // if (this.state.studentId != nextState.studentId && nextState.studentId) { 
+    //   console.log('aaa');
+    //   this.initializeFeeDues(nextState.studentId);
+    // }
+    //else 
+    if (this.props.guid != nextProps.guid || (this.props.studentId != nextProps.studentId && nextProps.studentId)) { 
+      console.log('aaa aaa');
       this.initializeFeeDues(nextProps.studentId);
     }
 
-    return this.state.studentId != nextState.studentId || this.props.studentId != nextProps.studentId;
+    //return this.state.studentId != nextState.studentId || this.props.studentId != nextProps.studentId;
+    console.log('guid ==> ', this.props.guid, nextProps.guid,  this.props.guid != nextProps.guid )
+    console.log('nextState.studentId   nextProps.studentId', nextState.studentId, nextProps.studentId)
+    return this.props.guid != nextProps.guid;
   }
 
   handleAdditionalDiscountBlur(index, event) {
@@ -197,8 +214,8 @@ class Details extends React.Component {
  
   render() {
     const { feeCollectionId, handleSubmit, pristine, reset, submitting, touched, error, warning } = this.props;
-    const { batchId, sectionId, classId, shiftId, studentId } = this.props;
-    const { langKey, paymentModeOptions } = this.state;
+    const { batchId, sectionId, classId, shiftId, studentId, guid, paymentModeOptions} = this.props;
+    const { langKey } = this.state;
 
     return (
       <form id="form-Fee-Aging" className="smart-form"
@@ -210,7 +227,7 @@ class Details extends React.Component {
           shiftId={shiftId}
           studentId={studentId} />
 
-
+        <br/>
         <fieldset>
           <div className="tabbable tabs">
 
@@ -222,9 +239,15 @@ class Details extends React.Component {
                 <a id="tabPaymentHistory" data-toggle="tab" href="#B1P1B"><Msg phrase="PaymentHistoryText" /></a>
               </li>
             </ul>
-
+            {/* guid = {guid} */}
             <div className="tab-content">
               <div className="tab-pane active" id="A1P1A">
+
+                <div className="row">
+                  <section className="remove-col-padding col-sm-12 col-md-12 col-lg-12">
+                     
+                  </section>
+                </div>
 
                 <div className="row">
                   <section className="remove-col-padding col-sm-4 col-md-4 col-lg-4">
@@ -269,7 +292,7 @@ class Details extends React.Component {
 
               </div>
               <div className="tab-pane table-responsive" id="B1P1B">
-                {studentId}
+              
                 <Datatable id="feePaymentDetailsGrid"
                   options={{
                     ajax: { "url": '/api/FeeCollections/FeePaymentDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },

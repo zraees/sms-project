@@ -101,32 +101,6 @@ namespace SMSServices.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeDueDetailsByStudentID_Result>("spFeeDueDetailsByStudentID", langParameter, studentIdParameter);
         }
     
-        public virtual ObjectResult<spReportFeePaymentByID_Result> spReportFeePaymentByID(string lang, Nullable<int> feePaymentID)
-        {
-            var langParameter = lang != null ?
-                new ObjectParameter("lang", lang) :
-                new ObjectParameter("lang", typeof(string));
-    
-            var feePaymentIDParameter = feePaymentID.HasValue ?
-                new ObjectParameter("FeePaymentID", feePaymentID) :
-                new ObjectParameter("FeePaymentID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportFeePaymentByID_Result>("spReportFeePaymentByID", langParameter, feePaymentIDParameter);
-        }
-    
-        public virtual ObjectResult<spFeePaymentDetailsByStudentID_Result> spFeePaymentDetailsByStudentID(string lang, Nullable<int> studentId)
-        {
-            var langParameter = lang != null ?
-                new ObjectParameter("lang", lang) :
-                new ObjectParameter("lang", typeof(string));
-    
-            var studentIdParameter = studentId.HasValue ?
-                new ObjectParameter("StudentId", studentId) :
-                new ObjectParameter("StudentId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeePaymentDetailsByStudentID_Result>("spFeePaymentDetailsByStudentID", langParameter, studentIdParameter);
-        }
-    
         public virtual ObjectResult<spFeeCollections_Result> spFeeCollections(string lang, Nullable<int> shiftId, Nullable<int> classId, Nullable<int> sectionId, Nullable<int> batchId, Nullable<int> studentId)
         {
             var langParameter = lang != null ?
@@ -154,6 +128,32 @@ namespace SMSServices.Models
                 new ObjectParameter("StudentId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeeCollections_Result>("spFeeCollections", langParameter, shiftIdParameter, classIdParameter, sectionIdParameter, batchIdParameter, studentIdParameter);
+        }
+    
+        public virtual ObjectResult<spFeePaymentDetailsByStudentID_Result> spFeePaymentDetailsByStudentID(string lang, Nullable<int> studentId)
+        {
+            var langParameter = lang != null ?
+                new ObjectParameter("lang", lang) :
+                new ObjectParameter("lang", typeof(string));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFeePaymentDetailsByStudentID_Result>("spFeePaymentDetailsByStudentID", langParameter, studentIdParameter);
+        }
+    
+        public virtual ObjectResult<spReportFeePaymentByID_Result> spReportFeePaymentByID(string lang, Nullable<int> feePaymentID)
+        {
+            var langParameter = lang != null ?
+                new ObjectParameter("lang", lang) :
+                new ObjectParameter("lang", typeof(string));
+    
+            var feePaymentIDParameter = feePaymentID.HasValue ?
+                new ObjectParameter("FeePaymentID", feePaymentID) :
+                new ObjectParameter("FeePaymentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportFeePaymentByID_Result>("spReportFeePaymentByID", langParameter, feePaymentIDParameter);
         }
     }
 }

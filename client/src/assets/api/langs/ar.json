@@ -257,6 +257,7 @@
     "FeeText": "Fee",
     "DiscountRateText": "Discount Rate",
     "DiscountValueText": "Discount Value",
+    "DiscountAmountText": "Discount Amount",
     "FeeAmountAfterDiscountText": "Fee Amount After Discount",
     "DiscountOptionText": "Discount Option",
     
