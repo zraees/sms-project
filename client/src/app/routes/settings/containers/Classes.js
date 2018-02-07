@@ -26,7 +26,7 @@ class Subjects extends React.Component {
    
   componentDidMount(){ 
     
-        axios.get('/api/lookup/subjects/')
+        instanceAxios.get('/api/lookup/subjects/')
           .then(res => {
             const subjectOptions = mapForCombo(res.data);
             this.setState({ subjectOptions });

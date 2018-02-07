@@ -13,7 +13,7 @@ import { RFField, RFTextArea } from '../../../../components/ui'
 import { required, email, number } from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import { submitStudentMedicalDetails } from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 import { upper, lower } from '../../../../components/utils/normalize'
 import Msg from '../../../../components/i18n/Msg'
 

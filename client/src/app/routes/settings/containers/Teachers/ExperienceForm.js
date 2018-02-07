@@ -11,7 +11,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitExperience, removeExperience} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
 
 class ExperienceForm extends React.Component  {
@@ -50,7 +50,7 @@ componentDidMount(){
 
   handleCountryBlur(obj, value){
     //console.log('before experience states');
-    axios.get('/api/states/' + value)
+    instanceAxios.get('/api/states/' + value)
         .then(res=>{
             const states = mapForCombo(res.data);                          
             this.setState({states});
@@ -59,7 +59,7 @@ componentDidMount(){
   }
 
   handleStateBlur(obj, value){
-    axios.get('/api/cities/' + value)
+    instanceAxios.get('/api/cities/' + value)
         .then(res=>{
             const cities = mapForCombo(res.data);                          
             this.setState({cities});
@@ -183,7 +183,7 @@ componentDidMount(){
                     
                     <Datatable id="teacherExperiencesGrid"  
                       options={{
-                        ajax: {"url":'/api/TeacherExperiences/' + teacherId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/TeacherExperiences/' + teacherId, "dataSrc": ""},
                         columnDefs: [
                             {/*{ 
                                 "type": "date",

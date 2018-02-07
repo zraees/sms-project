@@ -12,7 +12,7 @@ import {RFField, RFReactSelect, RFRadioButtonList} from '../../../../components/
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, instanceAxios} from '../../../../components/utils/functions'
  
 class FeeTypeForm extends React.Component {
  
@@ -41,20 +41,20 @@ class FeeTypeForm extends React.Component {
         this.setState({ percentageOptions });
       });
 
-    axios.get('/api/lookup/feeCycles/')
+    instanceAxios.get('/api/lookup/feeCycles/')
       .then(res=>{            
           const feeCycleOptions = mapForCombo(res.data);
           this.setState({feeCycleOptions});
     });            
     
-    axios.get('/api/lookup/feeDiscountTypes/')
+    instanceAxios.get('/api/lookup/feeDiscountTypes/')
       .then(res=>{            
           const feeDiscountTypeOptions = mapForCombo(res.data);
           this.setState({feeDiscountTypeOptions});
     });
 
     
-    axios.get('/api/GetFeeTypeGeneratedCode')  
+    instanceAxios.get('/api/GetFeeTypeGeneratedCode')  
     .then(res=>{      
       //console.log(res);       
       const initData = {
@@ -93,7 +93,7 @@ class FeeTypeForm extends React.Component {
 
   handleFeeCycleBlur(obj, value){
     if(value!=''){
-      axios.get('/api/Lookup/FeeDueOnFrequencies/FeecycleID/' + value)
+      instanceAxios.get('/api/Lookup/FeeDueOnFrequencies/FeecycleID/' + value)
         .then(res=>{
             const feeDueOnFrequencyOptions = mapForCombo(res.data);
             this.setState({feeDueOnFrequencyOptions});
@@ -107,7 +107,7 @@ class FeeTypeForm extends React.Component {
   handleFeeDueOnFrequencyBlur(obj, value){  
     //console.log('this.props.shiftId', this.props.shiftId);
     if(value){
-      axios.get('/api/Lookup/FeeDueOnInterval/FeeDueOnFrequencyID/'  + value)
+      instanceAxios.get('/api/Lookup/FeeDueOnInterval/FeeDueOnFrequencyID/'  + value)
         .then(res=>{
             const feeDueOnIntervalOptions = mapForCombo(res.data);
             this.setState({feeDueOnIntervalOptions});

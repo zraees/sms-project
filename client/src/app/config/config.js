@@ -15,6 +15,7 @@ const SmartadminConfig = {
         "backend": "YYYY-DD-MM"
     },
     
+    webApiRootUrl: "http://localhost:8082",
     apiRootUrl: "assets/api",
     buildUrl: "build",
     skins: [
@@ -200,6 +201,12 @@ if (SmartadminConfig.voice_command) {
 
   SmartadminConfig.commands = {
 
+    'show students': {
+      type: 'navigate', payload: '/settings/students'
+    },
+    'show teachers': {
+      type: 'navigate', payload: '/settings/teachers'
+    },
     'show dashboard': {
       type: 'navigate', payload: '/dashboard/analytics'
     },

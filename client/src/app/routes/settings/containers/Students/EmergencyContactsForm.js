@@ -33,13 +33,13 @@ class EmergencyContactsForm extends React.Component {
     
     componentDidMount(){ 
         
-        axios.get('/api/lookup/classes/')
+        instanceAxios.get('/api/lookup/classes/')
             .then(res=>{            
                 const classOptions = mapForCombo(res.data);
                 this.setState({classOptions});
             });
 
-        axios.get('/api/lookup/relations/')
+        instanceAxios.get('/api/lookup/relations/')
             .then(res=>{            
                 const relationOptions = mapForCombo(res.data);
                 this.setState({relationOptions});
@@ -180,7 +180,7 @@ class EmergencyContactsForm extends React.Component {
                     
                     <Datatable id="emergencyContactDetailsGrid"  
                       options={{
-                        ajax: {"url":'/api/StudentsEmergencyContactDetails/All/' + studentId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/StudentsEmergencyContactDetails/All/' + studentId, "dataSrc": ""},
                         columnDefs: [  
                             { 
                                 "render": function ( data, type, row ) {

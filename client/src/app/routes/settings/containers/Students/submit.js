@@ -18,7 +18,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
       insert(values);
     }   
     
-    // return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
+    // return instanceAxios.get('/api/students/' + values.studentId + '/' + values.email + '/')
     //   .then(res=>{            
     //       //throw {email: 'That email is already taken'}
     //       if(res.data.Email===''){
@@ -55,7 +55,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   function insert(values){
     LoaderVisibility(true);
 
-    axios.post('/api/students', values)      
+    instanceAxios.post('/api/students', values)      
       .then(function (response) {
         //multipart/form-data; boundary=${formData._boundary}
         console.log('response ==> ', response);
@@ -116,8 +116,8 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     //data.append('document', {'folderName':'StudentPics', 'fileName': fileName});    
 
-    //axios.post('/api/PostImage/StudentPics/' +fileName, data)
-    axios.post('/api/PostImage', data)
+    //instanceAxios.post('/api/PostImage/StudentPics/' +fileName, data)
+    instanceAxios.post('/api/PostImage', data)
       .then(function (response) {
         console.log('image upload sucess, ', response);
         //updatePicPath({'studentId': studentId, 'studentPic': fileName});
@@ -137,7 +137,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   // function updatePicPath(values){
     
   //   console.log('in updatePicPath');
-  //   axios.put('/api/AddStudentPicPath/' + values.studentId + '/' + values.studentPic)
+  //   instanceAxios.put('/api/AddStudentPicPath/' + values.studentId + '/' + values.studentPic)
   //     .then(function (response) {
   //       console.log('updatePicPath sucess, ', response);
         
@@ -158,7 +158,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     //console.log('in update');
     //console.log(values);
     LoaderVisibility(true);
-    axios.put('/api/students', values)      
+    instanceAxios.put('/api/students', values)      
       .then(function (response) {
         
         alert('s','student details have been updated.');
@@ -176,7 +176,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitPreviousSchool(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentPreviousSchools', values)      
+    instanceAxios.post('/api/StudentPreviousSchools', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -198,7 +198,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitSiblingDetail(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentSiblings', values)      
+    instanceAxios.post('/api/StudentSiblings', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -220,7 +220,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitStudentRelative(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentsRelatives', values)      
+    instanceAxios.post('/api/StudentsRelatives', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -242,7 +242,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitStudentParent(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentsParents', values)      
+    instanceAxios.post('/api/StudentsParents', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -264,7 +264,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitStudentEmergencyContactDetail(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentsEmergencyContactDetails', values)      
+    instanceAxios.post('/api/StudentsEmergencyContactDetails', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -286,7 +286,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitStudentSpecialSevices(values, studentId){
     values = Object.assign({}, values, {studentId});    
     LoaderVisibility(true);
-    axios.post('/api/StudentsSpecialSevices', values)      
+    instanceAxios.post('/api/StudentsSpecialSevices', values)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -308,7 +308,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   export function submitStudentMedicalDetails(values, studentId){
     values = Object.assign({}, values, {studentId});    
     // LoaderVisibility(true);
-    // axios.post('/api/StudentsSpecialSevices', values)      
+    // instanceAxios.post('/api/StudentsSpecialSevices', values)      
     //   .then(function (response) {
         
     //     alert('s', 'data has been saved successfully');
@@ -390,7 +390,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemovePreviousSchool/' + id)      
+        instanceAxios.post('/api/RemovePreviousSchool/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');
@@ -431,7 +431,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemoveSibling/' + id)      
+        instanceAxios.post('/api/RemoveSibling/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');
@@ -472,7 +472,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemoveStudentRelative/' + id)      
+        instanceAxios.post('/api/RemoveStudentRelative/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');
@@ -513,7 +513,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemoveStudentParent/' + id)      
+        instanceAxios.post('/api/RemoveStudentParent/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');
@@ -554,7 +554,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemoveStudentEmergencyContactDetail/' + id)      
+        instanceAxios.post('/api/RemoveStudentEmergencyContactDetail/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');
@@ -595,7 +595,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {         
         LoaderVisibility(true);
 
-        axios.post('/api/RemoveStudentSpecialSevice/' + id)      
+        instanceAxios.post('/api/RemoveStudentSpecialSevice/' + id)      
           .then(function (response) {
             
             alert('s','data has been deleted successfully');

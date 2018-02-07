@@ -12,6 +12,7 @@ import {required, email}  from '../../../../components/forms/validation/CustomVa
 //import UiDatepicker from '../../../../components/forms/inputs/UiDatepicker'
 
 import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} from '../../../../components/ui'
+import {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 //import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import asyncValidate from './asyncValidate'
@@ -64,7 +65,7 @@ class TeacherForm extends React.Component {
   // }
 
   // handleInitialize(teacherId) { 
-  //     axios.get('/api/teachers/' + teacherId)
+  //     instanceAxios.get('/api/teachers/' + teacherId)
   //         .then(res=>{            
   //             //var json = res.data;                
   //             const initData = {
@@ -87,7 +88,7 @@ class TeacherForm extends React.Component {
   // } 
 
   handleCountryBlur(obj, value){
-    axios.get('/api/states/' + value)
+    instanceAxios.get('/api/states/' + value)
         .then(res=>{
             const states = res.data.map(function(item, index){
                 return {value: item.Id + "", label: item.Name};
@@ -98,7 +99,7 @@ class TeacherForm extends React.Component {
   }
 
   handleStateBlur(obj, value){
-    axios.get('/api/cities/' + value)
+    instanceAxios.get('/api/cities/' + value)
         .then(res=>{
             const cities = res.data.map(function(item, index){
                 return {value: item.Id + "", label: item.Name};

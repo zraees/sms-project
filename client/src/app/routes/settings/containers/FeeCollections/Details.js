@@ -13,7 +13,7 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel,
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat, guid} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat, guid, instanceAxios, isYesClicked, isNoClicked} from '../../../../components/utils/functions'
 import { submitFeePayment, removePayment, printFeeSlip} from './submit'
 
 import StudentControl from '../Students/StudentControl'
@@ -21,8 +21,7 @@ import { config } from '../../../../config/config';
  
 import validate from './validate'
 import alert, {confirmation} from '../../../../components/utils/alerts'
-import LanguageStore from '../../../../components/i18n/LanguageStore'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import LanguageStore from '../../../../components/i18n/LanguageStore' 
 
 class Details extends React.Component {
  
@@ -49,7 +48,7 @@ class Details extends React.Component {
 
     this.initializeFeeDues(this.state.studentId);
 
-    // axios.get('/api/lookup/paymentModes/')
+    // instanceAxios.get('/api/lookup/paymentModes/')
     //   .then(res => {
 
     //     console.log('/api/lookup/paymentModes/', res.data);
@@ -91,7 +90,7 @@ class Details extends React.Component {
 
     //console.log('initializeFeeDues -- this.state.studentId ', this.state.studentId);
 
-    axios.get('/api/FeeCollections/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
+    instanceAxios.get('/api/FeeCollections/FeeDueDetailsByStudentID/' + this.state.langKey + '/' + studentId)
       .then(res => {
         if (res.data) {
           //console.log('exists..');
@@ -134,7 +133,7 @@ class Details extends React.Component {
           //this.setState({feeDueDetails})
 
           //console.log('this.state.feeDueDetails', initData.feeDueDetails, this.state.feeDueDetails);
-          // axios.get('/api/lookup/paymentModes/')
+          // instanceAxios.get('/api/lookup/paymentModes/')
           //   .then(res => {
 
           //     //console.log('/api/lookup/paymentModes/', res.data);
@@ -295,7 +294,7 @@ class Details extends React.Component {
               
                 <Datatable id="feePaymentDetailsGrid"
                   options={{
-                    ajax: { "url": '/api/FeeCollections/FeePaymentDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },
+                    ajax: { "url": getWebApiRootUrl() +'/api/FeeCollections/FeePaymentDetailsByStudentID/' + langKey + '/' + studentId, "dataSrc": "" },
                     columnDefs: [
                       {
                         "type": "date",

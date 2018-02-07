@@ -11,7 +11,7 @@ import { RFReactSelect } from '../../../../components/ui'
 import { required }  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitTeacherSubject, removeTeacherSubject} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 import Msg from '../../../../components/i18n/Msg'
 
 class TeacherSubjectForm extends React.Component  {
@@ -30,7 +30,7 @@ class TeacherSubjectForm extends React.Component  {
         this.setState({teacherId: this.props.teacherId});
         this.props.change('teacherId', this.props.teacherId); // function provided by redux-form
 
-        axios.get('/api/lookup/subjects/')
+        instanceAxios.get('/api/lookup/subjects/')
             .then(res=>{            
                 const subjectOptions = mapForCombo(res.data);
                 this.setState({subjectOptions});
@@ -105,7 +105,7 @@ class TeacherSubjectForm extends React.Component  {
                     
                     <Datatable id="teacherSubjectsGrid"  
                       options={{
-                        ajax: {"url":'/api/TeachersSubjects/All/' + teacherId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/TeachersSubjects/All/' + teacherId, "dataSrc": ""},
                         columnDefs: [
                             { 
                                 "render": function ( data, type, row ) {

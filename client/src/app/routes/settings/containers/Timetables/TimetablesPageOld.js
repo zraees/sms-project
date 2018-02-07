@@ -20,7 +20,7 @@ import Msg from '../../../../components/i18n/Msg'
 import Moment from '../../../../components/utils/Moment'
  
 import submit from './submit'
-import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
 import {RFField, RFReactSelect, RFLabel} from '../../../../components/ui'
@@ -113,7 +113,7 @@ class TimetablesPageOld extends React.Component {
           this.setState({shiftOptions});
       });
     
-    // axios.get('/api/GetTimetableGeneratedCode')
+    // instanceAxios.get('/api/GetTimetableGeneratedCode')
     //   .then(res=>{      
     //     console.log(res);       
     //     const initData = {
@@ -184,7 +184,7 @@ class TimetablesPageOld extends React.Component {
   }
 
   handleSubjectBlur(obj, value){ 
-    // axios.get('/api/Lookup/cities/subjectId/' + value)
+    // instanceAxios.get('/api/Lookup/cities/subjectId/' + value)
     //   .then(res=>{
     //       const cities = mapForCombo(res.data); // res.data.map(function(item, index){
     //       //     return {value: item.Id + "", label: item.Name};
@@ -194,7 +194,7 @@ class TimetablesPageOld extends React.Component {
   }
 
   handleShiftBlur(obj, value){
-    axios.get('/api/GetClassesByShiftId/' + value)
+    instanceAxios.get('/api/GetClassesByShiftId/' + value)
       .then(res=>{
           const classOptions = mapForCombo(res.data);
           this.setState({classOptions});
@@ -203,7 +203,7 @@ class TimetablesPageOld extends React.Component {
   }
 
   handleClassBlur(obj, value){  
-    axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
+    instanceAxios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
       .then(res=>{
           const sectionOptions = mapForCombo(res.data);
           this.setState({sectionOptions});
@@ -460,7 +460,7 @@ const renderPeriods = ({ fields }) => (
                   </form>
 
                   <Loader isLoading={this.props.isLoading} />
-                      {/* ajax: {"url":'/api/timetables', "dataSrc": ""},  */}
+                      {/* ajax: {"url": getWebApiRootUrl() +'/api/timetables', "dataSrc": ""},  */}
                   {/* <Datatable id="timetablesGrid"  
                     options={{
                       columnDefs: [ 

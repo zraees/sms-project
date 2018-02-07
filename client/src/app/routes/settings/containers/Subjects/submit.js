@@ -4,14 +4,14 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
  
   function submit(values){
     //console.log(values);
-    return axios.get('/api/subjects/' + values.subjectId + '/' + values.code + '/')
+    return instanceAxios.get('/api/subjects/' + values.subjectId + '/' + values.code + '/')
       .then(res=>{            
           //throw {Code: 'That Code is already taken'}
           if(res.data.Code===''){
@@ -36,7 +36,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   function insert(values){
     LoaderVisibility(true);
     console.log(values);
-    axios.post('/api/subjects', values)      
+    instanceAxios.post('/api/subjects', values)      
         .then(function (response) {
           
           LoaderVisibility(false);
@@ -73,7 +73,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     //console.log('in update');
     //console.log(values);
     LoaderVisibility(true);
-    axios.put('/api/subjects', values)      
+    instanceAxios.put('/api/subjects', values)      
         .then(function (response) {
           
           alert('s','data has been updated successfully');

@@ -1,4 +1,5 @@
 import LanguageStore from '../i18n/LanguageStore'
+import {config} from '../../config/config'
 //import store from '../../store/configureStore'
 //import LoaderActions from '../Loader/LoaderActions'
 
@@ -9,12 +10,13 @@ import numeral  from 'numeral'
 
 import * as phrases_us from '../../../assets/api/langs/us.json';
 import * as phrases_ar from '../../../assets/api/langs/ar.json';
-import * as phrases_ur from '../../../assets/api/langs/ur.json';
-import { config } from '../../config/config';
+import * as phrases_ur from '../../../assets/api/langs/ur.json'; 
 
 let phrasesUs = {}
 let phrasesUr = {}
 let phrasesAr = {} 
+
+export const instanceAxios = axios.create({baseURL: 'http://localhost:8082'});
 
 function mapForCombo(keyValues) {
     let key = getLangKey();
@@ -236,5 +238,11 @@ export function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
   }
+
+export function getWebApiRootUrl() {
+    // webApiRootUrl = config.webApiRootUrl;
+    // console.log('config.webApiRootUrl ==> ', config.webApiRootUrl);
+    return config.webApiRootUrl;
+}
 
 export default mapForCombo

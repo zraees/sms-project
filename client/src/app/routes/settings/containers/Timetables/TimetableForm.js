@@ -22,7 +22,7 @@ import Moment from '../../../../components/utils/Moment'
  
 import TimetableDay from './TimetableDay'
 import submit from './submit'
-import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
 import {RFField, RFReactSelect, RFLabel, RFRadioButtonList} from '../../../../components/ui'
@@ -110,13 +110,13 @@ class TimetableForm extends React.Component {
 
     }.bind(this));
     
-    axios.get('/api/lookup/shifts/')
+    instanceAxios.get('/api/lookup/shifts/')
       .then(res => {
         const shiftOptions = mapForCombo(res.data);
         this.setState({ shiftOptions });
       }); 
 
-    // axios.get('/api/GetTimetableGeneratedCode')
+    // instanceAxios.get('/api/GetTimetableGeneratedCode')
     //   .then(res=>{      
     //     console.log(res);       
     //     const initData = {
@@ -152,7 +152,7 @@ class TimetableForm extends React.Component {
       //             {"periodStart":"09:01 AM", "periodEnd":"09:30 AM", "teacherId":"0", "subjectId":"0", "firstName": "abc 1.1", "lastName": "123 1.x"}];
       // days.push({"periods":periods}); 
 
-      axios.get('/api/GetTimeTableGeneratedCode')
+      instanceAxios.get('/api/GetTimeTableGeneratedCode')
       .then(res=>{      
         //console.log(res);       
         const initData = {
@@ -168,7 +168,7 @@ class TimetableForm extends React.Component {
   }
 
   // handleTeacherBlur(obj, value){
-  //   // axios.get('/api/Lookup/subjectOptions/countryid/' + value)
+  //   // instanceAxios.get('/api/Lookup/subjectOptions/countryid/' + value)
   //   //   .then(res=>{
   //   //       const subjectOptions = mapForCombo(res.data);//res.data.map(function(item, index){
   //   //           //return {value: item.Id + "", label: item.Name};
@@ -179,7 +179,7 @@ class TimetableForm extends React.Component {
   // }
 
   // handleSubjectBlur(obj, value){ 
-  //   // axios.get('/api/Lookup/cities/subjectId/' + value)
+  //   // instanceAxios.get('/api/Lookup/cities/subjectId/' + value)
   //   //   .then(res=>{
   //   //       const cities = mapForCombo(res.data); // res.data.map(function(item, index){
   //   //       //     return {value: item.Id + "", label: item.Name};
@@ -190,13 +190,13 @@ class TimetableForm extends React.Component {
 
   handleShiftBlur(obj, value){
     if(value!=''){
-      axios.get('/api/GetClassesByShiftId/' + value)
+      instanceAxios.get('/api/GetClassesByShiftId/' + value)
         .then(res=>{
             const classOptions = mapForCombo(res.data);
             this.setState({classOptions});
         });
       
-      axios.get('/api/shifts/' + value)
+      instanceAxios.get('/api/shifts/' + value)
         .then(res=>{ 
             this.props.change('shiftStartTime', res.data.StartTime);
             this.props.change('shiftEndTime', res.data.EndTime);
@@ -218,7 +218,7 @@ class TimetableForm extends React.Component {
   handleClassBlur(obj, value){  
     console.log('this.props.shiftId', this.props.shiftId);
     if(this.props.shiftId && value){
-      axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
+      instanceAxios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
         .then(res=>{
             const sectionOptions = mapForCombo(res.data);
             this.setState({sectionOptions});

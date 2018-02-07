@@ -4,14 +4,14 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
 
     function submit(values){
       console.log(values);
-      return axios.get('/api/ClassesSections/' + values.shiftId + '/' + values.classId + '/' + values.sectionId + '/')
+      return instanceAxios.get('/api/ClassesSections/' + values.shiftId + '/' + values.classId + '/' + values.sectionId + '/')
         .then(res=>{             
       
             console.log(res.data);
@@ -38,7 +38,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     function insert(values){
       LoaderVisibility(true);
       console.log(values);
-      axios.post('/api/ClassesSections', values)      
+      instanceAxios.post('/api/ClassesSections', values )      
         .then(function (response) {
           
           LoaderVisibility(false);
@@ -73,10 +73,20 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     }
 
     function update(values){
-      //console.log('in update');
+      console.log('in update ==> ', instanceAxios);
       //console.log(values);
+
+      // let axiosConfig = {
+      //   crossdomain: true ,
+      //   headers: {
+      //       'Content-Type': 'application/x-www-form-urlencoded',
+      //       "Access-Control-Allow-Origin": "*",
+      //       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      //   }
+      // };
+
       LoaderVisibility(true);
-      axios.put('/api/ClassesSections', values)      
+      instanceAxios.put('/api/ClassesSections', values)      
         .then(function (response) {
           
           alert('s','data has been updated successfully');
@@ -85,7 +95,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
         })
         .catch(function (error) {
-          console.log(error);
+          console.log('error agya hai ..', error);
           alert('f', '');
           LoaderVisibility(false);
         });      
@@ -106,11 +116,11 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
         if (isYesClicked(ButtonPressed)) {
             LoaderVisibility(true);
-            //console.log('classsection dele conf yes by func');
+            console.log('classsection dele conf yes by func');
             // console.log(id);
             
             ////axios.delete('/api/ClassesSections/' + id)      
-            // axios.post('/api/Removestudent/' + id)
+            // instanceAxios.post('/api/Removestudent/' + id)
             //   .then(function (response) {
                 
             //     alert('s','student details have been deleted.');
@@ -128,7 +138,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
             //   }); 
 
             $.ajax({
-                url : '/api/RemoveClassSection/' + id,
+                url : 'http://localhost:8082/api/RemoveClassSection/' + id,
                 type: "POST",
                 //data : formData,
                 success: function(data, textStatus, jqXHR)
@@ -147,7 +157,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                  console.log('error = ', jqXHR, textStatus, errorThrown);
+                  console.log('error dele classsection = ', jqXHR, textStatus, errorThrown);
                   alert('f','');
 
                   LoaderVisibility(false);

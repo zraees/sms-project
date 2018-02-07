@@ -12,7 +12,7 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel}
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, getLangKey, instanceAxios} from '../../../../components/utils/functions'
  
 class FeeStructureForm extends React.Component {
  
@@ -40,7 +40,7 @@ class FeeStructureForm extends React.Component {
         this.setState({ percentageOptions });
       });
 
-    axios.get('/api/lookup/Classes/')
+    instanceAxios.get('/api/lookup/Classes/')
       .then(res => {
         const classOptions = mapForCombo(res.data);
         this.setState({ classOptions });
@@ -52,7 +52,7 @@ class FeeStructureForm extends React.Component {
         this.setState({ feeTypeOptions });
       });
 
-    axios.get('/api/lookup/feeDiscountTypes/')
+    instanceAxios.get('/api/lookup/feeDiscountTypes/')
       .then(res => {
         const feeDiscountTypeOptions = mapForCombo(res.data);
         this.setState({ feeDiscountTypeOptions });
@@ -97,7 +97,7 @@ class FeeStructureForm extends React.Component {
 
       //let langKey = getLangKey();
 
-      axios.get('/api/FeeTypesById/'+ val)    //+langKey +'/'
+      instanceAxios.get('/api/FeeTypesById/'+ val)    //+langKey +'/'
         .then(res => {
           this.props.change("feeTypeCode", res.data.Code);
           this.props.change("feeTypeName", res.data.Name);

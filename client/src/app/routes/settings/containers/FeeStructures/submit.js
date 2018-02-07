@@ -4,7 +4,7 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
@@ -24,7 +24,7 @@ function submit(values) {
 function insert(values) {
   LoaderVisibility(true);
   console.log(values);
-  axios.post('/api/FeeStructures', values)
+  instanceAxios.post('/api/FeeStructures', values)
     .then(function (response) {
 
       LoaderVisibility(false);
@@ -62,7 +62,7 @@ function update(values) {
   //console.log('in update');
   //console.log(values);
   LoaderVisibility(true);
-  axios.put('/api/FeeStructures', values)
+  instanceAxios.put('/api/FeeStructures', values)
     .then(function (response) {
 
       alert('s', 'data has been updated successfully');

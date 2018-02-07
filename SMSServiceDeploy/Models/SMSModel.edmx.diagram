@@ -28,7 +28,7 @@
         <EntityTypeShape EntityType="SMSModel.Shifts" Width="1.5" PointX="8.375" PointY="23.5" />
         <EntityTypeShape EntityType="SMSModel.Students" Width="1.5" PointX="13" PointY="6.875" IsExpanded="false" />
         <EntityTypeShape EntityType="SMSModel.Subjects" Width="1.5" PointX="6.375" PointY="18" />
-        <EntityTypeShape EntityType="SMSModel.SubjectTypes" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SMSModel.SubjectTypes" Width="1.5" PointX="1.375" PointY="1.125" />
         <EntityTypeShape EntityType="SMSModel.Teachers" Width="1.5" PointX="3.375" PointY="9" IsExpanded="false" />
         <AssociationConnector Association="SMSModel.FK_Admissions_Students" />
         <AssociationConnector Association="SMSModel.FK_Students_Cities" />

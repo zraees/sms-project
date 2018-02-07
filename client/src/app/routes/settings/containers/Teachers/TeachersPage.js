@@ -31,7 +31,7 @@ import TeacherSubjectsForm from './TeacherSubjectsForm'
 import TeacherClassesForm from './TeacherClassesForm'
 //import Test from './Test'
 import submit, {remove, submitQualification, submitExperience, submitTeacherSubject, submitTeacherClass} from './submit'
-import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -201,13 +201,13 @@ class TeachersPage extends React.Component {
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
-    axios.get('/api/nationalities/')
+    instanceAxios.get('/api/nationalities/')
       .then(res => {
         const nationalities = mapForCombo(res.data);
         this.setState({ nationalities });
       });
 
-    axios.get('/api/countries/')
+    instanceAxios.get('/api/countries/')
       .then(res => {
         const countries = mapForCombo(res.data);
         this.setState({ countries });
@@ -287,7 +287,7 @@ class TeachersPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="teachersGrid"  
                       options={{
-                        ajax: {"url":'/api/teachers', "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/teachers', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {

@@ -23,7 +23,7 @@ import SubjectForm from './SubjectForm'
 import SubjectEditForm from './SubjectEditForm'
 
 import submit, {remove} from './submit'
-import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
@@ -129,7 +129,7 @@ class SubjectsPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="subjectsGrid"  
                       options={{
-                        ajax: {"url":'/api/subjects', "dataSrc": ""},                         
+                        ajax: {"url": getWebApiRootUrl() +'/api/subjects', "dataSrc": ""},                         
                         columnDefs: [
                             { 
                                 "type": "date",

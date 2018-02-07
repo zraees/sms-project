@@ -4,7 +4,7 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
@@ -24,7 +24,7 @@ function submit(values) {
     function insert(values){
       LoaderVisibility(true);
       console.log(values);
-      axios.post('/api/FeeTypes', values)      
+      instanceAxios.post('/api/FeeTypes', values)      
         .then(function (response) {
           
           LoaderVisibility(false);
@@ -62,7 +62,7 @@ function submit(values) {
       //console.log('in update');
       //console.log(values);
       LoaderVisibility(true);
-      axios.put('/api/FeeTypes', values)      
+      instanceAxios.put('/api/FeeTypes', values)      
         .then(function (response) {
           
           alert('s','data has been updated successfully');
@@ -96,7 +96,7 @@ function submit(values) {
             // console.log(id);
             
             ////axios.delete('/api/FeeTypes/' + id)      
-            // axios.post('/api/Removestudent/' + id)
+            // instanceAxios.post('/api/Removestudent/' + id)
             //   .then(function (response) {
                 
             //     alert('s','student details have been deleted.');

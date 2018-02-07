@@ -74,3 +74,44 @@ E:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSSer
 E:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.csprojResolveAssemblyReference.cache
 E:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.dll
 E:\Zeeshan Data\Learning\Projects\Github Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.pdb
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.dll.config
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\SMSServices.pdb
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\Antlr3.Runtime.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.SqlServer.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\Microsoft.Web.Infrastructure.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\Newtonsoft.Json.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\NLog.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Net.Http.Formatting.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Helpers.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.WebHost.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Mvc.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Optimization.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Razor.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.Deployment.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.Razor.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\WebGrease.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\Antlr3.Runtime.pdb
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\EntityFramework.SqlServer.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\NLog.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Net.Http.Formatting.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Helpers.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.WebHost.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Mvc.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Optimization.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Razor.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.Deployment.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.WebPages.Razor.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\Newtonsoft.Json.xml
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.csprojResolveAssemblyReference.cache
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\obj\Release\SMSServices.pdb
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Cors.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.Cors.dll
+D:\Zeeshan\Projects\sms-project\SMSServices\SMSServices\bin\System.Web.Http.Cors.xml

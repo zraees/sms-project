@@ -8,7 +8,7 @@ import { RFReactSelect } from '../../../../components/ui'
 
 import { required }  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg' 
@@ -39,19 +39,19 @@ class EditGeneralInfo extends React.Component {
 
     componentDidMount(){ 
         
-        axios.get('/api/lookup/shifts/')
+        instanceAxios.get('/api/lookup/shifts/')
             .then(res=>{            
                 const shiftOptions = mapForCombo(res.data);
                 this.setState({shiftOptions});
         });            
         
-        axios.get('/api/lookup/classes/')
+        instanceAxios.get('/api/lookup/classes/')
             .then(res=>{            
                 const classOptions = mapForCombo(res.data);
                 this.setState({classOptions});
         });
 
-        axios.get('/api/lookup/sections/')
+        instanceAxios.get('/api/lookup/sections/')
             .then(res=>{            
                 const sectionOptions = mapForCombo(res.data);
                 this.setState({sectionOptions});
@@ -61,7 +61,7 @@ class EditGeneralInfo extends React.Component {
     }
 
     handleInitialize(classSectionId) { 
-      axios.get('/api/ClassesSectionsById/' + classSectionId)
+      instanceAxios.get('/api/ClassesSectionsById/' + classSectionId)
           .then(res=>{        
             console.log(res.data);
             const initData = {

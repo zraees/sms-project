@@ -12,7 +12,7 @@ import {RFField, RFReactSelect} from '../../../../components/ui'
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
  
 class ClassSectionForm extends React.Component {
  
@@ -32,23 +32,23 @@ class ClassSectionForm extends React.Component {
       "classSectionId": 0
     }        
        
-    const instance = axios.create({baseURL: 'http://localhost:8082'})
+    //const instance = axios.create({baseURL: 'http://localhost:8082'})
 
-console.log('instance', instance);
+//console.log('instance', instance);
 
-    instance.get('/api/lookup/shifts/')
+    instanceAxios.get('/api/lookup/shifts/')
       .then(res=>{            
           const shiftOptions = mapForCombo(res.data);
           this.setState({shiftOptions});
     });            
     
-    instance.get('/api/lookup/classes/')
+    instanceAxios.get('/api/lookup/classes/')
       .then(res=>{            
           const classOptions = mapForCombo(res.data);
           this.setState({classOptions});
     });
 
-    instance.get('/api/lookup/sections/')
+    instanceAxios.get('/api/lookup/sections/')
       .then(res=>{            
           const sectionOptions = mapForCombo(res.data);
           this.setState({sectionOptions});

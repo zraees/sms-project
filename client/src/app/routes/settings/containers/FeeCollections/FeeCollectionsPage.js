@@ -91,19 +91,19 @@ class FeeCollectionsPage extends React.Component {
     //     .modal({ remote: $(this).attr('href') });
     // });
 
-    axios.get('/api/lookup/shifts/')
+    instanceAxios.get('/api/lookup/shifts/')
       .then(res => {
         const shiftOptions = mapForCombo(res.data);
         this.setState({ shiftOptions });
       });
 
-    axios.get('/api/lookup/batches/')
+    instanceAxios.get('/api/lookup/batches/')
       .then(res => {
         const batchOptions = mapForCombo(res.data);
         this.setState({ batchOptions });
       });
 
-    axios.get('/api/lookup/paymentModes/')
+    instanceAxios.get('/api/lookup/paymentModes/')
       .then(res => {
 
         //console.log('/api/lookup/paymentModes/', res.data);
@@ -112,7 +112,7 @@ class FeeCollectionsPage extends React.Component {
         this.setState({ paymentModeOptions });
       });
 
-    // axios.get('/api/FeeStructures/GetFeeTypes/')
+    // instanceAxios.get('/api/FeeStructures/GetFeeTypes/')
     //   .then(res => {
     //     const feeStructureOptions = mapForCombo(res.data);
     //     this.setState({ feeStructureOptions });
@@ -189,13 +189,13 @@ class FeeCollectionsPage extends React.Component {
     this.setState({ studentOptions: [] });
 
     if (value != '') {
-      axios.get('/api/GetClassesByShiftId/' + value)
+      instanceAxios.get('/api/GetClassesByShiftId/' + value)
         .then(res => {
           const classOptions = mapForCombo(res.data);
           this.setState({ classOptions });
         });
 
-      // axios.get('/api/shifts/' + value)
+      // instanceAxios.get('/api/shifts/' + value)
       //   .then(res => {
       //     this.props.change('shiftStartTime', res.data.StartTime);
       //     this.props.change('shiftEndTime', res.data.EndTime);
@@ -218,13 +218,13 @@ class FeeCollectionsPage extends React.Component {
     this.setState({ studentOptions: [] });
 
     if (this.props.shiftId && value) {
-      axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
+      instanceAxios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
         .then(res => {
           const sectionOptions = mapForCombo(res.data);
           this.setState({ sectionOptions });
         });
 
-      axios.get('/api/FeeStructures/GetFeeTypes/'+value)
+      instanceAxios.get('/api/FeeStructures/GetFeeTypes/'+value)
         .then(res => {
           const feeStructureOptions = mapForCombo(res.data);
           this.setState({ feeStructureOptions });
@@ -238,7 +238,7 @@ class FeeCollectionsPage extends React.Component {
   handleSectionBlur(obj, value) {
     //console.log('this.props.sectionID ', this.props.shiftId, this.props.sectionId);
     if (this.props.shiftId && this.props.batchId && this.props.classId && value) {
-      axios.get('/api/GetStudentsByShiftIdClassIdSectionId/' + this.props.shiftId + '/' + this.props.classId + '/' + value + '/'+ this.props.batchId)
+      instanceAxios.get('/api/GetStudentsByShiftIdClassIdSectionId/' + this.props.shiftId + '/' + this.props.classId + '/' + value + '/'+ this.props.batchId)
         .then(res => {
           const studentOptions = mapForCombo(res.data);
           this.setState({ studentOptions });
@@ -252,7 +252,7 @@ class FeeCollectionsPage extends React.Component {
   handleBatchBlur(obj, value) {
     //console.log('this.props.sectionID ', this.props.shiftId, this.props.sectionId);
     if (this.props.shiftId && this.props.classId && this.props.sectionId && value) { 
-      axios.get('/api/GetStudentsByShiftIdClassIdSectionId/' + this.props.shiftId + '/' + this.props.classId + '/' + this.props.sectionId + '/' + value)
+      instanceAxios.get('/api/GetStudentsByShiftIdClassIdSectionId/' + this.props.shiftId + '/' + this.props.classId + '/' + this.props.sectionId + '/' + value)
         .then(res => {
           const studentOptions = mapForCombo(res.data);
           this.setState({ studentOptions });
@@ -463,7 +463,7 @@ class FeeCollectionsPage extends React.Component {
                     {"on Payment: payment mode, populate table on template ... setup school & branch tables. Set print by etc etc "}
                     <Datatable id="FeeCollectionGrid"  
                       options={{
-                        ajax: {"url": '/api/FeeCollections/Get/' + this.state.langKey + '/null/null/null/null/null', "dataSrc": ""},                       
+                        ajax: {"url": getWebApiRootUrl() +'/api/FeeCollections/Get/' + this.state.langKey + '/null/null/null/null/null', "dataSrc": ""},                       
                         columnDefs: [    
                           {
                             "type": "num",

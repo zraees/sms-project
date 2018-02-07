@@ -13,7 +13,7 @@ import {RFField, RFDatePicker, RFReactSelect, RFTextArea} from '../../../../comp
 import {required} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitPreviousSchool, removePreviousSchool} from './submit'
-import mapForCombo from '../../../../components/utils/functions' 
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions' 
 import Msg from '../../../../components/i18n/Msg'
 
 class PreviousSchoolsForm extends React.Component {
@@ -31,7 +31,7 @@ class PreviousSchoolsForm extends React.Component {
 componentDidMount(){ 
     console.log('componentDidMount --> PreviousSchoolsForm');
 //    LoaderVisibility(true);
-    axios.get('/api/lookup/classes/')
+    instanceAxios.get('/api/lookup/classes/')
         .then(res=>{            
             const classOptions = mapForCombo(res.data);
             this.setState({classOptions});
@@ -159,7 +159,7 @@ componentDidMount(){
                     
                     <Datatable id="previousSchoolsGrid"  
                       options={{
-                        ajax: {"url":'/api/StudentPreviousSchools/' + studentId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/StudentPreviousSchools/' + studentId, "dataSrc": ""},
                         columnDefs: [  
                             { 
                                 "render": function ( data, type, row ) {

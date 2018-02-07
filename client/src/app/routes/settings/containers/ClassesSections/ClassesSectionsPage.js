@@ -21,7 +21,7 @@ import ClassSectionForm from './ClassSectionForm'
 import EditGeneralInfo from './EditGeneralInfo'
 
 import submit, {remove} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 class ClassesSectionsPage extends React.Component {
   
@@ -122,7 +122,7 @@ class ClassesSectionsPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="ClassSectionGrid"  
                       options={{
-                        ajax: {"url":'/api/ClassesSections/All', "dataSrc": ""},                         
+                        ajax: {"url": getWebApiRootUrl() +'/api/ClassesSections/All', "dataSrc": ""},                         
                         columnDefs: [                             
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the

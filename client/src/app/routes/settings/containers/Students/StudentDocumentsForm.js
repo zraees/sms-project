@@ -33,13 +33,13 @@ class StudentDocumentsForm extends React.Component {
     
     componentDidMount(){ 
         
-        axios.get('/api/lookup/classes/')
+        instanceAxios.get('/api/lookup/classes/')
             .then(res=>{            
                 const classOptions = mapForCombo(res.data);
                 this.setState({classOptions});
             });
 
-        axios.get('/api/lookup/relations/')
+        instanceAxios.get('/api/lookup/relations/')
             .then(res=>{            
                 const relationOptions = mapForCombo(res.data);
                 this.setState({relationOptions});

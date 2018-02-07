@@ -16,7 +16,7 @@ import { createEmptyTimeTableDetail, submitTimetableDay } from './submit'
 
 import { required, number } from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import Loader, { Visibility as LoaderVisibility } from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg'
@@ -47,7 +47,7 @@ class TimetableDay extends React.Component {
 
   componentDidMount() {
 
-    axios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
+    instanceAxios.get('/api/TeachersClasses/ByClassID/' + this.props.classId)
     .then(res => {
       const teacherOptions = mapForCombo(res.data);
       this.setState({ teacherOptions });
@@ -55,7 +55,7 @@ class TimetableDay extends React.Component {
 
     let teacherIds = [];
 
-    axios.get('/api/GetTimeTableDetailByTimeTableIDDayID/' + this.props.timeTableId + '/' + this.props.dayId)
+    instanceAxios.get('/api/GetTimeTableDetailByTimeTableIDDayID/' + this.props.timeTableId + '/' + this.props.dayId)
       .then(res => {
         if (res.data) {
           //console.log('exists..');

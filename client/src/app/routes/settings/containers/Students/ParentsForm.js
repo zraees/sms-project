@@ -13,7 +13,7 @@ import {RFField, RFReactSelect, RFRadioButtonList } from '../../../../components
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitStudentParent, removeStudentParent} from './submit'
-import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, instanceAxios} from '../../../../components/utils/functions'
 import {upper, lower} from '../../../../components/utils/normalize'
 import Msg from '../../../../components/i18n/Msg'
 
@@ -47,13 +47,13 @@ class ParentsForm extends React.Component {
                 this.setState({yesNoOptions});
             });
 
-        axios.get('/api/lookup/nationality/')
+        instanceAxios.get('/api/lookup/nationality/')
             .then(res=>{            
                 const nationalityOptions = mapForCombo(res.data);
                 this.setState({nationalityOptions});
             });
 
-        axios.get('/api/lookup/languages/')
+        instanceAxios.get('/api/lookup/languages/')
             .then(res=>{            
                 const languageOptions = mapForCombo(res.data);
                 this.setState({languageOptions});
@@ -443,7 +443,7 @@ class ParentsForm extends React.Component {
                     
                     <Datatable id="parentsGrid"  
                       options={{
-                        ajax: {"url":'/api/StudentsParents/All/' + studentId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/StudentsParents/All/' + studentId, "dataSrc": ""},
                         columnDefs: [  
                             { 
                                 "render": function ( data, type, row ) {

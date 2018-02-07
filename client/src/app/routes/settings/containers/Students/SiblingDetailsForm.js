@@ -13,7 +13,7 @@ import {RFField, RFReactSelect, RFRadioButtonList } from '../../../../components
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitSiblingDetail, removeSibling} from './submit'
-import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, instanceAxios} from '../../../../components/utils/functions'
 import { upper } from '../../../../components/utils/normalize'
 import Msg from '../../../../components/i18n/Msg'
 
@@ -41,13 +41,13 @@ class SiblingDetailsForm extends React.Component {
                 this.setState({currentlyEnrolledOptions});
             });
 
-        axios.get('/api/lookup/classes/')
+        instanceAxios.get('/api/lookup/classes/')
             .then(res=>{            
                 const classOptions = mapForCombo(res.data);
                 this.setState({classOptions});
             });
 
-        axios.get('/api/lookup/sections/')
+        instanceAxios.get('/api/lookup/sections/')
             .then(res=>{            
                 const sectionOptions = mapForCombo(res.data);
                 this.setState({sectionOptions});
@@ -199,7 +199,7 @@ class SiblingDetailsForm extends React.Component {
                     
                     <Datatable id="siblingsGrid"  
                       options={{
-                        ajax: {"url":'/api/StudentSiblings/' + studentId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/StudentSiblings/' + studentId, "dataSrc": ""},
                         columnDefs: [  
                             { 
                                 "render": function ( data, type, row ) {

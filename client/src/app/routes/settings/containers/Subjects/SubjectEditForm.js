@@ -10,7 +10,7 @@ import {RFField} from '../../../../components/ui'
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg' 
@@ -40,7 +40,7 @@ class SubjectEditForm extends React.Component {
     }
 
     handleInitialize(subjectId) { 
-        axios.get('/api/subjects/' + subjectId)
+        instanceAxios.get('/api/subjects/' + subjectId)
             .then(res=>{                                  
             
             const initData = {

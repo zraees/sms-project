@@ -18,7 +18,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 import {required, email, number} from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import {submitQualification, removeQualification} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 //import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg'
 
@@ -60,7 +60,7 @@ componentDidMount(){
       }
     });
 
-    axios.get('/api/QualificationTypes/')
+    instanceAxios.get('/api/QualificationTypes/')
         .then(res=>{
             const qualificationTypes = mapForCombo(res.data);
             //  = res.data.map(function(item, index){
@@ -190,7 +190,7 @@ componentDidMount(){
                     
                     <Datatable id="teacherQualificationsGrid"  
                       options={{
-                        ajax: {"url":'/api/TeacherQualifications/' + teacherId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/TeacherQualifications/' + teacherId, "dataSrc": ""},
                         columnDefs: [
                             {/*{ 
                                 "type": "date",

@@ -10,7 +10,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea} fro
 
 import {required, email}  from '../../../../components/forms/validation/CustomValidation'
 import AlertMessage from '../../../../components/common/AlertMessage'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader'
 import Msg from '../../../../components/i18n/Msg' 
@@ -37,7 +37,7 @@ class EditGeneralInfo extends React.Component {
     const {teacherId} = nextProps;
 
     // if (this.state.countries === undefined || this.state.countries.length == 0) {
-    //     axios.get('/api/countries/')
+    //     instanceAxios.get('/api/countries/')
     //         .then(res=>{
     //             const countries = mapForCombo(res.data);          
     //             this.setState({countries});
@@ -57,7 +57,7 @@ class EditGeneralInfo extends React.Component {
     }
 
   handleInitialize(teacherId) { 
-      axios.get('/api/teachers/' + teacherId)
+      instanceAxios.get('/api/teachers/' + teacherId)
           .then(res=>{            
             console.log('dob');
             console.log(res.data.DOB != null ? moment(res.data.DOB).format("MM/DD/YYYY") : "");
@@ -85,7 +85,7 @@ class EditGeneralInfo extends React.Component {
             //console.log('before state');
 
             if(res.data.CountryId!=null){
-                axios.get('/api/states/' + res.data.CountryId)
+                instanceAxios.get('/api/states/' + res.data.CountryId)
                     .then(res=>{
                         const states = mapForCombo(res.data);             
                         this.setState({states});
@@ -93,7 +93,7 @@ class EditGeneralInfo extends React.Component {
             }
 
             if(res.data.StateId!=null){
-                axios.get('/api/cities/' + res.data.StateId)
+                instanceAxios.get('/api/cities/' + res.data.StateId)
                     .then(res=>{
                         const cities = mapForCombo(res.data);
                         this.setState({cities});
@@ -111,7 +111,7 @@ class EditGeneralInfo extends React.Component {
   } 
 
   handleCountryBlur(obj, value){
-    axios.get('/api/states/' + value)
+    instanceAxios.get('/api/states/' + value)
         .then(res=>{
             const states = mapForCombo(res.data);             
             this.setState({states});
@@ -120,7 +120,7 @@ class EditGeneralInfo extends React.Component {
   }
 
   handleStateBlur(obj, value){
-    axios.get('/api/cities/' + value)
+    instanceAxios.get('/api/cities/' + value)
         .then(res=>{
             const cities = mapForCombo(res.data);             
             this.setState({cities});

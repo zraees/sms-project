@@ -4,7 +4,7 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
@@ -13,7 +13,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
   function submit(values){
     //console.log(values);
-    return axios.get('/api/teachers/' + values.teacherId + '/' + values.email + '/')
+    return instanceAxios.get('/api/teachers/' + values.teacherId + '/' + values.email + '/')
       .then(res=>{            
           //throw {email: 'That email is already taken'}
           if(res.data.Email===''){
@@ -38,7 +38,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   function insert(values){
     LoaderVisibility(true);
     console.log(values);
-    axios.post('/api/teachers', values)      
+    instanceAxios.post('/api/teachers', values)      
         .then(function (response) {
           
           LoaderVisibility(false);
@@ -87,7 +87,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     //console.log('in update');
     //console.log(values);
     LoaderVisibility(true);
-    axios.put('/api/teachers', values)      
+    instanceAxios.put('/api/teachers', values)      
         .then(function (response) {
           
           alert('s','Teacher details have been updated.');
@@ -156,7 +156,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     values = Object.assign({}, values, {teacherId}); 
     LoaderVisibility(true);
 
-    axios.post('/api/TeacherQualifications', values)      
+    instanceAxios.post('/api/TeacherQualifications', values)      
       .then(function (response) {
         
         alert('s', 'Qualification details have been saved.');
@@ -179,7 +179,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     values = Object.assign({}, values, {teacherId});
     
     LoaderVisibility(true);
-    axios.post('/api/TeacherExperiences', values)      
+    instanceAxios.post('/api/TeacherExperiences', values)      
       .then(function (response) {
         
         alert('s', 'Experience details have been saved.');
@@ -203,8 +203,8 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     LoaderVisibility(true);
     console.log('teacher class submit ', values);
 
-    //axios.post('/api/TeachersSubjects', values)      
-    axios.post('/api/TeachersSubjects/'+teacherId+'/'+values.subjectId) 
+    //instanceAxios.post('/api/TeachersSubjects', values)      
+    instanceAxios.post('/api/TeachersSubjects/'+teacherId+'/'+values.subjectId) 
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -231,7 +231,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     LoaderVisibility(true);
     //console.log('teacher class submit ', values);
 
-    axios.post('/api/TeachersClasses/'+teacherId+'/'+values.classId)      
+    instanceAxios.post('/api/TeachersClasses/'+teacherId+'/'+values.classId)      
       .then(function (response) {
         
         alert('s', 'data has been saved successfully');
@@ -269,7 +269,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
         console.log(Date());
 
         //axios.delete('/api/TeacherQualifications/' + id)      
-        axios.post('/api/RemoveTeacherQualification/' + id)      
+        instanceAxios.post('/api/RemoveTeacherQualification/' + id)      
           .then(function (response) {
             
             alert('s','Qualification details have been deleted.');
@@ -314,7 +314,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
         LoaderVisibility(true);
 
         //axios.delete('/api/TeacherExperiences/' + id)      
-        axios.post('/api/RemoveTeacherExperience/' + id)      
+        instanceAxios.post('/api/RemoveTeacherExperience/' + id)      
           .then(function (response) {
             
             alert('s','Experience details have been deleted.');
@@ -355,7 +355,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     if (isYesClicked(ButtonPressed)) {
       LoaderVisibility(true);      
       console.log('RemoveTeacherSubject ', id);
-      axios.post('/api/RemoveTeacherSubject/' + id)      
+      instanceAxios.post('/api/RemoveTeacherSubject/' + id)      
         .then(function (response) {          
           alert('s','data has been deleted successfully');          
           var table = $('#teacherSubjectsGrid').DataTable();                
@@ -391,7 +391,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
 
     if (isYesClicked(ButtonPressed)) {
       LoaderVisibility(true);      
-      axios.post('/api/RemoveTeacherClass/' + id)      
+      instanceAxios.post('/api/RemoveTeacherClass/' + id)      
         .then(function (response) {          
           alert('s','data has been deleted successfully');          
           var table = $('#TeacherClassesGrid').DataTable();                

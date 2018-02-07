@@ -145,7 +145,7 @@ class SpecialServicesForm extends React.Component {
                     
                     <Datatable id="specialServicesGrid"  
                       options={{
-                        ajax: {"url":'/api/StudentSiblings/' + studentId, "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/StudentSiblings/' + studentId, "dataSrc": ""},
                         columnDefs: [  
                             { 
                                 "render": function ( data, type, row ) {

@@ -21,7 +21,7 @@ import FeeTypeForm from './FeeTypeForm'
 import EditGeneralInfo from './EditGeneralInfo'
 
 import submit, {remove} from './submit'
-import mapForCombo from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 class FeeTypesPage extends React.Component {
   
@@ -122,7 +122,7 @@ class FeeTypesPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="FeeTypeGrid"  
                       options={{
-                        ajax: {"url":'/api/FeeTypes/All', "dataSrc": ""},                         
+                        ajax: {"url": getWebApiRootUrl() +'/api/FeeTypes/All', "dataSrc": ""},                         
                         columnDefs: [                             
                             {
                                 // The `data` parameter refers to the data for the cell (defined by the

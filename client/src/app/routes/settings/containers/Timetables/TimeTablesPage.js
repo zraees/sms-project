@@ -27,7 +27,7 @@ import TimetableEditForm from './TimetableEditForm'
 import TimetableDay from './TimetableDay'
 
 import submit, {remove, submitTimetableDay} from './submit'
-import mapForCombo, {renderDate, mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, mapForRadioList, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
  
 
 // import {OverlayTrigger, Tooltip} from 'react-bootstrap'
@@ -118,19 +118,19 @@ class TimeTablesPage extends React.Component {
 
   componentDidMount(){ 
 
-    // axios.get('/api/lookup/subjects/')
+    // instanceAxios.get('/api/lookup/subjects/')
     //   .then(res => {
     //     const subjectOptions = mapForCombo(res.data);
     //     this.setState({ subjectOptions });
     //   });
 
-    axios.get('/api/lookup/locations/')
+    instanceAxios.get('/api/lookup/locations/')
       .then(res => {
         const locationOptions = mapForCombo(res.data);
         this.setState({ locationOptions });
       });
 
-    // axios.get('/api/TeachersClasses/ByClassID/2' )  //+ this.props.classId
+    // instanceAxios.get('/api/TeachersClasses/ByClassID/2' )  //+ this.props.classId
     //   .then(res => {
     //     const teacherOptions = mapForCombo(res.data);
     //     this.setState({ teacherOptions });
@@ -274,7 +274,7 @@ class TimeTablesPage extends React.Component {
                     <Loader isLoading={this.props.isLoading} />
                     <Datatable id="timeTablesGrid"  
                       options={{
-                        ajax: {"url":'/api/TimeTables', "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/TimeTables', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {

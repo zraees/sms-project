@@ -4,7 +4,7 @@ import axios from 'axios'
 import alert, {confirmation} from '../../../../components/utils/alerts'
 import {smallBox, bigBox, SmartMessageBox} from "../../../../components/utils/actions/MessageActions";
 import Msg from '../../../../components/i18n/Msg'
-import {isYesClicked, isNoClicked, overlap} from '../../../../components/utils/functions'
+import {isYesClicked, isNoClicked, overlap, instanceAxios} from '../../../../components/utils/functions'
 import LanguageStore from '../../../../components/i18n/LanguageStore'
 
 import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loader/Loader';
@@ -12,7 +12,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   function submit(values, timetableId){
     console.log(values);
     console.log('timetableId ', timetableId);
-    // return axios.get('/api/students/' + values.studentId + '/' + values.email + '/')
+    // return instanceAxios.get('/api/students/' + values.studentId + '/' + values.email + '/')
     //   .then(res=>{            
     //       //throw {email: 'That email is already taken'}
     //       if(res.data.Email===''){
@@ -37,7 +37,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
   function insert(values){
     LoaderVisibility(true);
 
-    axios.post('/api/timetables', values)      
+    instanceAxios.post('/api/timetables', values)      
       .then(function (response) {
          
         LoaderVisibility(false);
@@ -77,7 +77,7 @@ import Loader, {Visibility as LoaderVisibility} from '../../../../components/Loa
     //console.log('in update');
     //console.log(values);
     // LoaderVisibility(true);
-    // axios.put('/api/students', values)      
+    // instanceAxios.put('/api/students', values)      
     //   .then(function (response) {
         
     //     alert('s','student details have been updated.');
@@ -146,7 +146,7 @@ function deleteRecord(ButtonPressed, id, delCell) {
 export function createEmptyTimeTableDetail(timeTableId, dayId){
     LoaderVisibility(true);
   
-      axios.post('/api/createEmptyTimeTableDetails', {"timeTableId":timeTableId, "dayId":dayId})      
+      instanceAxios.post('/api/createEmptyTimeTableDetails', {"timeTableId":timeTableId, "dayId":dayId})      
         .then(function (response) {
            
           LoaderVisibility(false);
@@ -200,7 +200,7 @@ export function submitTimetableDay(values) {
     var validate = overlap(dateRange);
     if (!validate.overlap) {
 
-      axios.put('/api/TimeTableDetails', values.timeTableDetails)
+      instanceAxios.put('/api/TimeTableDetails', values.timeTableDetails)
         .then(function (response) {
 
           alert('s', 'data has been updated.');
@@ -240,7 +240,7 @@ export function submitTimetableDay(values) {
   }
 else{
   //console.log(' empty .. ',{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId});
-  axios.put('/api/TimeTableDetails', [{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId}])
+  instanceAxios.put('/api/TimeTableDetails', [{"timeTableDetailId": -1, "timeTableId": values.timeTableId, "dayId": values.dayId}])
   .then(function (response) {
 
     alert('s', 'data has been updated.');
@@ -273,7 +273,7 @@ else{
 }
 
 
-  //axios.put('/api/TimeTableDetails', {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails})
+  //instanceAxios.put('/api/TimeTableDetails', {"timeTableId": values.timeTableId, "dayId": values.dayId, "timeTableDetails": values.timeTableDetails})
     
     // .catch(function (error) {
     //   console.log(error);

@@ -13,7 +13,7 @@ import {RFField, RFDatePicker, RFRadioButtonList, RFReactSelect, RFTextArea, RFF
 import asyncValidate from './asyncValidate'
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList} from '../../../../components/utils/functions'
+import mapForCombo, {mapForRadioList, instanceAxios} from '../../../../components/utils/functions'
 import {upper, lower} from '../../../../components/utils/normalize'
 
 class StudentForm extends React.Component {
@@ -61,49 +61,49 @@ class StudentForm extends React.Component {
           this.setState({genderOptions});
       });
 
-    axios.get('/api/lookup/languages/')
+    instanceAxios.get('/api/lookup/languages/')
       .then(res=>{            
           const languageOptions = mapForCombo(res.data);
           this.setState({languageOptions});
       });
 
-    axios.get('/api/lookup/religions/')
+    instanceAxios.get('/api/lookup/religions/')
       .then(res=>{            
           const religionOptions = mapForCombo(res.data);
           this.setState({religionOptions});
       });
 
-    axios.get('/api/lookup/shifts/')
+    instanceAxios.get('/api/lookup/shifts/')
       .then(res=>{            
           const shiftOptions = mapForCombo(res.data);
           this.setState({shiftOptions});
       });
 
-    axios.get('/api/lookup/countries/')
+    instanceAxios.get('/api/lookup/countries/')
       .then(res=>{            
           const countryOptions = mapForCombo(res.data);
           this.setState({countryOptions});
       }); 
 
-      // axios.get('/api/lookup/classes/')
+      // instanceAxios.get('/api/lookup/classes/')
       //   .then(res=>{            
       //       const classOptions = mapForCombo(res.data);
       //       this.setState({classOptions});
       //   });
 
-      // axios.get('/api/lookup/sections/')
+      // instanceAxios.get('/api/lookup/sections/')
       //   .then(res=>{            
       //       const sectionOptions = mapForCombo(res.data);
       //       this.setState({sectionOptions});
       //   });
 
-    axios.get('/api/lookup/batches/')
+    instanceAxios.get('/api/lookup/batches/')
       .then(res=>{            
           const batchOptions = mapForCombo(res.data);
           this.setState({batchOptions});
       });
     
-    axios.get('/api/GetStudentGeneratedCode')
+    instanceAxios.get('/api/GetStudentGeneratedCode')
       .then(res=>{      
         //console.log(res);       
         const initData = {
@@ -119,7 +119,7 @@ class StudentForm extends React.Component {
   }
 
   handleCountryBlur(obj, value){
-    axios.get('/api/Lookup/states/countryid/' + value)
+    instanceAxios.get('/api/Lookup/states/countryid/' + value)
       .then(res=>{
           const states = mapForCombo(res.data);//res.data.map(function(item, index){
               //return {value: item.Id + "", label: item.Name};
@@ -130,14 +130,14 @@ class StudentForm extends React.Component {
   }
 
   handleStateBlur(obj, value){
-    // axios.get('/api/cities/' + value)
+    // instanceAxios.get('/api/cities/' + value)
     //     .then(res=>{
     //         const cities = mapForCombo(res.data); //res.data.map(function(item, index){
     //             //return {value: item.Id + "", label: item.Name};
     //         //});                       
     //         this.setState({cities});
     //     });
-    axios.get('/api/Lookup/cities/stateid/' + value)
+    instanceAxios.get('/api/Lookup/cities/stateid/' + value)
       .then(res=>{
           const cities = mapForCombo(res.data); // res.data.map(function(item, index){
           //     return {value: item.Id + "", label: item.Name};
@@ -161,7 +161,7 @@ class StudentForm extends React.Component {
   }
  
   handleShiftBlur(obj, value){
-    axios.get('/api/GetClassesByShiftId/' + value)
+    instanceAxios.get('/api/GetClassesByShiftId/' + value)
         .then(res=>{
             const classOptions = mapForCombo(res.data); // res.data.map(function(item, index){
             //     return {value: item.Id + "", label: item.Name};
@@ -173,7 +173,7 @@ class StudentForm extends React.Component {
 
   handleClassBlur(obj, value){ 
     //console.log('this.props.shiftId = ' ,this.props.shiftId);
-    axios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
+    instanceAxios.get('/api/GetClassesByShiftIdClassId/' + this.props.shiftId + '/' + value)
         .then(res=>{
             const sectionOptions = mapForCombo(res.data); // res.data.map(function(item, index){
             //     return {value: item.Id + "", label: item.Name};

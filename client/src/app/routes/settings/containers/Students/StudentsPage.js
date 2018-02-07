@@ -31,7 +31,7 @@ import SpecialServicesForm from './SpecialServicesForm'
 import MedicalDetailsForm from './MedicalDetailsForm'
 
 import submit, {remove, submitPreviousSchool, submitSiblingDetail, submitStudentRelative, submitStudentParent, submitStudentEmergencyContactDetail, submitStudentSpecialSevices, submitStudentMedicalDetails } from './submit'
-import mapForCombo, {renderDate} from '../../../../components/utils/functions'
+import mapForCombo, {renderDate, getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 //http://live.datatables.net/caderego/1/edit
 //https://github.com/mar10/jquery-ui-contextmenu
@@ -222,13 +222,13 @@ class StudentsPage extends React.Component {
     }.bind(this));
     
     //https://jsonplaceholder.typicode.com/posts
-    axios.get('/api/nationalities/')
+    instanceAxios.get('/api/nationalities/')
       .then(res=>{
           const nationalities = mapForCombo(res.data);      
           this.setState({nationalities});
       });
  
-    axios.get('/api/countries/')
+    instanceAxios.get('/api/countries/')
       .then(res=>{
           const countries = mapForCombo(res.data);
           this.setState({countries});
@@ -295,7 +295,7 @@ class StudentsPage extends React.Component {
                     {/*  */}
                     <Datatable id="StudentsGrid"  
                       options={{
-                        ajax: {"url":'/api/Students', "dataSrc": ""},
+                        ajax: {"url": getWebApiRootUrl() +'/api/Students', "dataSrc": ""},
                         //1. PAGING-SETTING SAMPLE lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         //createdRow: function ( row, data, index ) {
                             //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {

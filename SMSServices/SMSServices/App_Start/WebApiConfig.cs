@@ -32,6 +32,8 @@ namespace SMSServices
             config.Filters.Add(new LoggingFilterAttribute());
             config.Filters.Add(new GlobalExceptionAttribute());
 
+
+            config.EnableCors();
         }
     }
 }

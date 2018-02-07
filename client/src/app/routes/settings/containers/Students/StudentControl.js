@@ -33,7 +33,7 @@ class StudentControl extends React.Component {
         studentId = props.studentId ? props.studentId : 0;
 
         //console.log('sdasd');
-        axios.get('/api/GetStudentControlData/' + this.state.key + '/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId)
+        instanceAxios.get('/api/GetStudentControlData/' + this.state.key + '/' + shiftId + '/' + classId + '/' + sectionId + '/' + batchId + '/' + studentId)
             .then(res => {
                 //console.log('sdas asd d', res.data);
                 const student = res.data;
