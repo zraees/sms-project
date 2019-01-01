@@ -1,0 +1,16 @@
+hosted SMS Url : http://localhost:8081/#/settings/students
+hosted SMS Service Url : http://localhost:8082
+
+SQL Server Version 2012
+
+npm commands
+============
+
+npm install
+then 
+CD D:\Zeeshan\Projects\sms-project\client
+then
+npm run dev
+
+
+
