@@ -13,7 +13,7 @@ import {RFField, RFReactSelect, RFRadioButtonList, RFReactSelectSingle, RFLabel,
 
 import AlertMessage from '../../../../components/common/AlertMessage'
 import Msg from '../../../../components/i18n/Msg'
-import mapForCombo, {mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat, guid, instanceAxios, isYesClicked, isNoClicked} from '../../../../components/utils/functions'
+import mapForCombo, {getWebApiRootUrl, mapForRadioList, getLangKey, today, renderDate, getDateBackEndFormat, guid, instanceAxios, isYesClicked, isNoClicked} from '../../../../components/utils/functions'
 import { submitFeePayment, removePayment, printFeeSlip} from './submit'
 
 import StudentControl from '../Students/StudentControl'
@@ -142,7 +142,7 @@ class Details extends React.Component {
           //     this.setState({ paymentModeOptions });
           //   });
 
-          var url = '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + studentId;
+          var url =getWebApiRootUrl() + '/api/FeeCollections/FeePaymentDetailsByStudentID/' + this.state.langKey + '/' + studentId;
           //console.log(url);
           //this.setState({ url });
 

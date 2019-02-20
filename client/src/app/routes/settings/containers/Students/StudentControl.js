@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import classNames from 'classnames'
 
-import {getLangKey} from '../../../../components/utils/functions' 
+import {getLangKey, instanceAxios} from '../../../../components/utils/functions' 
 import Msg from '../../../../components/i18n/Msg'
 
 class StudentControl extends React.Component {

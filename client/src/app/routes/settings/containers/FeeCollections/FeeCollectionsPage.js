@@ -23,13 +23,14 @@ import Msg from '../../../../components/i18n/Msg'
 
 import Moment from '../../../../components/utils/Moment'
 import alert, {confirmation} from '../../../../components/utils/alerts'
+import mapForCombo, {getWebApiRootUrl, instanceAxios} from '../../../../components/utils/functions'
 
 import FeeCollectionForm from './FeeCollectionForm'
 import Details from './Details'
 import Payments from './Payments'
 import Alerts from './Alerts'
 
-import mapForCombo, {renderDate, getLangKey, getDateFrontEndFormat, getTranslation, renderFeeStatus, renderNumber, guid} from '../../../../components/utils/functions'
+import {renderDate, getLangKey, getDateFrontEndFormat, getTranslation, renderFeeStatus, renderNumber, guid} from '../../../../components/utils/functions'
 import print from '../../../../components/utils/reportRendering'
 
 import {required, number}  from '../../../../components/forms/validation/CustomValidation' 
@@ -456,14 +457,14 @@ class FeeCollectionsPage extends React.Component {
 
                       </form>
                     </div> 
-                     
+{/*  + '/null/null/null/null/null'   */}                 
                     <Loader isLoading={this.props.isLoading} />
                     {"show more cols.. like batch, class, etc.. Also add color coding for status "}
                     <br/>
                     {"on Payment: payment mode, populate table on template ... setup school & branch tables. Set print by etc etc "}
                     <Datatable id="FeeCollectionGrid"  
                       options={{
-                        ajax: {"url": getWebApiRootUrl() +'/api/FeeCollections/Get/' + this.state.langKey + '/null/null/null/null/null', "dataSrc": ""},                       
+                        ajax: {"url": getWebApiRootUrl() +'/api/FeeCollections/Get/' + this.state.langKey , "dataSrc": ""},                       
                         columnDefs: [    
                           {
                             "type": "num",
